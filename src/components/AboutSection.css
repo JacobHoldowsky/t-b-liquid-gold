@@ -1,4 +1,27 @@
-.about-section {
+@media (max-width: 719px)
+{
+  .about-section {
+    padding: 25px 0;
+    text-align: center;
+    
+    background-image: url('../../public/aboutBackground.jpg'); 
+    background-size: 120%;
+    color: white;
+  }
+  
+  .about-section h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+  }
+  
+  .about-section p {
+    font-size: 14px;
+    max-width: 375px;
+  }
+}  
+@media (min-width: 720px)
+{
+  .about-section {
     padding: 100px 0;
     text-align: center;
     background-image: url('../../public/aboutBackground.jpg'); 
@@ -16,4 +39,4 @@
     max-width: 800px;
     margin: 0 auto;
   }
-  
+}  
