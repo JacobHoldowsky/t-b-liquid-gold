@@ -1,4 +1,51 @@
-.hero-section {
+@media (max-width: 719px) {
+  .hero-section {
+    background-image: url('../../public/prettyPresentBackground.jpg'); 
+    background-size: 170%;
+    background-position: center;
+    height: 50vh;
+    display: flex;
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    position: relative; /* Position the container relatively */
+  }
+  
+  .hero-content {
+    max-width: 350px;
+    position: relative; /* Position the content container relatively */
+  }
+  
+  .hero-section h1 {
+    font-size: 26px;
+  }
+  
+  .hero-section p {
+    font-size: 18px;
+    /* margin-bottom: 15px; */
+  }
+  
+  .cta-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff7b54;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-btn:hover {
+    background-color: #ff4c00;
+  }
+}
+
+@media (min-width: 720px) {
+  .hero-section {
   background-image: url('../../public/prettyPresentBackground.jpg'); 
   background-size: cover;
   background-position: center;
@@ -40,4 +87,5 @@
 
 .cta-btn:hover {
   background-color: #ff4c00;
+}
 }
