@@ -1,0 +1,40 @@
+/* ContactForm.css */
+
+.contact-info {
+    max-width: 400px;
+    margin: 100px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+  }
+
+
+  .contact-info h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .contact-info .info {
+    text-align: center;
+  }
+  
+  .contact-info .info p {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #555;
+  }
+  
+  .contact-info .info a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .contact-info .info a:hover {
+    color: #0056b3;
+  }
+  

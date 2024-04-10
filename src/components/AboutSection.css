@@ -1,0 +1,19 @@
+.about-section {
+    padding: 100px 0;
+    text-align: center;
+    background-image: url('../../public/aboutBackground.jpg'); 
+  background-size: cover;
+  color: white;
+}
+  
+  .about-section h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+  
+  .about-section p {
+    font-size: 22px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
