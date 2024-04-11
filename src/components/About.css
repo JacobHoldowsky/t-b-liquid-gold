@@ -1,4 +1,33 @@
-.about-section {
+@media (max-width: 719px) {
+  
+  .about {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 55px;
+  text-align: center;
+  background-image: url('../../public/aboutBackground.jpg'); 
+  background-size: 120%;
+  height: auto;
+  color: white;
+}
+
+.about h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.about p {
+  font-size: 14px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+}
+
+@media (min-width: 720px) {
+  
+  .about {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,13 +40,14 @@
   color: white;
 }
 
-.about-section h2 {
+.about h2 {
   margin-bottom: 20px;
   font-size: 28px;
 }
 
-.about-section p {
+.about p {
   font-size: 18px;
   max-width: 800px;
   margin: 0 auto;
+}
 }

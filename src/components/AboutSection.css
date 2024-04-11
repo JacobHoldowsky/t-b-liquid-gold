@@ -1,7 +1,7 @@
 @media (max-width: 719px)
 {
   .about-section {
-    padding: 25px 0;
+    padding: 25px 55px;
     text-align: center;
     
     background-image: url('../../public/aboutBackground.jpg'); 

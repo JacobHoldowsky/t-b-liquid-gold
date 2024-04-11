@@ -3,7 +3,7 @@ import "./About.css"; // Import CSS file for styling
 
 function About() {
   return (
-    <section className="about-section">
+    <section className="about">
       <h2>About</h2>
       <p>Welcome to Pretty Presents by Chana! </p>
       <br />
