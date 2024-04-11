@@ -1,4 +1,49 @@
-@media (max-width: 719px) {
+@media (max-width: 450px) {
+  .hero-section {
+    background-image: url('../../public/prettyPresentBackground.jpg'); 
+    background-size: 120%;
+    background-position: center;
+    height: 250px;
+    display: flex;
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    position: relative; /* Position the container relatively */
+  }
+  
+  .hero-content {
+    max-width: 200px;
+    position: relative; /* Position the content container relatively */
+  }
+  
+  .hero-section h1 {
+    font-size: 24px;
+  }
+  
+  .hero-section p {
+    font-size: 16px;
+    /* margin-bottom: 15px; */
+  }
+  
+  .cta-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff7b54;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-btn:hover {
+    background-color: #ff4c00;
+  }
+}
+@media screen and (min-width: 451px) and (max-width: 719px) {
   .hero-section {
     background-image: url('../../public/prettyPresentBackground.jpg'); 
     background-size: 170%;
