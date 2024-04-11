@@ -8,13 +8,14 @@
   padding: 20px 55px;
   text-align: center;
   background-image: url('../../public/aboutBackground.jpg'); 
-  background-size: 120%;
+  background-size: 125%;
+  background-repeat: no-repeat;
   height: auto;
   color: white;
 }
 
 .about h2 {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-size: 22px;
 }
 
