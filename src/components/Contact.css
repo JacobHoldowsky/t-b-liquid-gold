@@ -1,13 +1,54 @@
 /* ContactForm.css */
 
-@media (max-width: 719px){.contact-info {
+@media (max-width: 450px)
+{
+  .contact-info {
+    max-width: 200px;
+    margin: 25px auto;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+
+  .contact-info h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .contact-info .info {
+    text-align: center;
+  }
+  
+  .contact-info .info p {
+    font-size: 12px;
+    margin-bottom: 5px;
+    color: #555;
+  }
+  
+  .contact-info .info a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .contact-info .info a:hover {
+    color: #0056b3;
+  }
+  }
+@media screen and (min-width: 451px) and (max-width: 719px)
+{
+  .contact-info {
     max-width: 200px;
     margin: 25px auto;
     padding: 15px;
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    
   }
 
 
