@@ -1,4 +1,28 @@
-@media (max-width: 719px)
+@media (max-width: 450px)
+{
+  .about-section {
+    padding: 25px 50px;
+    text-align: center;
+  
+    background-image: url('../../public/aboutBackground.jpg'); 
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 125%;
+    color: white;
+  }
+  
+  .about-section h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+  }
+  
+  .about-section p {
+    font-size: 14px;
+    max-width: 375px;
+    margin-bottom: 0px;
+  }
+}  
+@media screen and (min-width: 451px) and (max-width: 719px)
 {
   .about-section {
     padding: 25px 55px;
