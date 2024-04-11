@@ -1,7 +1,7 @@
 @media (max-width: 450px) {
   .hero-section {
     background-image: url('../../public/prettyPresentBackground.jpg'); 
-    background-size: 120%;
+    background-size: 125%;
     background-position: center;
     height: 250px;
     display: flex;
