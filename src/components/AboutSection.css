@@ -1,13 +1,13 @@
 @media (max-width: 450px)
 {
   .about-section {
-    padding: 25px 50px;
+    padding: 25px 55px;
     text-align: center;
   
     background-image: url('../../public/aboutBackground.jpg'); 
     background-position: left;
     background-repeat: no-repeat;
-    background-size: 125%;
+    background-size: 120%;
     color: white;
   }
   
