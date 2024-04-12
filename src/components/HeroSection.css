@@ -179,7 +179,7 @@
 @media screen and (min-width: 1440px) and (max-width: 2559px) {
   .hero-section {
     background-image: url('../../public/prettyPresentBackground.jpg'); 
-    background-size: 100%;
+    background-size: cover;
     background-position: center;
     display: flex;
     background-repeat: no-repeat;
@@ -192,7 +192,7 @@
   }
   
   .hero-content {
-    max-width: 40%;
+    max-width: 12%;
     position: relative; /* Position the content container relatively */
   }
   

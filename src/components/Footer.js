@@ -9,6 +9,18 @@ function Footer() {
           &copy; {new Date().getFullYear()} Pretty Presents by Chana. All rights
           reserved.
         </p>
+
+        <p className="holdowsky">
+          Website crafted by{" "}
+          <a
+            href="https://www.linkedin.com/in/jacob-holdowsky-2b0baa103"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Jacob Holdowsky
+          </a>
+          .
+        </p>
       </div>
     </footer>
   );

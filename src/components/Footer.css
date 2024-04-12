@@ -1,10 +1,18 @@
+.footer a {
+color: lightgray;
+}
+
 @media (max-width: 576px) { 
+
+  .holdowsky {
+    font-size: 10px;
+  }
 
   .footer {
       background-color: #333;
       color: #fff;
       padding: 20px 0;
-      font-size: 8px;
+      font-size: 11px;
     }
     
     .footer-content {
@@ -13,6 +21,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
     }
     
     .footer-content p {
@@ -46,6 +55,9 @@
   
 @media screen and (min-width: 577px) and (max-width: 767px)
 {
+.holdowsky {
+  font-size: 6px;
+}
   .footer {
     background-color: #333;
     color: #fff;
@@ -59,6 +71,7 @@
     justify-content: center;
     align-items: center;
     font-size: 10px;
+    flex-direction: column;
   }
   
   .footer-content p {
@@ -90,6 +103,9 @@
   }}
 @media screen and (min-width: 768px) and (max-width: 1023px)
 {
+  .holdowsky {
+    font-size: 10px;
+  }
   .footer {
     background-color: #333;
     color: #fff;
@@ -103,6 +119,7 @@
     justify-content: center;
     align-items: center;
     font-size: 12px;
+    flex-direction: column;
   }
   
   .footer-content p {
@@ -134,6 +151,9 @@
   }}
 @media screen and (min-width: 1024px) and (max-width: 1439px)
 {
+  .holdowsky {
+    font-size: 12px;
+  }
   .footer {
     background-color: #333;
     color: #fff;
@@ -147,6 +167,7 @@
     justify-content: center;
     align-items: center;
     font-size: 14px;
+    flex-direction: column;
   }
   
   .footer-content p {
@@ -179,6 +200,9 @@
   
   @media screen and (min-width: 1440px) and (max-width: 2559px)
    {
+    .holdowsky {
+      font-size: 12px;
+    }
     .footer {
     background-color: #333;
     color: #fff;
@@ -192,6 +216,7 @@
     justify-content: center;
     align-items: center;
     font-size: 14px;
+    flex-direction: column;
   }
   
   .footer-content p {
@@ -222,7 +247,12 @@
     text-decoration: underline;
   }}
   
-  @media screen and (min-width: 2560px) {.footer {
+  @media screen and (min-width: 2560px) {
+    .holdowsky {
+      font-size: 20px;
+    }
+
+    .footer {
     background-color: #333;
     color: #fff;
     padding: 20px 0;
@@ -235,6 +265,7 @@
     justify-content: center;
     align-items: center;
     font-size: 24px;
+    flex-direction: column;
   }
   
   .footer-content p {
