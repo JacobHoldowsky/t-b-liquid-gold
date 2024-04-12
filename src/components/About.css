@@ -1,4 +1,4 @@
-@media (max-width: 719px) {
+@media (max-width: 576px) {
   
   .about {
   display: flex;
@@ -10,13 +10,64 @@
   background-image: url('../../public/aboutBackground.jpg'); 
   background-size: 120%;
   background-repeat: no-repeat;
-  height: auto;
   color: white;
 }
 
 .about h2 {
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: 14px;
+}
+
+.about p {
+  font-size: 11px;
+  max-width: 800px;
+  margin: 0 0;
+}
+}
+@media screen and (min-width: 577px) and (max-width: 767px){
+  
+  .about {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 20%;
+  text-align: center;
+  background-image: url('../../public/aboutBackground.jpg'); 
+  background-size: 120%;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.about h2 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.about p {
+  font-size: 14px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+}
+@media screen and (min-width: 768px) and (max-width: 1023px){
+  
+  .about {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 20%;
+  text-align: center;
+  background-image: url('../../public/aboutBackground.jpg'); 
+  background-size: 120%;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.about h2 {
+  margin-bottom: 10px;
+  font-size: 18px;
 }
 
 .about p {
@@ -26,29 +77,83 @@
 }
 }
 
-@media (min-width: 720px) {
+@media screen and (min-width: 1024px) and (max-width: 1439px){
   
   .about {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 100px 0;
+  padding: 20px 20%;
   text-align: center;
   background-image: url('../../public/aboutBackground.jpg'); 
-  background-size: cover;
-  height: auto;
+  background-size: 120%;
+  background-repeat: no-repeat;
   color: white;
 }
 
 .about h2 {
-  margin-bottom: 20px;
-  font-size: 28px;
+  margin-bottom: 10px;
+  font-size: 18px;
 }
 
 .about p {
-  font-size: 18px;
+  font-size: 14px;
   max-width: 800px;
   margin: 0 auto;
 }
 }
+@media screen and (min-width: 1440px) and (max-width: 2559px){
+  
+  .about {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 20%;
+  text-align: center;
+  background-image: url('../../public/aboutBackground.jpg'); 
+  background-size: 120%;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.about h2 {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.about p {
+  font-size: 14px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+}
+
+@media screen and (min-width: 2560px){
+  
+  .about {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 20%;
+  text-align: center;
+  background-image: url('../../public/aboutBackground.jpg'); 
+  background-size: 120%;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.about h2 {
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.about p {
+  font-size: 24px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+}
+

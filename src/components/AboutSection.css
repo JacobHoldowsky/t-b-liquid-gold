@@ -1,34 +1,45 @@
-@media (max-width: 450px)
+@media (max-width: 576px)
 {
   .about-section {
-    padding: 25px 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3% 18%;
+    align-items: center;
+
     text-align: center;
-  
+    
     background-image: url('../../public/aboutBackground.jpg'); 
     background-position: left;
-    background-repeat: no-repeat;
+    /* background-repeat: no-repeat; */
     background-size: 120%;
     color: white;
   }
   
   .about-section h2 {
-    margin-bottom: 10px;
-    font-size: 20px;
+    font-size: 16px;
+    margin-bottom: 0px;
   }
   
   .about-section p {
-    font-size: 14px;
-    max-width: 375px;
+    font-size: 12px;
     margin-bottom: 0px;
   }
 }  
-@media screen and (min-width: 451px) and (max-width: 719px)
+@media screen and (min-width: 577px) and (max-width: 767px)
 {
   .about-section {
-    padding: 25px 55px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 25px 18%;
+    align-items: center;
+
     text-align: center;
     
     background-image: url('../../public/aboutBackground.jpg'); 
+    background-position: left;
+    background-repeat: no-repeat;
     background-size: 120%;
     color: white;
   }
@@ -40,17 +51,25 @@
   
   .about-section p {
     font-size: 14px;
-    max-width: 375px;
+    margin-bottom: 0px;
   }
 }  
-@media (min-width: 720px)
+@media screen and (min-width: 768px) and (max-width: 1023px)
 {
   .about-section {
-    padding: 100px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 25px 18%;
+    align-items: center;
+
     text-align: center;
+    
     background-image: url('../../public/aboutBackground.jpg'); 
-  background-size: cover;
-  color: white;
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 120%;
+    color: white;
 }
   
   .about-section h2 {
@@ -61,6 +80,77 @@
   .about-section p {
     font-size: 18px;
     max-width: 800px;
+    margin: 0 auto;
+  }
+}  
+@media screen and (min-width: 1024px) and (max-width: 1439px)
+{
+  .about-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 25px 18%;
+    align-items: center;
+
+    text-align: center;
+    
+    background-image: url('../../public/aboutBackground.jpg'); 
+    background-position: left;
+    background-repeat: no-repeat;
+    background-size: 115%;
+    color: white;
+}
+  
+  .about-section h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+  
+  .about-section p {
+    font-size: 18px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}  
+@media screen and (min-width: 1440px) and (max-width: 2559px)
+{
+  .about-section {
+    padding: 25px 30%;
+    text-align: center;
+    background-image: url('../../public/aboutBackground.jpg'); 
+  background-size: cover;
+  background-position: left;
+  color: white;
+}
+  
+  .about-section h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+  }
+  
+  .about-section p {
+    font-size: 18px;
+    margin: 0 auto;
+  }
+}  
+
+@media screen and (min-width: 2560px) {
+  .about-section {
+    padding: 25px 30%;
+    text-align: center;
+    background-image: url('../../public/aboutBackground.jpg'); 
+  background-size: cover;
+  background-position: left;
+  color: white;
+}
+  
+  .about-section h2 {
+    margin-bottom: 20px;
+    font-size: 42px;
+  }
+  
+  .about-section p {
+    font-size: 28px;
     margin: 0 auto;
   }
 }  
