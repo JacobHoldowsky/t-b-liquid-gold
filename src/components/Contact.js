@@ -8,7 +8,9 @@ function Contact() {
     <div className="contact-info">
       <h2>Contact</h2>
       <div className="info">
-        <p>Phone and WhatsApp: 845-269-8649</p>
+        <p>
+          Phone and WhatsApp: <a href="tel:8452698649">845-269-8649</a>
+        </p>
         <p>
           Instagram:{" "}
           <a
