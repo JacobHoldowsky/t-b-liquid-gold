@@ -11,13 +11,13 @@ function Footer() {
         </p>
 
         <p className="holdowsky">
-          Website crafted by{" "}
+          Website built and maintained by{" "}
           <a
             href="https://www.linkedin.com/in/jacob-holdowsky-2b0baa103"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Jacob Holdowsky
+            Holdowsky Web Solutions.
           </a>
           .
         </p>
