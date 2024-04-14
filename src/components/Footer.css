@@ -152,7 +152,7 @@ color: lightgray;
 @media screen and (min-width: 1024px) and (max-width: 1439px)
 {
   .holdowsky {
-    font-size: 8px;
+    font-size: 9px;
   }
   .footer {
     background-color: #333;
@@ -201,7 +201,7 @@ color: lightgray;
   @media screen and (min-width: 1440px) and (max-width: 2559px)
    {
     .holdowsky {
-      font-size: 10px;
+      font-size: 11px;
     }
     .footer {
     background-color: #333;
