@@ -17,7 +17,7 @@ function Footer() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Holdowsky Web Solutions.
+            Holdowsky Web Solutions
           </a>
           .
         </p>
