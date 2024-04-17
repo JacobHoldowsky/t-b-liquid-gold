@@ -17,7 +17,7 @@ function Footer() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            UXilityPRO Digital Experience
+            UXilityPRO
           </a>
           .
         </p>
