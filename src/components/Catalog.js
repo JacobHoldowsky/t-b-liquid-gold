@@ -6,17 +6,17 @@ function Catalog() {
   const [selectedImage, setSelectedImage] = useState("");
 
   const presentImages = [
-    "happyBirthday.JPG",
-    "shabbosSet.JPG",
-    "serenity.JPG",
-    "youreTheBomb.JPG",
-    "thankMyTeacher.JPG",
-    "shabbosSet2.JPG",
-    "pamperUp.JPG",
-    "mayimAchronim.JPG",
-    "hostPackage.JPG",
-    "homeAndKitchen.JPG",
-    "buildYourOwn.JPG",
+    "catalog1.JPG",
+    "catalog2.JPG",
+    "catalog3.JPG",
+    "catalog4.JPG",
+    "catalog5.JPG",
+    "catalog6.JPG",
+    "catalog7.JPG",
+    "catalog8.JPG",
+    "catalog9.JPG",
+    "catalog10.JPG",
+    "catalog11.JPG",
   ];
 
   const openModal = (imageUrl) => {
