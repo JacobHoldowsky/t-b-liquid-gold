@@ -9,7 +9,18 @@ function Contact() {
       <h2>Contact</h2>
       <div className="info">
         <p>
-          Phone and WhatsApp: <a href="tel:8452698649">845-269-8649</a>
+          Let's connect on{" "}
+          <a
+            href="https://wa.me/+18452698649"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            WhatsApp
+          </a>
+          !
+        </p>
+        <p>
+          Phone: <a href="tel:8452698649">845-269-8649</a>
         </p>
         <p>
           Instagram:{" "}
