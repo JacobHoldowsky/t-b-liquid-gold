@@ -9,98 +9,98 @@ function FeaturedProducts() {
       name: "Product 1",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$19.99",
-      image: "gift1.jpg",
+      image: "present1.jpg",
     },
     {
       id: 2,
       name: "Product 2",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$24.99",
-      image: "gift2.jpg", // Replace with image path
+      image: "present2.jpg", // Replace with image path
     },
     {
       id: 2,
       name: "Product 5",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$24.99",
-      image: "gift4.jpg", // Replace with image path
+      image: "present4.jpg", // Replace with image path
     },
     {
       id: 1,
       name: "Product 7",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$19.99",
-      image: "gift6.jpg",
+      image: "present6.jpg",
     },
     {
       id: 2,
       name: "Product 8",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$24.99",
-      image: "gift7.jpg", // Replace with image path
+      image: "present7.jpg", // Replace with image path
     },
     {
       id: 3,
       name: "Product 9",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$29.99",
-      image: "gift8.jpg", // Replace with image path
+      image: "present8.jpg", // Replace with image path
     },
     {
       id: 1,
       name: "Product 10",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$19.99",
-      image: "gift9.jpg",
+      image: "present9.jpg",
     },
     {
       id: 2,
       name: "Product 2",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$24.99",
-      image: "gift10.jpg", // Replace with image path
+      image: "present10.jpg", // Replace with image path
     },
     {
       id: 3,
       name: "Product 3",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$29.99",
-      image: "gift11.jpg", // Replace with image path
+      image: "present11.jpg", // Replace with image path
     },
     {
       id: 1,
       name: "Product 1",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$19.99",
-      image: "gift12.jpg",
+      image: "present12.jpg",
     },
     {
       id: 2,
       name: "Product 2",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$24.99",
-      image: "gift13.jpg", // Replace with image path
+      image: "present13.jpg", // Replace with image path
     },
     {
       id: 3,
       name: "Product 3",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$29.99",
-      image: "gift14.jpg", // Replace with image path
+      image: "present14.jpg", // Replace with image path
     },
     {
       id: 1,
       name: "Product 1",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$19.99",
-      image: "gift15.jpg",
+      image: "present15.jpg",
     },
     {
       id: 3,
       name: "Product 3",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       price: "$29.99",
-      image: "gift3.jpg", // Replace with image path
+      image: "present3.jpg", // Replace with image path
     },
   ];
 
