@@ -55,7 +55,7 @@ function Catalog() {
             key={index}
             src={imageUrl}
             alt={`Present ${index + 1}`}
-            loading="lazy"
+            
             onClick={() => openModal(imageUrl)}
           />
         ))}
@@ -66,7 +66,7 @@ function Catalog() {
             <button className="catalog-close-btn" onClick={closeModal}>
               &times;
             </button>
-            <img src={selectedImage} alt="Enlarged" loading="lazy" />
+            <img src={selectedImage} alt="Enlarged"  />
           </div>
         </div>
       )}
