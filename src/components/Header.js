@@ -6,7 +6,7 @@ function Header() {
   return (
     <header className="header">
       <div className="logo">
-        <img src="prettyPresentsLogo.JPG" alt="Pretty Presents by Chana" />
+        <img src="prettyPresentsLogo.JPG" alt="Pretty Presents by Chana" loading="lazy" />
       </div>
       <nav>
         <ul>

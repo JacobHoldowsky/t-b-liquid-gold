@@ -146,7 +146,7 @@ function FeaturedProducts() {
               key={product.id}
               onClick={() => openModal(product.image)}
             >
-              <img src={product.image} alt={product.name} />
+              <img src={product.image} alt={product.name} loading="lazy" />
             </div>
           ))}
         </div>
@@ -160,7 +160,7 @@ function FeaturedProducts() {
             >
               &times;
             </button>
-            <img src={selectedImage} alt="Enlarged" />
+            <img src={selectedImage} alt="Enlarged" loading="lazy" />
           </div>
         </div>
       )}
