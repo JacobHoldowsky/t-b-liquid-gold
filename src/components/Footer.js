@@ -6,14 +6,14 @@ function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <p>
-          &copy; {new Date().getFullYear()} Pretty Presents by Chana. All rights
+          &copy; {new Date().getFullYear()} T&B Liquid Gold. All rights
           reserved.
         </p>
 
         <p className="holdowsky">
           Website built and maintained by{" "}
           <a
-            href="https://www.linkedin.com/in/jacob-holdowsky-2b0baa103"
+            href="https://www.linkedin.com/uxilitypro"
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -5,14 +5,14 @@ function AboutSection() {
   return (
     <section className="about-section">
       <h2>About</h2>
-      <p>Welcome to Pretty Presents by Chana! </p>
+      <p>Welcome to T&B Liquid Gold! </p>
       <br />
       <p>
         We specialize in creating beautifully wrapped gifts for all occasions.
         Whether it's birthdays, weddings, or holidays, we have the perfect
         present for you. We ensure that each gift is meticulously crafted to
         delight both the giver and the recipient. Browse our collection and make
-        every moment special with Pretty Presents by Chana.
+        every moment special with T&B Liquid Gold.
       </p>
       {/* Add more about your business here */}
     </section>

@@ -2,11 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 
-function Header() {
+function Header({ cartItemCount }) {
   return (
     <header className="header">
       <div className="logo">
-        <img src="prettyPresentsLogo.JPG" alt="Pretty Presents by Chana" />
+        <Link to="/">
+          <img src="t&bLiquidGoldLogo.png" alt="TnB Liquid Gold" />
+        </Link>
       </div>
       <nav>
         <ul>
@@ -21,6 +23,14 @@ function Header() {
           </li>
           <li>
             <Link to="/contact">Contact</Link>
+          </li>
+          <li className="cart-link">
+            <Link to="/checkout">
+              Checkout
+              {cartItemCount > 0 && (
+                <span className="cart-count">{cartItemCount}</span>
+              )}
+            </Link>
           </li>
         </ul>
       </nav>

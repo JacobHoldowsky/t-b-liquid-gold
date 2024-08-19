@@ -11,7 +11,7 @@ function TestimonialsSection() {
     },
     {
       id: 2,
-      text: "What I love about Pretty Presents is their creativity and that I’m able to customize my gift packages. It’s easy to place an order and they ship by the next day!",
+      text: "What I love about T&B Liquid Gold is their creativity and that I’m able to customize my gift packages. It’s easy to place an order and they ship by the next day!",
       author: "Dina H.",
     },
   ];
