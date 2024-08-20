@@ -7,12 +7,15 @@ import Checkout from "./components/Checkout";
 import Success from "./components/Success";
 import Canceled from "./components/Canceled";
 import Footer from "./components/Footer";
-import ScrollToTop from "./components/ScrollToTop"; // Import the ScrollToTop component
+import ScrollToTop from "./components/ScrollToTop";
 import { v4 as uuidv4 } from "uuid";
-import Catalog from "./components/Catalog";
 import LandingPage from "./components/LandingPage";
-import '@fortawesome/fontawesome-free/css/all.min.css';
-
+import HoneyCollection from "./components/HoneyCollection";
+import GiftPackages from "./components/GiftPackages";
+import CorporateGifts from "./components/CorporateGifts";
+import Wholesale from "./components/Wholesale";
+import FloatingWhatsAppButton from "./components/FloatingWhatsAppButton";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -70,29 +73,22 @@ function App() {
       <div className="App">
         <Header cartItemCount={calculateCartItemCount()} />
         <Routes>
+          <Route path="/" element={<LandingPage />} />
           <Route
-            path="/"
-            element={
-              <>
-                <LandingPage />
-              </>
-            }
-          />
-          <Route
-            path="/catalog"
-            element={<Catalog cart={cart} addToCart={addToCart} cartItemCount={calculateCartItemCount()} />}
+            path="/honeyCollection"
+            element={<HoneyCollection cart={cart} addToCart={addToCart} />}
           />
           <Route
             path="/giftPackages"
-            element={<Catalog cart={cart} addToCart={addToCart} />}
+            element={<GiftPackages cart={cart} addToCart={addToCart} />}
           />
           <Route
             path="/corporateGifts"
-            element={<Catalog cart={cart} addToCart={addToCart} />}
+            element={<CorporateGifts cart={cart} addToCart={addToCart} />}
           />
           <Route
             path="/wholesale"
-            element={<Catalog cart={cart} addToCart={addToCart} />}
+            element={<Wholesale cart={cart} addToCart={addToCart} />}
           />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
@@ -110,7 +106,7 @@ function App() {
           <Route path="/canceled" element={<Canceled />} />
         </Routes>
         <Footer />
-
+        <FloatingWhatsAppButton />
       </div>
     </Router>
   );

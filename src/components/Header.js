@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { HashLink } from "react-router-hash-link"; 
+import { HashLink } from "react-router-hash-link";
 import "./Header.css";
 
 function Header({ cartItemCount }) {
@@ -45,36 +45,73 @@ function Header({ cartItemCount }) {
         <div></div>
         <div></div>
       </div>
+
       <nav>
         <ul className={isOpen ? "active" : ""}>
           <li>
-            <Link to="/" onClick={closeMenu}>Home</Link>
+            <Link to="/" onClick={closeMenu}>
+              Home
+            </Link>
           </li>
           <li>
-            <HashLink smooth to="/catalog#ourCollection" scroll={scrollWithOffset} onClick={closeMenu}>
-              Our Collection
+            <HashLink
+              smooth
+              to="/honeyCollection"
+              scroll={scrollWithOffset}
+              onClick={closeMenu}
+            >
+              Honey Collection
             </HashLink>
           </li>
           <li>
-            <HashLink smooth to="/catalog#giftPackages" scroll={scrollWithOffset} onClick={closeMenu}>
+            <HashLink
+              smooth
+              to="/giftPackages"
+              scroll={scrollWithOffset}
+              onClick={closeMenu}
+            >
               Gift Packages
             </HashLink>
           </li>
           <li>
-            <HashLink smooth to="/catalog#corporateGifts" scroll={scrollWithOffset} onClick={closeMenu}>
+            <HashLink
+              smooth
+              to="/corporateGifts"
+              scroll={scrollWithOffset}
+              onClick={closeMenu}
+            >
               Corporate Gifts
             </HashLink>
           </li>
           <li>
-            <HashLink smooth to="/catalog#wholesale" scroll={scrollWithOffset} onClick={closeMenu}>
+            <HashLink
+              smooth
+              to="/wholesale"
+              scroll={scrollWithOffset}
+              onClick={closeMenu}
+            >
               Wholesale
             </HashLink>
           </li>
           <li>
-            <Link to="/about" onClick={closeMenu}>About</Link>
+            <HashLink
+              smooth
+              to="/catalog#sponsorABox"
+              scroll={scrollWithOffset}
+              onClick={closeMenu}
+            >
+              Sponsor-a-Box
+            </HashLink>
           </li>
           <li>
-            <Link to="/contact" onClick={closeMenu}>Contact</Link>
+            <Link to="/about" onClick={closeMenu}>
+              About
+            </Link>
+          </li>
+          <li>
+            <Link to="/contact" onClick={closeMenu}>
+              Contact
+            </Link>
           </li>
           <li className="cart-link">
             <Link to="/checkout" onClick={closeMenu}>

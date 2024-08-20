@@ -7,49 +7,7 @@ function Catalog({ cart, addToCart, cartItemCount }) {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const sections = {
-    ourCollection: [
-      {
-        url: "bourbon small jar.jpg",
-        title: "Bourbon Small Jar",
-        priceDollar: "$15",
-        priceShekel: "₪50",
-      },
-      {
-        url: "chocolate small jar.jpg",
-        title: "Chocolate Small Jar",
-        priceDollar: "$15",
-        priceShekel: "₪50",
-      },
-      {
-        url: "cinnamon small jar.jpg",
-        title: "Cinnamon Small Jar",
-        priceDollar: "$15",
-        priceShekel: "₪50",
-      },
-      {
-        url: "cinnamon small jar.jpg",
-        title: "Blueberry Small Jar",
-        priceDollar: "$15",
-        priceShekel: "₪50",
-      },
-      {
-        url: "pumpkin small jar.JPG",
-        title: "Pumpkin Small Jar",
-        priceDollar: "$15",
-        priceShekel: "₪50",
-      },
-      {
-        url: "sea salt small jar.jpg",
-        title: "Sea Salt Small Jar",
-        priceDollar: "$15",
-        priceShekel: "₪50",
-      },
-      {
-        url: "vanilla small jar.jpg",
-        title: "Vanilla Small Jar",
-        priceDollar: "$15",
-        priceShekel: "50",
-      },
+    honeyCollection: [
       {
         url: "bourbon small jar.jpg",
         title: "Bourbon Large Jar",
@@ -157,7 +115,50 @@ function Catalog({ cart, addToCart, cartItemCount }) {
         priceShekel: "₪200",
       },
     ],
-    wholesale: [], // Leave this array empty to avoid displaying items
+    wholesale: [
+      {
+        url: "bourbon small jar.jpg",
+        title: "Bourbon Small Jar",
+        priceDollar: "$15",
+        priceShekel: "₪50",
+      },
+      {
+        url: "chocolate small jar.jpg",
+        title: "Chocolate Small Jar",
+        priceDollar: "$15",
+        priceShekel: "₪50",
+      },
+      {
+        url: "cinnamon small jar.jpg",
+        title: "Cinnamon Small Jar",
+        priceDollar: "$15",
+        priceShekel: "₪50",
+      },
+      {
+        url: "cinnamon small jar.jpg",
+        title: "Blueberry Small Jar",
+        priceDollar: "$15",
+        priceShekel: "₪50",
+      },
+      {
+        url: "pumpkin small jar.JPG",
+        title: "Pumpkin Small Jar",
+        priceDollar: "$15",
+        priceShekel: "₪50",
+      },
+      {
+        url: "sea salt small jar.jpg",
+        title: "Sea Salt Small Jar",
+        priceDollar: "$15",
+        priceShekel: "₪50",
+      },
+      {
+        url: "vanilla small jar.jpg",
+        title: "Vanilla Small Jar",
+        priceDollar: "$15",
+        priceShekel: "50",
+      },
+    ],
   };
 
   const capitalizeWords = (str) =>
@@ -166,14 +167,16 @@ function Catalog({ cart, addToCart, cartItemCount }) {
       .trim()
       .replace(/\b\w/g, (char) => char.toUpperCase());
 
-  const openModal = (item) => {
-    setSelectedItem(item);
-    setModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+      const openModal = (item) => {
+        setSelectedItem(item);
+        setModalOpen(true);
+        document.body.classList.add("modal-open");
+      };
+    
+      const closeModal = () => {
+        setModalOpen(false);
+        document.body.classList.remove("modal-open");
+      };
 
   const handleModalClick = (e) => {
     e.stopPropagation();

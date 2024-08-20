@@ -13,20 +13,6 @@ function FeaturedProducts() {
     <section className="featured-products">
       <h2>Our Featured Products</h2>
       <div className="product-grid">
-        {/* Our Collection */}
-        <div className="product-card">
-          <img src="vanilla small jar.jpg" alt="Vanilla Small Jar" />
-          <h3>Vanilla Small Jar</h3>
-          <p>$15 / ₪60</p>
-          <HashLink
-            smooth
-            to="/catalog#ourCollection"
-            scroll={scrollWithOffset}
-            className="cta-btn"
-          >
-            Shop Our Collection
-          </HashLink>
-        </div>
         {/* Gift Packages */}
         <div className="product-card">
           <img src="Deluxe Box $120.jpg" alt="Deluxe Box" />
@@ -34,11 +20,25 @@ function FeaturedProducts() {
           <p>$120 / ₪360</p>
           <HashLink
             smooth
-            to="/catalog#giftPackages"
+            to="/giftPackages"
             scroll={scrollWithOffset}
             className="cta-btn"
           >
             Shop Gift Packages
+          </HashLink>
+        </div>
+        {/* Our Collection */}
+        <div className="product-card">
+          <img src="vanilla small jar.jpg" alt="Vanilla Small Jar" />
+          <h3>Vanilla Small Jar</h3>
+          <p>$15 / ₪60</p>
+          <HashLink
+            smooth
+            to="/honeyCollection"
+            scroll={scrollWithOffset}
+            className="cta-btn"
+          >
+            Shop Our Collection
           </HashLink>
         </div>
         {/* Corporate Gifts */}
@@ -48,7 +48,7 @@ function FeaturedProducts() {
           <p>$55 / ₪180</p>
           <HashLink
             smooth
-            to="/catalog#corporateGifts"
+            to="/corporateGifts"
             scroll={scrollWithOffset}
             className="cta-btn"
           >
