@@ -1,6 +1,6 @@
-import React from 'react';
-import { HashLink } from 'react-router-hash-link'; // Import HashLink
-import './FeaturedProducts.css';
+import React from "react";
+import { HashLink } from "react-router-hash-link"; // Import HashLink
+import "./FeaturedProducts.css";
 
 function FeaturedProducts() {
   const scrollWithOffset = (el) => {
@@ -53,20 +53,6 @@ function FeaturedProducts() {
             className="cta-btn"
           >
             Shop Corporate Gifts
-          </HashLink>
-        </div>
-        {/* Wholesale */}
-        <div className="product-card">
-          <img src="bourbon small jar.jpg" alt="Wholesale Bourbon Small Jars" />
-          <h3>Wholesale Bourbon Small Jars</h3>
-          <p>$1000 / ₪3000</p>
-          <HashLink
-            smooth
-            to="/catalog#wholesale"
-            scroll={scrollWithOffset}
-            className="cta-btn"
-          >
-            Shop Wholesale
           </HashLink>
         </div>
       </div>
