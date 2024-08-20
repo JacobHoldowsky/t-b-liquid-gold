@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
-import Catalog from "./components/Catalog";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Checkout from "./components/Checkout";
@@ -14,12 +13,12 @@ import TestimonialsSection from "./components/TestimonialsSection";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop"; // Import the ScrollToTop component
 import { v4 as uuidv4 } from "uuid";
+import Catalog from "./components/Catalog";
 
 function App() {
   const [cart, setCart] = useState([]);
 
   useEffect(() => {
-    // Load cart from localStorage when the app initializes
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
       setCart(JSON.parse(savedCart));
@@ -27,22 +26,50 @@ function App() {
   }, []);
 
   const addToCart = (item) => {
-    const itemWithId = { ...item, id: uuidv4() }; // Add a unique ID
-    const updatedCart = [...cart, itemWithId];
+    const existingItemIndex = cart.findIndex(
+      (cartItem) => cartItem.title === item.title
+    );
+    let updatedCart;
+
+    if (existingItemIndex !== -1) {
+      updatedCart = [...cart];
+      updatedCart[existingItemIndex].quantity += 1;
+    } else {
+      const itemWithId = { ...item, id: uuidv4(), quantity: 1 };
+      updatedCart = [...cart, itemWithId];
+    }
+
     setCart(updatedCart);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
-  const removeFromCart = (updatedCart) => {
+  const removeFromCart = (id) => {
+    const updatedCart = cart
+      .map((item) => {
+        if (item.id === id) {
+          if (item.quantity > 1) {
+            return { ...item, quantity: item.quantity - 1 };
+          } else {
+            return null;
+          }
+        }
+        return item;
+      })
+      .filter((item) => item !== null);
+
     setCart(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart)); // Update localStorage
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  };
+
+  const calculateCartItemCount = () => {
+    return cart.reduce((total, item) => total + item.quantity, 0);
   };
 
   return (
     <Router>
       <ScrollToTop />
       <div className="App">
-        <Header cartItemCount={cart.length} />
+        <Header cartItemCount={calculateCartItemCount()} />
         <Routes>
           <Route
             path="/"
@@ -59,6 +86,18 @@ function App() {
             path="/catalog"
             element={<Catalog cart={cart} addToCart={addToCart} />}
           />
+          <Route
+            path="/giftPackages"
+            element={<Catalog cart={cart} addToCart={addToCart} />}
+          />
+          <Route
+            path="/corporateGifts"
+            element={<Catalog cart={cart} addToCart={addToCart} />}
+          />
+          <Route
+            path="/wholesale"
+            element={<Catalog cart={cart} addToCart={addToCart} />}
+          />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route
@@ -67,7 +106,7 @@ function App() {
               <Checkout
                 cart={cart}
                 removeFromCart={removeFromCart}
-                setCart={setCart} // Pass setCart here
+                setCart={setCart}
               />
             }
           />

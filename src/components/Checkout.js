@@ -4,7 +4,7 @@ import "./Checkout.css";
 
 const stripePromise = loadStripe("your-publishable-key-here");
 
-function Checkout({ cart, setCart }) {
+function Checkout({ cart, setCart, removeFromCart }) {
   const handleCheckout = async () => {
     const stripe = await stripePromise;
 
@@ -35,14 +35,16 @@ function Checkout({ cart, setCart }) {
     const seenTitles = {};
 
     cart.forEach((item) => {
+      const itemQuantity = item.quantity ? parseInt(item.quantity, 10) : 1; // Ensure item.quantity is a number
+
       if (seenTitles[item.title]) {
-        // If the item has been seen before, increase the quantity
+        // If the item has been seen before, increase the quantity by the item's quantity
         const existingItemIndex = seenTitles[item.title];
-        aggregatedCart[existingItemIndex].quantity += 1;
+        aggregatedCart[existingItemIndex].quantity += itemQuantity;
       } else {
-        // If it's the first time the item is seen, add it to the aggregatedCart
+        // If it's the first time the item is seen, add it to the aggregatedCart with its current quantity
         seenTitles[item.title] = aggregatedCart.length;
-        aggregatedCart.push({ ...item, quantity: 1 });
+        aggregatedCart.push({ ...item, quantity: itemQuantity });
       }
     });
 
@@ -51,22 +53,7 @@ function Checkout({ cart, setCart }) {
 
   const aggregatedCart = aggregateCartItems();
 
-  const removeItemFromCart = (id) => {
-    const updatedCart = [];
-    let itemRemoved = false;
-
-    // Rebuild the cart while removing the first occurrence of the item with the given id
-    cart.forEach((item) => {
-      if (item.id !== id || itemRemoved) {
-        updatedCart.push(item);
-      } else {
-        itemRemoved = true; // Skip the first occurrence of the item with this id
-      }
-    });
-
-    setCart(updatedCart); // Use setCart to update the cart
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
-  };
+  console.log("aggrr", aggregatedCart);
 
   const calculateTotalPrice = () => {
     return aggregatedCart
@@ -94,9 +81,7 @@ function Checkout({ cart, setCart }) {
                   <p>Price: {item.price}</p>
                   <p>Quantity: {item.quantity}</p>
                 </div>
-                <button onClick={() => removeItemFromCart(item.id)}>
-                  Remove
-                </button>
+                <button onClick={() => removeFromCart(item.id)}>Remove</button>
               </li>
             ))}
           </ul>
