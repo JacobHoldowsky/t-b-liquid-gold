@@ -8,8 +8,8 @@ function BenefitsSection() {
       <div className="benefits-grid">
         <div className="benefit">
           <i className="fas fa-leaf"></i>
-          <h3>Organic Ingredients</h3>
-          <p>Our honey is made from 100% organic and natural ingredients.</p>
+          <h3>Natural Ingredients</h3>
+          <p>Our honey is made from 100% natural ingredients.</p>
         </div>
         <div className="benefit">
           <i className="fas fa-hand-holding-heart"></i>
@@ -18,8 +18,8 @@ function BenefitsSection() {
         </div>
         <div className="benefit">
           <i className="fas fa-globe"></i>
-          <h3>Worldwide Shipping</h3>
-          <p>We deliver our premium honey to customers around the globe.</p>
+          <h3>Nationwide Shipping</h3>
+          <p>We deliver our premium honey to customers all over Israel.</p>
         </div>
       </div>
     </section>

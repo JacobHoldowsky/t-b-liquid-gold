@@ -157,92 +157,7 @@ function Catalog({ cart, addToCart, cartItemCount }) {
         priceShekel: "₪200",
       },
     ],
-    wholesale: [
-      {
-        url: "bourbon small jar.jpg",
-        title: "100 Bourbon Small Jars",
-        priceDollar: "$1000",
-        priceShekel: "₪3000",
-      },
-      {
-        url: "chocolate small jar.jpg",
-        title: "100 Chocolate Small Jars",
-        priceDollar: "$1000",
-        priceShekel: "₪3000",
-      },
-      {
-        url: "cinnamon small jar.jpg",
-        title: "100 Cinnamon Small Jars",
-        priceDollar: "$1000",
-        priceShekel: "₪3000",
-      },
-      {
-        url: "cinnamon small jar.jpg",
-        title: "100 Blueberry Small Jars",
-        priceDollar: "$1000",
-        priceShekel: "₪3000",
-      },
-      {
-        url: "pumpkin small jar.JPG",
-        title: "100 Pumpkin Small Jars",
-        priceDollar: "$1000",
-        priceShekel: "₪3000",
-      },
-      {
-        url: "sea salt small jar.jpg",
-        title: "100 Sea Salt Small Jars",
-        priceDollar: "$1000",
-        priceShekel: "₪3000",
-      },
-      {
-        url: "vanilla small jar.jpg",
-        title: "100 Vanilla Small Jars",
-        priceDollar: "$1000",
-        priceShekel: "₪3000",
-      },
-      {
-        url: "bourbon small jar.jpg",
-        title: "100 Bourbon Large Jars",
-        priceDollar: "$2000",
-        priceShekel: "₪6000",
-      },
-      {
-        url: "chocolate small jar.jpg",
-        title: "100 Chocolate Large Jars",
-        priceDollar: "$2000",
-        priceShekel: "₪6000",
-      },
-      {
-        url: "cinnamon small jar.jpg",
-        title: "100 Cinnamon Large Jars",
-        priceDollar: "$2000",
-        priceShekel: "₪6000",
-      },
-      {
-        url: "cinnamon small jar.jpg",
-        title: "100 Blueberry Large Jars",
-        priceDollar: "$2000",
-        priceShekel: "₪6000",
-      },
-      {
-        url: "pumpkin small jar.JPG",
-        title: "100 Pumpkin Large Jars",
-        priceDollar: "$2000",
-        priceShekel: "₪6000",
-      },
-      {
-        url: "sea salt small jar.jpg",
-        title: "100 Sea Salt Large Jars",
-        priceDollar: "$2000",
-        priceShekel: "₪6000",
-      },
-      {
-        url: "vanilla small jar.jpg",
-        title: "100 Vanilla Large Jars",
-        priceDollar: "$2000",
-        priceShekel: "₪6000",
-      },
-    ],
+    wholesale: [], // Leave this array empty to avoid displaying items
   };
 
   const capitalizeWords = (str) =>
@@ -274,29 +189,51 @@ function Catalog({ cart, addToCart, cartItemCount }) {
         >
           <h2 className="catalog-section-title">{capitalizeWords(section)}</h2>
           <div className="catalog-images">
-            {sections[section].map((item, index) => (
-              <div key={index} className="catalog-div">
-                <div className="catalog-image">
-                  <img
-                    src={item.url}
-                    alt={item.title}
-                    onClick={() => openModal(item)}
-                  />
-                </div>
-                <div className="catalog-info">
-                  <h3>{item.title}</h3>
-                  <p>
-                    {item.priceDollar} / {item.priceShekel}
-                  </p>
-                </div>
-                <button
-                  onClick={() => addToCart(item)}
-                  className="add-to-cart-btn"
-                >
-                  Add to Cart
-                </button>
-              </div>
-            ))}
+            {sections[section].length > 0
+              ? sections[section].map((item, index) => (
+                  <div key={index} className="catalog-div">
+                    <div className="catalog-image">
+                      <img
+                        src={item.url}
+                        alt={item.title}
+                        onClick={() => openModal(item)}
+                      />
+                    </div>
+                    <div className="catalog-info">
+                      <h3>{item.title}</h3>
+                      <p>
+                        {item.priceDollar} / {item.priceShekel}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => addToCart(item)}
+                      className="add-to-cart-btn"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                ))
+              : section === "wholesale" && (
+                  <div className="wholesale-message">
+                    <p>
+                      We are now selling wholesale and will be happy to service
+                      you! Minimum wholesale order for the 4oz jars start at 50+
+                      jars and minimum wholesale order for our 2oz jars start at
+                      100+ jars.
+                      <br />
+                      If you would like to buy wholesale please reach out to us
+                      via{" "}
+                      <a
+                        href="https://wa.me/+972534309254"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        WhatsApp
+                      </a>
+                      .
+                    </p>
+                  </div>
+                )}
           </div>
         </div>
       ))}

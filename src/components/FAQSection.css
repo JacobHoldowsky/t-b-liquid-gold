@@ -9,6 +9,10 @@
     margin-bottom: 40px;
     color: #333;
   }
+
+  .hechsher{
+    border-radius: 10px;
+  }
   
   .faq-grid {
     display: flex;

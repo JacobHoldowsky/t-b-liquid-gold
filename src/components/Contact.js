@@ -10,7 +10,7 @@ function Contact() {
           <p>
             We would love to hear from you. Reach out to us on{" "}
             <a
-              href="https://wa.me/+1972534309254"
+              href="https://wa.me/+972534309254"
               target="_blank"
               rel="noopener noreferrer"
             >

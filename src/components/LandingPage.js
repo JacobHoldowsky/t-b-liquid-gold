@@ -13,7 +13,7 @@ function LandingPage() {
       <FeaturedProducts />
       <BenefitsSection />
       <TestimonialsSection />
-      {/* <FAQSection /> */}
+      <FAQSection />
       <CallToAction />
     </>
   );
