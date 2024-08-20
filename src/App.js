@@ -84,7 +84,7 @@ function App() {
           />
           <Route
             path="/catalog"
-            element={<Catalog cart={cart} addToCart={addToCart} />}
+            element={<Catalog cart={cart} addToCart={addToCart} cartItemCount={calculateCartItemCount()} />}
           />
           <Route
             path="/giftPackages"

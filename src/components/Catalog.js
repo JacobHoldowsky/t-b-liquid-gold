@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Catalog.css"; // Import CSS file for styling
 import { Link } from "react-router-dom";
 
-function Catalog({ cart, addToCart }) {
+function Catalog({ cart, addToCart, cartItemCount }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -328,7 +328,7 @@ function Catalog({ cart, addToCart }) {
       {cart.length > 0 && (
         <div className="cart-actions">
           <Link to="/checkout" className="checkout-btn">
-            Proceed to Checkout ({cart.length})
+            Proceed to Checkout ({cartItemCount})
           </Link>
         </div>
       )}
