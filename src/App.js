@@ -6,10 +6,6 @@ import Contact from "./components/Contact";
 import Checkout from "./components/Checkout";
 import Success from "./components/Success";
 import Canceled from "./components/Canceled";
-import HeroSection from "./components/HeroSection";
-import FeaturedProducts from "./components/FeaturedProducts";
-import AboutSection from "./components/AboutSection";
-import TestimonialsSection from "./components/TestimonialsSection";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop"; // Import the ScrollToTop component
 import { v4 as uuidv4 } from "uuid";
