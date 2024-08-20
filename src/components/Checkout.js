@@ -16,7 +16,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             name: item.title,
             images: [item.url],
           },
-          unit_amount: parseInt(item.price.replace("$", "")) * 100,
+          unit_amount: parseInt(item.priceDollar.replace("$", "")) * 100,
         },
         quantity: item.quantity,
       })),
@@ -35,14 +35,12 @@ function Checkout({ cart, setCart, removeFromCart }) {
     const seenTitles = {};
 
     cart.forEach((item) => {
-      const itemQuantity = item.quantity ? parseInt(item.quantity, 10) : 1; // Ensure item.quantity is a number
+      const itemQuantity = item.quantity ? parseInt(item.quantity, 10) : 1;
 
       if (seenTitles[item.title]) {
-        // If the item has been seen before, increase the quantity by the item's quantity
         const existingItemIndex = seenTitles[item.title];
         aggregatedCart[existingItemIndex].quantity += itemQuantity;
       } else {
-        // If it's the first time the item is seen, add it to the aggregatedCart with its current quantity
         seenTitles[item.title] = aggregatedCart.length;
         aggregatedCart.push({ ...item, quantity: itemQuantity });
       }
@@ -53,15 +51,12 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   const aggregatedCart = aggregateCartItems();
 
-  console.log("aggrr", aggregatedCart);
-
-  const calculateTotalPrice = () => {
+  const calculateTotalPrice = (currency) => {
     return aggregatedCart
-      .reduce(
-        (total, item) =>
-          total + parseFloat(item.price.replace("$", "")) * item.quantity,
-        0
-      )
+      .reduce((total, item) => {
+        const price = currency === "usd" ? item.priceDollar : item.priceShekel;
+        return total + parseFloat(price.replace(/[^0-9.]/g, "")) * item.quantity;
+      }, 0)
       .toFixed(2);
   };
 
@@ -78,7 +73,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 <img src={item.url} alt={`Cart item ${index + 1}`} />
                 <div className="item-details">
                   <p>{item.title}</p>
-                  <p>Price: {item.price}</p>
+                  <p>Price: {item.priceDollar} / {item.priceShekel}</p>
                   <p>Quantity: {item.quantity}</p>
                 </div>
                 <button onClick={() => removeFromCart(item.id)}>Remove</button>
@@ -88,7 +83,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
         )}
       </div>
       <div className="total-price">
-        <h3>Total: ${calculateTotalPrice()}</h3>
+        <h3>Total: ${calculateTotalPrice("usd")} / ₪{calculateTotalPrice("ils")}</h3>
       </div>
       <button
         type="button"

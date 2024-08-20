@@ -1,16 +1,20 @@
+/* Global Styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  height: 100%;
+}
+
 .hero-section {
   position: relative;
-  background-image: url('../../public/background png.png'); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh; /* Full screen height */
+  background: url('../../public/background png.png') no-repeat center center/cover; /* Add your background image */
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  height: 100vh; /* Full viewport height */
-  color: #ffffff;
-  font-family: 'Playfair Display', serif;
+  color: white;
 }
 
 .hero-overlay {
@@ -19,115 +23,80 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Dark overlay for better text readability */
-  z-index: 1;
+  background: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 600px;
+  max-width: 800px;
+  text-align: center;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background for contrast */
-  border-radius: 10px;
 }
 
-.hero-section h1 {
-  font-size: 48px;
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-family: 'Playfair Display', serif;
   margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  animation: fadeInDown 1s ease-out;
 }
 
-.hero-section p {
-  font-size: 20px;
+.hero-content p {
+  font-size: 1.5rem;
+  line-height: 1.6;
   margin-bottom: 30px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1s ease-out;
 }
 
-/* CTA Button */
 .cta-btn {
   display: inline-block;
-  padding: 12px 30px;
-  background-color: #ff7b54;
-  color: #fff;
-  text-decoration: none;
+  padding: 15px 30px;
+  background-color: #fbb034; /* Honey-like color */
+  color: #333;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  font-weight: bold;
   border-radius: 5px;
+  text-decoration: none;
   transition: background-color 0.3s ease, transform 0.3s ease;
-  font-size: 18px;
+  animation: fadeIn 1.5s ease-out;
 }
 
 .cta-btn:hover {
-  background-color: #ff4c00;
+  background-color: #d49428;
   transform: translateY(-3px);
 }
 
-/* Responsive Adjustments */
-@media (max-width: 576px) {
-  .hero-section h1 {
-    font-size: 32px;
+/* Keyframes for animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-
-  .hero-section p {
-    font-size: 16px;
-  }
-
-  .cta-btn {
-    font-size: 16px;
-    padding: 10px 20px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media screen and (min-width: 577px) and (max-width: 767px) {
-  .hero-section h1 {
-    font-size: 36px;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-
-  .hero-section p {
-    font-size: 18px;
-  }
-
-  .cta-btn {
-    font-size: 16px;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-  .hero-section h1 {
-    font-size: 40px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-
-  .hero-section p {
-    font-size: 18px;
-  }
-
-  .cta-btn {
-    font-size: 16px;
-  }
-}
-
-@media screen and (min-width: 1024px) and (max-width: 1439px) {
-  .hero-section h1 {
-    font-size: 44px;
-  }
-
-  .hero-section p {
-    font-size: 20px;
-  }
-
-  .cta-btn {
-    font-size: 18px;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  .hero-section h1 {
-    font-size: 48px;
-  }
-
-  .hero-section p {
-    font-size: 22px;
-  }
-
-  .cta-btn {
-    font-size: 20px;
-    padding: 14px 35px;
+  to {
+    opacity: 1;
   }
 }

@@ -8,25 +8,240 @@ function Catalog({ cart, addToCart }) {
 
   const sections = {
     honeyJars: [
-      { url: "Deluxe Box $120.jpg", title: "Deluxe Box", price: "$120" },
-      { url: "Belgian Box $100.jpg", title: "Belgian Box", price: "$100" },
+      {
+        url: "bourbon small jar.jpg",
+        title: "Bourbon Small Jar",
+        priceDollar: "$15",
+        priceShekel: "₪50",
+      },
+      {
+        url: "chocolate small jar.jpg",
+        title: "Chocolate Small Jar",
+        priceDollar: "$15",
+        priceShekel: "₪50",
+      },
+      {
+        url: "cinnamon small jar.jpg",
+        title: "Cinnnamon Small Jar",
+        priceDollar: "$15",
+        priceShekel: "₪50",
+      },
+      {
+        url: "cinnamon small jar.jpg",
+        title: "Blueberry Small Jar",
+        priceDollar: "$15",
+        priceShekel: "₪50",
+      },
+      {
+        url: "pumpkin small jar.JPG",
+        title: "Pumpkin Small Jar",
+        priceDollar: "$15",
+        priceShekel: "₪50",
+      },
+      {
+        url: "sea salt small jar.jpg",
+        title: "Sea Salt Small Jar",
+        priceDollar: "$15",
+        priceShekel: "₪50",
+      },
+      {
+        url: "vanilla small jar.jpg",
+        title: "Vanilla Small Jar",
+        priceDollar: "$15",
+        priceShekel: "50",
+      },
+      {
+        url: "bourbon small jar.jpg",
+        title: "Bourbon Large Jar",
+        priceDollar: "$30",
+        priceShekel: "₪100",
+      },
+      {
+        url: "chocolate small jar.jpg",
+        title: "Chocolate Large Jar",
+        priceDollar: "$30",
+        priceShekel: "₪100",
+      },
+      {
+        url: "cinnamon small jar.jpg",
+        title: "Cinnnamon Large Jar",
+        priceDollar: "$30",
+        priceShekel: "₪100",
+      },
+      {
+        url: "cinnamon small jar.jpg",
+        title: "Blueberry Large Jar",
+        priceDollar: "$30",
+        priceShekel: "₪100",
+      },
+      {
+        url: "pumpkin small jar.JPG",
+        title: "Pumpkin Large Jar",
+        priceDollar: "$30",
+        priceShekel: "₪100",
+      },
+      {
+        url: "sea salt small jar.jpg",
+        title: "Sea Salt Large Jar",
+        priceDollar: "$30",
+        priceShekel: "₪100",
+      },
+      {
+        url: "vanilla small jar.jpg",
+        title: "Vanilla Large Jar",
+        priceDollar: "$30",
+        priceShekel: "₪100",
+      },
     ],
     giftPackages: [
       {
         url: "Collection Plus $95.jpg",
         title: "Collection Plus",
-        price: "$95",
+        priceDollar: "$95",
+        priceShekel: "₪320",
       },
-      { url: "catalog4.JPG", title: "Gift Set 3", price: "$70" },
+      {
+        url: "Deluxe Box $120.jpg",
+        title: "Deluxe Box",
+        priceDollar: "$120",
+        priceShekel: "₪400",
+      },
+      {
+        url: "Belgian Box $100.jpg",
+        title: "Belgian Box",
+        priceDollar: "$100",
+        priceShekel: "₪350",
+      },
+      {
+        url: "For Him $55.jpg",
+        title: "For Him",
+        priceDollar: "$55",
+        priceShekel: "₪200",
+      },
+      {
+        url: "For Her $55.jpg",
+        title: "For Her",
+        priceDollar: "$55",
+        priceShekel: "₪200",
+      },
     ],
     corporateGifts: [
-      { url: "catalog5.JPG", title: "Gift Set 4", price: "$80" },
-      { url: "catalog6.JPG", title: "Gift Set 5", price: "$90" },
+      {
+        url: "Collection Plus $95.jpg",
+        title: "Collection Plus",
+        priceDollar: "$95",
+        priceShekel: "₪320",
+      },
+      {
+        url: "Deluxe Box $120.jpg",
+        title: "Deluxe Box",
+        priceDollar: "$120",
+        priceShekel: "₪400",
+      },
+      {
+        url: "Belgian Box $100.jpg",
+        title: "Belgian Box",
+        priceDollar: "$100",
+        priceShekel: "₪350",
+      },
+      {
+        url: "For Him $55.jpg",
+        title: "For Him",
+        priceDollar: "$55",
+        priceShekel: "₪200",
+      },
+      {
+        url: "For Her $55.jpg",
+        title: "For Her",
+        priceDollar: "$55",
+        priceShekel: "₪200",
+      },
     ],
     wholesale: [
-      { url: "catalog7.JPG", title: "Gift Set 6", price: "$100" },
-      { url: "catalog8.JPG", title: "Gift Set 7", price: "$110" },
-      { url: "catalog9.JPG", title: "Gift Set 8", price: "$120" },
+      {
+        url: "bourbon small jar.jpg",
+        title: "100 Bourbon Small Jars",
+        priceDollar: "$1000",
+        priceShekel: "₪3000",
+      },
+      {
+        url: "chocolate small jar.jpg",
+        title: "100 Chocolate Small Jars",
+        priceDollar: "$1000",
+        priceShekel: "₪3000",
+      },
+      {
+        url: "cinnamon small jar.jpg",
+        title: "100 Cinnnamon Small Jars",
+        priceDollar: "$1000",
+        priceShekel: "₪3000",
+      },
+      {
+        url: "cinnamon small jar.jpg",
+        title: "100 Blueberry Small Jars",
+        priceDollar: "$1000",
+        priceShekel: "₪3000",
+      },
+      {
+        url: "pumpkin small jar.JPG",
+        title: "100 Pumpkin Small Jars",
+        priceDollar: "$1000",
+        priceShekel: "₪3000",
+      },
+      {
+        url: "sea salt small jar.jpg",
+        title: "100 Sea Salt Small Jars",
+        priceDollar: "$1000",
+        priceShekel: "₪3000",
+      },
+      {
+        url: "vanilla small jar.jpg",
+        title: "100 Vanilla Small Jars",
+        priceDollar: "$1000",
+        priceShekel: "₪3000",
+      },
+      {
+        url: "bourbon small jar.jpg",
+        title: "100 Bourbon Large Jars",
+        priceDollar: "$2000",
+        priceShekel: "₪6000",
+      },
+      {
+        url: "chocolate small jar.jpg",
+        title: "100 Chocolate Large Jars",
+        priceDollar: "$2000",
+        priceShekel: "₪6000",
+      },
+      {
+        url: "cinnamon small jar.jpg",
+        title: "100 Cinnnamon Large Jars",
+        priceDollar: "$2000",
+        priceShekel: "₪6000",
+      },
+      {
+        url: "cinnamon small jar.jpg",
+        title: "100 Blueberry Large Jars",
+        priceDollar: "$2000",
+        priceShekel: "₪6000",
+      },
+      {
+        url: "pumpkin small jar.JPG",
+        title: "100 Pumpkin Large Jars",
+        priceDollar: "$2000",
+        priceShekel: "₪6000",
+      },
+      {
+        url: "sea salt small jar.jpg",
+        title: "100 Sea Salt Large Jars",
+        priceDollar: "$2000",
+        priceShekel: "₪6000",
+      },
+      {
+        url: "vanilla small jar.jpg",
+        title: "100 Vanilla Large Jars",
+        priceDollar: "$2000",
+        priceShekel: "₪6000",
+      },
     ],
   };
 
@@ -52,7 +267,11 @@ function Catalog({ cart, addToCart }) {
   return (
     <div className="catalog">
       {Object.keys(sections).map((section) => (
-        <div key={section} id={section} className="catalog-section">
+        <div
+          key={section}
+          id={section}
+          className={`catalog-section ${section}-background`}
+        >
           <h2 className="catalog-section-title">{capitalizeWords(section)}</h2>
           <div className="catalog-images">
             {sections[section].map((item, index) => (
@@ -66,7 +285,9 @@ function Catalog({ cart, addToCart }) {
                 </div>
                 <div className="catalog-info">
                   <h3>{item.title}</h3>
-                  <p>{item.price}</p>
+                  <p>
+                    {item.priceDollar} / {item.priceShekel}
+                  </p>
                 </div>
                 <button
                   onClick={() => addToCart(item)}
@@ -88,7 +309,9 @@ function Catalog({ cart, addToCart }) {
             <div className="modal-content">
               <img src={selectedItem.url} alt={selectedItem.title} />
               <h3>{selectedItem.title}</h3>
-              <p>{selectedItem.price}</p>
+              <p>
+                {selectedItem.priceDollar} / {selectedItem.priceShekel}
+              </p>
               <button
                 onClick={() => {
                   addToCart(selectedItem);

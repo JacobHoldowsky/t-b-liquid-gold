@@ -19,7 +19,7 @@ function Contact() {
             .
           </p>
           <p>
-            Call us directly at: <a href="tel:8452698649">(845) 269-8649</a>
+            Call us directly at: <a href="tel:0534309254">0534309254</a>
           </p>
           <p>
             Follow our journey on Instagram:{" "}

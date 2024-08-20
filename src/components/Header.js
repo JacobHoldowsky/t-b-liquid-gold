@@ -22,9 +22,9 @@ function Header({ cartItemCount }) {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/catalog">Catalog</Link>
-          </li>
+          </li> */}
           <li>
             <HashLink smooth to="/catalog#honeyJars" scroll={scrollWithOffset}>
               Honey Jars

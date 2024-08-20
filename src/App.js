@@ -76,9 +76,8 @@ function App() {
             element={
               <>
                 <HeroSection />
-                <FeaturedProducts />
-                <AboutSection />
                 <TestimonialsSection />
+                <AboutSection />
               </>
             }
           />
