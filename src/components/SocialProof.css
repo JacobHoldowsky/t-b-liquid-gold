@@ -1,0 +1,24 @@
+.social-proof {
+    padding: 60px 20px;
+    background-color: #f7f7f7;
+    text-align: center;
+  }
+  
+  .social-proof h2 {
+    font-size: 2.5rem;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 40px;
+    color: #333;
+  }
+  
+  .logos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 30px;
+  }
+  
+  .logos-grid img {
+    max-width: 150px;
+  }
+  

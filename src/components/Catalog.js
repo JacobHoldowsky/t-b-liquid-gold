@@ -7,7 +7,7 @@ function Catalog({ cart, addToCart }) {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const sections = {
-    honeyJars: [
+    ourCollection: [
       {
         url: "bourbon small jar.jpg",
         title: "Bourbon Small Jar",
@@ -22,7 +22,7 @@ function Catalog({ cart, addToCart }) {
       },
       {
         url: "cinnamon small jar.jpg",
-        title: "Cinnnamon Small Jar",
+        title: "Cinnamon Small Jar",
         priceDollar: "$15",
         priceShekel: "₪50",
       },
@@ -64,7 +64,7 @@ function Catalog({ cart, addToCart }) {
       },
       {
         url: "cinnamon small jar.jpg",
-        title: "Cinnnamon Large Jar",
+        title: "Cinnamon Large Jar",
         priceDollar: "$30",
         priceShekel: "₪100",
       },
@@ -172,7 +172,7 @@ function Catalog({ cart, addToCart }) {
       },
       {
         url: "cinnamon small jar.jpg",
-        title: "100 Cinnnamon Small Jars",
+        title: "100 Cinnamon Small Jars",
         priceDollar: "$1000",
         priceShekel: "₪3000",
       },
@@ -214,7 +214,7 @@ function Catalog({ cart, addToCart }) {
       },
       {
         url: "cinnamon small jar.jpg",
-        title: "100 Cinnnamon Large Jars",
+        title: "100 Cinnamon Large Jars",
         priceDollar: "$2000",
         priceShekel: "₪6000",
       },

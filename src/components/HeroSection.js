@@ -7,7 +7,7 @@ function HeroSection() {
     <section className="hero-section">
       <div className="hero-overlay"></div>
       <div className="hero-content">
-        <h1>Welcome to T&Bee Liquid Gold!</h1>
+        <h1>Welcome to T&B Liquid Gold!</h1>
         <p>
           We have a unique line of flavored creamed honeys handcrafted in
           Israel. Our honeys are a perfect way to enhance your Rosh Hashana and

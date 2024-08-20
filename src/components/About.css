@@ -1,48 +1,34 @@
 .about {
+  min-height: 80vh; /* Use min-height for better adaptability */
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 60px 20px;
-  text-align: center;
   background-image: url('../../public/ale-vega-Mbvzguw2XxY-unsplash.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: bottom;
+  padding: 20px;
   color: white;
-  position: relative;
-  height: 80vh;
-}
-
-.about::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* Add a dark overlay for better text readability */
-  z-index: 1;
 }
 
 .about-content {
-  position: relative;
-  z-index: 2;
-  max-width: 800px;
-  padding: 40px;
-  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
+  margin: 20px auto;
+  padding: 30px;
+  background-color: rgba(249, 249, 249, 0.15); /* Slightly transparent background */
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Softer shadow for depth */
+  max-width: 800px;
+  text-align: center;
 }
 
 .about h2 {
-  font-size: 36px;
   margin-bottom: 20px;
+  font-size: 2.5rem;
   font-family: 'Playfair Display', serif;
 }
 
 .about p {
-  font-size: 18px;
+  font-size: 1.125rem;
   line-height: 1.6;
   margin-bottom: 20px;
 }
@@ -55,66 +41,76 @@
   color: white;
   text-decoration: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 1rem;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .cta-btn:hover {
-  background-color: #ff4c00;
+  background-color: #ff4c00 !important;
   transform: translateY(-3px);
 }
 
-
+/* Responsive Styles */
 @media (max-width: 576px) {
   .about {
-    padding: 40px 20px;
+    padding: 20px;
+    min-height: 60vh; /* Reduce height on small screens */
+  }
+
+  .about-content {
+    padding: 20px;
+    max-width: 100%;
+    margin: 10px;
   }
 
   .about h2 {
-    font-size: 24px;
+    font-size: 1.75rem;
   }
 
   .about p {
-    font-size: 14px;
+    font-size: 1rem;
+  }
+
+  .cta-btn {
+    font-size: 0.9rem;
+    padding: 10px 25px;
   }
 }
 
-@media screen and (min-width: 577px) and (max-width: 767px) {
+@media (min-width: 577px) and (max-width: 1023px) {
+  .about-content {
+    padding: 25px;
+    max-width: 90%;
+  }
+
   .about h2 {
-    font-size: 28px;
+    font-size: 2rem;
   }
 
   .about p {
-    font-size: 16px;
+    font-size: 1.125rem;
+  }
+
+  .cta-btn {
+    font-size: 1rem;
   }
 }
 
-@media screen and (min-width: 768px) and (max-width: 1023px) {
+@media (min-width: 1024px) {
+  .about-content {
+    padding: 30px;
+    max-width: 800px;
+  }
+
   .about h2 {
-    font-size: 32px;
+    font-size: 2.5rem;
   }
 
   .about p {
-    font-size: 18px;
-  }
-}
-
-@media screen and (min-width: 1024px) and (max-width: 1439px) {
-  .about h2 {
-    font-size: 36px;
+    font-size: 1.25rem;
   }
 
-  .about p {
-    font-size: 20px;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  .about h2 {
-    font-size: 40px;
-  }
-
-  .about p {
-    font-size: 22px;
+  .cta-btn {
+    font-size: 1.2rem;
   }
 }

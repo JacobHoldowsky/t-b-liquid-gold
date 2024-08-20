@@ -1,38 +1,30 @@
-import React from "react";
-import "./TestimonialsSection.css";
+import React from 'react';
+import './TestimonialsSection.css';
 
 function TestimonialsSection() {
-  // Dummy data for testimonials (replace with actual data)
-  const testimonials = [
-    {
-      id: 1,
-      text: "I used Chana's gift company for my corporate Purim gifts! They were delivered super promptly and all of my gifts were loved and appreciated! Everyone said how unique it was and that the presentation was gorgeous! I'll definitely order again 🙏",
-      author: "Pamela F.",
-    },
-    {
-      id: 2,
-      text: "What I love about T&B Liquid Gold is their creativity and that I’m able to customize my gift packages. It’s easy to place an order and they ship by the next day!",
-      author: "Dina H.",
-    },
-  ];
-
   return (
     <section className="testimonials-section">
       <h2>What Our Customers Say</h2>
-      <div className="testimonials-list">
-        {testimonials.map((testimonial) => (
-          <div className="testimonial" key={testimonial.id}>
-            <p className="testimonial-text">{testimonial.text}</p>
-            <p className="testimonial-author">- {testimonial.author}</p>
-            <div className="rating">
-              {[...Array(5)].map((star, index) => (
-                <span key={index} className={index < 3 ? "filled" : ""}>
-                  ★
-                </span>
-              ))}
-            </div>
-          </div>
-        ))}
+      <div className="testimonials-grid">
+        <div className="testimonial">
+          <p>
+            "The best honey I've ever tasted! Perfect for gifts and personal
+            use."
+          </p>
+          <h3>- Sarah M.</h3>
+        </div>
+        <div className="testimonial">
+          <p>
+            "A delightful experience from start to finish. Highly recommend!"
+          </p>
+          <h3>- David L.</h3>
+        </div>
+        <div className="testimonial">
+          <p>
+            "Incredible flavor and quality. I keep coming back for more."
+          </p>
+          <h3>- Rachel G.</h3>
+        </div>
       </div>
     </section>
   );

@@ -3,14 +3,14 @@ import "./Contact.css";
 
 function Contact() {
   return (
-    <div  className="contact-page">
+    <div className="contact-page">
       <div className="contact-info">
         <h2>Contact Us</h2>
         <div className="info">
           <p>
             We would love to hear from you. Reach out to us on{" "}
             <a
-              href="https://wa.me/+18452698649"
+              href="https://wa.me/+1972534309254"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -24,11 +24,11 @@ function Contact() {
           <p>
             Follow our journey on Instagram:{" "}
             <a
-              href="https://www.instagram.com/prettypresentsbychana"
+              href="https://www.instagram.com/T&BLiquidGold"
               target="_blank"
               rel="noopener noreferrer"
             >
-              @prettypresentsbychana
+              @T&BLiquidGold
             </a>
           </p>
           <p>We look forward to connecting with you.</p>

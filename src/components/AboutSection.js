@@ -1,20 +1,18 @@
-import React from "react";
-import "./AboutSection.css";
+import React from 'react';
+import './AboutSection.css';
 
 function AboutSection() {
   return (
     <section className="about-section">
-      <h2>About</h2>
-      <p>Welcome to T&B Liquid Gold! </p>
-      <br />
-      <p>
-        We specialize in creating beautifully wrapped gifts for all occasions.
-        Whether it's birthdays, weddings, or holidays, we have the perfect
-        present for you. We ensure that each gift is meticulously crafted to
-        delight both the giver and the recipient. Browse our collection and make
-        every moment special with T&B Liquid Gold.
-      </p>
-      {/* Add more about your business here */}
+      <div className="about-content">
+        <h2>About T&B Liquid Gold</h2>
+        <p>
+          At T&B, we believe in the power of nature’s finest sweetener. Our
+          creamed honeys are made with the highest quality ingredients, crafted
+          with love and care in Israel. Each jar is a testament to our
+          commitment to bringing you the best honey experience.
+        </p>
+      </div>
     </section>
   );
 }

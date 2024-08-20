@@ -1,3 +1,42 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+}
+
+section {
+  padding: 60px 20px;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 40px;
+  color: #333;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 2rem;
+  }
+
+  p, a {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  p, a {
+    font-size: 0.9rem;
+  }
+}
+
+
 .App {
   text-align: center;
 }

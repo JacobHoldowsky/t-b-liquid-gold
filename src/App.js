@@ -14,6 +14,9 @@ import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop"; // Import the ScrollToTop component
 import { v4 as uuidv4 } from "uuid";
 import Catalog from "./components/Catalog";
+import LandingPage from "./components/LandingPage";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -75,9 +78,7 @@ function App() {
             path="/"
             element={
               <>
-                <HeroSection />
-                <TestimonialsSection />
-                <AboutSection />
+                <LandingPage />
               </>
             }
           />
@@ -113,6 +114,7 @@ function App() {
           <Route path="/canceled" element={<Canceled />} />
         </Routes>
         <Footer />
+
       </div>
     </Router>
   );

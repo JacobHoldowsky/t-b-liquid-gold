@@ -1,16 +1,21 @@
 /* Common Styles */
 
-.contact-page{
-  height: 80vh;
+.contact-page {
+  min-height: 80vh; /* Use min-height for better adaptability */
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url('../../public/jocelyn-morales-nKMGJAy3Qps-unsplash.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 20px;
 }
 
 .contact-info {
-  margin: 50px auto;
+  margin: 20px auto;
   padding: 30px;
-  background-color: #f9f9f9;
+  background-color: rgba(249, 249, 249, 0.95);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   max-width: 600px;
@@ -42,10 +47,12 @@
   color: #0056b3;
 }
 
+/* Responsive Styles */
 @media (max-width: 576px) {
   .contact-info {
     padding: 20px;
-    max-width: 90%;
+    max-width: 100%;
+    margin: 10px;
   }
 
   .contact-info h2 {
@@ -60,7 +67,7 @@
 @media (min-width: 577px) and (max-width: 1023px) {
   .contact-info {
     padding: 25px;
-    max-width: 80%;
+    max-width: 90%;
   }
 
   .contact-info h2 {
