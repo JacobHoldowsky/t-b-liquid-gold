@@ -14,7 +14,7 @@ function HeroSection() {
           they also make a perfect gift! Check out our full collection and enjoy
           the most delicious honey on earth.
         </p>
-        <Link to="/catalog" className="cta-btn">
+        <Link to="/honeyCollection" className="cta-btn">
           Explore Our Collection
         </Link>
       </div>

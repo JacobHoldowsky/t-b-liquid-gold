@@ -25,12 +25,6 @@ function HoneyCollection({ cart, addToCart }) {
       priceShekel: "₪100",
     },
     {
-      url: "cinnamon small jar.jpg",
-      title: "Blueberry Large Jar",
-      priceDollar: "$30",
-      priceShekel: "₪100",
-    },
-    {
       url: "pumpkin small jar.JPG",
       title: "Pumpkin Large Jar",
       priceDollar: "$30",
@@ -48,6 +42,12 @@ function HoneyCollection({ cart, addToCart }) {
       priceDollar: "$30",
       priceShekel: "₪100",
     },
+    {
+      url: "blueberry small jar.jpg",
+      title: "Blueberry Large Jar",
+      priceDollar: "$30",
+      priceShekel: "₪100",
+    },
   ];
 
   const openModal = (item) => {
@@ -55,7 +55,7 @@ function HoneyCollection({ cart, addToCart }) {
     setModalOpen(true);
     document.body.classList.add("modal-open");
   };
-
+  
   const closeModal = () => {
     setModalOpen(false);
     document.body.classList.remove("modal-open");

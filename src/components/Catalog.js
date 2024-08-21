@@ -27,12 +27,6 @@ function Catalog({ cart, addToCart, cartItemCount }) {
         priceShekel: "₪100",
       },
       {
-        url: "cinnamon small jar.jpg",
-        title: "Blueberry Large Jar",
-        priceDollar: "$30",
-        priceShekel: "₪100",
-      },
-      {
         url: "pumpkin small jar.JPG",
         title: "Pumpkin Large Jar",
         priceDollar: "$30",
@@ -47,6 +41,12 @@ function Catalog({ cart, addToCart, cartItemCount }) {
       {
         url: "vanilla small jar.jpg",
         title: "Vanilla Large Jar",
+        priceDollar: "$30",
+        priceShekel: "₪100",
+      },
+      {
+        url: "blueberry small jar.jpg",
+        title: "Blueberry Large Jar",
         priceDollar: "$30",
         priceShekel: "₪100",
       },

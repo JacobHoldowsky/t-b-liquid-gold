@@ -25,12 +25,6 @@ function Wholesale({ cart, addToCart }) {
       priceShekel: "₪50",
     },
     {
-      url: "cinnamon small jar.jpg",
-      title: "Blueberry Small Jar",
-      priceDollar: "$15",
-      priceShekel: "₪50",
-    },
-    {
       url: "pumpkin small jar.JPG",
       title: "Pumpkin Small Jar",
       priceDollar: "$15",
@@ -47,6 +41,12 @@ function Wholesale({ cart, addToCart }) {
       title: "Vanilla Small Jar",
       priceDollar: "$15",
       priceShekel: "50",
+    },
+    {
+      url: "blueberry small jar.jpg",
+      title: "Blueberry Small Jar",
+      priceDollar: "$15",
+      priceShekel: "₪50",
     },
   ];
 

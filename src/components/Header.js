@@ -96,7 +96,7 @@ function Header({ cartItemCount }) {
           <li>
             <HashLink
               smooth
-              to="/catalog#sponsorABox"
+              to="/sponsorABox"
               scroll={scrollWithOffset}
               onClick={closeMenu}
             >

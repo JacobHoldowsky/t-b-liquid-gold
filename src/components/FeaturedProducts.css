@@ -1,6 +1,6 @@
 .featured-products {
   padding: 80px 20px;
-  background-color: #f8f9fa;
+  background-color: #f7f7f7;
   text-align: center;
 }
 
@@ -57,7 +57,7 @@
 .cta-btn {
   display: inline-block;
   padding: 12px 25px;
-  background-color: #ff7b54 !important;
+  background-color: #7c2234;
   color: #ffffff;
   text-decoration: none;
   border-radius: 50px;
@@ -67,7 +67,7 @@
 }
 
 .cta-btn:hover {
-  background-color: #ff4c00;
+  background-color: #b74058;
   transform: translateY(-3px);
 }
 

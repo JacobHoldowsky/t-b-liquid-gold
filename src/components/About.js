@@ -23,7 +23,7 @@ function About() {
         <p>
           <strong>How to store:</strong> Store in a cool/room temperature place for up to 1 year. Refrigeration is not needed.
         </p>
-        <Link to="/catalog" className="cta-btn">
+        <Link to="/honeyCollection" className="cta-btn">
           Browse Our Collection
         </Link>
       </div>

@@ -1,8 +1,8 @@
 .call-to-action {
     padding: 60px 20px;
-    background-color: #fbb034;
+    background-color: #f7f7f7;
     text-align: center;
-    color: #333;
+    color: black;
   }
   
   .call-to-action h2 {
@@ -13,8 +13,8 @@
   .cta-btn {
     display: inline-block;
     padding: 15px 30px;
-    background-color: #ffffff;
-    color: #333;
+    background-color: #7c2234;
+    color: white;
     text-transform: uppercase;
     font-size: 1.2rem;
     font-weight: bold;
@@ -24,7 +24,7 @@
   }
   
   .cta-btn:hover {
-    background-color: #eeeeee;
+    background-color: #b74058 !important;
     transform: translateY(-3px);
   }
   

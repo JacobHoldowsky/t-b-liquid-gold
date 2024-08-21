@@ -52,8 +52,8 @@
 }
 
 .header nav ul li a:hover {
-  color: #9f5c6a;
-  border-bottom: 1px solid #9f5c6a;
+  color: #7c2234;
+  border-bottom: 1px solid #7c2234;
 }
 
 .header nav ul li.cart-link {
@@ -61,7 +61,7 @@
 }
 
 .cart-count {
-  background-color: #ff7b54;
+  background-color: #7c2234;
   color: white;
   border-radius: 50%;
   padding: 2px 6px;
@@ -78,7 +78,7 @@
 }
 
 .header nav ul li.cart-link a:hover .cart-count {
-  background-color: #ff4c00;
+  background-color: #b74058;
 }
 
 /* Hamburger Menu Button */
@@ -101,32 +101,6 @@
   align-items: center;
 }
 
-.whatsapp-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5px 10px;
-  background-color: #25D366;
-  color: #fff !important;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
-  font-family: 'Playfair Display', serif;
-  font-size: 16px;
-  gap: 10px;
-}
-
-.whatsapp-button img {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
-}
-
-.whatsapp-button:hover {
-  background-color: #1ebe57;
-  color: #fff !important;
-  border-bottom: none !important;
-}
 
 @media (max-width: 768px) {
   .whatsapp-button {

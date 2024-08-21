@@ -6,7 +6,7 @@ function CallToAction() {
   return (
     <section className="call-to-action">
       <h2>Ready to Taste the Best Honey on Earth?</h2>
-      <Link to="/catalog" className="cta-btn">
+      <Link to="/honeyCollection" className="cta-btn">
         Shop Now
       </Link>
     </section>
