@@ -17,13 +17,15 @@
   
   .corporate-gifts-images {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
-    justify-content: space-between;
     gap: 20px;
   }
   
   .corporate-gifts-div {
     flex: 1 1 calc(33.33% - 20px);
+    max-width: calc(33.33% - 20px);
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -69,7 +71,7 @@
   .add-to-cart-btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #7c2234 !important;
+    background-color: #7c2234;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -83,7 +85,7 @@
   }
   
   .add-to-cart-btn:hover {
-    background-color: #b74058 !important;
+    background-color: #b74058;
     transform: translateY(-2px);
   }
   
@@ -157,6 +159,7 @@
   @media (max-width: 992px) {
     .corporate-gifts-div {
       flex: 1 1 calc(50% - 20px);
+      max-width: calc(50% - 20px);
     }
   
     .corporate-gifts-section-title {
@@ -219,7 +222,8 @@
   
   @media (max-width: 576px) {
     .corporate-gifts-div {
-      flex: 1 1 100%;
+      flex: 1 1 calc(100% - 20px);
+      max-width: calc(100% - 20px);
     }
   
     .corporate-gifts-section-title {
