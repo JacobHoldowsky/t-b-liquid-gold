@@ -13,7 +13,7 @@ export const ExchangeRateProvider = ({ children }) => {
       try {
         const token = process.env.VERCEL_ACCESS_TOKEN; // Access the environment variable
         const response = await fetch(`${apiUrl}/api/exchange-rate`, {
-          method: "POST",
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
