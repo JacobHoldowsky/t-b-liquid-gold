@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('../../public/jocelyn-morales-nKMGJAy3Qps-unsplash.jpg');
+  background-image: url('../../public/Collection Plus $95.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -17,7 +17,7 @@
   padding: 30px;
   background-color: rgba(249, 249, 249, 0.95);
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.r);
   max-width: 600px;
   text-align: center;
 }
