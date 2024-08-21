@@ -157,6 +157,15 @@ function Header({ cartItemCount }) {
               Contact
             </Link>
           </li>
+          <li>
+            <Link
+              className="top-level-header-item"
+              to="/distributers"
+              onClick={closeMenu}
+            >
+              Distributers
+            </Link>
+          </li>
           <li className="cart-link">
             <Link
               className="top-level-header-item"

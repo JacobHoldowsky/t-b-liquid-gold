@@ -30,6 +30,24 @@ function GiftPackages({ cart, addToCart }) {
       priceShekel: exchangeRate ? Math.ceil(100 * exchangeRate) : 0,
     },
     {
+      url: "Chocolate delight, $55.png",
+      title: "Chocolate Delight",
+      priceDollar: 65,
+      priceShekel: exchangeRate ? Math.ceil(65 * exchangeRate) : 0,
+    },
+    {
+      url: "220717-112502_jpg best.jpg",
+      title: "Honey A' LA Connoisseur",
+      priceDollar: 85,
+      priceShekel: exchangeRate ? Math.ceil(85 * exchangeRate) : 0,
+    },
+    {
+      url: "220717-111308_jpg best.jpg",
+      title: "T&Bee Collection",
+      priceDollar: 79,
+      priceShekel: exchangeRate ? Math.ceil(79 * exchangeRate) : 0,
+    },
+    {
       url: "For Him $55.jpg",
       title: "For Him",
       priceDollar: 55,
