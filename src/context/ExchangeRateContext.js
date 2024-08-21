@@ -6,7 +6,7 @@ export const ExchangeRateProvider = ({ children }) => {
   const [exchangeRate, setExchangeRate] = useState(null);
 
   const API_URL =
-    process.env.REACT_APP_API_URL || "http://localhost:5000";
+    process.env.REACT_APP_API_URL || "https://t-b-liquid-gold.vercel.app";
 
   useEffect(() => {
     const fetchExchangeRate = async () => {
