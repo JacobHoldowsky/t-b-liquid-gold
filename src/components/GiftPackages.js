@@ -115,7 +115,7 @@ function GiftPackages({ cart, addToCart }) {
               <p>
                 {currency === "Dollar"
                   ? `$${selectedItem.priceDollar}`
-                  : `₪${selectedItem.priceDollar}`}
+                  : `₪${selectedItem.priceShekel}`}
               </p>
               <button
                 onClick={() => {
