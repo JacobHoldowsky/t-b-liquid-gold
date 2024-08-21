@@ -1,14 +1,17 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect } from "react";
 
 export const ExchangeRateContext = createContext();
 
 export const ExchangeRateProvider = ({ children }) => {
   const [exchangeRate, setExchangeRate] = useState(null);
 
+  const API_URL =
+    process.env.REACT_APP_API_URL || "http://localhost:5000";
+
   useEffect(() => {
     const fetchExchangeRate = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/exchange-rate");
+        const response = await fetch(`${API_URL}/api/exchange-rate`);
         const data = await response.json();
         if (data.rate) {
           setExchangeRate(data.rate);
@@ -21,7 +24,7 @@ export const ExchangeRateProvider = ({ children }) => {
     };
 
     fetchExchangeRate();
-  }, []);
+  }, [API_URL]);
 
   return (
     <ExchangeRateContext.Provider value={exchangeRate}>
