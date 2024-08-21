@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./CorporateGifts.css";
+import { CurrencyContext } from "../context/CurrencyContext"; // Import CurrencyContext
 
 function CorporateGifts({ cart, addToCart }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+
+  const { currency } = useContext(CurrencyContext); // Use context here
 
   const items = [
     {
@@ -69,7 +72,8 @@ function CorporateGifts({ cart, addToCart }) {
             <div className="corporate-gifts-info">
               <h3>{item.title}</h3>
               <p>
-                {item.priceDollar} / {item.priceShekel}
+                {/* Display the price based on the selected currency */}
+                {currency === "Dollar" ? item.priceDollar : item.priceShekel}
               </p>
             </div>
             <button onClick={() => addToCart(item)} className="add-to-cart-btn">
@@ -88,7 +92,10 @@ function CorporateGifts({ cart, addToCart }) {
               <img src={selectedItem.url} alt={selectedItem.title} />
               <h3>{selectedItem.title}</h3>
               <p>
-                {selectedItem.priceDollar} / {selectedItem.priceShekel}
+                {/* Display the price based on the selected currency in the modal */}
+                {currency === "Dollar"
+                  ? selectedItem.priceDollar
+                  : selectedItem.priceShekel}
               </p>
               <button
                 onClick={() => {

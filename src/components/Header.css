@@ -40,20 +40,23 @@
   font-family: 'Playfair Display', serif;
 }
 
-.header nav ul li a {
+.header nav ul li a,
+.currency-toggle {
   color: #333;
   text-decoration: none;
   padding: 5px 10px;
   transition: color 0.3s ease, border-bottom 0.3s ease;
-  display: flex;
+  display: inline-block; /* Ensure it's inline-block to control the underline */
   align-items: center;
   justify-content: center;
   text-align: center;
 }
 
-.header nav ul li a:hover {
+.header nav ul li a:hover,
+.currency-toggle:hover {
   color: #7c2234;
   border-bottom: 1px solid #7c2234;
+  cursor: pointer;
 }
 
 .header nav ul li.cart-link {
@@ -62,6 +65,7 @@
 
 .cart-count {
   background-color: #7c2234;
+  transition: background-color 0.3s ease;
   color: white;
   border-radius: 50%;
   padding: 2px 6px;
@@ -69,12 +73,6 @@
   position: absolute;
   top: -5px;
   right: -15px;
-}
-
-.header nav ul li.cart-link a {
-  position: relative;
-  display: flex;
-  align-items: center;
 }
 
 .header nav ul li.cart-link a:hover .cart-count {
@@ -85,11 +83,13 @@
   position: relative;
 }
 
-.header nav ul li.dropdown:hover .dropdown-menu {
+.header nav ul li.dropdown:hover .dropdown-menu,
+.header nav ul li.currency-dropdown:hover .currency-dropdown-menu {
   display: block;
 }
 
-.header nav ul li .dropdown-menu {
+.header nav ul li .dropdown-menu,
+.header nav ul li.currency-dropdown .currency-dropdown-menu {
   display: none;
   position: absolute;
   top: 100%;
@@ -97,27 +97,27 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  padding: 10px 0;
+  padding: 10px 15px;
   list-style: none;
-  min-width: 200px;
+  min-width: max-content;
 }
 
-.header nav ul li .dropdown-menu li {
-  padding: 10px 20px;
-}
-
-.header nav ul li .dropdown-menu li a {
+.header nav ul li .dropdown-menu .dropdown-menu-item,
+.header nav ul li.currency-dropdown .currency-dropdown-menu .currency-option {
   color: #333;
   text-decoration: none;
-  display: block;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-block; /* Ensure it's inline-block to control the underline */
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
 }
 
-.header nav ul li .dropdown-menu li a:hover {
+.header nav ul li .dropdown-menu .dropdown-menu-item:hover,
+.header nav ul li.currency-dropdown .currency-dropdown-menu .currency-option:hover {
   color: #7c2234;
+  border-bottom: 1px solid #7c2234;
 }
 
-/* Hamburger Menu Button */
 .hamburger {
   display: none;
   flex-direction: column;
@@ -131,39 +131,6 @@
   margin: 4px 0;
   transition: 0.4s;
 }
-
-.whatsapp-link {
-  display: flex;
-  align-items: center;
-}
-
-
-@media (max-width: 768px) {
-  .whatsapp-button {
-    font-size: 14px;
-    padding: 8px 12px;
-  }
-
-  .whatsapp-button img {
-    width: 18px;
-    height: 18px;
-    margin-right: 5px;
-  }
-}
-
-@media (max-width: 576px) {
-  .whatsapp-button {
-    font-size: 12px;
-    padding: 6px 10px;
-  }
-
-  .whatsapp-button img {
-    width: 16px;
-    height: 16px;
-    margin-right: 4px;
-  }
-}
-
 
 /* Mobile Navigation */
 @media (max-width: 1150px) {
@@ -185,20 +152,8 @@
     display: flex;
   }
 
-  .hamburger {
-    display: flex;
-  }
-
   .header {
     justify-content: space-between;
-  }
-
-  .header nav ul li .dropdown-menu {
-    position: static;
-  }
-
-  .header nav ul li.dropdown {
-    flex-direction: column;
   }
 
   .header nav ul li .dropdown-menu li {

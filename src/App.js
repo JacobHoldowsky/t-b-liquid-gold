@@ -16,6 +16,7 @@ import CorporateGifts from "./components/CorporateGifts";
 import Wholesale from "./components/Wholesale";
 import FloatingWhatsAppButton from "./components/FloatingWhatsAppButton";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { CurrencyProvider } from "./context/CurrencyContext";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -68,47 +69,49 @@ function App() {
   };
 
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="App">
-        <Header cartItemCount={calculateCartItemCount()} />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route
-            path="/honeyCollection"
-            element={<HoneyCollection cart={cart} addToCart={addToCart} />}
-          />
-          <Route
-            path="/giftPackages"
-            element={<GiftPackages cart={cart} addToCart={addToCart} />}
-          />
-          <Route
-            path="/corporateGifts"
-            element={<CorporateGifts cart={cart} addToCart={addToCart} />}
-          />
-          <Route
-            path="/wholesale"
-            element={<Wholesale cart={cart} addToCart={addToCart} />}
-          />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route
-            path="/checkout"
-            element={
-              <Checkout
-                cart={cart}
-                removeFromCart={removeFromCart}
-                setCart={setCart}
-              />
-            }
-          />
-          <Route path="/success" element={<Success />} />
-          <Route path="/canceled" element={<Canceled />} />
-        </Routes>
-        <Footer />
-        <FloatingWhatsAppButton />
-      </div>
-    </Router>
+    <CurrencyProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="App">
+          <Header cartItemCount={calculateCartItemCount()} />
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route
+              path="/honeyCollection"
+              element={<HoneyCollection cart={cart} addToCart={addToCart} />}
+            />
+            <Route
+              path="/giftPackages"
+              element={<GiftPackages cart={cart} addToCart={addToCart} />}
+            />
+            <Route
+              path="/corporateGifts"
+              element={<CorporateGifts cart={cart} addToCart={addToCart} />}
+            />
+            <Route
+              path="/wholesale"
+              element={<Wholesale cart={cart} addToCart={addToCart} />}
+            />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route
+              path="/checkout"
+              element={
+                <Checkout
+                  cart={cart}
+                  removeFromCart={removeFromCart}
+                  setCart={setCart}
+                />
+              }
+            />
+            <Route path="/success" element={<Success />} />
+            <Route path="/canceled" element={<Canceled />} />
+          </Routes>
+          <Footer />
+          <FloatingWhatsAppButton />
+        </div>
+      </Router>
+    </CurrencyProvider>
   );
 }
 

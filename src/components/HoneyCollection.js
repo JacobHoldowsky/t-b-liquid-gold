@@ -1,52 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import "./HoneyCollection.css";
+import { CurrencyContext } from "../context/CurrencyContext"; // Import CurrencyContext
 
 function HoneyCollection({ cart, addToCart }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
+  const { currency } = useContext(CurrencyContext); // Use context here
+
   const items = [
     {
       url: "bourbon small jar.jpg",
-      title: "Bourbon Large Jar",
-      priceDollar: "$30",
-      priceShekel: "₪100",
+      title: "Bourbon Creamed Honey",
+      sizeUS: "4oz",
+      priceDollar: "$14",
+      sizeIL: "120ml",
+      priceShekel: "₪45",
     },
     {
       url: "chocolate small jar.jpg",
-      title: "Chocolate Large Jar",
-      priceDollar: "$30",
-      priceShekel: "₪100",
+      title: "Chocolate Creamed Honey",
+      sizeUS: "4oz",
+      priceDollar: "$14",
+      sizeIL: "120ml",
+      priceShekel: "₪45",
     },
     {
       url: "cinnamon small jar.jpg",
-      title: "Cinnamon Large Jar",
-      priceDollar: "$30",
-      priceShekel: "₪100",
+      title: "Cinnamon Creamed Honey",
+      sizeUS: "4oz",
+      priceDollar: "$14",
+      sizeIL: "120ml",
+      priceShekel: "₪45",
     },
     {
       url: "pumpkin small jar.JPG",
-      title: "Pumpkin Large Jar",
-      priceDollar: "$30",
-      priceShekel: "₪100",
+      title: "Pumpkin Creamed Honey",
+      sizeUS: "4oz",
+      priceDollar: "$14",
+      sizeIL: "120ml",
+      priceShekel: "₪45",
     },
     {
       url: "sea salt small jar.jpg",
-      title: "Sea Salt Large Jar",
-      priceDollar: "$30",
-      priceShekel: "₪100",
+      title: "Sea Salt Creamed Honey",
+      sizeUS: "4oz",
+      priceDollar: "$14",
+      sizeIL: "120ml",
+      priceShekel: "₪45",
     },
     {
       url: "vanilla small jar.jpg",
-      title: "Vanilla Large Jar",
-      priceDollar: "$30",
-      priceShekel: "₪100",
+      title: "Vanilla Creamed Honey",
+      sizeUS: "4oz",
+      priceDollar: "$14",
+      sizeIL: "120ml",
+      priceShekel: "₪45",
     },
     {
       url: "blueberry small jar.jpg",
-      title: "Blueberry Large Jar",
-      priceDollar: "$30",
-      priceShekel: "₪100",
+      title: "Blueberry Creamed Honey",
+      sizeUS: "4oz",
+      priceDollar: "$14",
+      sizeIL: "120ml",
+      priceShekel: "₪45",
     },
   ];
 
@@ -55,7 +72,7 @@ function HoneyCollection({ cart, addToCart }) {
     setModalOpen(true);
     document.body.classList.add("modal-open");
   };
-  
+
   const closeModal = () => {
     setModalOpen(false);
     document.body.classList.remove("modal-open");
@@ -81,7 +98,9 @@ function HoneyCollection({ cart, addToCart }) {
             <div className="honey-info">
               <h3>{item.title}</h3>
               <p>
-                {item.priceDollar} / {item.priceShekel}
+                {currency === "Dollar" ? item.priceDollar : item.priceShekel}
+                {" / "}
+                {currency === "Dollar" ? item.sizeUS : item.sizeIL}
               </p>
             </div>
             <button onClick={() => addToCart(item)} className="add-to-cart-btn">
@@ -100,7 +119,13 @@ function HoneyCollection({ cart, addToCart }) {
               <img src={selectedItem.url} alt={selectedItem.title} />
               <h3>{selectedItem.title}</h3>
               <p>
-                {selectedItem.priceDollar} / {selectedItem.priceShekel}
+                {currency === "Dollar"
+                  ? selectedItem.priceDollar
+                  : selectedItem.priceShekel}
+                {" / "}
+                {currency === "Dollar"
+                  ? selectedItem.sizeUS
+                  : selectedItem.sizeIL}
               </p>
               <button
                 onClick={() => {

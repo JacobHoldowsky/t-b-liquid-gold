@@ -1,10 +1,13 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import "./Checkout.css";
+import { CurrencyContext } from "../context/CurrencyContext"; // Import CurrencyContext
 
 const stripePromise = loadStripe("your-publishable-key-here");
 
 function Checkout({ cart, setCart, removeFromCart }) {
+  const { currency } = useContext(CurrencyContext); // Use context here
+
   const aggregatedCart = useMemo(() => {
     const aggregatedCart = [];
     const seenTitles = {};
@@ -31,12 +34,17 @@ function Checkout({ cart, setCart, removeFromCart }) {
       const session = await stripe.redirectToCheckout({
         lineItems: aggregatedCart.map((item) => ({
           price_data: {
-            currency: "usd",
+            currency: currency === "Dollar" ? "usd" : "ils",
             product_data: {
               name: item.title,
               images: [item.url],
             },
-            unit_amount: parseInt(item.priceDollar.replace("$", "")) * 100,
+            unit_amount: parseInt(
+              (currency === "Dollar"
+                ? item.priceDollar.replace("$", "")
+                : item.priceShekel.replace("₪", "")
+              ).replace(/[^0-9.]/g, "")
+            ) * 100,
           },
           quantity: item.quantity,
         })),
@@ -57,11 +65,15 @@ function Checkout({ cart, setCart, removeFromCart }) {
     return number.toLocaleString();
   };
 
-  const calculateTotalPrice = (currency) => {
+  const calculateTotalPrice = () => {
     const total = aggregatedCart
       .reduce((total, item) => {
-        const price = currency === "usd" ? item.priceDollar : item.priceShekel;
-        return total + parseFloat(price.replace(/[^0-9.]/g, "")) * item.quantity;
+        const price =
+          currency === "Dollar" ? item.priceDollar : item.priceShekel;
+        return (
+          total +
+          parseFloat(price.replace(/[^0-9.]/g, "")) * item.quantity
+        );
       }, 0)
       .toFixed(2);
 
@@ -104,19 +116,32 @@ function Checkout({ cart, setCart, removeFromCart }) {
                   <div className="item-details">
                     <p className="item-title">{item.title}</p>
                     <p className="item-price">
-                      ${formatNumberWithCommas(parseFloat(item.priceDollar.replace(/[^0-9.]/g, "")))} / ₪{formatNumberWithCommas(parseFloat(item.priceShekel.replace(/[^0-9.]/g, "")))}
+                      {currency === "Dollar"
+                        ? `$${formatNumberWithCommas(
+                            parseFloat(item.priceDollar.replace(/[^0-9.]/g, ""))
+                          )}`
+                        : `₪${formatNumberWithCommas(
+                            parseFloat(item.priceShekel.replace(/[^0-9.]/g, ""))
+                          )}`}
                     </p>
                   </div>
                   <div className="quantity-controls">
                     <button
-                      onClick={() => updateItemQuantity(item.title, Math.max(0, item.quantity - 1))}
+                      onClick={() =>
+                        updateItemQuantity(
+                          item.title,
+                          Math.max(0, item.quantity - 1)
+                        )
+                      }
                       className="quantity-btn"
                     >
                       -
                     </button>
                     <span className="item-quantity">{item.quantity}</span>
                     <button
-                      onClick={() => updateItemQuantity(item.title, item.quantity + 1)}
+                      onClick={() =>
+                        updateItemQuantity(item.title, item.quantity + 1)
+                      }
                       className="quantity-btn"
                     >
                       +
@@ -128,9 +153,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
           )}
         </div>
         <div className="total-price">
-          <h3>
-            Total: ${calculateTotalPrice("usd")} / ₪{calculateTotalPrice("ils")}
-          </h3>
+          <h3>Total: {currency === "Dollar" ? "$" : "₪"}{calculateTotalPrice()}</h3>
         </div>
         <button
           type="button"

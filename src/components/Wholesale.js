@@ -97,9 +97,6 @@ function Wholesale({ cart, addToCart }) {
             </div>
             <div className="wholesale-info">
               <h3>{item.title}</h3>
-              <p>
-                {item.priceDollar} / {item.priceShekel}
-              </p>
             </div>
           </div>
         ))}
@@ -113,9 +110,6 @@ function Wholesale({ cart, addToCart }) {
             <div className="modal-content">
               <img src={selectedItem.url} alt={selectedItem.title} />
               <h3>{selectedItem.title}</h3>
-              <p>
-                {selectedItem.priceDollar} / {selectedItem.priceShekel}
-              </p>
             </div>
           </div>
         </div>

@@ -29,8 +29,8 @@ function FeaturedProducts() {
         </div>
         {/* Our Collection */}
         <div className="product-card">
-          <img src="vanilla small jar.jpg" alt="Vanilla Small Jar" />
-          <h3>Vanilla Small Jar</h3>
+          <img src="vanilla small jar.jpg" alt="Vanilla Creamed Honey" />
+          <h3>Vanilla Creamed Honey</h3>
           <p>$15 / ₪60</p>
           <HashLink
             smooth

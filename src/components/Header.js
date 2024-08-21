@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
+import { CurrencyContext } from "../context/CurrencyContext";
 import "./Header.css";
 
 function Header({ cartItemCount }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { currency, toggleCurrency } = useContext(CurrencyContext); // Use context here
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -12,6 +14,11 @@ function Header({ cartItemCount }) {
 
   const closeMenu = () => {
     setIsOpen(false);
+  };
+
+  const handleCurrencyChange = (selectedCurrency) => {
+    toggleCurrency(selectedCurrency);
+    closeMenu();
   };
 
   useEffect(() => {
@@ -49,17 +56,18 @@ function Header({ cartItemCount }) {
       <nav>
         <ul className={isOpen ? "active" : ""}>
           <li>
-            <Link to="/" onClick={closeMenu}>
+            <Link className="top-level-header-item" to="/" onClick={closeMenu}>
               Home
             </Link>
           </li>
           <li className="dropdown">
-            <Link to="/shop" onClick={closeMenu}>
+            <Link className="top-level-header-item" onClick={closeMenu}>
               Shop
             </Link>
             <ul className="dropdown-menu">
               <li>
                 <HashLink
+                  className="dropdown-menu-item"
                   smooth
                   to="/honeyCollection"
                   scroll={scrollWithOffset}
@@ -70,6 +78,7 @@ function Header({ cartItemCount }) {
               </li>
               <li>
                 <HashLink
+                  className="dropdown-menu-item"
                   smooth
                   to="/giftPackages"
                   scroll={scrollWithOffset}
@@ -80,6 +89,7 @@ function Header({ cartItemCount }) {
               </li>
               <li>
                 <HashLink
+                  className="dropdown-menu-item"
                   smooth
                   to="/corporateGifts"
                   scroll={scrollWithOffset}
@@ -90,6 +100,7 @@ function Header({ cartItemCount }) {
               </li>
               <li>
                 <HashLink
+                  className="dropdown-menu-item"
                   smooth
                   to="/wholesale"
                   scroll={scrollWithOffset}
@@ -100,6 +111,7 @@ function Header({ cartItemCount }) {
               </li>
               <li>
                 <HashLink
+                  className="dropdown-menu-item"
                   smooth
                   to="/sponsorABox"
                   scroll={scrollWithOffset}
@@ -110,18 +122,47 @@ function Header({ cartItemCount }) {
               </li>
             </ul>
           </li>
+          <li className="currency-dropdown">
+            <span className="currency-toggle">Currency: {currency}</span>
+            <ul className="currency-dropdown-menu">
+              <li
+                className="currency-option"
+                onClick={() => handleCurrencyChange("Dollar")}
+              >
+                Dollar
+              </li>
+              <li
+                className="currency-option"
+                onClick={() => handleCurrencyChange("Shekel")}
+              >
+                Shekel
+              </li>
+            </ul>
+          </li>
           <li>
-            <Link to="/about" onClick={closeMenu}>
+            <Link
+              className="top-level-header-item"
+              to="/about"
+              onClick={closeMenu}
+            >
               About
             </Link>
           </li>
           <li>
-            <Link to="/contact" onClick={closeMenu}>
+            <Link
+              className="top-level-header-item"
+              to="/contact"
+              onClick={closeMenu}
+            >
               Contact
             </Link>
           </li>
           <li className="cart-link">
-            <Link to="/checkout" onClick={closeMenu}>
+            <Link
+              className="top-level-header-item"
+              to="/checkout"
+              onClick={closeMenu}
+            >
               Checkout
               {cartItemCount > 0 && (
                 <span className="cart-count">{cartItemCount}</span>
