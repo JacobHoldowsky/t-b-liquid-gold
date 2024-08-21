@@ -12,7 +12,6 @@
 .wholesale-message a {
   color: #7c2234;
   text-decoration: none;
-  font-weight: bold;
   transition: color 0.3s ease;
 }
 
@@ -31,8 +30,6 @@
     text-align: center;
     margin-bottom: 40px;
     color: #222;
-    font-family: 'Playfair Display', serif;
-    font-weight: 700;
     text-transform: capitalize;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
   }
@@ -80,8 +77,8 @@
     font-size: 1.6rem;
     color: #333;
     margin-bottom: 10px;
-    font-family: 'Playfair Display', serif;
-    font-weight: 600;
+    
+   
   }
   
   .wholesale-info p {
@@ -98,7 +95,7 @@
     border: none;
     border-radius: 5px;
     font-size: 1rem;
-    font-weight: 600;
+   
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: background-color 0.3s ease, transform 0.3s ease;
@@ -147,8 +144,8 @@
   .modal h3 {
     font-size: 1.6rem;
     margin-bottom: 15px;
-    font-family: 'Playfair Display', serif;
-    font-weight: 600;
+    
+   
   }
   
   .modal p {

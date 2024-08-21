@@ -6,12 +6,10 @@
 
 .about-content {
   max-width: 800px;
-  margin: 0 auto;
 }
 
 .about-content h2 {
   font-size: 2.5rem;
-  font-family: 'Playfair Display', serif;
   margin-bottom: 20px;
   color: #333;
 }
@@ -19,6 +17,5 @@
 .about-content p {
   font-size: 1.2rem;
   color: #555;
-  line-height: 1.8;
   margin-bottom: 20px;
 }

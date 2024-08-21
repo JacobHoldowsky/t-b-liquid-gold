@@ -17,6 +17,7 @@ import Wholesale from "./components/Wholesale";
 import FloatingWhatsAppButton from "./components/FloatingWhatsAppButton";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { CurrencyProvider } from "./context/CurrencyContext";
+import './index.css';
 
 function App() {
   const [cart, setCart] = useState([]);

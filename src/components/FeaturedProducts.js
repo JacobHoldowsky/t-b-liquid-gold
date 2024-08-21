@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { HashLink } from "react-router-hash-link"; // Import HashLink
 import "./FeaturedProducts.css";
+import { CurrencyContext } from "../context/CurrencyContext"; // Import CurrencyContext
 
 function FeaturedProducts() {
+  const { currency } = useContext(CurrencyContext); // Use context here
+
   const scrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -100; // Adjust this value to match the height of your sticky header
@@ -17,7 +20,7 @@ function FeaturedProducts() {
         <div className="product-card">
           <img src="Deluxe Box $120.jpg" alt="Deluxe Box" />
           <h3>Deluxe Box</h3>
-          <p>$120 / ₪360</p>
+          <p>{currency === "Dollar" ? "$120" : "₪360"}</p>
           <HashLink
             smooth
             to="/giftPackages"
@@ -31,7 +34,7 @@ function FeaturedProducts() {
         <div className="product-card">
           <img src="vanilla small jar.jpg" alt="Vanilla Creamed Honey" />
           <h3>Vanilla Creamed Honey</h3>
-          <p>$15 / ₪60</p>
+          <p>{currency === "Dollar" ? "$15" : "₪60"}</p>
           <HashLink
             smooth
             to="/honeyCollection"
@@ -45,7 +48,7 @@ function FeaturedProducts() {
         <div className="product-card">
           <img src="For Her $55.jpg" alt="For Her" />
           <h3>For Her</h3>
-          <p>$55 / ₪180</p>
+          <p>{currency === "Dollar" ? "$55" : "₪180"}</p>
           <HashLink
             smooth
             to="/corporateGifts"
