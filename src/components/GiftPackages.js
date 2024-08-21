@@ -1,43 +1,45 @@
 import React, { useState, useContext } from "react";
 import "./GiftPackages.css";
-import { CurrencyContext } from "../context/CurrencyContext"; // Import CurrencyContext
+import { CurrencyContext } from "../context/CurrencyContext";
+import { ExchangeRateContext } from "../context/ExchangeRateContext"; // Import the context
 
 function GiftPackages({ cart, addToCart }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const { currency } = useContext(CurrencyContext); // Use context here
+  const { currency } = useContext(CurrencyContext);
+  const exchangeRate = useContext(ExchangeRateContext); // Use the context here
 
   const items = [
     {
       url: "Collection Plus $95.jpg",
       title: "Collection Plus",
-      priceDollar: "$95",
-      priceShekel: "₪320",
+      priceDollar: 105,
+      priceShekel: exchangeRate ? Math.ceil(105 * exchangeRate) : 0,
     },
     {
       url: "Deluxe Box $120.jpg",
       title: "Deluxe Box",
-      priceDollar: "$120",
-      priceShekel: "₪400",
+      priceDollar: 120,
+      priceShekel: exchangeRate ? Math.ceil(120 * exchangeRate) : 0,
     },
     {
       url: "Belgian Box $100.jpg",
       title: "Belgian Box",
-      priceDollar: "$100",
-      priceShekel: "₪350",
+      priceDollar: 100,
+      priceShekel: exchangeRate ? Math.ceil(100 * exchangeRate) : 0,
     },
     {
       url: "For Him $55.jpg",
       title: "For Him",
-      priceDollar: "$55",
-      priceShekel: "₪200",
+      priceDollar: 55,
+      priceShekel: exchangeRate ? Math.ceil(55 * exchangeRate) : 0,
     },
     {
       url: "For Her $55.jpg",
       title: "For Her",
-      priceDollar: "$55",
-      priceShekel: "₪200",
+      priceDollar: 55,
+      priceShekel: exchangeRate ? Math.ceil(55 * exchangeRate) : 0,
     },
   ];
 
@@ -72,8 +74,9 @@ function GiftPackages({ cart, addToCart }) {
             <div className="gift-packages-info">
               <h3>{item.title}</h3>
               <p>
-                {/* Display the price based on the selected currency */}
-                {currency === "Dollar" ? item.priceDollar : item.priceShekel}
+                {currency === "Dollar"
+                  ? `$${item.priceDollar}`
+                  : `₪${item.priceShekel}`}
               </p>
             </div>
             <button onClick={() => addToCart(item)} className="add-to-cart-btn">
@@ -92,10 +95,9 @@ function GiftPackages({ cart, addToCart }) {
               <img src={selectedItem.url} alt={selectedItem.title} />
               <h3>{selectedItem.title}</h3>
               <p>
-                {/* Display the price based on the selected currency in the modal */}
                 {currency === "Dollar"
-                  ? selectedItem.priceDollar
-                  : selectedItem.priceShekel}
+                  ? `$${selectedItem.priceDollar}`
+                  : `₪${selectedItem.priceDollar}`}
               </p>
               <button
                 onClick={() => {

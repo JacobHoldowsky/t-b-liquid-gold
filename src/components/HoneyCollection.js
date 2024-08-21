@@ -13,57 +13,57 @@ function HoneyCollection({ cart, addToCart }) {
       url: "bourbon small jar.jpg",
       title: "Bourbon Creamed Honey",
       sizeUS: "4oz",
-      priceDollar: "$14",
+      priceDollar: "14",
       sizeIL: "120ml",
-      priceShekel: "₪45",
+      priceShekel: "45",
     },
     {
       url: "chocolate small jar.jpg",
       title: "Chocolate Creamed Honey",
       sizeUS: "4oz",
-      priceDollar: "$14",
+      priceDollar: "14",
       sizeIL: "120ml",
-      priceShekel: "₪45",
+      priceShekel: "45",
     },
     {
       url: "cinnamon small jar.jpg",
       title: "Cinnamon Creamed Honey",
       sizeUS: "4oz",
-      priceDollar: "$14",
+      priceDollar: "14",
       sizeIL: "120ml",
-      priceShekel: "₪45",
+      priceShekel: "45",
     },
     {
       url: "pumpkin small jar.JPG",
       title: "Pumpkin Creamed Honey",
       sizeUS: "4oz",
-      priceDollar: "$14",
+      priceDollar: "14",
       sizeIL: "120ml",
-      priceShekel: "₪45",
+      priceShekel: "45",
     },
     {
       url: "sea salt small jar.jpg",
       title: "Sea Salt Creamed Honey",
       sizeUS: "4oz",
-      priceDollar: "$14",
+      priceDollar: "14",
       sizeIL: "120ml",
-      priceShekel: "₪45",
+      priceShekel: "45",
     },
     {
       url: "vanilla small jar.jpg",
       title: "Vanilla Creamed Honey",
       sizeUS: "4oz",
-      priceDollar: "$14",
+      priceDollar: "14",
       sizeIL: "120ml",
-      priceShekel: "₪45",
+      priceShekel: "45",
     },
     {
       url: "blueberry small jar.jpg",
       title: "Blueberry Creamed Honey",
       sizeUS: "4oz",
-      priceDollar: "$14",
+      priceDollar: "14",
       sizeIL: "120ml",
-      priceShekel: "₪45",
+      priceShekel: "45",
     },
   ];
 
@@ -98,7 +98,9 @@ function HoneyCollection({ cart, addToCart }) {
             <div className="honey-info">
               <h3>{item.title}</h3>
               <p>
-                {currency === "Dollar" ? item.priceDollar : item.priceShekel}
+                {currency === "Dollar"
+                  ? `$${item.priceDollar}`
+                  : `₪${item.priceShekel}`}
                 {" / "}
                 {currency === "Dollar" ? item.sizeUS : item.sizeIL}
               </p>
@@ -120,8 +122,8 @@ function HoneyCollection({ cart, addToCart }) {
               <h3>{selectedItem.title}</h3>
               <p>
                 {currency === "Dollar"
-                  ? selectedItem.priceDollar
-                  : selectedItem.priceShekel}
+                  ? `$${selectedItem.priceDollar}`
+                  : `₪${selectedItem.priceShekel}`}
                 {" / "}
                 {currency === "Dollar"
                   ? selectedItem.sizeUS

@@ -12,32 +12,32 @@ function CorporateGifts({ cart, addToCart }) {
     {
       url: "Collection Plus $95.jpg",
       title: "Collection Plus",
-      priceDollar: "$95",
-      priceShekel: "₪320",
+      priceDollar: "105",
+      priceShekel: "320",
     },
     {
       url: "Deluxe Box $120.jpg",
       title: "Deluxe Box",
-      priceDollar: "$120",
-      priceShekel: "₪400",
+      priceDollar: "120",
+      priceShekel: "400",
     },
     {
       url: "Belgian Box $100.jpg",
       title: "Belgian Box",
-      priceDollar: "$100",
-      priceShekel: "₪350",
+      priceDollar: "100",
+      priceShekel: "350",
     },
     {
       url: "For Him $55.jpg",
       title: "For Him",
-      priceDollar: "$55",
-      priceShekel: "₪200",
+      priceDollar: "55",
+      priceShekel: "200",
     },
     {
       url: "For Her $55.jpg",
       title: "For Her",
-      priceDollar: "$55",
-      priceShekel: "₪200",
+      priceDollar: "55",
+      priceShekel: "200",
     },
   ];
 
@@ -73,7 +73,9 @@ function CorporateGifts({ cart, addToCart }) {
               <h3>{item.title}</h3>
               <p>
                 {/* Display the price based on the selected currency */}
-                {currency === "Dollar" ? item.priceDollar : item.priceShekel}
+                {currency === "Dollar"
+                  ? `$${item.priceDollar}`
+                  : `₪${item.priceShekel}`}
               </p>
             </div>
             <button onClick={() => addToCart(item)} className="add-to-cart-btn">
@@ -94,8 +96,8 @@ function CorporateGifts({ cart, addToCart }) {
               <p>
                 {/* Display the price based on the selected currency in the modal */}
                 {currency === "Dollar"
-                  ? selectedItem.priceDollar
-                  : selectedItem.priceShekel}
+                  ? `$${selectedItem.priceDollar}`
+                  : `₪${selectedItem.priceShekel}`}
               </p>
               <button
                 onClick={() => {

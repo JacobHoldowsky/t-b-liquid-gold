@@ -39,12 +39,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
               name: item.title,
               images: [item.url],
             },
-            unit_amount: parseInt(
-              (currency === "Dollar"
-                ? item.priceDollar.replace("$", "")
-                : item.priceShekel.replace("₪", "")
-              ).replace(/[^0-9.]/g, "")
-            ) * 100,
+            unit_amount: (currency === "Dollar" ? item.priceDollar : item.priceShekel) * 100, // No replace needed if prices are numbers
           },
           quantity: item.quantity,
         })),
@@ -72,7 +67,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
           currency === "Dollar" ? item.priceDollar : item.priceShekel;
         return (
           total +
-          parseFloat(price.replace(/[^0-9.]/g, "")) * item.quantity
+          parseFloat(price) * item.quantity // No replace needed if prices are numbers
         );
       }, 0)
       .toFixed(2);
@@ -118,10 +113,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     <p className="item-price">
                       {currency === "Dollar"
                         ? `$${formatNumberWithCommas(
-                            parseFloat(item.priceDollar.replace(/[^0-9.]/g, ""))
+                            parseFloat(item.priceDollar)
                           )}`
                         : `₪${formatNumberWithCommas(
-                            parseFloat(item.priceShekel.replace(/[^0-9.]/g, ""))
+                            parseFloat(item.priceShekel)
                           )}`}
                     </p>
                   </div>
