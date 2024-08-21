@@ -53,55 +53,62 @@ function Header({ cartItemCount }) {
               Home
             </Link>
           </li>
-          <li>
-            <HashLink
-              smooth
-              to="/honeyCollection"
-              scroll={scrollWithOffset}
-              onClick={closeMenu}
-            >
-              Honey Collection
-            </HashLink>
-          </li>
-          <li>
-            <HashLink
-              smooth
-              to="/giftPackages"
-              scroll={scrollWithOffset}
-              onClick={closeMenu}
-            >
-              Gift Packages
-            </HashLink>
-          </li>
-          <li>
-            <HashLink
-              smooth
-              to="/corporateGifts"
-              scroll={scrollWithOffset}
-              onClick={closeMenu}
-            >
-              Corporate Gifts
-            </HashLink>
-          </li>
-          <li>
-            <HashLink
-              smooth
-              to="/wholesale"
-              scroll={scrollWithOffset}
-              onClick={closeMenu}
-            >
-              Wholesale
-            </HashLink>
-          </li>
-          <li>
-            <HashLink
-              smooth
-              to="/sponsorABox"
-              scroll={scrollWithOffset}
-              onClick={closeMenu}
-            >
-              Sponsor-a-Box
-            </HashLink>
+          <li className="dropdown">
+            <Link to="/shop" onClick={closeMenu}>
+              Shop
+            </Link>
+            <ul className="dropdown-menu">
+              <li>
+                <HashLink
+                  smooth
+                  to="/honeyCollection"
+                  scroll={scrollWithOffset}
+                  onClick={closeMenu}
+                >
+                  Honey Collection
+                </HashLink>
+              </li>
+              <li>
+                <HashLink
+                  smooth
+                  to="/giftPackages"
+                  scroll={scrollWithOffset}
+                  onClick={closeMenu}
+                >
+                  Gift Packages
+                </HashLink>
+              </li>
+              <li>
+                <HashLink
+                  smooth
+                  to="/corporateGifts"
+                  scroll={scrollWithOffset}
+                  onClick={closeMenu}
+                >
+                  Corporate Gifts
+                </HashLink>
+              </li>
+              <li>
+                <HashLink
+                  smooth
+                  to="/wholesale"
+                  scroll={scrollWithOffset}
+                  onClick={closeMenu}
+                >
+                  Wholesale
+                </HashLink>
+              </li>
+              <li>
+                <HashLink
+                  smooth
+                  to="/sponsorABox"
+                  scroll={scrollWithOffset}
+                  onClick={closeMenu}
+                >
+                  Sponsor-a-Box
+                </HashLink>
+              </li>
+            </ul>
           </li>
           <li>
             <Link to="/about" onClick={closeMenu}>

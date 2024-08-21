@@ -81,6 +81,42 @@
   background-color: #b74058;
 }
 
+.header nav ul li {
+  position: relative;
+}
+
+.header nav ul li.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.header nav ul li .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 10px 0;
+  list-style: none;
+  min-width: 200px;
+}
+
+.header nav ul li .dropdown-menu li {
+  padding: 10px 20px;
+}
+
+.header nav ul li .dropdown-menu li a {
+  color: #333;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.header nav ul li .dropdown-menu li a:hover {
+  color: #7c2234;
+}
+
 /* Hamburger Menu Button */
 .hamburger {
   display: none;
@@ -155,6 +191,18 @@
 
   .header {
     justify-content: space-between;
+  }
+
+  .header nav ul li .dropdown-menu {
+    position: static;
+  }
+
+  .header nav ul li.dropdown {
+    flex-direction: column;
+  }
+
+  .header nav ul li .dropdown-menu li {
+    padding: 10px;
   }
 }
 
