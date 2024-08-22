@@ -5,8 +5,7 @@ export const ExchangeRateContext = createContext();
 export const ExchangeRateProvider = ({ children }) => {
   const [exchangeRate, setExchangeRate] = useState(null);
 
-  const API_URL =
-    process.env.NODE_ENV === "development" ? "http://localhost:5000" : "";
+  const API_URL = "";
 
   console.log("api-url", API_URL);
 
