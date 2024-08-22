@@ -14,7 +14,7 @@ function BenefitsSection() {
         <div className="benefit">
           <i className="fas fa-hand-holding-heart"></i>
           <h3>Handcrafted</h3>
-          <p>Each jar is crafted with care in Israel.</p>
+          <p>Each jar is handrafted with lots of love in the land of Israel.</p>
         </div>
         <div className="benefit">
           <i className="fas fa-globe"></i>
