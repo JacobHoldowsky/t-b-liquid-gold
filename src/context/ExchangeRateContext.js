@@ -8,6 +8,8 @@ export const ExchangeRateProvider = ({ children }) => {
   const API_URL =
     process.env.NODE_ENV === "development" ? "http://localhost:5000" : "";
 
+  console.log("api-url", API_URL);
+
   useEffect(() => {
     const fetchExchangeRate = async () => {
       try {
