@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
   try {
     const token = process.env.VERCEL_ACCESS_TOKEN; // Server-side access token
     const response = await axios.get(
-      "https://api.vercel.com/api/exchange-rate",
+      "https://api.exchangerate-api.com/v4/latest/USD",
       {
         headers: {
           "Content-Type": "application/json",
