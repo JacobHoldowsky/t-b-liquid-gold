@@ -5,17 +5,16 @@ export const ExchangeRateContext = createContext();
 export const ExchangeRateProvider = ({ children }) => {
   const [exchangeRate, setExchangeRate] = useState(null);
 
-  // Determine API URL based on the environment
   const API_URL =
     process.env.NODE_ENV === "development"
-      ? "http://localhost:5000"
-      : "https://t-b-liquid-gold.vercel.app"; // Use Vercel API URL in production
+      ? "http://localhost:3000/api"
+      : "/api"; // Use relative path in production
 
   useEffect(() => {
     const fetchExchangeRate = async () => {
       try {
         // Use the Vercel Access Token stored in an environment variable
-        const token = process.env.REACT_APP_VERCEL_ACCESS_TOKEN;
+        const token = process.env.VERCEL_ACCESS_TOKEN;
 
         // Make the API request
         const response = await fetch(`${API_URL}/api/exchange-rate`, {

@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 
 app.get('/api/exchange-rate', async (req, res) => {
   try {
-    const token = process.env.VERCEL_ACCESS_TOKEN; // Server-side access token
+    const token = process.env.REACT_APP_VERCEL_ACCESS_TOKEN; // Server-side access token
     const response = await axios.get('https://api.vercel.com/api/exchange-rate', {
       headers: {
         'Content-Type': 'application/json',
