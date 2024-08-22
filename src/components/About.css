@@ -3,10 +3,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('../../public/ale-vega-Mbvzguw2XxY-unsplash.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: bottom;
   padding: 20px;
   color: white;
 }
