@@ -11,28 +11,26 @@ export const ExchangeRateProvider = ({ children }) => {
   useEffect(() => {
     const fetchExchangeRate = async () => {
       try {
-        // Use the Vercel Access Token stored in an environment variable
-        const token = process.env.VERCEL_ACCESS_TOKEN;
-
-        // Make the API request
+        // Make the API request without Authorization header
         const response = await fetch(`${API_URL}/api/exchange-rate`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Use the access token for authentication
           },
         });
 
         // Parse the JSON response
         const data = await response.json();
+        console.log("data", data);
 
-        if (data.rate) {
-          setExchangeRate(data.rate);
+        // Check if rates are present in the response
+        if (data.rates) {
+          setExchangeRate(data.rates);
         } else {
-          console.error("Error fetching exchange rate:", data.error);
+          console.error("Error fetching exchange rate: No rates found");
         }
       } catch (error) {
-        console.error("Error fetching exchange rate:", error);
+        console.error("Error fetching exchange rate:", error.message || error);
       }
     };
 

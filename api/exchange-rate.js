@@ -1,20 +1,16 @@
-// File: api/exchange-rate.js
 const axios = require("axios");
 
 module.exports = async (req, res) => {
   try {
-    const token = process.env.VERCEL_ACCESS_TOKEN; // Server-side access token
+    // Make the request to a public exchange rate API
     const response = await axios.get(
-      "https://api.exchangerate-api.com/v4/latest/USD",
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      "https://api.exchangerate-api.com/v4/latest/USD"
     );
+
+    // Return the data without unnecessary headers
     res.json(response.data);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error in exchange-rate API:", error.message || error);
+    res.status(500).json({ error: error.message || "Internal Server Error" });
   }
 };
