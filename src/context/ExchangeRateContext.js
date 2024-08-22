@@ -9,7 +9,7 @@ export const ExchangeRateProvider = ({ children }) => {
   const API_URL =
     process.env.NODE_ENV === "development"
       ? "http://localhost:5000"
-      : "https://api.vercel.com"; // Use Vercel API URL in production
+      : "https://t-b-liquid-gold.com"; // Use Vercel API URL in production
 
   useEffect(() => {
     const fetchExchangeRate = async () => {

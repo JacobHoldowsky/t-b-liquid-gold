@@ -30,16 +30,16 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/api/exchange-rate", async (req, res) => {
-  const url = `https://api.exchangerate-api.com/v4/latest/USD`;
+app.get('/api/exchange-rate', async (req, res) => {
   try {
-    const response = await axios.get(url);
-    const rate = response.data.rates.ILS;
-    if (rate) {
-      res.json({ rate });
-    } else {
-      res.status(404).json({ error: "Exchange rate for ILS not found" });
-    }
+    const token = process.env.VERCEL_ACCESS_TOKEN; // Server-side access token
+    const response = await axios.get('https://api.vercel.com/api/exchange-rate', {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    res.json(response.data);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
