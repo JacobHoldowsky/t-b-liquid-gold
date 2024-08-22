@@ -23,11 +23,11 @@ export const ExchangeRateProvider = ({ children }) => {
         const data = await response.json();
         console.log("data", data);
 
-        // Check if rates are present in the response
-        if (data.rates) {
-          setExchangeRate(data.rates['ILS']);
+        // Set the ILS exchange rate
+        if (data.ILS) {
+          setExchangeRate(data.ILS);
         } else {
-          console.error("Error fetching exchange rate: No rates found");
+          console.error("Error fetching exchange rate: ILS rate not found");
         }
       } catch (error) {
         console.error("Error fetching exchange rate:", error.message || error);
