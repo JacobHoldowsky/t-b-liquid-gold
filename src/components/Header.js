@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { CurrencyContext } from "../context/CurrencyContext";
 import "./Header.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDollarSign, faShekelSign } from "@fortawesome/free-solid-svg-icons";
 
 function Header({ cartItemCount }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,10 +18,11 @@ function Header({ cartItemCount }) {
     setIsOpen(false);
   };
 
-  const handleCurrencyChange = (selectedCurrency) => {
-    toggleCurrency(selectedCurrency);
-    closeMenu();
+  const handleCurrencyToggle = () => {
+    toggleCurrency(currency === "Dollar" ? "Shekel" : "Dollar");
   };
+
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,10 +45,17 @@ function Header({ cartItemCount }) {
 
   return (
     <header className="header">
-      <div className="logo">
-        <Link to="/" onClick={closeMenu}>
-          <img src="t&bLiquidGoldLogo.png" alt="TnB Liquid Gold" />
-        </Link>
+      <div className="logo-currency-wrapper">
+        <div className="logo">
+          <Link to="/" onClick={closeMenu}>
+            <img src="t&bLiquidGoldLogo.png" alt="TnB Liquid Gold" />
+          </Link>
+        </div>
+        <div className="currency-toggle" onClick={handleCurrencyToggle}>
+          <FontAwesomeIcon
+            icon={currency === "Dollar" ? faDollarSign : faShekelSign}
+          />
+        </div>
       </div>
       <div className="hamburger" onClick={toggleMenu}>
         <div></div>
@@ -119,23 +129,6 @@ function Header({ cartItemCount }) {
                 >
                   Sponsor-a-Box
                 </HashLink>
-              </li>
-            </ul>
-          </li>
-          <li className="currency-dropdown">
-            <span className="currency-toggle">Currency: {currency}</span>
-            <ul className="currency-dropdown-menu">
-              <li
-                className="currency-option"
-                onClick={() => handleCurrencyChange("Dollar")}
-              >
-                Dollar
-              </li>
-              <li
-                className="currency-option"
-                onClick={() => handleCurrencyChange("Shekel")}
-              >
-                Shekel
               </li>
             </ul>
           </li>
