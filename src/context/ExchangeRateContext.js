@@ -21,7 +21,6 @@ export const ExchangeRateProvider = ({ children }) => {
 
         // Parse the JSON response
         const data = await response.json();
-        console.log("data", data);
 
         // Set the ILS exchange rate
         if (data.ILS) {
