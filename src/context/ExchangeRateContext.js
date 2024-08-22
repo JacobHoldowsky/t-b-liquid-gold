@@ -13,7 +13,13 @@ export const ExchangeRateProvider = ({ children }) => {
   useEffect(() => {
     const fetchExchangeRate = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/exchange-rate`);
+        const token = process.env.VERCEL_ACCESS_TOKEN; // Access the environment variable
+        const response = await fetch(`${API_URL}/api/exchange-rate`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = await response.json();
         if (data.rate) {
           setExchangeRate(data.rate);
