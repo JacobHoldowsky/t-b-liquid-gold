@@ -1,0 +1,200 @@
+.us-distributors {
+    padding: 40px 40px;
+    background-color: #f3f4f6;
+    font-family: 'Arial', sans-serif;
+    margin: 0 auto;
+    min-height: 75vh; /* Ensures the section takes up the full height of the viewport */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers content vertically */
+  }
+  
+  .page-title {
+    font-size: 2.8rem;
+    text-align: center;
+    margin-bottom: 50px;
+    color: #222;
+    font-weight: 700;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #7c2234;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  .distributors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .distributor-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .distributor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .distributor-card h4 {
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+  
+  .whatsapp-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #25d366;
+    color: #fff;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+  
+  .whatsapp-link:hover {
+    background-color: #1ebe57;
+  }
+  
+  .whatsapp-icon {
+    margin-right: 10px;
+    font-size: 1.5rem;
+  }
+  
+  .stores-section {
+    margin-top: 40px;
+  }
+  
+  .stores-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+  }
+  
+  .stores-list li {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: 500;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .page-title {
+      font-size: 2.5rem;
+    }
+  
+    .section-title {
+      font-size: 1.8rem;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .page-title {
+      font-size: 2.2rem;
+    }
+  
+    .section-title {
+      font-size: 1.6rem;
+    }
+  
+    .distributor-card {
+      padding: 15px;
+    }
+  
+    .distributor-card h4 {
+      font-size: 1.4rem;
+    }
+  
+    .whatsapp-link {
+      font-size: 1.1rem;
+      padding: 8px 15px;
+    }
+  
+    .whatsapp-icon {
+      font-size: 1.3rem;
+    }
+  
+    .stores-list li {
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .page-title {
+      font-size: 2rem;
+    }
+  
+    .section-title {
+      font-size: 1.4rem;
+    }
+  
+    .distributors-grid {
+      grid-template-columns: 1fr; /* Stack the cards in a single column */
+    }
+  
+    .distributor-card {
+      padding: 10px;
+    }
+  
+    .distributor-card h4 {
+      font-size: 1.2rem;
+    }
+  
+    .whatsapp-link {
+      font-size: 1rem;
+      padding: 8px 12px;
+    }
+  
+    .whatsapp-icon {
+      font-size: 1.2rem;
+    }
+  
+    .stores-list li {
+      font-size: 1.1rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .page-title {
+      font-size: 1.8rem;
+    }
+  
+    .section-title {
+      font-size: 1.2rem;
+    }
+  
+    .distributor-card h4 {
+      font-size: 1rem;
+    }
+  
+    .whatsapp-link {
+      font-size: 0.9rem;
+      padding: 7px 10px;
+    }
+  
+    .whatsapp-icon {
+      font-size: 1rem;
+      margin-right: 5px;
+    }
+  
+    .stores-list li {
+      font-size: 1rem;
+    }
+  }
+  

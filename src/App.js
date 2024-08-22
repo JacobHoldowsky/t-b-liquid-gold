@@ -13,6 +13,7 @@ import LandingPage from "./components/LandingPage";
 import HoneyCollection from "./components/HoneyCollection";
 import GiftPackages from "./components/GiftPackages";
 import CorporateGifts from "./components/CorporateGifts";
+import USDistributors from "./components/USDistributors";
 import Wholesale from "./components/Wholesale";
 import FloatingWhatsAppButton from "./components/FloatingWhatsAppButton";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -93,6 +94,8 @@ function App() {
                 path="/corporateGifts"
                 element={<CorporateGifts cart={cart} addToCart={addToCart} />}
               />
+              <Route path="/distributors/us" element={<USDistributors cart={cart} addToCart={addToCart} />} />
+
               <Route
                 path="/wholesale"
                 element={<Wholesale cart={cart} addToCart={addToCart} />}
