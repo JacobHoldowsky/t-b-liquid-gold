@@ -25,7 +25,7 @@ export const ExchangeRateProvider = ({ children }) => {
 
         // Check if rates are present in the response
         if (data.rates) {
-          setExchangeRate(data.rates);
+          setExchangeRate(data.rates['ILS']);
         } else {
           console.error("Error fetching exchange rate: No rates found");
         }
