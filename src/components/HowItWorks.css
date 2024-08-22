@@ -1,0 +1,42 @@
+.how-it-works {
+    padding: 60px 20px;
+    background-color: #ffffff;
+    text-align: center;
+  }
+  
+  .how-it-works h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #333;
+  }
+  
+  .steps-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 30px;
+  }
+  
+  .step {
+    max-width: 300px;
+    text-align: center;
+  }
+  
+  .step i {
+    font-size: 3rem;
+    color: #fbb034;
+    margin-bottom: 20px;
+  }
+  
+  .step h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .step p {
+    font-size: 1.2rem;
+    color: #777;
+    margin-bottom: 20px;
+  }
+  

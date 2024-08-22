@@ -1,0 +1,92 @@
+/* Common Styles */
+
+.contact-page {
+  min-height: 80vh; /* Use min-height for better adaptability */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../public/Collection Plus $95.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 20px;
+}
+
+.contact-info {
+  margin: 20px auto;
+  padding: 30px;
+  background-color: rgba(249, 249, 249, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.r);
+  max-width: 600px;
+  text-align: center;
+}
+
+.contact-info h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+}
+
+.contact-info .info p {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+.contact-info .info a {
+  color: #7c2234;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-info .info a:hover {
+  color: #b74058;
+}
+
+/* Responsive Styles */
+@media (max-width: 576px) {
+  .contact-info {
+    padding: 20px;
+    max-width: 100%;
+    margin: 10px;
+  }
+
+  .contact-info h2 {
+    font-size: 20px;
+  }
+
+  .contact-info .info p {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 1023px) {
+  .contact-info {
+    padding: 25px;
+    max-width: 90%;
+  }
+
+  .contact-info h2 {
+    font-size: 22px;
+  }
+
+  .contact-info .info p {
+    font-size: 17px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .contact-info {
+    max-width: 600px;
+    padding: 30px;
+  }
+
+  .contact-info h2 {
+    font-size: 26px;
+  }
+
+  .contact-info .info p {
+    font-size: 18px;
+  }
+}

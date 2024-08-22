@@ -1,0 +1,167 @@
+.header {
+  background-color: #fff;
+  color: #333;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  min-height: 60px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 50px;
+  max-width: 100%;
+  transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+  transform: translateY(-5px);
+}
+
+.header nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  font-size: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.header nav ul li a,
+.currency-toggle {
+  color: #333;
+  text-decoration: none;
+  padding: 5px 10px;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  display: inline-block; /* Ensure it's inline-block to control the underline */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.header nav ul li a:hover,
+.currency-toggle:hover {
+  color: #7c2234;
+  border-bottom: 1px solid #7c2234;
+  cursor: pointer;
+}
+
+.header nav ul li.cart-link {
+  position: relative;
+}
+
+.cart-count {
+  background-color: #7c2234;
+  transition: background-color 0.3s ease;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 12px;
+  position: absolute;
+  top: -5px;
+  right: -15px;
+}
+
+.header nav ul li.cart-link a:hover .cart-count {
+  background-color: #b74058;
+}
+
+.header nav ul li {
+  position: relative;
+}
+
+.header nav ul li.dropdown:hover .dropdown-menu,
+.header nav ul li.currency-dropdown:hover .currency-dropdown-menu {
+  display: block;
+}
+
+.header nav ul li .dropdown-menu,
+.header nav ul li.currency-dropdown .currency-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  padding: 10px 15px;
+  list-style: none;
+  min-width: max-content;
+}
+
+.header nav ul li .dropdown-menu .dropdown-menu-item,
+.header nav ul li.currency-dropdown .currency-dropdown-menu .currency-option {
+  color: #333;
+  text-decoration: none;
+  display: inline-block; /* Ensure it's inline-block to control the underline */
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+
+.header nav ul li .dropdown-menu .dropdown-menu-item:hover,
+.header nav ul li.currency-dropdown .currency-dropdown-menu .currency-option:hover {
+  color: #7c2234;
+  border-bottom: 1px solid #7c2234;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background-color: #333;
+  margin: 4px 0;
+  transition: 0.4s;
+}
+
+/* Mobile Navigation */
+@media (max-width: 1150px) {
+  .header nav ul {
+    flex-direction: column;
+    gap: 15px;
+    font-size: 14px;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #fff;
+    width: 100%;
+    padding: 20px 0;
+    display: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .header nav ul.active {
+    display: flex;
+  }
+
+  .header {
+    justify-content: space-between;
+  }
+
+  .header nav ul li .dropdown-menu li {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .logo img {
+    height: 40px;
+  }
+}

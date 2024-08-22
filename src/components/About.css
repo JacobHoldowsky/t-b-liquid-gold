@@ -1,0 +1,126 @@
+.about {
+  min-height: 80vh; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../../public/ale-vega-Mbvzguw2XxY-unsplash.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  padding: 20px;
+  color: white;
+}
+
+.about-content {
+  margin: 20px auto;
+  padding: 30px;
+  background-color: rgba(249, 249, 249, 0.95) ; 
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) ; 
+  max-width: 800px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+
+.kashrus {
+  border-radius: 10px;
+  margin: 20px 0; /* Add spacing around the image */
+  max-width: 100%;
+}
+
+.about h2 {
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+}
+
+.about p {
+  font-size: 1.125rem;
+  margin-bottom: 20px;
+  text-align: left; /* Align text left for better readability */
+  max-width: 700px; /* Limit text width for better readability */
+}
+
+.cta-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 30px;
+  background-color: #7c2234 !important;
+  color: white !important;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-btn:hover {
+  background-color: #b74058 !important;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 576px) {
+  .about {
+    padding: 20px;
+    min-height: 60vh;
+  }
+
+  .about-content {
+    padding: 20px;
+    max-width: 100%;
+    margin: 10px;
+  }
+
+  .about h2 {
+    font-size: 1.75rem;
+  }
+
+  .about p {
+    font-size: 1rem;
+  }
+
+  .cta-btn {
+    font-size: 0.9rem;
+    padding: 10px 25px;
+  }
+}
+
+@media (min-width: 577px) and (max-width: 1023px) {
+  .about-content {
+    padding: 25px;
+    max-width: 90%;
+  }
+
+  .about h2 {
+    font-size: 2rem;
+  }
+
+  .about p {
+    font-size: 1.125rem;
+  }
+
+  .cta-btn {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-content {
+    padding: 30px;
+    max-width: 800px;
+  }
+
+  .about h2 {
+    font-size: 2.5rem;
+  }
+
+  .about p {
+    font-size: 1.25rem;
+  }
+
+  .cta-btn {
+    font-size: 1.2rem;
+  }
+}
