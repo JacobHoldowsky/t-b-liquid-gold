@@ -6,7 +6,7 @@ export const ExchangeRateProvider = ({ children }) => {
   const [exchangeRate, setExchangeRate] = useState(null);
 
   const API_URL =
-    process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""; // Use relative path in production
+    process.env.NODE_ENV === "development" ? "http://localhost:5000" : ""; // Use relative path in production
 
   useEffect(() => {
     const fetchExchangeRate = async () => {
