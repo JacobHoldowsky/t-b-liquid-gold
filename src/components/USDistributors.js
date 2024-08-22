@@ -68,6 +68,21 @@ function USDistributors() {
           <li>The Cheese Store, Five Towns, NY</li>
         </ul>
       </div>
+
+      <div className="nationwide-section">
+        <div className="distributor-card">
+          <h4>For Nationwide Shipping Please Contact</h4>
+          <a
+            href="https://wa.me/message/AUHFRK2KKV27O1"
+            className="whatsapp-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaWhatsapp className="whatsapp-icon" />
+            Chana Tokarsky
+          </a>
+        </div>
+      </div>
     </div>
   );
 }

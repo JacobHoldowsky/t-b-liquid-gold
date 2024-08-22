@@ -1,7 +1,5 @@
-/* Common Styles */
-
 .contact-page {
-  min-height: 80vh; /* Use min-height for better adaptability */
+  min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -44,6 +42,55 @@
   color: #b74058;
 }
 
+/* Contact Form Styling */
+.contact-form {
+  margin-top: 30px;
+  text-align: left;
+}
+
+.contact-form h3 {
+  font-size: 22px;
+  color: #7c2234;
+  margin-bottom: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
+}
+
+.contact-form textarea {
+  height: 120px;
+  resize: none;
+}
+
+.contact-form .submit-btn {
+  background-color: #7c2234;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact-form .submit-btn:hover {
+  background-color: #b74058;
+}
+
+.form-status {
+  margin-top: 20px;
+  color: #28a745;
+  font-size: 16px;
+}
+
 /* Responsive Styles */
 @media (max-width: 576px) {
   .contact-info {
@@ -59,6 +106,19 @@
   .contact-info .info p {
     font-size: 16px;
   }
+
+  .contact-form h3 {
+    font-size: 20px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 14px;
+  }
+
+  .contact-form .submit-btn {
+    font-size: 16px;
+  }
 }
 
 @media (min-width: 577px) and (max-width: 1023px) {
@@ -72,6 +132,19 @@
   }
 
   .contact-info .info p {
+    font-size: 17px;
+  }
+
+  .contact-form h3 {
+    font-size: 21px;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 15px;
+  }
+
+  .contact-form .submit-btn {
     font-size: 17px;
   }
 }

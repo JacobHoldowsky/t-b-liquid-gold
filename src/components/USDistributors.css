@@ -1,7 +1,6 @@
 .us-distributors {
     padding: 40px 40px;
     background-color: #f3f4f6;
-    font-family: 'Arial', sans-serif;
     margin: 0 auto;
     min-height: 75vh; /* Ensures the section takes up the full height of the viewport */
     display: flex;
@@ -91,6 +90,31 @@
     margin-bottom: 10px;
     color: #555;
     font-weight: 500;
+  }
+  
+  .nationwide-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    text-align: center;
+  }
+  
+  .nationwide-info {
+    font-size: 1.4rem;
+    color: #333;
+  }
+  
+  .nationwide-info a {
+    font-weight: bold;
+    color: #25d366;
+    text-decoration: none;
+  }
+  
+  .nationwide-info a:hover {
+    color: #1ebe57;
+    text-decoration: underline;
   }
   
   /* Responsive Design */
