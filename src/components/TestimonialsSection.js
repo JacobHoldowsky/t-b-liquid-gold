@@ -1,5 +1,5 @@
-import React from 'react';
-import './TestimonialsSection.css';
+import React from "react";
+import "./TestimonialsSection.css";
 
 function TestimonialsSection() {
   return (
@@ -8,22 +8,24 @@ function TestimonialsSection() {
       <div className="testimonials-grid">
         <div className="testimonial">
           <p>
-            "The best honey I've ever tasted! Perfect for gifts and personal
-            use."
+            "The most amazing honey I've ever tasted. Also they have the best
+            customer service."
           </p>
-          <h3>- Sarah M.</h3>
+          <h3>- Tamar Gold</h3>
         </div>
         <div className="testimonial">
           <p>
-            "A delightful experience from start to finish. Highly recommend!"
+            "This was a perfect way to gift our company employees. They all loved
+            it."
           </p>
-          <h3>- David L.</h3>
+          <h3>- Natan Ben Chaim</h3>
         </div>
         <div className="testimonial">
           <p>
-            "Incredible flavor and quality. I keep coming back for more."
+            "We tasted this by our friends and decided that we needed to buy it
+            for ourselves for Rosh Hashana. It was incredible!"
           </p>
-          <h3>- Rachel G.</h3>
+          <h3>- Temima Hershkowitz</h3>
         </div>
       </div>
     </section>
