@@ -2,9 +2,11 @@ import React, { useContext } from "react";
 import { HashLink } from "react-router-hash-link"; // Import HashLink
 import "./FeaturedProducts.css";
 import { CurrencyContext } from "../context/CurrencyContext"; // Import CurrencyContext
+import { ExchangeRateContext } from "../context/ExchangeRateContext"; // Import the context
 
 function FeaturedProducts() {
   const { currency } = useContext(CurrencyContext); // Use context here
+  const exchangeRate = useContext(ExchangeRateContext); // Use the context here
 
   const scrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
@@ -20,7 +22,7 @@ function FeaturedProducts() {
         <div className="product-card">
           <img src="Deluxe Box $120.jpg" alt="Deluxe Box" />
           <h3>Deluxe Box</h3>
-          <p>{currency === "Dollar" ? "$120" : "₪360"}</p>
+          <p>{currency === "Dollar" ? "$120" : `₪${exchangeRate ? Math.ceil(120 * exchangeRate) : 120 * 3.7}`}</p>
           <HashLink
             smooth
             to="/giftPackages"
@@ -30,25 +32,15 @@ function FeaturedProducts() {
             Shop Gift Packages
           </HashLink>
         </div>
-        {/* Our Collection */}
-        <div className="product-card">
-          <img src="vanilla small jar.jpg" alt="Vanilla Creamed Honey" />
-          <h3>Vanilla Creamed Honey</h3>
-          <p>{currency === "Dollar" ? "$15" : "₪60"}</p>
-          <HashLink
-            smooth
-            to="/honeyCollection"
-            scroll={scrollWithOffset}
-            className="cta-btn"
-          >
-            Shop Our Collection
-          </HashLink>
-        </div>
         {/* Corporate Gifts */}
         <div className="product-card">
           <img src="For Her $55.jpg" alt="For Her" />
           <h3>For Her</h3>
-          <p>{currency === "Dollar" ? "$55" : "₪180"}</p>
+          <p>
+            {currency === "Dollar"
+              ? "$55"
+              : `₪${exchangeRate ? Math.ceil(55 * exchangeRate) : 55 * 3.7}`}
+          </p>
           <HashLink
             smooth
             to="/corporateGifts"
@@ -56,6 +48,23 @@ function FeaturedProducts() {
             className="cta-btn"
           >
             Shop Corporate Gifts
+          </HashLink>
+        </div>
+        <div className="product-card">
+          <img src="Collection Plus $95.jpg" alt="Collection Plus" />
+          <h3>Collection Plus</h3>
+          <p>
+            {currency === "Dollar"
+              ? "$120"
+              : `₪${exchangeRate ? Math.ceil(105 * exchangeRate) : 105 * 3.7}`}
+          </p>
+          <HashLink
+            smooth
+            to="/giftPackages"
+            scroll={scrollWithOffset}
+            className="cta-btn"
+          >
+            Shop Gift Packages
           </HashLink>
         </div>
       </div>
