@@ -1,22 +1,17 @@
 import React, { useState, useContext } from "react";
 import "./HoneyCollection.css";
 import { CurrencyContext } from "../context/CurrencyContext"; // Import CurrencyContext
+import { FaCheckCircle } from "react-icons/fa"; // Import a checkmark icon
 
 function HoneyCollection({ cart, addToCart }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [quantities, setQuantities] = useState({}); // State to track quantities
+  const [addedToCart, setAddedToCart] = useState({}); // Track which items have been added
+  const [modalAddedToCart, setModalAddedToCart] = useState(false); // Separate state for modal
 
   const { currency } = useContext(CurrencyContext); // Use context here
-
   const items = [
-    {
-      url: "bourbon small jar.jpg",
-      title: "Bourbon Creamed Honey",
-      sizeUS: "4oz",
-      priceDollar: "12",
-      sizeIL: "120ml",
-      priceShekel: "45",
-    },
     {
       url: "chocolate small jar.jpg",
       title: "Chocolate Creamed Honey",
@@ -58,10 +53,18 @@ function HoneyCollection({ cart, addToCart }) {
       priceShekel: "45",
     },
     {
+      url: "bourbon small jar.jpg",
+      title: "Bourbon Creamed Honey",
+      sizeUS: "4oz",
+      priceDollar: "14",
+      sizeIL: "120ml",
+      priceShekel: "45",
+    },
+    {
       url: "blueberry small jar.jpg",
       title: "Blueberry Creamed Honey",
       sizeUS: "4oz",
-      priceDollar: "12",
+      priceDollar: "14",
       sizeIL: "120ml",
       priceShekel: "45",
     },
@@ -82,6 +85,50 @@ function HoneyCollection({ cart, addToCart }) {
     e.stopPropagation();
   };
 
+  const handleQuantityChange = (item, quantity) => {
+    setQuantities((prev) => ({
+      ...prev,
+      [item.title]: quantity,
+    }));
+  };
+
+  const handleAddToCart = (item, inModal = false) => {
+    const quantity = quantities[item.title] || 1;
+    addToCart({ ...item, quantity });
+    setQuantities((prev) => ({ ...prev, [item.title]: 1 }));
+
+    if (inModal) {
+      setModalAddedToCart(true);
+      setTimeout(() => {
+        setModalAddedToCart("hide");
+      }, 1500);
+
+      setTimeout(() => {
+        setModalAddedToCart(false);
+        closeModal(); // Optionally close the modal after the animation
+      }, 2000);
+    } else {
+      setAddedToCart((prev) => ({
+        ...prev,
+        [item.title]: true,
+      }));
+
+      setTimeout(() => {
+        setAddedToCart((prev) => ({
+          ...prev,
+          [item.title]: "hide",
+        }));
+      }, 1500);
+
+      setTimeout(() => {
+        setAddedToCart((prev) => ({
+          ...prev,
+          [item.title]: false,
+        }));
+      }, 2000);
+    }
+  };
+
   return (
     <div className="honey">
       <h2 className="honey-section-title">Honey Collection</h2>
@@ -97,17 +144,50 @@ function HoneyCollection({ cart, addToCart }) {
             </div>
             <div className="honey-info">
               <h3>{item.title}</h3>
-              <p>
-                {currency === "Dollar"
-                  ? `$${item.priceDollar}`
-                  : `₪${item.priceShekel}`}
-                {" / "}
-                {currency === "Dollar" ? item.sizeUS : item.sizeIL}
-              </p>
+              <div className="honey-price-size">
+                <span className="honey-price">
+                  {currency === "Dollar"
+                    ? `$${item.priceDollar}`
+                    : `₪${item.priceShekel}`}
+                </span>
+                <span className="honey-size">
+                  Size: {currency === "Dollar" ? item.sizeUS : item.sizeIL}
+                </span>
+              </div>
+              <div className="quantity-selector">
+                <label htmlFor={`quantity-${index}`}>Quantity:</label>
+                <select
+                  id={`quantity-${index}`}
+                  value={quantities[item.title] || 1}
+                  onChange={(e) =>
+                    handleQuantityChange(item, parseInt(e.target.value, 10))
+                  }
+                >
+                  {[...Array(10).keys()].map((num) => (
+                    <option key={num + 1} value={num + 1}>
+                      {num + 1}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <button onClick={() => addToCart(item)} className="add-to-cart-btn">
-              Add to Cart
-            </button>
+            {addedToCart[item.title] ? (
+              <div
+                className={`notification ${
+                  addedToCart[item.title] === "hide" ? "hide" : "show"
+                }`}
+              >
+                <FaCheckCircle className="checkmark" />
+                Added to cart
+              </div>
+            ) : (
+              <button
+                onClick={() => handleAddToCart(item)}
+                className="add-to-cart-btn"
+              >
+                Add to Cart
+              </button>
+            )}
           </div>
         ))}
       </div>
@@ -120,24 +200,54 @@ function HoneyCollection({ cart, addToCart }) {
             <div className="modal-content">
               <img src={selectedItem.url} alt={selectedItem.title} />
               <h3>{selectedItem.title}</h3>
-              <p>
-                {currency === "Dollar"
-                  ? `$${selectedItem.priceDollar}`
-                  : `₪${selectedItem.priceShekel}`}
-                {" / "}
-                {currency === "Dollar"
-                  ? selectedItem.sizeUS
-                  : selectedItem.sizeIL}
-              </p>
-              <button
-                onClick={() => {
-                  addToCart(selectedItem);
-                  closeModal();
-                }}
-                className="add-to-cart-btn"
-              >
-                Add to Cart
-              </button>
+              <div className="honey-price-size">
+                <span className="honey-price">
+                  {currency === "Dollar"
+                    ? `$${selectedItem.priceDollar}`
+                    : `₪${selectedItem.priceShekel}`}
+                </span>
+                <span className="honey-size">
+                  Size: {currency === "Dollar"
+                    ? selectedItem.sizeUS
+                    : selectedItem.sizeIL}
+                </span>
+              </div>
+              <div className="quantity-selector">
+                <label htmlFor="modal-quantity">Quantity:</label>
+                <select
+                  id="modal-quantity"
+                  value={quantities[selectedItem.title] || 1}
+                  onChange={(e) =>
+                    handleQuantityChange(
+                      selectedItem,
+                      parseInt(e.target.value, 10)
+                    )
+                  }
+                >
+                  {[...Array(10).keys()].map((num) => (
+                    <option key={num + 1} value={num + 1}>
+                      {num + 1}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {modalAddedToCart ? (
+                <div
+                  className={`notification ${
+                    modalAddedToCart === "hide" ? "hide" : "show"
+                  }`}
+                >
+                  <FaCheckCircle className="checkmark" />
+                  Added to cart
+                </div>
+              ) : (
+                <button
+                  onClick={() => handleAddToCart(selectedItem, true)}
+                  className="add-to-cart-btn"
+                >
+                  Add to Cart
+                </button>
+              )}
             </div>
           </div>
         </div>

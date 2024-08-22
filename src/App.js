@@ -18,7 +18,7 @@ import FloatingWhatsAppButton from "./components/FloatingWhatsAppButton";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { CurrencyProvider } from "./context/CurrencyContext";
 import { ExchangeRateProvider } from "./context/ExchangeRateContext"; // Import the new context
-import './index.css';
+import "./index.css";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -38,9 +38,9 @@ function App() {
 
     if (existingItemIndex !== -1) {
       updatedCart = [...cart];
-      updatedCart[existingItemIndex].quantity += 1;
+      updatedCart[existingItemIndex].quantity += item.quantity; // Add the selected quantity
     } else {
-      const itemWithId = { ...item, id: uuidv4(), quantity: 1 };
+      const itemWithId = { ...item, id: uuidv4() };
       updatedCart = [...cart, itemWithId];
     }
 
@@ -72,7 +72,9 @@ function App() {
 
   return (
     <CurrencyProvider>
-      <ExchangeRateProvider> {/* Wrap with ExchangeRateProvider */}
+      <ExchangeRateProvider>
+        {" "}
+        {/* Wrap with ExchangeRateProvider */}
         <Router>
           <ScrollToTop />
           <div className="App">

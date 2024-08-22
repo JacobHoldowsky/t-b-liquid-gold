@@ -1,8 +1,26 @@
-/* General Styles */
 .honey {
   padding: 20px;
   background-color: #f5f5f5;
 }
+
+.honey-price-size {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the price and size horizontally */
+  margin-bottom: 15px; /* Add some space between the size and the next element */
+}
+
+.honey-price {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 5px; /* Add some space between price and size */
+}
+
+.honey-size {
+  font-size: 1rem;
+  color: #777;
+}
+
 
 .honey-section-title {
   font-size: 2.5rem;
@@ -12,6 +30,26 @@
   text-transform: capitalize;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
+
+.quantity-selector {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.quantity-selector label {
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.quantity-selector select {
+  padding: 5px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  transition: all 0.3s ease; /* Smooth transition */
+}
+
+
 
 .honey-images {
   display: flex;
@@ -73,12 +111,47 @@
   border: none;
   border-radius: 5px;
   font-size: 1rem;
-  
   text-transform: uppercase;
   letter-spacing: 1px;
   transition: background-color 0.3s ease, transform 0.3s ease;
   cursor: pointer;
   width: 80%;
+}
+
+.notification {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: transparent; /* Transparent background */
+  color: #28a745; /* Green text color */
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: default;
+  width: 75%;
+  text-align: center;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.notification.hide {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.notification .checkmark {
+  display: inline-block;
+  margin-right: 8px;
+  color: #28a745;
+  font-size: 1.5rem;
 }
 
 .add-to-cart-btn:hover {

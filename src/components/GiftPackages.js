@@ -12,30 +12,6 @@ function GiftPackages({ cart, addToCart }) {
 
   const items = [
     {
-      url: "Collection Plus $95.jpg",
-      title: "Collection Plus",
-      priceDollar: 105,
-      priceShekel: exchangeRate ? Math.ceil(105 * exchangeRate) : 105 * 3.7,
-    },
-    {
-      url: "Deluxe Box $120.jpg",
-      title: "Deluxe Box",
-      priceDollar: 120,
-      priceShekel: exchangeRate ? Math.ceil(120 * exchangeRate) : 120 * 3.7,
-    },
-    {
-      url: "Belgian Box $100.jpg",
-      title: "Belgian Box",
-      priceDollar: 100,
-      priceShekel: exchangeRate ? Math.ceil(100 * exchangeRate) : 100 * 3.7,
-    },
-    {
-      url: "chocolateDelight.png",
-      title: "Chocolate Delight",
-      priceDollar: 65,
-      priceShekel: exchangeRate ? Math.ceil(65 * exchangeRate) : 65 * 3.7,
-    },
-    {
       url: "For Him $55.jpg",
       title: "For Him",
       priceDollar: 55,
@@ -48,6 +24,12 @@ function GiftPackages({ cart, addToCart }) {
       priceShekel: exchangeRate ? Math.ceil(55 * exchangeRate) : 55 * 3.7,
     },
     {
+      url: "chocolateDelight.png",
+      title: "Chocolate Delight",
+      priceDollar: 65,
+      priceShekel: exchangeRate ? Math.ceil(65 * exchangeRate) : 65 * 3.7,
+    },
+    {
       url: "tnbCollection.jpg",
       title: "T&Bee Collection",
       priceDollar: 79,
@@ -58,6 +40,24 @@ function GiftPackages({ cart, addToCart }) {
       title: "A' LA Connoisseur",
       priceDollar: 85,
       priceShekel: exchangeRate ? Math.ceil(85 * exchangeRate) : 85 * 3.7,
+    },
+    {
+      url: "Belgian Box $100.jpg",
+      title: "Belgian Box",
+      priceDollar: 100,
+      priceShekel: exchangeRate ? Math.ceil(100 * exchangeRate) : 100 * 3.7,
+    },
+    {
+      url: "Collection Plus $95.jpg",
+      title: "Collection Plus",
+      priceDollar: 105,
+      priceShekel: exchangeRate ? Math.ceil(105 * exchangeRate) : 105 * 3.7,
+    },
+    {
+      url: "Deluxe Box $120.jpg",
+      title: "Deluxe Box",
+      priceDollar: 120,
+      priceShekel: exchangeRate ? Math.ceil(120 * exchangeRate) : 120 * 3.7,
     },
   ];
 

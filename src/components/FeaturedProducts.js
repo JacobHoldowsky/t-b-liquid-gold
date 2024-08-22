@@ -22,7 +22,11 @@ function FeaturedProducts() {
         <div className="product-card">
           <img src="Deluxe Box $120.jpg" alt="Deluxe Box" />
           <h3>Deluxe Box</h3>
-          <p>{currency === "Dollar" ? "$120" : `₪${exchangeRate ? Math.ceil(120 * exchangeRate) : 120 * 3.7}`}</p>
+          <p>
+            {currency === "Dollar"
+              ? "$120"
+              : `₪${exchangeRate ? Math.ceil(120 * exchangeRate) : 120 * 3.7}`}
+          </p>
           <HashLink
             smooth
             to="/giftPackages"
@@ -55,7 +59,7 @@ function FeaturedProducts() {
           <h3>Collection Plus</h3>
           <p>
             {currency === "Dollar"
-              ? "$120"
+              ? "$105"
               : `₪${exchangeRate ? Math.ceil(105 * exchangeRate) : 105 * 3.7}`}
           </p>
           <HashLink
