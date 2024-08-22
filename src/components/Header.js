@@ -22,8 +22,6 @@ function Header({ cartItemCount }) {
     toggleCurrency(currency === "Dollar" ? "Shekel" : "Dollar");
   };
 
-
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768 && isOpen) {
@@ -150,14 +148,30 @@ function Header({ cartItemCount }) {
               Contact
             </Link>
           </li>
-          <li>
-            <Link
-              className="top-level-header-item"
-              to="/distributers"
-              onClick={closeMenu}
-            >
-              Distributers
+          <li className="dropdown">
+            <Link className="top-level-header-item" onClick={closeMenu}>
+              Distributors
             </Link>
+            <ul className="dropdown-menu">
+              <li>
+                <Link
+                  className="dropdown-menu-item"
+                  to="/distributors/us"
+                  onClick={closeMenu}
+                >
+                  US Distributors
+                </Link>
+              </li>
+              <li>
+                <Link
+                  className="dropdown-menu-item"
+                  to="/distributors/israel"
+                  onClick={closeMenu}
+                >
+                  Israel Distributors
+                </Link>
+              </li>
+            </ul>
           </li>
           <li className="cart-link">
             <Link
