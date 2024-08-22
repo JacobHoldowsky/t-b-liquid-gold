@@ -51,16 +51,26 @@ app.get("/api/exchange-rate", async (req, res) => {
 app.post("/send-email", async (req, res) => {
   const { name, email, number, message } = req.body;
 
-  console.log("Received data:", { name, email, number, message }); // Add this line
-
   const mailOptions = {
     from: process.env.MAIL_USERNAME,
     to: process.env.PERSONAL_EMAIL,
     subject: "New Contact Form Submission",
-    text: `Name: ${name}\nEmail: ${email}\nNumber: ${number}\nMessage: ${message}`,
+    html: `
+      <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+        <h2 style="color: #7c2234; border-bottom: 2px solid #ddd; padding-bottom: 10px;">New Contact Form Submission</h2>
+        <p style="font-size: 16px;">You have received a new message from your website's contact form.</p>
+        <p style="font-size: 16px;"><strong>Name:</strong> ${name}</p>
+        <p style="font-size: 16px;"><strong>Email:</strong> ${email}</p>
+        <p style="font-size: 16px;"><strong>Phone Number:</strong> ${number}</p>
+        <p style="font-size: 16px;"><strong>Message:</strong></p>
+        <p style="font-size: 16px; background-color: #f9f9f9; padding: 15px; border-radius: 5px;">${message}</p>
+        <p style="font-size: 14px; color: #777; margin-top: 20px; text-align: center;">This email was sent from your website's contact form.</p>
+      </div>
+    `,
   };
 
   try {
+    // Send email
     await transporter.sendMail(mailOptions);
     res.status(200).json({ success: true, message: "Email sent successfully" });
   } catch (error) {
@@ -68,7 +78,6 @@ app.post("/send-email", async (req, res) => {
     res.status(500).json({ success: false, message: "Failed to send email" });
   }
 });
-
 
 // Start server
 const PORT = process.env.PORT || 5000;
