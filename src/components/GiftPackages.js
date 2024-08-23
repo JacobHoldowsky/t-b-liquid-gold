@@ -80,7 +80,6 @@ function GiftPackages({ cart, addToCart }) {
   };
 
   const handleAddToCart = (item, inModal = false) => {
-    // Add to cart with quantity defaulted to 1
     addToCart({ ...item, quantity: 1 });
 
     if (inModal) {
@@ -91,7 +90,7 @@ function GiftPackages({ cart, addToCart }) {
 
       setTimeout(() => {
         setModalAddedToCart(false);
-        closeModal(); // Optionally close the modal after the animation
+        closeModal(); 
       }, 2000);
     } else {
       setAddedToCart((prev) => ({
@@ -117,6 +116,12 @@ function GiftPackages({ cart, addToCart }) {
 
   return (
     <div className="gift-packages">
+      <div className="banner">
+        <p>
+          All gift packages will be delivered the week of September 29th, 2024. 
+          If you need a specific delivery date outside of this week, please contact us directly.
+        </p>
+      </div>
       <h2 className="gift-packages-section-title">Gift Packages</h2>
       <div className="gift-packages-images">
         {items.map((item, index) => (
