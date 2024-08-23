@@ -1,12 +1,15 @@
 import React, { useState, useContext } from "react";
 import "./CorporateGifts.css";
-import { CurrencyContext } from "../context/CurrencyContext"; // Import CurrencyContext
+import { CurrencyContext } from "../context/CurrencyContext";
+import { FaCheckCircle } from "react-icons/fa"; // Import the FaCheckCircle icon
 
 function CorporateGifts({ cart, addToCart }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [addedToCart, setAddedToCart] = useState({});
+  const [modalAddedToCart, setModalAddedToCart] = useState(false);
 
-  const { currency } = useContext(CurrencyContext); // Use context here
+  const { currency } = useContext(CurrencyContext);
 
   const items = [
     {
@@ -56,6 +59,42 @@ function CorporateGifts({ cart, addToCart }) {
     e.stopPropagation();
   };
 
+  const handleAddToCart = (item, inModal = false) => {
+    // Add to cart with quantity defaulted to 1
+    addToCart({ ...item, quantity: 1 });
+
+    if (inModal) {
+      setModalAddedToCart(true);
+      setTimeout(() => {
+        setModalAddedToCart("hide");
+      }, 1500);
+
+      setTimeout(() => {
+        setModalAddedToCart(false);
+        closeModal(); // Optionally close the modal after the animation
+      }, 2000);
+    } else {
+      setAddedToCart((prev) => ({
+        ...prev,
+        [item.title]: true,
+      }));
+
+      setTimeout(() => {
+        setAddedToCart((prev) => ({
+          ...prev,
+          [item.title]: "hide",
+        }));
+      }, 1500);
+
+      setTimeout(() => {
+        setAddedToCart((prev) => ({
+          ...prev,
+          [item.title]: false,
+        }));
+      }, 2000);
+    }
+  };
+
   return (
     <div className="corporate-gifts">
       <h2 className="corporate-gifts-section-title">Corporate Gifts</h2>
@@ -72,15 +111,28 @@ function CorporateGifts({ cart, addToCart }) {
             <div className="corporate-gifts-info">
               <h3>{item.title}</h3>
               <p>
-                {/* Display the price based on the selected currency */}
                 {currency === "Dollar"
                   ? `$${item.priceDollar}`
                   : `₪${item.priceShekel}`}
               </p>
             </div>
-            <button onClick={() => addToCart(item)} className="add-to-cart-btn">
-              Add to Cart
-            </button>
+            {addedToCart[item.title] ? (
+              <div
+                className={`notification ${
+                  addedToCart[item.title] === "hide" ? "hide" : "show"
+                }`}
+              >
+                <FaCheckCircle className="checkmark" />
+                Added to cart
+              </div>
+            ) : (
+              <button
+                onClick={() => handleAddToCart(item)}
+                className="add-to-cart-btn"
+              >
+                Add to Cart
+              </button>
+            )}
           </div>
         ))}
       </div>
@@ -94,20 +146,27 @@ function CorporateGifts({ cart, addToCart }) {
               <img src={selectedItem.url} alt={selectedItem.title} />
               <h3>{selectedItem.title}</h3>
               <p>
-                {/* Display the price based on the selected currency in the modal */}
                 {currency === "Dollar"
                   ? `$${selectedItem.priceDollar}`
                   : `₪${selectedItem.priceShekel}`}
               </p>
-              <button
-                onClick={() => {
-                  addToCart(selectedItem);
-                  closeModal();
-                }}
-                className="add-to-cart-btn"
-              >
-                Add to Cart
-              </button>
+              {modalAddedToCart ? (
+                <div
+                  className={`notification ${
+                    modalAddedToCart === "hide" ? "hide" : "show"
+                  }`}
+                >
+                  <FaCheckCircle className="checkmark" />
+                  Added to cart
+                </div>
+              ) : (
+                <button
+                  onClick={() => handleAddToCart(selectedItem, true)}
+                  className="add-to-cart-btn"
+                >
+                  Add to Cart
+                </button>
+              )}
             </div>
           </div>
         </div>

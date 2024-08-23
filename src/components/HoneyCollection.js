@@ -157,6 +157,7 @@ function HoneyCollection({ cart, addToCart }) {
               <div className="quantity-selector">
                 <label htmlFor={`quantity-${index}`}>Quantity:</label>
                 <select
+                  className="select-dropdown"
                   id={`quantity-${index}`}
                   value={quantities[item.title] || 1}
                   onChange={(e) =>
@@ -207,7 +208,8 @@ function HoneyCollection({ cart, addToCart }) {
                     : `₪${selectedItem.priceShekel}`}
                 </span>
                 <span className="honey-size">
-                  Size: {currency === "Dollar"
+                  Size:{" "}
+                  {currency === "Dollar"
                     ? selectedItem.sizeUS
                     : selectedItem.sizeIL}
                 </span>
@@ -215,7 +217,7 @@ function HoneyCollection({ cart, addToCart }) {
               <div className="quantity-selector">
                 <label htmlFor="modal-quantity">Quantity:</label>
                 <select
-                  id="modal-quantity"
+                  className="select-dropdown"
                   value={quantities[selectedItem.title] || 1}
                   onChange={(e) =>
                     handleQuantityChange(

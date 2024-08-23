@@ -49,6 +49,24 @@
   transition: all 0.3s ease; /* Smooth transition */
 }
 
+.select-dropdown {
+  padding: 6px 8px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.select-dropdown:focus {
+  outline: none;
+  border-color: #7c2234;
+}
+
+.select-dropdown:hover {
+  border-color: #7c2234;
+}
 
 
 .honey-images {

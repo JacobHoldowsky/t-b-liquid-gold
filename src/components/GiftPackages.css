@@ -20,6 +20,43 @@
     flex-wrap: wrap;
     gap: 20px;
   }
+
+  .notification {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: transparent;
+    color: #28a745; /* Green text color */
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    cursor: default;
+    width: 75%;
+    text-align: center;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .notification.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .notification.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  
+  .notification .checkmark {
+    display: inline-block;
+    margin-right: 8px;
+    color: #28a745;
+    font-size: 1.5rem;
+  }
+  
   
   .gift-packages-div {
     flex: 1 1 calc(33.33% - 20px);

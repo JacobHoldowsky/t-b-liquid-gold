@@ -1,14 +1,17 @@
 import React, { useState, useContext } from "react";
 import "./GiftPackages.css";
 import { CurrencyContext } from "../context/CurrencyContext";
-import { ExchangeRateContext } from "../context/ExchangeRateContext"; // Import the context
+import { ExchangeRateContext } from "../context/ExchangeRateContext";
+import { FaCheckCircle } from "react-icons/fa";
 
 function GiftPackages({ cart, addToCart }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [addedToCart, setAddedToCart] = useState({});
+  const [modalAddedToCart, setModalAddedToCart] = useState(false);
 
   const { currency } = useContext(CurrencyContext);
-  const exchangeRate = useContext(ExchangeRateContext); // Use the context here
+  const exchangeRate = useContext(ExchangeRateContext);
 
   const items = [
     {
@@ -76,6 +79,42 @@ function GiftPackages({ cart, addToCart }) {
     e.stopPropagation();
   };
 
+  const handleAddToCart = (item, inModal = false) => {
+    // Add to cart with quantity defaulted to 1
+    addToCart({ ...item, quantity: 1 });
+
+    if (inModal) {
+      setModalAddedToCart(true);
+      setTimeout(() => {
+        setModalAddedToCart("hide");
+      }, 1500);
+
+      setTimeout(() => {
+        setModalAddedToCart(false);
+        closeModal(); // Optionally close the modal after the animation
+      }, 2000);
+    } else {
+      setAddedToCart((prev) => ({
+        ...prev,
+        [item.title]: true,
+      }));
+
+      setTimeout(() => {
+        setAddedToCart((prev) => ({
+          ...prev,
+          [item.title]: "hide",
+        }));
+      }, 1500);
+
+      setTimeout(() => {
+        setAddedToCart((prev) => ({
+          ...prev,
+          [item.title]: false,
+        }));
+      }, 2000);
+    }
+  };
+
   return (
     <div className="gift-packages">
       <h2 className="gift-packages-section-title">Gift Packages</h2>
@@ -97,9 +136,23 @@ function GiftPackages({ cart, addToCart }) {
                   : `₪${item.priceShekel}`}
               </p>
             </div>
-            <button onClick={() => addToCart(item)} className="add-to-cart-btn">
-              Add to Cart
-            </button>
+            {addedToCart[item.title] ? (
+              <div
+                className={`notification ${
+                  addedToCart[item.title] === "hide" ? "hide" : "show"
+                }`}
+              >
+                <FaCheckCircle className="checkmark" />
+                Added to cart
+              </div>
+            ) : (
+              <button
+                onClick={() => handleAddToCart(item)}
+                className="add-to-cart-btn"
+              >
+                Add to Cart
+              </button>
+            )}
           </div>
         ))}
       </div>
@@ -115,17 +168,25 @@ function GiftPackages({ cart, addToCart }) {
               <p>
                 {currency === "Dollar"
                   ? `$${selectedItem.priceDollar}`
-                  : `₪${selectedItem.priceDollar}`}
+                  : `₪${selectedItem.priceShekel}`}
               </p>
-              <button
-                onClick={() => {
-                  addToCart(selectedItem);
-                  closeModal();
-                }}
-                className="add-to-cart-btn"
-              >
-                Add to Cart
-              </button>
+              {modalAddedToCart ? (
+                <div
+                  className={`notification ${
+                    modalAddedToCart === "hide" ? "hide" : "show"
+                  }`}
+                >
+                  <FaCheckCircle className="checkmark" />
+                  Added to cart
+                </div>
+              ) : (
+                <button
+                  onClick={() => handleAddToCart(selectedItem, true)}
+                  className="add-to-cart-btn"
+                >
+                  Add to Cart
+                </button>
+              )}
             </div>
           </div>
         </div>
