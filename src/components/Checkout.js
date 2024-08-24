@@ -1,12 +1,12 @@
 import React, { useMemo, useContext } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import "./Checkout.css";
-import { CurrencyContext } from "../context/CurrencyContext"; // Import CurrencyContext
+import { CurrencyContext } from "../context/CurrencyContext";
 
-const stripePromise = loadStripe("your-publishable-key-here");
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 function Checkout({ cart, setCart, removeFromCart }) {
-  const { currency } = useContext(CurrencyContext); // Use context here
+  const { currency } = useContext(CurrencyContext);
 
   const aggregatedCart = useMemo(() => {
     const aggregatedCart = [];
@@ -27,30 +27,63 @@ function Checkout({ cart, setCart, removeFromCart }) {
     return aggregatedCart;
   }, [cart]);
 
+  const apiUrl =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5000/api/create-checkout-session"
+      : "/api/create-checkout-session";
+
   const handleCheckout = async () => {
     try {
       const stripe = await stripePromise;
 
-      const session = await stripe.redirectToCheckout({
-        lineItems: aggregatedCart.map((item) => ({
-          price_data: {
-            currency: currency === "Dollar" ? "usd" : "ils",
-            product_data: {
-              name: item.title,
-              images: [item.url],
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: aggregatedCart.map((item) => ({
+            price_data: {
+              currency: currency === "Dollar" ? "usd" : "ils",
+              product_data: {
+                name: item.title,
+                images: [item.url],
+              },
+              unit_amount:
+                (currency === "Dollar" ? item.priceDollar : item.priceShekel) *
+                100,
             },
-            unit_amount: (currency === "Dollar" ? item.priceDollar : item.priceShekel) * 100, // No replace needed if prices are numbers
-          },
-          quantity: item.quantity,
-        })),
-        mode: "payment",
-        successUrl: `${window.location.origin}/success`,
-        cancelUrl: `${window.location.origin}/canceled`,
+            quantity: item.quantity,
+          })),
+        }),
       });
 
-      if (session.error) {
-        throw new Error(session.error.message);
+      if (!response.ok) {
+        const errorDetails = await response.text();
+        throw new Error(
+          `Request failed with status ${response.status}: ${errorDetails}`
+        );
       }
+
+      const session = await response.json();
+      console.log(session); // Debugging line
+
+      if (!session.id) {
+        throw new Error("No session ID returned from the API");
+      }
+
+      // Redirect to Stripe Checkout using the session ID
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id,
+      });
+
+      if (result.error) {
+        throw new Error(result.error.message);
+      }
+
+      // Clear the cart if the payment is successful
+      setCart([]);
+      localStorage.removeItem("cart"); // Also clear the cart in localStorage
     } catch (error) {
       alert(`Checkout failed: ${error.message}`);
     }
@@ -65,10 +98,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
       .reduce((total, item) => {
         const price =
           currency === "Dollar" ? item.priceDollar : item.priceShekel;
-        return (
-          total +
-          parseFloat(price) * item.quantity // No replace needed if prices are numbers
-        );
+        return total + parseFloat(price) * item.quantity;
       }, 0)
       .toFixed(2);
 
@@ -148,7 +178,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
           )}
         </div>
         <div className="total-price">
-          <h3>Total: {currency === "Dollar" ? "$" : "₪"}{calculateTotalPrice()}</h3>
+          <h3>
+            Total: {currency === "Dollar" ? "$" : "₪"}
+            {calculateTotalPrice()}
+          </h3>
         </div>
         <button
           type="button"

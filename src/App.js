@@ -94,7 +94,10 @@ function App() {
                 path="/corporateGifts"
                 element={<CorporateGifts cart={cart} addToCart={addToCart} />}
               />
-              <Route path="/distributors/us" element={<USDistributors cart={cart} addToCart={addToCart} />} />
+              <Route
+                path="/distributors/us"
+                element={<USDistributors cart={cart} addToCart={addToCart} />}
+              />
 
               <Route
                 path="/wholesale"
@@ -112,7 +115,7 @@ function App() {
                   />
                 }
               />
-              <Route path="/success" element={<Success />} />
+              <Route path="/success" element={<Success setCart={setCart} />} />
               <Route path="/canceled" element={<Canceled />} />
             </Routes>
             <Footer />

@@ -1,8 +1,23 @@
 {
-    "build": {
-      "env": {
-        "GIT_SUBMODULE_STRATEGY": "recursive"
-      }
+  "version": 2,
+  "build": {
+    "env": {
+      "GIT_SUBMODULE_STRATEGY": "recursive"
     }
+  },
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.js"
+    }
+  ],
+  "env": {
+    "STRIPE_SECRET_KEY": "@stripe-secret-key"
   }
-  
+}
