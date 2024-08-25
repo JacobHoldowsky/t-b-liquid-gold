@@ -37,7 +37,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
       const stripe = await stripePromise;
 
       const response = await fetch(apiUrl, {
-        method: 'POST",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
