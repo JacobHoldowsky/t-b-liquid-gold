@@ -22,8 +22,8 @@ module.exports = async (req, res) => {
         payment_method_types: ["card"],
         line_items: lineItems,
         mode: "payment",
-        success_url: `https://t-b-liquid-gold.vercel.app//success`,
-        cancel_url: `https://t-b-liquid-gold.vercel.app//canceled`,
+        success_url: `https://t-b-liquid-gold.vercel.app/success`,
+        cancel_url: `https://t-b-liquid-gold.vercel.app/canceled`,
         shipping_address_collection: {
           allowed_countries: ["US", "IL"], // Specify allowed countries
         },
