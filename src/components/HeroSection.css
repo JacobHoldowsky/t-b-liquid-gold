@@ -1,3 +1,5 @@
+/* HeroSection.css */
+
 .hero-section {
   position: relative;
   width: 100%;
@@ -25,6 +27,15 @@
   padding: 20px;
   background: rgba(249, 249, 249, 0.5);
   border-radius: 20px;
+  opacity: 0; /* Initially hidden */
+  animation: fadeIn 2s ease-in-out .4s forwards; /* Fade in with a delay */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
 }
 
 .hero-content h1 {
