@@ -21,10 +21,10 @@ const transporter = nodemailer.createTransport({
 module.exports = async (req, res) => {
   if (req.method === "POST") {
     const sig = req.headers["stripe-signature"];
-
     let event;
 
     try {
+      // Parse raw body
       const rawBody = await buffer(req);
       event = stripe.webhooks.constructEvent(
         rawBody,
@@ -40,17 +40,14 @@ module.exports = async (req, res) => {
     try {
       if (event.type === "checkout.session.completed") {
         const session = event.data.object;
-
         console.log("Session object:", session);
 
-        // Handle potential null customer email
         const customerEmail = session.customer_details.email;
         if (!customerEmail) {
           throw new Error("Customer email is null or undefined");
         }
 
         const shippingDetails = session.customer_details.address;
-
         const lineItems = await stripe.checkout.sessions.listLineItems(
           session.id
         );
@@ -72,9 +69,9 @@ module.exports = async (req, res) => {
         const shippingAddressHtml = `
           <p>${shippingDetails.line1}</p>
           ${shippingDetails.line2 ? `<p>${shippingDetails.line2}</p>` : ""}
-          <p>${shippingDetails.city}, ${
-          shippingDetails.state ? shippingDetails.state : ""
-        } ${shippingDetails.postal_code}</p>
+          <p>${shippingDetails.city}, ${shippingDetails.state || ""} ${
+          shippingDetails.postal_code
+        }</p>
           <p>${shippingDetails.country}</p>
         `;
 
@@ -104,13 +101,7 @@ module.exports = async (req, res) => {
         };
 
         console.log("Sending email to customer:", customerEmail);
-        transporter.sendMail(mailOptionsCustomer, (error, info) => {
-          if (error) {
-            console.error("Error sending email to customer:", error);
-          } else {
-            console.log("Email sent to customer:", info.response);
-          }
-        });
+        await transporter.sendMail(mailOptionsCustomer);
 
         const mailOptionsAdmin = {
           from: process.env.MAIL_USERNAME,
@@ -137,13 +128,7 @@ module.exports = async (req, res) => {
         };
 
         console.log("Sending email to admin:", process.env.PERSONAL_EMAIL);
-        transporter.sendMail(mailOptionsAdmin, (error, info) => {
-          if (error) {
-            console.error("Error sending email to admin:", error);
-          } else {
-            console.log("Email sent to admin:", info.response);
-          }
-        });
+        await transporter.sendMail(mailOptionsAdmin);
       }
 
       res.status(200).json({ received: true });
