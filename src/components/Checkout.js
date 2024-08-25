@@ -30,14 +30,14 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const apiUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:5000/api/create-checkout-session"
-      : "/api/create-checkout-session";
+      : '/api/create-checkout-session';
 
   const handleCheckout = async () => {
     try {
       const stripe = await stripePromise;
 
       const response = await fetch(apiUrl, {
-        method: "POST",
+        method: 'POST",
         headers: {
           "Content-Type": "application/json",
         },
