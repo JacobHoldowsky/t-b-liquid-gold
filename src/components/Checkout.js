@@ -3,7 +3,9 @@ import { loadStripe } from "@stripe/stripe-js";
 import "./Checkout.css";
 import { CurrencyContext } from "../context/CurrencyContext";
 
-const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+console.log("Stripe API Key:", process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 function Checkout({ cart, setCart, removeFromCart }) {
   const { currency } = useContext(CurrencyContext);
@@ -30,7 +32,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const apiUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:5000/api/create-checkout-session"
-      : '/api/create-checkout-session';
+      : "/api/create-checkout-session";
 
   const handleCheckout = async () => {
     try {
