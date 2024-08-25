@@ -3,7 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import "./Checkout.css";
 import { CurrencyContext } from "../context/CurrencyContext";
 
-console.log("Stripe API Key:", process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+console.log('Stripe API Key:', process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
