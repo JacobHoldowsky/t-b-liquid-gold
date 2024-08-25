@@ -22,10 +22,7 @@ module.exports = async (req, res) => {
     let event;
 
     try {
-      // Retrieve the raw body as a buffer
       const rawBody = await buffer(req);
-
-      // Verify and construct the event
       event = stripe.webhooks.constructEvent(
         rawBody,
         sig,
@@ -33,17 +30,16 @@ module.exports = async (req, res) => {
       );
       console.log("Webhook received:", event.type);
     } catch (err) {
-      console.log(`⚠️  Webhook signature verification failed.`, err.message);
+      console.error(`⚠️  Webhook signature verification failed.`, err);
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
-    // Handle the event
-    if (event.type === "checkout.session.completed") {
-      const session = event.data.object;
-      const customerEmail = session.customer_details.email;
-      const shippingDetails = session.customer_details.address;
+    try {
+      if (event.type === "checkout.session.completed") {
+        const session = event.data.object;
+        const customerEmail = session.customer_details.email;
+        const shippingDetails = session.customer_details.address;
 
-      try {
         const lineItems = await stripe.checkout.sessions.listLineItems(
           session.id
         );
@@ -93,6 +89,7 @@ module.exports = async (req, res) => {
           `,
         };
 
+        // Send email to customer
         transporter.sendMail(mailOptionsCustomer, (error, info) => {
           if (error) {
             console.error("Error sending email to customer:", error);
@@ -125,6 +122,7 @@ module.exports = async (req, res) => {
           `,
         };
 
+        // Send email to admin
         transporter.sendMail(mailOptionsAdmin, (error, info) => {
           if (error) {
             console.error("Error sending email to admin:", error);
@@ -132,12 +130,13 @@ module.exports = async (req, res) => {
             console.log("Email sent to admin:", info.response);
           }
         });
-      } catch (err) {
-        console.error("Error retrieving line items:", err);
       }
-    }
 
-    res.status(200).json({ received: true });
+      res.status(200).json({ received: true });
+    } catch (err) {
+      console.error(`⚠️  Error processing webhook event:`, err);
+      res.status(500).send(`Server Error: ${err.message}`);
+    }
   } else {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
@@ -146,6 +145,6 @@ module.exports = async (req, res) => {
 
 export const config = {
   api: {
-    bodyParser: false, // Disable Vercel's automatic body parsing
+    bodyParser: false,
   },
 };
