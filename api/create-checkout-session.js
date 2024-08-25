@@ -1,17 +1,18 @@
 const Stripe = require("stripe");
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2022-11-15",
+});
 module.exports = async (req, res) => {
   if (req.method === "POST") {
     try {
-      const { items } = req.body;
+      const { items, email } = req.body;
 
       const lineItems = items.map((item) => ({
         price_data: {
           currency: item.price_data.currency,
           product_data: {
             name: item.price_data.product_data.name,
-            images: item.price_data.product_data.images,
+            images: [item.url],
           },
           unit_amount: item.price_data.unit_amount,
         },
@@ -22,10 +23,11 @@ module.exports = async (req, res) => {
         payment_method_types: ["card"],
         line_items: lineItems,
         mode: "payment",
-        success_url: `https://t-b-liquid-gold.vercel.app/success`,
-        cancel_url: `https://t-b-liquid-gold.vercel.app/canceled`,
+        success_url: `${req.headers.origin}/success`,
+        cancel_url: `${req.headers.origin}/canceled`,
+        customer_email: email,
         shipping_address_collection: {
-          allowed_countries: ["US", "IL"], // Specify allowed countries
+          allowed_countries: ["US", "IL"], // Specify the allowed shipping countries
         },
       });
 
