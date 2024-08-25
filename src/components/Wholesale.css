@@ -1,326 +1,258 @@
+/* General Styles */
+.wholesale {
+  padding: 40px 20px;
+  background-color: #f5f5f5;
+}
+
+.wholesale-section-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 40px;
+  color: #222;
+  text-transform: capitalize;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
 .wholesale-message {
-  font-size: 1.4rem;
-  color: #555;
+  font-size: 1.2rem;
+  color: #333;
   text-align: center;
   margin: 20px 0;
-  background-color: #f9f9f9;
+  background-color: #fefefe;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  line-height: 1.6;
 }
 
 .wholesale-message a {
   color: #7c2234;
+  font-weight: 600;
   text-decoration: none;
-  transition: color 0.3s ease;
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
 }
 
 .wholesale-message a:hover {
   color: #b74058;
+  border-bottom: 1px solid #b74058;
 }
-/* General Styles */
-/* General Styles */
-.wholesale {
-    padding: 20px;
-    background-color: #f5f5f5;
-  }
-  
-  .wholesale-section-title {
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 40px;
-    color: #222;
-    text-transform: capitalize;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .wholesale-images {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  
+
+/* Section Styles */
+.wholesale-jar-section {
+  margin-top: 40px;
+}
+
+.wholesale-jar-heading {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #7c2234;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.wholesale-images {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.wholesale-div {
+  flex: 1 1 calc(30% - 20px);
+  max-width: calc(30% - 20px);
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.wholesale-div:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.wholesale-image img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #e9e9e9;
+  transition: transform 0.3s ease;
+}
+
+.wholesale-image img:hover {
+  transform: scale(1.05);
+}
+
+.wholesale-info {
+  padding: 20px;
+  text-align: center;
+}
+
+.wholesale-info h3 {
+  font-size: 1.5rem;
+  color: #444;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.modal img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.modal h3 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+  color: #333;
+}
+
+.wholesale-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 28px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.wholesale-close-btn:hover {
+  color: #555;
+}
+
+/* Disable Scroll When Modal is Open */
+.modal-open {
+  overflow: hidden;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
   .wholesale-div {
-    flex: 1 1 calc(33.33% - 20px);
-    max-width: calc(33.33% - 20px);
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    overflow: hidden;
+    flex: 1 1 calc(45% - 20px);
+    max-width: calc(45% - 20px);
   }
-  
-  .wholesale-div:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+
+  .wholesale-section-title {
+    font-size: 2.2rem;
   }
-  
-  .wholesale-image img {
-    width: 100%;
-    height: auto;
-    border-bottom: 2px solid #e9e9e9;
-    transition: transform 0.3s ease;
-  }
-  
-  .wholesale-image img:hover {
-    transform: scale(1.08);
-  }
-  
-  .wholesale-info {
-    padding: 20px;
-    text-align: center;
-  }
-  
+
   .wholesale-info h3 {
-    font-size: 1.6rem;
-    color: #333;
-    margin-bottom: 10px;
-    
-   
+    font-size: 1.4rem;
   }
-  
-  .wholesale-info p {
-    font-size: 1.2rem;
-    color: #777;
-    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+  .wholesale-div {
+    flex: 1 1 calc(100% - 20px);
   }
-  
-  .add-to-cart-btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #7c2234;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-   
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    cursor: pointer;
-    width: 80%;
+
+  .wholesale-section-title {
+    font-size: 2rem;
   }
-  
-  .add-to-cart-btn:hover {
-    background-color: #b74058;
-    transform: translateY(-2px);
-  }
-  
-  /* Modal Styles */
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-  
+
   .modal {
-    background-color: #fff;
-    border-radius: 15px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    width: 90%;
-    max-width: 500px;
-    text-align: center;
-    position: relative;
+    max-width: 400px;
   }
-  
-  .modal img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
-  
+
   .modal h3 {
-    font-size: 1.6rem;
-    margin-bottom: 15px;
-    
-   
+    font-size: 1.5rem;
   }
-  
-  .modal p {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    color: #777;
-  }
-  
+
   .wholesale-close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: transparent;
-    border: none;
     font-size: 24px;
-    color: #333;
-    cursor: pointer;
   }
-  
-  .wholesale-close-btn:hover {
-    color: #555;
+}
+
+@media (max-width: 576px) {
+  .wholesale-section-title {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
   }
-  
-  /* Disable Scroll When Modal is Open */
-  .modal-open {
-    overflow: hidden;
+
+  .modal {
+    padding: 15px;
+    max-width: 350px;
+    border-radius: 10px;
   }
-  
-  /* Responsive Adjustments */
-  @media (max-width: 992px) {
-    .wholesale-div {
-      flex: 1 1 calc(50% - 20px);
-      max-width: calc(50% - 20px);
-    }
-  
-    .wholesale-section-title {
-      font-size: 2.2rem;
-    }
-  
-    .wholesale-info h3 {
-      font-size: 1.4rem;
-    }
-  
-    .wholesale-info p {
-      font-size: 1.1rem;
-    }
-  
-    .add-to-cart-btn {
-      font-size: 0.9rem;
-      padding: 8px 16px;
-    }
+
+  .modal h3 {
+    font-size: 1.4rem;
   }
-  
-  @media (max-width: 768px) {
-    .wholesale-div {
-      flex: 1 1 calc(50% - 20px);
-    }
-  
-    .wholesale-section-title {
-      font-size: 2rem;
-    }
-  
-    .wholesale-info h3 {
-      font-size: 1.4rem;
-    }
-  
-    .wholesale-info p {
-      font-size: 1rem;
-    }
-  
-    .add-to-cart-btn {
-      font-size: 0.9rem;
-      padding: 8px 16px;
-    }
-  
-    .modal {
-      padding: 15px;
-      max-width: 400px;
-    }
-  
-    .modal h3 {
-      font-size: 1.4rem;
-    }
-  
-    .modal p {
-      font-size: 1rem;
-    }
-  
-    .wholesale-close-btn {
-      font-size: 20px;
-    }
+
+  .wholesale-close-btn {
+    font-size: 20px;
+    top: 8px;
+    right: 8px;
   }
-  
-  @media (max-width: 576px) {
-    .wholesale-div {
-      flex: 1 1 calc(100% - 20px);
-      max-width: calc(100% - 20px);
-    }
-  
-    .wholesale-section-title {
-      font-size: 1.8rem;
-      margin-bottom: 30px;
-    }
-  
-    .wholesale-info h3 {
-      font-size: 1.2rem;
-    }
-  
-    .wholesale-info p {
-      font-size: 0.9rem;
-    }
-  
-    .add-to-cart-btn {
-      font-size: 0.8rem;
-      padding: 6px 12px;
-    }
-  
-    .modal {
-      padding: 10px;
-      max-width: 300px;
-      border-radius: 10px;
-    }
-  
-    .modal h3 {
-      font-size: 1.2rem;
-    }
-  
-    .modal p {
-      font-size: 0.9rem;
-    }
-  
-    .wholesale-close-btn {
-      font-size: 18px;
-      top: 5px;
-      right: 5px;
-    }
+}
+
+@media (max-width: 400px) {
+  .wholesale-section-title {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
   }
-  
-  @media (max-width: 400px) {
-    .wholesale-section-title {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-    }
-  
-    .wholesale-info h3 {
-      font-size: 1.1rem;
-    }
-  
-    .wholesale-info p {
-      font-size: 0.8rem;
-    }
-  
-    .add-to-cart-btn {
-      font-size: 0.7rem;
-      padding: 5px 10px;
-    }
-  
-    .modal {
-      padding: 10px;
-      max-width: 250px;
-      border-radius: 8px;
-    }
-  
-    .modal h3 {
-      font-size: 1.1rem;
-    }
-  
-    .modal p {
-      font-size: 0.8rem;
-    }
-  
-    .wholesale-close-btn {
-      font-size: 16px;
-      top: 2px;
-      right: 2px;
-    }
+
+  .modal {
+    padding: 10px;
+    max-width: 300px;
   }
-  
+
+  .modal h3 {
+    font-size: 1.3rem;
+  }
+
+  .wholesale-close-btn {
+    font-size: 18px;
+  }
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

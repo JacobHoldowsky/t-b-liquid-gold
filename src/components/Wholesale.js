@@ -7,46 +7,14 @@ function Wholesale({ cart, addToCart }) {
 
   const items = [
     {
-      url: "bourbon small jar.jpg",
-      title: "Bourbon Small Jar",
-      priceDollar: "15",
-      priceShekel: "50",
+      url: "collection of small jars.jpg",
+      title: "T&Bee 2oz Jars",
+      size: "small",
     },
     {
-      url: "chocolate small jar.jpg",
-      title: "Chocolate Small Jar",
-      priceDollar: "15",
-      priceShekel: "50",
-    },
-    {
-      url: "cinnamon small jar.jpg",
-      title: "Cinnamon Small Jar",
-      priceDollar: "15",
-      priceShekel: "50",
-    },
-    {
-      url: "pumpkin small jar.JPG",
-      title: "Pumpkin Small Jar",
-      priceDollar: "15",
-      priceShekel: "50",
-    },
-    {
-      url: "sea salt small jar.jpg",
-      title: "Sea Salt Small Jar",
-      priceDollar: "15",
-      priceShekel: "50",
-    },
-    {
-      url: "vanilla small jar.jpg",
-      title: "Vanilla Small Jar",
-      priceDollar: "15",
-      priceShekel: "50",
-    },
-    {
-      url: "blueberry small jar.jpg",
-      title: "Blueberry Small Jar",
-      priceDollar: "15",
-      priceShekel: "50",
+      url: "mini jar pyramid.jpg",
+      title: "T&Bee 4oz Jars",
+      size: "large",
     },
   ];
 
@@ -70,11 +38,10 @@ function Wholesale({ cart, addToCart }) {
       <h2 className="wholesale-section-title">Wholesale</h2>
       <div className="wholesale-message">
         <p>
-          We are now selling wholesale and will be happy to service you! Minimum
-          wholesale order for the 4oz jars start at 50+ jars and minimum
-          wholesale order for our 2oz jars start at 100+ jars.
+          We are now offering wholesale orders! Minimum orders for 4oz jars
+          start at 50+ jars, and 2oz jars at 100+ jars.
           <br />
-          If you would like to buy wholesale please reach out to us via{" "}
+          For inquiries, please contact us via{" "}
           <a
             href="https://wa.me/+972534309254"
             target="_blank"
@@ -85,22 +52,53 @@ function Wholesale({ cart, addToCart }) {
           .
         </p>
       </div>
-      <div className="wholesale-images">
-        {items.map((item, index) => (
-          <div key={index} className="wholesale-div">
-            <div className="wholesale-image">
-              <img
-                src={item.url}
-                alt={item.title}
+
+      {/* Small Jars Section */}
+      <div className="wholesale-jar-section">
+        <h3 className="wholesale-jar-heading">T&Bee 2oz Jars</h3>
+        <div className="wholesale-images">
+          {items
+            .filter((item) => item.size === "small")
+            .map((item, index) => (
+              <div
+                key={index}
+                className="wholesale-div"
                 onClick={() => openModal(item)}
-              />
-            </div>
-            <div className="wholesale-info">
-              <h3>{item.title}</h3>
-            </div>
-          </div>
-        ))}
+              >
+                <div className="wholesale-image">
+                  <img src={item.url} alt={item.title} />
+                </div>
+                <div className="wholesale-info">
+                  <h3>{item.title}</h3>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
+
+      {/* Large Jars Section */}
+      <div className="wholesale-jar-section">
+        <h3 className="wholesale-jar-heading">T&Bee 4oz Jars</h3>
+        <div className="wholesale-images">
+          {items
+            .filter((item) => item.size === "large")
+            .map((item, index) => (
+              <div
+                key={index}
+                className="wholesale-div"
+                onClick={() => openModal(item)}
+              >
+                <div className="wholesale-image">
+                  <img src={item.url} alt={item.title} />
+                </div>
+                <div className="wholesale-info">
+                  <h3>{item.title}</h3>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+
       {modalOpen && selectedItem && (
         <div className="modal-overlay" onClick={closeModal}>
           <div className="modal" onClick={handleModalClick}>

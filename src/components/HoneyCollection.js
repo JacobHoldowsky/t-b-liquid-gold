@@ -61,7 +61,7 @@ function HoneyCollection({ cart, addToCart }) {
       priceShekel: "45",
     },
     {
-      url: "blueberry small jar.jpg",
+      url: "blueberry screenshot.png",
       title: "Blueberry Creamed Honey",
       sizeUS: "4oz",
       priceDollar: "14",

@@ -25,7 +25,7 @@ function FeaturedProducts() {
           <p>
             {currency === "Dollar"
               ? "$120"
-              : `₪${exchangeRate ? Math.ceil(120 * exchangeRate) : 120 * 3.7}`}
+              : `₪${exchangeRate ? Math.ceil(120 * exchangeRate) : Math.ceil(120 * 3.7)}`}
           </p>
           <HashLink
             smooth
@@ -43,7 +43,7 @@ function FeaturedProducts() {
           <p>
             {currency === "Dollar"
               ? "$55"
-              : `₪${exchangeRate ? Math.ceil(55 * exchangeRate) : 55 * 3.7}`}
+              : `₪${exchangeRate ? Math.ceil(55 * exchangeRate) : Math.ceil(55 * 3.7)}`}
           </p>
           <HashLink
             smooth
@@ -60,7 +60,7 @@ function FeaturedProducts() {
           <p>
             {currency === "Dollar"
               ? "$105"
-              : `₪${exchangeRate ? Math.ceil(105 * exchangeRate) : 105 * 3.7}`}
+              : `₪${exchangeRate ? Math.ceil(105 * exchangeRate) : Math.ceil(105 * 3.7)}`}
           </p>
           <HashLink
             smooth

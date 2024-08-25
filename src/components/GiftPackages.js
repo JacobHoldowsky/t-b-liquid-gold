@@ -18,49 +18,65 @@ function GiftPackages({ cart, addToCart }) {
       url: "For Him $55.jpg",
       title: "For Him",
       priceDollar: 55,
-      priceShekel: exchangeRate ? Math.ceil(55 * exchangeRate) : 55 * 3.7,
+      priceShekel: exchangeRate
+        ? Math.ceil(55 * exchangeRate)
+        : Math.ceil(55 * 3.7),
     },
     {
       url: "For Her $55.jpg",
       title: "For Her",
       priceDollar: 55,
-      priceShekel: exchangeRate ? Math.ceil(55 * exchangeRate) : 55 * 3.7,
+      priceShekel: exchangeRate
+        ? Math.ceil(55 * exchangeRate)
+        : Math.ceil(55 * 3.7),
     },
     {
       url: "chocolateDelight.png",
       title: "Chocolate Delight",
       priceDollar: 65,
-      priceShekel: exchangeRate ? Math.ceil(65 * exchangeRate) : 65 * 3.7,
+      priceShekel: exchangeRate
+        ? Math.ceil(65 * exchangeRate)
+        : Math.ceil(65 * 3.7),
     },
     {
       url: "tnbCollection.jpg",
       title: "T&Bee Collection",
       priceDollar: 79,
-      priceShekel: exchangeRate ? Math.ceil(79 * exchangeRate) : 79 * 3.7,
+      priceShekel: exchangeRate
+        ? Math.ceil(79 * exchangeRate)
+        : Math.ceil(79 * 3.7),
     },
     {
       url: "aLaConnoisseur.jpg",
       title: "A' LA Connoisseur",
       priceDollar: 85,
-      priceShekel: exchangeRate ? Math.ceil(85 * exchangeRate) : 85 * 3.7,
+      priceShekel: exchangeRate
+        ? Math.ceil(85 * exchangeRate)
+        : Math.ceil(85 * 3.7),
     },
     {
       url: "Belgian Box $100.jpg",
       title: "Belgian Box",
       priceDollar: 100,
-      priceShekel: exchangeRate ? Math.ceil(100 * exchangeRate) : 100 * 3.7,
+      priceShekel: exchangeRate
+        ? Math.ceil(100 * exchangeRate)
+        : Math.ceil(100 * 3.7),
     },
     {
       url: "Collection Plus $95.jpg",
       title: "Collection Plus",
       priceDollar: 105,
-      priceShekel: exchangeRate ? Math.ceil(105 * exchangeRate) : 105 * 3.7,
+      priceShekel: exchangeRate
+        ? Math.ceil(105 * exchangeRate)
+        : Math.ceil(105 * 3.7),
     },
     {
       url: "Deluxe Box $120.jpg",
       title: "Deluxe Box",
       priceDollar: 120,
-      priceShekel: exchangeRate ? Math.ceil(120 * exchangeRate) : 120 * 3.7,
+      priceShekel: exchangeRate
+        ? Math.ceil(120 * exchangeRate)
+        : Math.ceil(120 * 3.7),
     },
   ];
 
@@ -90,7 +106,7 @@ function GiftPackages({ cart, addToCart }) {
 
       setTimeout(() => {
         setModalAddedToCart(false);
-        closeModal(); 
+        closeModal();
       }, 2000);
     } else {
       setAddedToCart((prev) => ({
@@ -118,8 +134,9 @@ function GiftPackages({ cart, addToCart }) {
     <div className="gift-packages">
       <div className="banner">
         <p>
-          All gift packages will be delivered the week of September 29th, 2024. 
-          If you need a specific delivery date outside of this week, please contact us directly.
+          All gift packages will be delivered the week of September 29th, 2024.
+          If you need a specific delivery date outside of this week, please
+          contact us directly.
         </p>
       </div>
       <h2 className="gift-packages-section-title">Gift Packages</h2>
