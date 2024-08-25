@@ -21,8 +21,10 @@ module.exports = async (req, res) => {
     let event;
 
     try {
+      // Use the raw body instead of the parsed JSON body
+      const rawBody = Buffer.from(req.body);
       event = stripe.webhooks.constructEvent(
-        req.body,
+        rawBody,
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       );
@@ -136,4 +138,10 @@ module.exports = async (req, res) => {
     res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
   }
+};
+
+export const config = {
+  api: {
+    bodyParser: false, // Disable Vercel's body parsing to use raw body
+  },
 };
