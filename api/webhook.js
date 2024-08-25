@@ -1,5 +1,6 @@
 const Stripe = require("stripe");
 const nodemailer = require("nodemailer");
+const { buffer } = require("micro");
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -21,9 +22,10 @@ module.exports = async (req, res) => {
     let event;
 
     try {
-      // If req.body is a string (e.g., raw body from the webhook), convert it to a Buffer
-      const rawBody = req.body instanceof Buffer ? req.body : Buffer.from(req.body);
+      // Retrieve the raw body as a buffer
+      const rawBody = await buffer(req);
 
+      // Verify and construct the event
       event = stripe.webhooks.constructEvent(
         rawBody,
         sig,
@@ -35,6 +37,7 @@ module.exports = async (req, res) => {
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
+    // Handle the event
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
       const customerEmail = session.customer_details.email;
@@ -143,6 +146,6 @@ module.exports = async (req, res) => {
 
 export const config = {
   api: {
-    bodyParser: false, // Disable Vercel's body parsing to use raw body
+    bodyParser: false, // Disable Vercel's automatic body parsing
   },
 };
