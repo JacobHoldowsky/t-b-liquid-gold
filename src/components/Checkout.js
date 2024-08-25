@@ -68,13 +68,12 @@ function Checkout({ cart, setCart, removeFromCart }) {
       }
 
       const session = await response.json();
-      console.log(session); // Debugging line
+      console.log(session);
 
       if (!session.id) {
         throw new Error("No session ID returned from the API");
       }
 
-      // Redirect to Stripe Checkout using the session ID
       const result = await stripe.redirectToCheckout({
         sessionId: session.id,
       });
@@ -83,9 +82,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
         throw new Error(result.error.message);
       }
 
-      // Clear the cart if the payment is successful
       setCart([]);
-      localStorage.removeItem("cart"); // Also clear the cart in localStorage
+      localStorage.removeItem("cart");
     } catch (error) {
       alert(`Checkout failed: ${error.message}`);
     }
