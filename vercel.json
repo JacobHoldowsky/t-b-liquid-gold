@@ -19,9 +19,5 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ],
-  "env": {
-    "STRIPE_SECRET_KEY": "@stripe-secret-key",
-    "OTHER_ENV_VARIABLE": "@other-env-variable"
-  }
+  ]
 }
