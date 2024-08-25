@@ -30,19 +30,30 @@ module.exports = async (req, res) => {
       );
       console.log("Webhook received:", event.type);
     } catch (err) {
-      console.error(`⚠️  Webhook signature verification failed.`, err);
+      console.error(`⚠️  Webhook signature verification failed:`, err.message);
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
     try {
       if (event.type === "checkout.session.completed") {
         const session = event.data.object;
+
+        console.log("Session object:", session);
+
+        // Handle potential null customer email
         const customerEmail = session.customer_details.email;
+        if (!customerEmail) {
+          throw new Error("Customer email is null or undefined");
+        }
+
         const shippingDetails = session.customer_details.address;
 
         const lineItems = await stripe.checkout.sessions.listLineItems(
           session.id
         );
+
+        console.log("Line items:", lineItems.data);
+
         const itemsListHtml = lineItems.data
           .map(
             (item) => `
@@ -89,7 +100,7 @@ module.exports = async (req, res) => {
           `,
         };
 
-        // Send email to customer
+        console.log("Sending email to customer:", customerEmail);
         transporter.sendMail(mailOptionsCustomer, (error, info) => {
           if (error) {
             console.error("Error sending email to customer:", error);
@@ -122,7 +133,7 @@ module.exports = async (req, res) => {
           `,
         };
 
-        // Send email to admin
+        console.log("Sending email to admin:", process.env.PERSONAL_EMAIL);
         transporter.sendMail(mailOptionsAdmin, (error, info) => {
           if (error) {
             console.error("Error sending email to admin:", error);
@@ -145,6 +156,6 @@ module.exports = async (req, res) => {
 
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: false, // Disable Vercel's body parsing to use raw body
   },
 };
