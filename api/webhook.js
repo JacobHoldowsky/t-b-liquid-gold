@@ -21,8 +21,9 @@ module.exports = async (req, res) => {
     let event;
 
     try {
-      // Use the raw body instead of the parsed JSON body
-      const rawBody = Buffer.from(req.body);
+      // If req.body is a string (e.g., raw body from the webhook), convert it to a Buffer
+      const rawBody = req.body instanceof Buffer ? req.body : Buffer.from(req.body);
+
       event = stripe.webhooks.constructEvent(
         rawBody,
         sig,
