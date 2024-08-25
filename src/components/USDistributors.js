@@ -15,7 +15,7 @@ function USDistributors() {
             <a
               href="https://wa.me/18485250358"
               className="whatsapp-link"
-              target="_blank"
+              target='_blank'
               rel="noopener noreferrer"
             >
               <FaWhatsapp className="whatsapp-icon" />
