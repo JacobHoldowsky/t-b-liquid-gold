@@ -16,7 +16,7 @@ app.use(cors());
 app.use(
   express.json({
     verify: function (req, res, buf) {
-      if (req.originalUrl.startsWith('/webhook')) {
+      if (req.originalUrl.startsWith("/webhook")) {
         req.rawBody = buf.toString();
       }
     },
@@ -99,7 +99,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
 // Webhook endpoint to handle events from Stripe
 app.post(
   "/webhook",
-  express.raw({ type: "application/json" }),
+  express.raw({ type: "application/json" }), // Ensure raw body parsing for webhook
   async (req, res) => {
     const sig = req.headers["stripe-signature"];
     let event;
