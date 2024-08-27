@@ -19,7 +19,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
       const flavors = item.selectedFlavors ? item.selectedFlavors : [];
 
       // Aggregation of items by title and selected flavors
-      const key = `${item.title}-${flavors.join(",")}`;
+      const key = flavors.length
+        ? `${item.title}-${flavors.join(",")}`
+        : item.title;
 
       if (seenTitles[key]) {
         const existingItemIndex = seenTitles[key];
@@ -53,7 +55,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
         },
         body: JSON.stringify({
           items: aggregatedCart.map((item) => {
-            const flavorText = item.selectedFlavors.length
+            const flavorText = item.selectedFlavors?.length
               ? ` (${item.selectedFlavors.join(", ")})`
               : "";
             return {
@@ -127,13 +129,19 @@ function Checkout({ cart, setCart, removeFromCart }) {
       if (confirmRemoval) {
         const itemToRemove = cart.find(
           (item) =>
-            `${item.title}-${item.selectedFlavors.join(",")}` === itemKey
+            (item.selectedFlavors?.length
+              ? `${item.title}-${item.selectedFlavors.join(",")}`
+              : item.title) === itemKey
         );
         removeFromCart(itemToRemove.id);
       }
     } else {
       const updatedCart = cart.map((item) => {
-        if (`${item.title}-${item.selectedFlavors.join(",")}` === itemKey) {
+        if (
+          (item.selectedFlavors?.length
+            ? `${item.title}-${item.selectedFlavors.join(",")}`
+            : item.title) === itemKey
+        ) {
           return { ...item, quantity: newQuantity };
         }
         return item;
@@ -160,7 +168,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                   />
                   <div className="item-details">
                     <p className="item-title">{item.title}</p>
-                    {item.selectedFlavors.length ? (
+                    {item.selectedFlavors?.length ? (
                       <p className="item-flavors">
                         Flavors: {item.selectedFlavors.join(", ")}
                       </p>
@@ -179,7 +187,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     <button
                       onClick={() =>
                         updateItemQuantity(
-                          `${item.title}-${item.selectedFlavors.join(",")}`,
+                          item.selectedFlavors?.length
+                            ? `${item.title}-${item.selectedFlavors.join(",")}`
+                            : item.title,
                           Math.max(0, item.quantity - 1)
                         )
                       }
@@ -191,7 +201,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     <button
                       onClick={() =>
                         updateItemQuantity(
-                          `${item.title}-${item.selectedFlavors.join(",")}`,
+                          item.selectedFlavors?.length
+                            ? `${item.title}-${item.selectedFlavors.join(",")}`
+                            : item.title,
                           item.quantity + 1
                         )
                       }
