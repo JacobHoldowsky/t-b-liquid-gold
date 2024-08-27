@@ -21,6 +21,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { CurrencyProvider } from "./context/CurrencyContext";
 import { ExchangeRateProvider } from "./context/ExchangeRateContext"; // Import the new context
 import "./index.css";
+import CorporateGiftDetail from "./components/CorporateGiftDetail";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -100,6 +101,12 @@ function App() {
               <Route
                 path="/corporateGifts"
                 element={<CorporateGifts cart={cart} addToCart={addToCart} />}
+              />
+              <Route
+                path="/corporateGifts/:corporateId"
+                element={
+                  <CorporateGiftDetail cart={cart} addToCart={addToCart} />
+                }
               />
               <Route
                 path="/distributors/us"

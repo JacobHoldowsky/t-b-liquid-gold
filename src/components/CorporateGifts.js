@@ -1,99 +1,52 @@
-import React, { useState, useContext } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import "./CorporateGifts.css";
 import { CurrencyContext } from "../context/CurrencyContext";
-import { FaCheckCircle } from "react-icons/fa"; // Import the FaCheckCircle icon
+import { ExchangeRateContext } from "../context/ExchangeRateContext";
 
 function CorporateGifts({ cart, addToCart }) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [addedToCart, setAddedToCart] = useState({});
-  const [modalAddedToCart, setModalAddedToCart] = useState(false);
-
-  const { currency } = useContext(CurrencyContext);
+  const { currency } = React.useContext(CurrencyContext);
+  const exchangeRate = React.useContext(ExchangeRateContext);
 
   const items = [
     {
-      url: "Collection Plus $95.jpg",
-      title: "Collection Plus",
-      priceDollar: "105",
-      priceShekel: "320",
+      url: "mini collection board.jpeg",
+      title: "Mini Collection Board",
+      priceDollar: "50",
+      id: "miniCollectionBoard",
+      priceShekel: exchangeRate
+        ? Math.ceil(50 * exchangeRate)
+        : Math.ceil(50 * 3.7),
     },
     {
       url: "Deluxe Box $120.jpg",
       title: "Deluxe Box",
       priceDollar: "120",
+      id: "deluxeBox",
       priceShekel: "400",
     },
     {
       url: "Belgian Box $100.jpg",
       title: "Belgian Box",
       priceDollar: "100",
+      id: "belgianBox",
       priceShekel: "350",
     },
     {
       url: "For Him $55.jpg",
       title: "For Him",
       priceDollar: "55",
+      id: "forHim",
       priceShekel: "200",
     },
     {
       url: "For Her $55.jpg",
       title: "For Her",
       priceDollar: "55",
+      id: "forHer",
       priceShekel: "200",
     },
   ];
-
-  const openModal = (item) => {
-    setSelectedItem(item);
-    setModalOpen(true);
-    document.body.classList.add("modal-open");
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-    document.body.classList.remove("modal-open");
-  };
-
-  const handleModalClick = (e) => {
-    e.stopPropagation();
-  };
-
-  const handleAddToCart = (item, inModal = false) => {
-    // Add to cart with quantity defaulted to 1
-    addToCart({ ...item, quantity: 1 });
-
-    if (inModal) {
-      setModalAddedToCart(true);
-      setTimeout(() => {
-        setModalAddedToCart("hide");
-      }, 1500);
-
-      setTimeout(() => {
-        setModalAddedToCart(false);
-        closeModal(); // Optionally close the modal after the animation
-      }, 2000);
-    } else {
-      setAddedToCart((prev) => ({
-        ...prev,
-        [item.title]: true,
-      }));
-
-      setTimeout(() => {
-        setAddedToCart((prev) => ({
-          ...prev,
-          [item.title]: "hide",
-        }));
-      }, 1500);
-
-      setTimeout(() => {
-        setAddedToCart((prev) => ({
-          ...prev,
-          [item.title]: false,
-        }));
-      }, 2000);
-    }
-  };
 
   return (
     <div className="corporate-gifts">
@@ -102,11 +55,9 @@ function CorporateGifts({ cart, addToCart }) {
         {items.map((item, index) => (
           <div key={index} className="corporate-gifts-div">
             <div className="corporate-gifts-image">
-              <img
-                src={item.url}
-                alt={item.title}
-                onClick={() => openModal(item)}
-              />
+              <Link to={`/corporateGifts/${item.id}`}>
+                <img src={item.url} alt={item.title} />
+              </Link>
             </div>
             <div className="corporate-gifts-info">
               <h3>{item.title}</h3>
@@ -116,61 +67,9 @@ function CorporateGifts({ cart, addToCart }) {
                   : `₪${item.priceShekel}`}
               </p>
             </div>
-            {addedToCart[item.title] ? (
-              <div
-                className={`notification ${
-                  addedToCart[item.title] === "hide" ? "hide" : "show"
-                }`}
-              >
-                <FaCheckCircle className="checkmark" />
-                Added to cart
-              </div>
-            ) : (
-              <button
-                onClick={() => handleAddToCart(item)}
-                className="add-to-cart-btn"
-              >
-                Add to Cart
-              </button>
-            )}
           </div>
         ))}
       </div>
-      {modalOpen && selectedItem && (
-        <div className="modal-overlay" onClick={closeModal}>
-          <div className="modal" onClick={handleModalClick}>
-            <button className="corporate-gifts-close-btn" onClick={closeModal}>
-              &times;
-            </button>
-            <div className="modal-content">
-              <img src={selectedItem.url} alt={selectedItem.title} />
-              <h3>{selectedItem.title}</h3>
-              <p>
-                {currency === "Dollar"
-                  ? `$${selectedItem.priceDollar}`
-                  : `₪${selectedItem.priceShekel}`}
-              </p>
-              {modalAddedToCart ? (
-                <div
-                  className={`notification ${
-                    modalAddedToCart === "hide" ? "hide" : "show"
-                  }`}
-                >
-                  <FaCheckCircle className="checkmark" />
-                  Added to cart
-                </div>
-              ) : (
-                <button
-                  onClick={() => handleAddToCart(selectedItem, true)}
-                  className="add-to-cart-btn"
-                >
-                  Add to Cart
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

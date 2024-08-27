@@ -1,0 +1,245 @@
+/* General Styles for Corporate Gift Detail */
+.corporate-gift-detail {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.corporate-gift-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.corporate-gift-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.corporate-gift-description {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.corporate-gift-price {
+    font-size: 1.8rem;
+    color: #7c2234;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.quantity-selector {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.quantity-selector label {
+    font-size: 1rem;
+    color: #333;
+}
+
+.quantity-selector select {
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 60%;
+}
+
+.logo-option {
+    margin: 20px 0;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-option label {
+    font-size: 1rem;
+    color: #333;
+    cursor: pointer;
+}
+
+.logo-option input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #7c2234;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+.logo-option input[type="checkbox"]:checked {
+    background-color: #7c2234;
+    border-color: #7c2234;
+}
+
+.logo-option input[type="checkbox"]:checked::after {
+    content: '\2713';
+    font-size: 14px;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.upload-artwork {
+    margin-top: 15px;
+    font-size: 1rem;
+    color: #555;
+}
+
+.upload-artwork label {
+    font-size: 1rem;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.upload-artwork input[type="file"] {
+    font-size: 1rem;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.add-to-cart-btn {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    background-color: #7c2234;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #b74058;
+    transform: translateY(-3px);
+}
+
+.notification {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: transparent;
+    color: #28a745; /* Green text color */
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    cursor: default;
+    width: 75%;
+    text-align: center;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notification.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.notification .checkmark {
+    display: inline-block;
+    margin-right: 8px;
+    color: #28a745;
+    font-size: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .corporate-gift-detail {
+        padding: 15px;
+    }
+
+    .corporate-gift-title {
+        font-size: 2rem;
+    }
+
+    .corporate-gift-description {
+        font-size: 1.1rem;
+    }
+
+    .corporate-gift-price {
+        font-size: 1.6rem;
+        margin-bottom: 25px;
+    }
+
+    .quantity-selector select {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .add-to-cart-btn {
+        padding: 12px 25px;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .corporate-gift-detail {
+        padding: 10px;
+    }
+
+    .corporate-gift-title {
+        font-size: 1.8rem;
+    }
+
+    .corporate-gift-description {
+        font-size: 1rem;
+    }
+
+    .corporate-gift-price {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+    }
+
+    .add-to-cart-btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .corporate-gift-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .corporate-gift-description {
+        font-size: 0.9rem;
+    }
+
+    .add-to-cart-btn {
+        font-size: 0.8rem;
+        padding: 8px 16px;
+    }
+}

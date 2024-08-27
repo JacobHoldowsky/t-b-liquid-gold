@@ -2,11 +2,13 @@ import React, { useMemo, useContext } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import "./Checkout.css";
 import { CurrencyContext } from "../context/CurrencyContext";
+import { ExchangeRateContext } from "../context/ExchangeRateContext";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 function Checkout({ cart, setCart, removeFromCart }) {
   const { currency } = useContext(CurrencyContext);
+  const exchangeRate = useContext(ExchangeRateContext);
 
   const aggregatedCart = useMemo(() => {
     const aggregatedCart = [];
@@ -14,13 +16,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
     cart.forEach((item) => {
       const itemQuantity = item.quantity ? parseInt(item.quantity, 10) : 1;
-
-      // Ensure selectedFlavors is defined and is an array
       const flavors = item.selectedFlavors ? item.selectedFlavors : [];
-
-      // Aggregation of items by title and selected flavors
       const key = flavors.length
-        ? `${item.title}-${flavors.join(",")}`
+        ? `${item.title}-${flavors.join(",")}-${item.includeLogo ? "Logo" : ""}`
         : item.title;
 
       if (seenTitles[key]) {
@@ -48,30 +46,59 @@ function Checkout({ cart, setCart, removeFromCart }) {
     try {
       const stripe = await stripePromise;
 
+      let logoSurchargeAdded = false; // Track if the logo surcharge has been added
+
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          items: aggregatedCart.map((item) => {
+          items: aggregatedCart.flatMap((item) => {
             const flavorText = item.selectedFlavors?.length
               ? ` (${item.selectedFlavors.join(", ")})`
               : "";
-            return {
-              price_data: {
-                currency: currency === "Dollar" ? "usd" : "ils",
-                product_data: {
-                  name: `${item.title}${flavorText}`,
-                  images: [item.url],
+            const logoText = item.includeLogo ? " with Logo" : "";
+
+            // Calculate base unit amount
+            const basePrice =
+              currency === "Dollar" ? item.priceDollar : item.priceShekel;
+
+            // Add logo surcharge only once, regardless of quantity
+            let items = [
+              {
+                price_data: {
+                  currency: currency === "Dollar" ? "usd" : "ils",
+                  product_data: {
+                    name: `${item.title}${flavorText}${logoText}`,
+                    images: [item.url],
+                  },
+                  unit_amount: basePrice * 100,
                 },
-                unit_amount:
-                  (currency === "Dollar"
-                    ? item.priceDollar
-                    : item.priceShekel) * 100,
+                quantity: item.quantity,
               },
-              quantity: item.quantity,
-            };
+            ];
+
+            if (item.includeLogo && !logoSurchargeAdded) {
+              logoSurchargeAdded = true;
+
+              // Add a separate item for the logo surcharge
+              const logoCharge =
+                currency === "Dollar" ? 50 : Math.ceil(50 * exchangeRate);
+
+              items.push({
+                price_data: {
+                  currency: currency === "Dollar" ? "usd" : "ils",
+                  product_data: {
+                    name: "Personalized Logo",
+                  },
+                  unit_amount: logoCharge * 100,
+                },
+                quantity: 1,
+              });
+            }
+
+            return items;
           }),
         }),
       });
@@ -114,7 +141,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
       .reduce((total, item) => {
         const price =
           currency === "Dollar" ? item.priceDollar : item.priceShekel;
-        return total + parseFloat(price) * item.quantity;
+        return (
+          total + parseFloat(price) * item.quantity + (item.logoCharge || 0)
+        );
       }, 0)
       .toFixed(2);
 
@@ -122,20 +151,38 @@ function Checkout({ cart, setCart, removeFromCart }) {
   };
 
   const updateItemQuantity = (itemKey, newQuantity) => {
-    if (newQuantity === 0) {
+    const itemToUpdate = cart.find(
+      (item) =>
+        (item.selectedFlavors?.length
+          ? `${item.title}-${item.selectedFlavors.join(",")}`
+          : item.title) === itemKey
+    );
+
+    // Special handling for "Mini Collection Board"
+    if (itemToUpdate.title === "Mini Collection Board" && newQuantity < 15) {
+      const confirmRemoval = window.confirm(
+        "The minimum quantity for Mini Collection Board is 15. Would you like to remove them all from your cart?"
+      );
+      if (confirmRemoval) {
+        const updatedCart = cart.filter(
+          (item) => item.title !== "Mini Collection Board"
+        );
+        setCart(updatedCart);
+        return; // Exit function to prevent further processing
+      }
+      return; // Exit function to prevent further processing if not removing
+    }
+
+    // If quantity is 1 and is being reduced, trigger removal confirmation
+    if (newQuantity <= 0) {
       const confirmRemoval = window.confirm(
         "Do you want to remove this item from your cart?"
       );
       if (confirmRemoval) {
-        const itemToRemove = cart.find(
-          (item) =>
-            (item.selectedFlavors?.length
-              ? `${item.title}-${item.selectedFlavors.join(",")}`
-              : item.title) === itemKey
-        );
-        removeFromCart(itemToRemove.id);
+        removeFromCart(itemToUpdate.id);
       }
     } else {
+      // Update the quantity for items that can be reduced to zero
       const updatedCart = cart.map((item) => {
         if (
           (item.selectedFlavors?.length
@@ -173,6 +220,15 @@ function Checkout({ cart, setCart, removeFromCart }) {
                         Flavors: {item.selectedFlavors.join(", ")}
                       </p>
                     ) : null}
+                    {item.includeLogo && (
+                      <p className="item-logo">
+                        Personalized Logo (
+                        {currency === "Dollar"
+                          ? `$50`
+                          : `₪${50 * exchangeRate}`}
+                        )
+                      </p>
+                    )}
                     <p className="item-price">
                       {currency === "Dollar"
                         ? `$${formatNumberWithCommas(
@@ -190,7 +246,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                           item.selectedFlavors?.length
                             ? `${item.title}-${item.selectedFlavors.join(",")}`
                             : item.title,
-                          Math.max(0, item.quantity - 1)
+                          item.quantity - 1
                         )
                       }
                       className="quantity-btn"
