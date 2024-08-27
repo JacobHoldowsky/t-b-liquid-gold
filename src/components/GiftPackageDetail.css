@@ -1,0 +1,224 @@
+.gift-package-detail {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .gift-package-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gift-package-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .gift-package-description {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  
+  .gift-package-price {
+    font-size: 1.8rem;
+    color: #7c2234;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  
+  .honey-flavor-selector {
+    margin-bottom: 30px;
+    text-align: left;
+  }
+  
+  .honey-flavor-dropdown {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .honey-flavor-dropdown label {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .honey-flavor-dropdown select {
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 60%;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .honey-flavor-dropdown select:focus {
+    outline: none;
+    border-color: #7c2234;
+  }
+  
+  .honey-flavor-dropdown select:hover {
+    border-color: #7c2234;
+  }
+  
+  .add-to-cart-btn {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    background-color: #7c2234;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 80%;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #b74058;
+    transform: translateY(-2px);
+  }
+
+  .notification {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: transparent; /* Transparent background */
+    color: #28a745; /* Green text color */
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    cursor: default;
+    width: 75%;
+    text-align: center;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .notification.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .notification.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  
+  .notification .checkmark {
+    display: inline-block;
+    margin-right: 8px;
+    color: #28a745;
+    font-size: 1.5rem;
+  }
+
+  .quantity-selector {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .quantity-selector label {
+    font-size: 1rem;
+    color: #333;
+    margin-right: 10px;
+  }
+  
+  .quantity-selector select {
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .quantity-selector select:focus {
+    outline: none;
+    border-color: #7c2234;
+  }
+  
+  .quantity-selector select:hover {
+    border-color: #7c2234;
+  }
+  
+  
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .gift-package-detail {
+      padding: 15px;
+    }
+  
+    .gift-package-title {
+      font-size: 2rem;
+    }
+  
+    .gift-package-description {
+      font-size: 1.1rem;
+    }
+  
+    .gift-package-price {
+      font-size: 1.6rem;
+      margin-bottom: 25px;
+    }
+  
+    .honey-flavor-dropdown {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .honey-flavor-dropdown select {
+      width: 100%;
+      margin-top: 10px;
+    }
+  
+    .add-to-cart-btn {
+      padding: 12px 25px;
+      font-size: 1.1rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .gift-package-detail {
+      padding: 10px;
+    }
+  
+    .gift-package-title {
+      font-size: 1.8rem;
+    }
+  
+    .gift-package-description {
+      font-size: 1rem;
+    }
+  
+    .gift-package-price {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+  
+    .add-to-cart-btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+  }
+  

@@ -15,12 +15,22 @@ function Checkout({ cart, setCart, removeFromCart }) {
     cart.forEach((item) => {
       const itemQuantity = item.quantity ? parseInt(item.quantity, 10) : 1;
 
-      if (seenTitles[item.title]) {
-        const existingItemIndex = seenTitles[item.title];
+      // Ensure selectedFlavors is defined and is an array
+      const flavors = item.selectedFlavors ? item.selectedFlavors : [];
+
+      // Aggregation of items by title and selected flavors
+      const key = `${item.title}-${flavors.join(",")}`;
+
+      if (seenTitles[key]) {
+        const existingItemIndex = seenTitles[key];
         aggregatedCart[existingItemIndex].quantity += itemQuantity;
       } else {
-        seenTitles[item.title] = aggregatedCart.length;
-        aggregatedCart.push({ ...item, quantity: itemQuantity });
+        seenTitles[key] = aggregatedCart.length;
+        aggregatedCart.push({
+          ...item,
+          quantity: itemQuantity,
+          selectedFlavors: flavors,
+        });
       }
     });
 
@@ -30,7 +40,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const apiUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:5000/api/create-checkout-session"
-      : '/api/create-checkout-session';
+      : "/api/create-checkout-session";
 
   const handleCheckout = async () => {
     try {
@@ -42,19 +52,25 @@ function Checkout({ cart, setCart, removeFromCart }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          items: aggregatedCart.map((item) => ({
-            price_data: {
-              currency: currency === "Dollar" ? "usd" : "ils",
-              product_data: {
-                name: item.title,
-                images: [item.url],
+          items: aggregatedCart.map((item) => {
+            const flavorText = item.selectedFlavors.length
+              ? ` (${item.selectedFlavors.join(", ")})`
+              : "";
+            return {
+              price_data: {
+                currency: currency === "Dollar" ? "usd" : "ils",
+                product_data: {
+                  name: `${item.title}${flavorText}`,
+                  images: [item.url],
+                },
+                unit_amount:
+                  (currency === "Dollar"
+                    ? item.priceDollar
+                    : item.priceShekel) * 100,
               },
-              unit_amount:
-                (currency === "Dollar" ? item.priceDollar : item.priceShekel) *
-                100,
-            },
-            quantity: item.quantity,
-          })),
+              quantity: item.quantity,
+            };
+          }),
         }),
       });
 
@@ -103,18 +119,21 @@ function Checkout({ cart, setCart, removeFromCart }) {
     return formatNumberWithCommas(parseFloat(total));
   };
 
-  const updateItemQuantity = (itemTitle, newQuantity) => {
+  const updateItemQuantity = (itemKey, newQuantity) => {
     if (newQuantity === 0) {
       const confirmRemoval = window.confirm(
         "Do you want to remove this item from your cart?"
       );
       if (confirmRemoval) {
-        const itemToRemove = cart.find((item) => item.title === itemTitle);
+        const itemToRemove = cart.find(
+          (item) =>
+            `${item.title}-${item.selectedFlavors.join(",")}` === itemKey
+        );
         removeFromCart(itemToRemove.id);
       }
     } else {
       const updatedCart = cart.map((item) => {
-        if (item.title === itemTitle) {
+        if (`${item.title}-${item.selectedFlavors.join(",")}` === itemKey) {
           return { ...item, quantity: newQuantity };
         }
         return item;
@@ -135,9 +154,17 @@ function Checkout({ cart, setCart, removeFromCart }) {
             <ul>
               {aggregatedCart.map((item, index) => (
                 <li key={index} className="cart-item">
-                  <img src={item.url} alt={`Cart item ${index + 1}`} />
+                  <img
+                    src={item.imageUrl || item.url}
+                    alt={`Cart item ${index + 1}`}
+                  />
                   <div className="item-details">
                     <p className="item-title">{item.title}</p>
+                    {item.selectedFlavors.length ? (
+                      <p className="item-flavors">
+                        Flavors: {item.selectedFlavors.join(", ")}
+                      </p>
+                    ) : null}
                     <p className="item-price">
                       {currency === "Dollar"
                         ? `$${formatNumberWithCommas(
@@ -152,7 +179,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     <button
                       onClick={() =>
                         updateItemQuantity(
-                          item.title,
+                          `${item.title}-${item.selectedFlavors.join(",")}`,
                           Math.max(0, item.quantity - 1)
                         )
                       }
@@ -163,7 +190,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     <span className="item-quantity">{item.quantity}</span>
                     <button
                       onClick={() =>
-                        updateItemQuantity(item.title, item.quantity + 1)
+                        updateItemQuantity(
+                          `${item.title}-${item.selectedFlavors.join(",")}`,
+                          item.quantity + 1
+                        )
                       }
                       className="quantity-btn"
                     >

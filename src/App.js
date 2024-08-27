@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from "uuid";
 import LandingPage from "./components/LandingPage";
 import HoneyCollection from "./components/HoneyCollection";
 import GiftPackages from "./components/GiftPackages";
+import GiftPackageDetail from "./components/GiftPackageDetail";
 import CorporateGifts from "./components/CorporateGifts";
 import USDistributors from "./components/USDistributors";
 import Wholesale from "./components/Wholesale";
@@ -89,6 +90,12 @@ function App() {
               <Route
                 path="/giftPackages"
                 element={<GiftPackages cart={cart} addToCart={addToCart} />}
+              />
+              <Route
+                path="/giftPackages/:packageId"
+                element={
+                  <GiftPackageDetail cart={cart} addToCart={addToCart} />
+                }
               />
               <Route
                 path="/corporateGifts"
