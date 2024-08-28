@@ -258,9 +258,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
           {isGift && (
             <textarea
               value={giftNote}
-              onChange={(e) => setGiftNote(e.target.value)}
-              placeholder="Include a gift note"
+              onChange={(e) => setGiftNote(e.target.value.slice(0, 400))} // Limit to 400 characters
+              placeholder="Include a gift note (max 400 characters)"
               rows="4"
+              maxLength="400" // Additional safeguard
             />
           )}
         </div>
