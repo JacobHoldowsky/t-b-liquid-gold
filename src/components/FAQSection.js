@@ -9,7 +9,7 @@ function FAQSection() {
         <div className="faq-item">
           <h3>What's the Hechsher?</h3>
           <p>
-          We are under the strict supervision of Rabbi Weiner of ZNT Kosher.
+            We are under the strict supervision of Rabbi Weiner of ZNT Kosher.
           </p>
           <img className="hechsher" src="hechsher 5.png" alt="hechsher" />
         </div>
@@ -23,13 +23,8 @@ function FAQSection() {
         <div className="faq-item">
           <h3>What are the delivery details?</h3>
           <p>
-            We deliver anywhere in Israel. Delivery rates vary based on
-            location. Deliveries in Jerusalem range between $10-$20. Deliveries
-            to RBS are $15. For any other location in Israel, please reach out
-            to us and we will give you a quote. Pickup is in Ramat Eshkol,
-            Jerusalem. We have distributors in many locations in the US so if
-            you would like to purchase our honeys in the US, please check out
-            the list of distributors.
+            We deliver anywhere in Israel and the US. Delivery rates vary based
+            on location.
           </p>
         </div>
         <div className="faq-item">

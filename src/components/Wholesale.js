@@ -7,12 +7,12 @@ function Wholesale({ cart, addToCart }) {
 
   const items = [
     {
-      url: "collection of small jars.jpg",
+      url: "mini jar pyramid.jpg",
       title: "T&Bee 2oz Jars",
       size: "small",
     },
     {
-      url: "mini jar pyramid.jpg",
+      url: "collection of small jars.jpg",
       title: "T&Bee 4oz Jars",
       size: "large",
     },
@@ -53,50 +53,22 @@ function Wholesale({ cart, addToCart }) {
         </p>
       </div>
 
-      {/* Small Jars Section */}
+      {/* Combined Jar Sections */}
       <div className="wholesale-jar-section">
-        <h3 className="wholesale-jar-heading">T&Bee 2oz Jars</h3>
-        <div className="wholesale-images">
-          {items
-            .filter((item) => item.size === "small")
-            .map((item, index) => (
-              <div
-                key={index}
-                className="wholesale-div"
-                onClick={() => openModal(item)}
-              >
-                <div className="wholesale-image">
-                  <img src={item.url} alt={item.title} />
-                </div>
-                <div className="wholesale-info">
-                  <h3>{item.title}</h3>
-                </div>
-              </div>
-            ))}
-        </div>
-      </div>
-
-      {/* Large Jars Section */}
-      <div className="wholesale-jar-section">
-        <h3 className="wholesale-jar-heading">T&Bee 4oz Jars</h3>
-        <div className="wholesale-images">
-          {items
-            .filter((item) => item.size === "large")
-            .map((item, index) => (
-              <div
-                key={index}
-                className="wholesale-div"
-                onClick={() => openModal(item)}
-              >
-                <div className="wholesale-image">
-                  <img src={item.url} alt={item.title} />
-                </div>
-                <div className="wholesale-info">
-                  <h3>{item.title}</h3>
-                </div>
-              </div>
-            ))}
-        </div>
+        {items.map((item, index) => (
+          <div
+            key={index}
+            className="wholesale-div"
+            onClick={() => openModal(item)}
+          >
+            <div className="wholesale-image">
+              <img src={item.url} alt={item.title} />
+            </div>
+            <div className="wholesale-info">
+              <h3>{item.title}</h3>
+            </div>
+          </div>
+        ))}
       </div>
 
       {modalOpen && selectedItem && (
