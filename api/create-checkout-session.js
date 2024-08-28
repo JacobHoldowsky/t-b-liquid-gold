@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 module.exports = async (req, res) => {
   if (req.method === "POST") {
     try {
-      const { items, email } = req.body;
+      const { items, giftNote } = req.body;
 
       if (!items || !Array.isArray(items) || items.length === 0) {
         throw new Error("No items found in the request");
@@ -31,6 +31,7 @@ module.exports = async (req, res) => {
               name: item.price_data.product_data.name,
               metadata: {
                 logoUrl: logoUrl, // Store the logo URL in metadata without showing it in the description
+                ...(giftNote && { giftNote: giftNote }), // Add the gift note to metadata if it exists
               },
             },
             unit_amount: item.price_data.unit_amount,
@@ -60,9 +61,11 @@ module.exports = async (req, res) => {
         mode: "payment",
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/canceled`,
-        customer_email: email,
         shipping_address_collection: {
           allowed_countries: ["US", "IL"], // Specify the allowed shipping countries
+        },
+        metadata: {
+          ...(giftNote && { giftNote: giftNote }), // Include the gift note in the session metadata if it exists
         },
       });
 

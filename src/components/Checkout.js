@@ -1,4 +1,4 @@
-import React, { useMemo, useContext } from "react";
+import React, { useMemo, useContext, useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import "./Checkout.css";
 import { CurrencyContext } from "../context/CurrencyContext";
@@ -9,6 +9,8 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 function Checkout({ cart, setCart, removeFromCart }) {
   const { currency } = useContext(CurrencyContext);
   const exchangeRate = useContext(ExchangeRateContext);
+  const [isGift, setIsGift] = useState(false);
+  const [giftNote, setGiftNote] = useState("");
 
   const aggregatedCart = useMemo(() => {
     const aggregatedCart = [];
@@ -70,6 +72,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
               quantity: item.quantity,
             };
           }),
+          gift: isGift,
+          giftNote: isGift ? giftNote : null, // Include gift note only if it's a gift
         }),
       });
 
@@ -240,6 +244,24 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 </li>
               ))}
             </ul>
+          )}
+        </div>
+        <div className="gift-option">
+          <label>
+            <input
+              type="checkbox"
+              checked={isGift}
+              onChange={(e) => setIsGift(e.target.checked)}
+            />
+            This is a gift
+          </label>
+          {isGift && (
+            <textarea
+              value={giftNote}
+              onChange={(e) => setGiftNote(e.target.value)}
+              placeholder="Include a gift note"
+              rows="4"
+            />
           )}
         </div>
         <div className="total-price">

@@ -123,7 +123,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
   try {
     console.log("Received request body:", JSON.stringify(req.body, null, 2));
 
-    const { items } = req.body;
+    const { items, giftNote } = req.body; // Retrieve items and giftNote from the request body
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       throw new Error("No items found in the request");
@@ -146,6 +146,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
             name: item.price_data.product_data.name,
             metadata: {
               logoUrl: logoUrl, // Store the logo URL in metadata without showing it in the description
+              ...(giftNote && { giftNote: giftNote }), // Add the gift note to metadata if it exists
             },
           },
           unit_amount: item.price_data.unit_amount,
@@ -176,6 +177,9 @@ app.post("/api/create-checkout-session", async (req, res) => {
       cancel_url: `${req.headers.origin}/canceled`,
       shipping_address_collection: {
         allowed_countries: ["US", "IL"],
+      },
+      metadata: {
+        ...(giftNote && { giftNote: giftNote }), // Include the gift note in the session metadata if it exists
       },
     });
 
@@ -211,6 +215,7 @@ app.post(
       const session = event.data.object;
       const customerEmail = session.customer_details.email;
       const shippingDetails = session.customer_details.address;
+      const giftNote = session.metadata.giftNote || ""; // Retrieve gift note from session metadata
 
       if (!customerEmail) {
         console.error("No customer email provided. Cannot send email.");
@@ -292,6 +297,12 @@ app.post(
           <p>${shippingDetails.country}</p>
         `;
 
+        // Include the gift note in the email if it exists
+        const giftNoteHtml = giftNote
+          ? `<h3 style="color: #333; margin-top: 20px;">Gift Note</h3>
+             <p style="font-size: 16px; background-color: #f9f9f9; padding: 15px; border-radius: 5px; color: #333;">${giftNote}</p>`
+          : "";
+
         // Send the confirmation email to the customer
         const mailOptionsCustomer = {
           from: process.env.MAIL_USERNAME,
@@ -307,6 +318,8 @@ app.post(
               <ul style="font-size: 16px; list-style-type: none; padding: 0;">
                 ${itemsListHtml}
               </ul>
+
+              ${giftNoteHtml} <!-- Include the gift note here -->
 
               <h3 style="color: #333; margin-bottom: 10px;">Shipping Address</h3>
               <div style="font-size: 16px;">
