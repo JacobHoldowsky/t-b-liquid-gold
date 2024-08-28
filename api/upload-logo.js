@@ -1,11 +1,11 @@
 // api/upload-logo.js
 
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import multer from "multer";
-import nextConnect from "next-connect";
-import fs from "fs";
-import path from "path";
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 
+// Configure S3 client with environment variables
 const s3Client = new S3Client({
   region: process.env.AWS_REGION,
   credentials: {
@@ -14,56 +14,69 @@ const s3Client = new S3Client({
   },
 });
 
-const upload = multer({ dest: "/uploads" }); // Temp storage for Vercel functions
+// Configure multer to use /tmp as the storage directory for uploaded files
+const upload = multer({ dest: "/tmp" });
 
-const apiRoute = nextConnect({
-  onError(error, req, res) {
-    res
-      .status(501)
-      .json({ error: `Sorry something happened! ${error.message}` });
-  },
-  onNoMatch(req, res) {
-    res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
-  },
-});
+module.exports = async (req, res) => {
+  if (req.method === "POST") {
+    // Use multer to handle file upload
+    upload.single("file")(req, res, async (err) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ success: false, message: "Upload error" });
+      }
 
-apiRoute.use(upload.single("file"));
+      const file = req.file;
 
-apiRoute.post(async (req, res) => {
-  const file = req.file;
-  if (!file) {
-    return res
-      .status(400)
-      .json({ success: false, message: "No file uploaded" });
-  }
+      // Check if a file was uploaded
+      if (!file) {
+        return res
+          .status(400)
+          .json({ success: false, message: "No file uploaded" });
+      }
 
-  const uploadParams = {
-    Bucket: process.env.AWS_BUCKET_NAME,
-    Key: `${Date.now()}_${file.originalname}`, // Unique file name
-    Body: fs.createReadStream(file.path),
-    ContentType: file.mimetype,
-  };
+      // Define S3 upload parameters
+      const uploadParams = {
+        Bucket: process.env.AWS_BUCKET_NAME,
+        Key: `${Date.now()}_${file.originalname}`, // Generate a unique file name
+        Body: fs.createReadStream(file.path),
+        ContentType: file.mimetype,
+      };
 
-  try {
-    const command = new PutObjectCommand(uploadParams);
-    const data = await s3Client.send(command);
-    const location = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadParams.Key}`;
-    res.status(200).json({ success: true, url: location });
-  } catch (err) {
-    console.error("Error uploading file:", err);
-    res.status(500).json({ success: false, message: "Failed to upload file" });
-  } finally {
-    // Clean up the temporary file
-    fs.unlink(file.path, (err) => {
-      if (err) console.error("Error deleting temporary file:", err);
+      try {
+        // Upload the file to S3
+        const command = new PutObjectCommand(uploadParams);
+        await s3Client.send(command);
+
+        // Generate the file URL from S3
+        const location = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadParams.Key}`;
+        res.status(200).json({ success: true, url: location });
+      } catch (err) {
+        console.error("Error uploading file:", err);
+        res
+          .status(500)
+          .json({ success: false, message: "Failed to upload file" });
+      } finally {
+        // Delete the temporary file
+        fs.unlink(file.path, (err) => {
+          if (err) {
+            console.error("Error deleting temporary file:", err);
+          } else {
+            console.log(`Temporary file deleted: ${file.path}`);
+          }
+        });
+      }
     });
+  } else {
+    // Respond with 405 if the method is not POST
+    res.setHeader("Allow", "POST");
+    res.status(405).end("Method Not Allowed");
   }
-});
-
-export default apiRoute;
+};
 
 export const config = {
   api: {
-    bodyParser: false, // Disable default body parsing to use multer
+    bodyParser: false, // Disable the default bodyParser for file uploads
   },
 };
