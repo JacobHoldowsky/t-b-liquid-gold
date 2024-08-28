@@ -369,7 +369,8 @@ app.post(
 app.post("/send-email", async (req, res) => {
   const { name, email, number, message } = req.body;
 
-  const mailOptions = {
+  // Email to admin
+  const mailOptionsAdmin = {
     from: process.env.MAIL_USERNAME,
     to: process.env.PERSONAL_EMAIL,
     subject: "New Contact Form Submission",
@@ -387,13 +388,34 @@ app.post("/send-email", async (req, res) => {
     `,
   };
 
+  // Confirmation email to the sender
+  const mailOptionsSender = {
+    from: process.env.MAIL_USERNAME,
+    to: email,
+    subject: "Thank you for contacting us",
+    html: `
+      <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+        <h2 style="color: #7c2234; border-bottom: 2px solid #ddd; padding-bottom: 10px;">Thank You for Reaching Out</h2>
+        <p style="font-size: 16px;">Dear ${name},</p>
+        <p style="font-size: 16px;">Thank you for reaching out to us. We will respond to your inquiry shortly.</p>
+        <p style="font-size: 14px; color: #777; margin-top: 20px; text-align: center;">This is an automated response to confirm we have received your message.</p>
+      </div>
+    `,
+  };
+
   try {
-    // Send email
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ success: true, message: "Email sent successfully" });
+    // Send email to admin
+    await transporter.sendMail(mailOptionsAdmin);
+
+    // Send confirmation email to sender
+    await transporter.sendMail(mailOptionsSender);
+
+    res
+      .status(200)
+      .json({ success: true, message: "Emails sent successfully" });
   } catch (error) {
     console.error("Failed to send email:", error);
-    res.status(500).json({ success: false, message: "Failed to send email" });
+    res.status(500).json({ success: false, message: "Failed to send emails" });
   }
 });
 
