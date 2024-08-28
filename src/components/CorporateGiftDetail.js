@@ -6,7 +6,7 @@ import { FaCheckCircle } from "react-icons/fa";
 import "./CorporateGiftDetail.css";
 
 function CorporateGiftDetail({ cart, addToCart }) {
-  const { corporateId } = useParams(); // Get the corporate gift ID from the URL
+  const { corporateId } = useParams();
   const { currency } = useContext(CurrencyContext);
   const exchangeRate = useContext(ExchangeRateContext);
 
@@ -19,7 +19,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
       priceShekel: exchangeRate
         ? Math.ceil(50 * exchangeRate)
         : Math.ceil(50 * 3.7),
-      imageUrl: "/mini collection board.jpeg",
+      imageUrl: "/miniCollectionBoard.jpeg",
       hasLogoOption: true,
     },
     deluxeBox: {
@@ -57,7 +57,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
   };
 
   const selectedItem = items[corporateId];
-  const [quantity, setQuantity] = useState(15); // Start with a minimum of 15
+  const [quantity, setQuantity] = useState(15);
   const [addedToCart, setAddedToCart] = useState(false);
   const [includeLogo, setIncludeLogo] = useState(false);
   const [artwork, setArtwork] = useState(null);
@@ -70,18 +70,38 @@ function CorporateGiftDetail({ cart, addToCart }) {
     setIncludeLogo(e.target.checked);
   };
 
-  const handleArtworkUpload = (e) => {
+  const handleArtworkUpload = async (e) => {
     const file = e.target.files[0];
 
     if (file) {
-      const fileURL = URL.createObjectURL(file); // Create a URL for the uploaded file
+      const formData = new FormData();
+      formData.append("file", file);
 
-      setArtwork({
-        name: file.name,
-        type: file.type,
-        file: file, // Store the file object directly
-        previewURL: fileURL, // Store the preview URL for display
-      });
+      const apiUrl =
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:5000/upload-logo"
+          : "/api/upload-logo";
+
+      try {
+        const response = await fetch(apiUrl, {
+          method: "POST",
+          body: formData,
+        });
+
+        const data = await response.json();
+        if (data.success) {
+          setArtwork({
+            name: file.name,
+            type: file.type,
+            file: file,
+            previewURL: data.url, // URL from S3
+          });
+        } else {
+          console.error("Upload failed:", data.message);
+        }
+      } catch (err) {
+        console.error("Error uploading file:", err);
+      }
     }
   };
 
@@ -92,8 +112,9 @@ function CorporateGiftDetail({ cart, addToCart }) {
       priceShekel: selectedItem.priceShekel,
       quantity,
       includeLogo,
-      artwork, // This now contains the Data URL
-      logoCharge: includeLogo ? 50 : 0, // Include one-time logo charge
+      artwork,
+      logoCharge: includeLogo ? 50 : 0,
+      logoUrl: includeLogo && artwork ? artwork.previewURL : null, // Ensure this is added
     };
     addToCart(itemToAdd);
     setAddedToCart(true);
@@ -153,7 +174,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
                 <p className="uploaded-file">
                   <a
                     href={artwork.previewURL}
-                    download={artwork.name} // Ensures the file can be downloaded with the correct name
+                    download={artwork.name}
                     target="_blank"
                     rel="noopener noreferrer"
                   >

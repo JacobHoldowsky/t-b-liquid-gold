@@ -46,59 +46,29 @@ function Checkout({ cart, setCart, removeFromCart }) {
     try {
       const stripe = await stripePromise;
 
-      let logoSurchargeAdded = false; // Track if the logo surcharge has been added
-
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          items: aggregatedCart.flatMap((item) => {
-            const flavorText = item.selectedFlavors?.length
-              ? ` (${item.selectedFlavors.join(", ")})`
-              : "";
-            const logoText = item.includeLogo ? " with Logo" : "";
-
-            // Calculate base unit amount
+          items: aggregatedCart.map((item) => {
             const basePrice =
               currency === "Dollar" ? item.priceDollar : item.priceShekel;
 
-            // Add logo surcharge only once, regardless of quantity
-            let items = [
-              {
-                price_data: {
-                  currency: currency === "Dollar" ? "usd" : "ils",
-                  product_data: {
-                    name: `${item.title}${flavorText}${logoText}`,
-                    images: [item.url],
+            return {
+              price_data: {
+                currency: currency === "Dollar" ? "usd" : "ils",
+                product_data: {
+                  name: `${item.title}`,
+                  metadata: {
+                    logoUrl: item.logoUrl ? item.logoUrl : null, // Store the logo URL in metadata
                   },
-                  unit_amount: basePrice * 100,
                 },
-                quantity: item.quantity,
+                unit_amount: basePrice * 100, // Add the logo charge to the base price
               },
-            ];
-
-            if (item.includeLogo && !logoSurchargeAdded) {
-              logoSurchargeAdded = true;
-
-              // Add a separate item for the logo surcharge
-              const logoCharge =
-                currency === "Dollar" ? 50 : Math.ceil(50 * exchangeRate);
-
-              items.push({
-                price_data: {
-                  currency: currency === "Dollar" ? "usd" : "ils",
-                  product_data: {
-                    name: "Personalized Logo",
-                  },
-                  unit_amount: logoCharge * 100,
-                },
-                quantity: 1,
-              });
-            }
-
-            return items;
+              quantity: item.quantity,
+            };
           }),
         }),
       });
@@ -111,7 +81,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
       }
 
       const session = await response.json();
-      console.log(session);
 
       if (!session.id) {
         throw new Error("No session ID returned from the API");
@@ -224,8 +193,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
                       <p className="item-logo">
                         Personalized Logo (
                         {currency === "Dollar"
-                          ? `$50`
-                          : `₪${50 * exchangeRate}`}
+                          ? `+$50`
+                          : `+₪${50 * exchangeRate}`}
                         )
                       </p>
                     )}

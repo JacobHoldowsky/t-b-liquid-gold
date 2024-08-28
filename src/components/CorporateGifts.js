@@ -10,7 +10,7 @@ function CorporateGifts({ cart, addToCart }) {
 
   const items = [
     {
-      url: "mini collection board.jpeg",
+      url: "miniCollectionBoard.jpeg",
       title: "Mini Collection Board",
       priceDollar: "50",
       id: "miniCollectionBoard",
