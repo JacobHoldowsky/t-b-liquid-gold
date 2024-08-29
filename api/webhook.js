@@ -248,6 +248,16 @@ module.exports = async (req, res) => {
       }
     }
 
+    try {
+      const files = await fs.readdir("/tmp"); // List all files in /tmp
+      for (const file of files) {
+        await fs.unlink(path.join("/tmp", file)); // Delete each file
+        console.log(`File deleted: ${file}`);
+      }
+    } catch (err) {
+      console.error("Error cleaning up /tmp directory:", err);
+    }
+
     res.status(200).json({ received: true });
   } else {
     res.setHeader("Allow", "POST");
