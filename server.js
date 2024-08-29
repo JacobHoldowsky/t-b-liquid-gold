@@ -61,7 +61,7 @@ function emptyUploadsDirectory() {
         if (err) {
           console.error(`Error deleting file: ${filePath}`, err);
         } else {
-          console.log(`File deleted: ${filePath}`);
+         
         }
       });
     });
@@ -243,14 +243,14 @@ app.post(
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       );
-      console.log("Webhook received:", event.type);
+     
     } catch (err) {
-      console.log(`⚠️  Webhook signature verification failed.`, err.message);
+     
       return res.sendStatus(400);
     }
 
     if (event.type === "checkout.session.completed") {
-      console.log("Processing checkout.session.completed event");
+     
       const session = event.data.object;
       const customerEmail = session.customer_details.email;
       const giftNote = session.metadata.giftNote || ""; // Retrieve gift note from session metadata
@@ -329,7 +329,7 @@ app.post(
         );
 
         const validAttachments = attachments.filter(Boolean);
-        console.log("Attachments to send:", validAttachments);
+       
 
         // Create HTML list of purchased items
         const itemsListHtml = lineItems.data
@@ -437,7 +437,7 @@ app.post(
           if (error) {
             console.error("Error sending email to customer:", error);
           } else {
-            console.log("Email sent to customer:", info.response);
+           
           }
         });
 
@@ -455,14 +455,14 @@ app.post(
           if (error) {
             console.error("Error sending email to admin:", error);
           } else {
-            console.log("Email sent to admin:", info.response);
+           
           }
 
           // Delete downloaded images
           validAttachments.forEach((attachment) => {
             fs.unlink(attachment.path, (err) => {
               if (err) console.error("Error deleting file:", err);
-              else console.log(`File deleted: ${attachment.path}`);
+              else
             });
           });
         });
@@ -489,7 +489,7 @@ app.post(
               };
               const command = new DeleteObjectCommand(deleteParams);
               await s3Client.send(command);
-              console.log(`Deleted S3 object: ${s3Key.Key}`);
+             
             } catch (err) {
               console.error(`Failed to delete S3 object ${s3Key.Key}:`, err);
             }
@@ -562,5 +562,5 @@ app.post("/send-email", async (req, res) => {
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+ 
 });

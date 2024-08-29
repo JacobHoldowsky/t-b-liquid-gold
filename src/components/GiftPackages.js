@@ -137,8 +137,6 @@ function GiftPackages({ cart, addToCart }) {
     },
   ];
 
-  console.log(items[0].url);
-
   return (
     <div className="gift-packages">
       <div className="banner">

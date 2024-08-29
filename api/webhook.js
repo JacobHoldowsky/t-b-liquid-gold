@@ -44,14 +44,14 @@ module.exports = async (req, res) => {
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       );
-      console.log("Webhook received:", event.type);
+      
     } catch (err) {
       console.error(`⚠️  Webhook signature verification failed.`, err.message);
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
     if (event.type === "checkout.session.completed") {
-      console.log("Processing checkout.session.completed event");
+      
       const session = event.data.object;
       const customerEmail = session.customer_details.email;
       const giftNote = session.metadata.giftNote || ""; // Retrieve gift note from session metadata
@@ -129,7 +129,7 @@ module.exports = async (req, res) => {
         );
 
         const validAttachments = attachments.filter(Boolean);
-        console.log("Attachments to send:", validAttachments);
+        
 
         // Create HTML list of purchased items
         const itemsListHtml = lineItems.data
@@ -251,7 +251,7 @@ module.exports = async (req, res) => {
         validAttachments.forEach((attachment) => {
           fs.unlink(attachment.path, (err) => {
             if (err) console.error("Error deleting file:", err);
-            else console.log(`File deleted: ${attachment.path}`);
+            else 
           });
         });
       } catch (err) {
@@ -282,7 +282,7 @@ module.exports = async (req, res) => {
           };
           const command = new DeleteObjectCommand(deleteParams);
           await s3Client.send(command);
-          console.log(`Deleted S3 object: ${s3Key.Key}`);
+          
         } catch (err) {
           console.error(`Failed to delete S3 object ${s3Key.Key}:`, err);
         }
@@ -293,7 +293,7 @@ module.exports = async (req, res) => {
       const files = await fs.readdir("/tmp"); // List all files in /tmp
       for (const file of files) {
         await fs.unlink(path.join("/tmp", file)); // Delete each file
-        console.log(`File deleted: ${file}`);
+        
       }
     } catch (err) {
       console.error("Error cleaning up /tmp directory:", err);
