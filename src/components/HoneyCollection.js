@@ -58,7 +58,7 @@ function HoneyCollection({ cart, addToCart }) {
       sizeUS: "4oz",
       priceDollar: "14",
       sizeIL: "120ml",
-      priceShekel: "45",
+      priceShekel: "55",
     },
     {
       url: "blueberry screenshot.png",
@@ -66,7 +66,7 @@ function HoneyCollection({ cart, addToCart }) {
       sizeUS: "4oz",
       priceDollar: "14",
       sizeIL: "120ml",
-      priceShekel: "45",
+      priceShekel: "55",
     },
   ];
 
