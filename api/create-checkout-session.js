@@ -7,13 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 module.exports = async (req, res) => {
   if (req.method === "POST") {
     try {
-      const {
-        items,
-        giftNote,
-        shippingDetails,
-        deliveryCharge,
-        selectedDeliveryOption,
-      } = req.body;
+      const { items, giftNote } = req.body;
 
       if (!items || !Array.isArray(items) || items.length === 0) {
         throw new Error("No items found in the request");
@@ -60,20 +54,6 @@ module.exports = async (req, res) => {
         });
       }
 
-      // Add delivery charge as a line item
-      if (selectedDeliveryOption && deliveryCharge > 0) {
-        lineItems.push({
-          price_data: {
-            currency: "usd", // Set currency as needed, assuming USD here
-            product_data: {
-              name: `Delivery Charge - ${selectedDeliveryOption}`, // Include the selected delivery option in the name
-            },
-            unit_amount: deliveryCharge * 100, // Convert to cents
-          },
-          quantity: 1, // One-time charge
-        });
-      }
-
       // Create the Stripe checkout session
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
@@ -81,21 +61,11 @@ module.exports = async (req, res) => {
         mode: "payment",
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/canceled`,
+        shipping_address_collection: {
+          allowed_countries: ["US", "IL"], // Specify the allowed shipping countries
+        },
         metadata: {
           ...(giftNote && { giftNote: giftNote }), // Include the gift note in the session metadata if it exists
-          fullName: shippingDetails.fullName, // Include additional customer information
-          email: shippingDetails.email,
-          recipientName: shippingDetails.recipientName,
-          address: shippingDetails.address,
-          homeType: shippingDetails.homeType,
-          ...(shippingDetails.homeType === "building" && {
-            apartmentNumber: shippingDetails.apartmentNumber,
-            floor: shippingDetails.floor,
-            code: shippingDetails.code,
-          }),
-          city: shippingDetails.city,
-          zipCode: shippingDetails.zipCode,
-          contactNumber: shippingDetails.contactNumber,
         },
       });
 
