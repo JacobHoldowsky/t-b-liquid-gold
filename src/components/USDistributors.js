@@ -13,9 +13,9 @@ function USDistributors() {
           <div className="distributor-card">
             <h4>Monsey</h4>
             <a
-              href="https://wa.me/18485250358"
+              href="https://wa.me/13475633508"
               className="whatsapp-link"
-              target='_blank'
+              target="_blank"
               rel="noopener noreferrer"
             >
               <FaWhatsapp className="whatsapp-icon" />

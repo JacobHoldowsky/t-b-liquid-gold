@@ -12,7 +12,7 @@ function Wholesale({ cart, addToCart }) {
       size: "small",
     },
     {
-      url: "collection of small jars.jpg",
+      url: "Honey Collection.png",
       title: "T&Bee 4oz Jars",
       size: "large",
     },

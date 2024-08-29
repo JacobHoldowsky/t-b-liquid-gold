@@ -325,17 +325,14 @@ function Checkout({ cart, setCart, removeFromCart }) {
       shippingDetails.address,
       shippingDetails.homeType,
       shippingDetails.city,
-      shippingDetails.zipCode,
       shippingDetails.contactNumber,
     ].every((field) => field.trim() !== "");
 
     const areBuildingFieldsFilled =
       shippingDetails.homeType === "building"
-        ? [
-            shippingDetails.apartmentNumber,
-            shippingDetails.floor,
-            shippingDetails.code,
-          ].every((field) => field.trim() !== "")
+        ? [shippingDetails.apartmentNumber].every(
+            (field) => field.trim() !== ""
+          )
         : true;
 
     setIsFormValid(
@@ -544,7 +541,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
                   placeholder="Floor"
                   value={shippingDetails.floor}
                   onChange={handleInputChange}
-                  required
                 />
                 <input
                   type="text"
@@ -552,7 +548,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
                   placeholder="Building code"
                   value={shippingDetails.code}
                   onChange={handleInputChange}
-                  required
                 />
               </>
             )}
@@ -570,7 +565,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
               placeholder="Zip code"
               value={shippingDetails.zipCode}
               onChange={handleInputChange}
-              required
             />
             <input
               type="text"
@@ -601,12 +595,14 @@ function Checkout({ cart, setCart, removeFromCart }) {
             </select>
           </div>
         ) : null}
-        <div className="total-price">
-          <h3>
-            Total: {currency === "Dollar" ? "$" : "₪"}
-            {calculateTotalPrice()}
-          </h3>
-        </div>
+        {aggregatedCart.aggregatedCart.length ? (
+          <div className="total-price">
+            <h3>
+              Total: {currency === "Dollar" ? "$" : "₪"}
+              {calculateTotalPrice()}
+            </h3>
+          </div>
+        ) : null}
         {aggregatedCart.aggregatedCart.length ? (
           <div className="submit-order-btn-wrapper">
             <button

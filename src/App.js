@@ -15,6 +15,7 @@ import GiftPackages from "./components/GiftPackages";
 import GiftPackageDetail from "./components/GiftPackageDetail";
 import CorporateGifts from "./components/CorporateGifts";
 import USDistributors from "./components/USDistributors";
+import IsraelDistributors from "./components/IsraelDistributors";
 import Wholesale from "./components/Wholesale";
 import FloatingWhatsAppButton from "./components/FloatingWhatsAppButton";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -111,6 +112,12 @@ function App() {
               <Route
                 path="/distributors/us"
                 element={<USDistributors cart={cart} addToCart={addToCart} />}
+              />
+              <Route
+                path="/distributors/israel"
+                element={
+                  <IsraelDistributors cart={cart} addToCart={addToCart} />
+                }
               />
 
               <Route

@@ -2,7 +2,6 @@
   padding: 80px 20px;
   background-color: #f7f7f7;
   text-align: center;
-  
 }
 
 .featured-products h2 {
@@ -35,7 +34,8 @@
 
 .product-card img {
   width: 100%;
-  height: auto;
+  height: 350px; /* Fixed height for uniformity */
+  object-fit: cover; /* Ensures image is scaled correctly to cover area */
   border-radius: 8px;
   margin-bottom: 20px;
   transition: transform 0.3s ease;
@@ -43,16 +43,6 @@
 
 .product-card img:hover {
   transform: scale(1.05);
-}
-
-.product-card h3 {
-  font-size: 1.6rem;
-  margin-bottom: 15px;
-}
-
-.product-card p {
-  font-size: 1.2rem;
-  margin-bottom: 25px;
 }
 
 .cta-btn {

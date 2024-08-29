@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { CurrencyContext } from "../context/CurrencyContext";
@@ -8,7 +8,9 @@ import { faDollarSign, faShekelSign } from "@fortawesome/free-solid-svg-icons";
 
 function Header({ cartItemCount }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { currency, toggleCurrency } = useContext(CurrencyContext); // Use context here
+  const [activeDropdown, setActiveDropdown] = useState(null); // Track active dropdown
+  const { currency, toggleCurrency } = useContext(CurrencyContext);
+  const headerRef = useRef(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -16,6 +18,7 @@ function Header({ cartItemCount }) {
 
   const closeMenu = () => {
     setIsOpen(false);
+    setActiveDropdown(null); // Close all dropdowns when the menu is closed
   };
 
   const handleCurrencyToggle = () => {
@@ -35,18 +38,35 @@ function Header({ cartItemCount }) {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (headerRef.current && !headerRef.current.contains(event.target)) {
+        closeMenu();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [headerRef]);
+
   const scrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -100;
     window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
   };
 
+  const toggleDropdown = (dropdown) => {
+    setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
+  };
+
   return (
-    <header className="header">
+    <header className="header" ref={headerRef}>
       <div className="logo-currency-wrapper">
         <div className="logo">
           <Link to="/" onClick={closeMenu}>
-            <img src="t&bLiquidGoldLogo.png" alt="TnB Liquid Gold" />
+            <img src="tnbLiquidGoldLogo.png" alt="TnB Liquid Gold" />
           </Link>
         </div>
         <div className="currency-toggle" onClick={handleCurrencyToggle}>
@@ -68,8 +88,13 @@ function Header({ cartItemCount }) {
               Home
             </Link>
           </li>
-          <li className="dropdown">
-            <Link className="top-level-header-item" onClick={closeMenu}>
+          <li
+            className={`dropdown ${
+              activeDropdown === "shop" ? "active" : ""
+            }`}
+            onClick={() => toggleDropdown("shop")}
+          >
+            <Link className="top-level-header-item">
               Shop
             </Link>
             <ul className="dropdown-menu">
@@ -148,8 +173,13 @@ function Header({ cartItemCount }) {
               Contact
             </Link>
           </li>
-          <li className="dropdown">
-            <Link className="top-level-header-item" onClick={closeMenu}>
+          <li
+            className={`dropdown ${
+              activeDropdown === "distributors" ? "active" : ""
+            }`}
+            onClick={() => toggleDropdown("distributors")}
+          >
+            <Link className="top-level-header-item">
               Distributors
             </Link>
             <ul className="dropdown-menu">

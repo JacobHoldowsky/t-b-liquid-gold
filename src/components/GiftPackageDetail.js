@@ -14,7 +14,6 @@ function GiftPackageDetail({ cart, addToCart }) {
     forHim: {
       title: "For Him",
       description: "2 flavored creamed honeys, moscato, wooden honey dipper.",
-      kashrus: "Parve",
       priceDollar: 49,
       priceShekel: exchangeRate
         ? Math.ceil(49 * exchangeRate)
@@ -25,7 +24,6 @@ function GiftPackageDetail({ cart, addToCart }) {
     forHer: {
       title: "For Her",
       description: "2 flavored creamed honeys, Rosato, wooden honey dipper",
-      kashrus: "Parve",
       priceDollar: 49,
       priceShekel: exchangeRate
         ? Math.ceil(49 * exchangeRate)
@@ -37,7 +35,6 @@ function GiftPackageDetail({ cart, addToCart }) {
       title: "Box of Four",
       description:
         "4 flavored creamed honeys wrapped in a beautiful gift box with a wooden honey dipper",
-      kashrus: "Parve",
       priceDollar: 55,
       priceShekel: exchangeRate
         ? Math.ceil(55 * exchangeRate)
@@ -48,7 +45,6 @@ function GiftPackageDetail({ cart, addToCart }) {
     boardOfFour: {
       title: "Board of Four",
       description: "4 flavored creamed honeys on a wooden serving board",
-      kashrus: "Parve",
       priceDollar: 58,
       priceShekel: exchangeRate
         ? Math.ceil(58 * exchangeRate)
@@ -60,7 +56,6 @@ function GiftPackageDetail({ cart, addToCart }) {
       title: "Chocolate Delight",
       description:
         "2 Flavored creamed honeys, 4 Dairy belgian chocolates, wooden honey dipper.",
-      kashrus: "Dairy",
       priceDollar: 59,
       priceShekel: exchangeRate
         ? Math.ceil(59 * exchangeRate)
@@ -72,7 +67,6 @@ function GiftPackageDetail({ cart, addToCart }) {
       title: "T&Bee Collection Box",
       description:
         "6 flavored creamed honeys wrapped in a beautiful gift box with a wooden honey dipper.",
-      kashrus: "Parve",
       priceDollar: 79,
       priceShekel: exchangeRate
         ? Math.ceil(79 * exchangeRate)
@@ -84,7 +78,6 @@ function GiftPackageDetail({ cart, addToCart }) {
       title: "Honey A' La Connoissuer",
       description:
         "2 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
-      kashrus: "Dairy",
       warning: "*Wine may vary based on availability",
       priceDollar: 85,
       priceShekel: exchangeRate
@@ -97,7 +90,6 @@ function GiftPackageDetail({ cart, addToCart }) {
       title: "Collection Plus Box",
       description:
         "6 Flavored creamed honeys, 5 Dairy Belgian chocolates, wooden honey dipper.",
-      kashrus: "Dairy",
       priceDollar: 95,
       priceShekel: exchangeRate
         ? Math.ceil(95 * exchangeRate)
@@ -109,7 +101,6 @@ function GiftPackageDetail({ cart, addToCart }) {
       title: "Honeycomb Collection Board",
       description:
         "All of our 7 delicious flavored creamed honeys on a wooden serving board.",
-      kashrus: "Parve",
       priceDollar: 99,
       priceShekel: exchangeRate
         ? Math.ceil(99 * exchangeRate)
@@ -121,7 +112,6 @@ function GiftPackageDetail({ cart, addToCart }) {
       title: "Belgian Box",
       description:
         "4 Flavored creamed honeys, 12 Dairy Belgian chocolates, wooden honey dipper.",
-      kashrus: "Dairy",
       priceDollar: 105,
       priceShekel: exchangeRate
         ? Math.ceil(105 * exchangeRate)
@@ -134,7 +124,6 @@ function GiftPackageDetail({ cart, addToCart }) {
       description:
         "5 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
       warning: "*Wine may vary based on availability",
-      kashrus: "Dairy",
       priceDollar: 120,
       priceShekel: exchangeRate
         ? Math.ceil(120 * exchangeRate)
@@ -147,7 +136,6 @@ function GiftPackageDetail({ cart, addToCart }) {
       description:
         "5 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
       warning: "*Wine may vary based on availability",
-      kashrus: "Dairy",
       priceDollar: 136,
       priceShekel: exchangeRate
         ? Math.ceil(136 * exchangeRate)
@@ -159,11 +147,10 @@ function GiftPackageDetail({ cart, addToCart }) {
       title: "Scotch n' Sweets Board",
       description:
         "4 Flavored creamed honeys, 5 Dairy Belgian chocolates, 700ml Bottle of Glenlivet, wooden honey dipper, wooden honey board.",
-      kashrus: "Dairy",
-      priceDollar: 150,
+      priceDollar: 160,
       priceShekel: exchangeRate
-        ? Math.ceil(150 * exchangeRate)
-        : Math.ceil(150 * 3.7),
+        ? Math.ceil(160 * exchangeRate)
+        : Math.ceil(160 * 3.7),
       honeyCount: 4,
       imageUrl: "/scoth n sweets.png",
     },
@@ -172,7 +159,6 @@ function GiftPackageDetail({ cart, addToCart }) {
       description:
         "6 Flavored creamed honeys, Bottle of wine, 9 Dairy Belgian chocolates, Wooden honey dipper, Wooden serving board.",
       warning: "*Wine may vary based on availability",
-      kashrus: "Dairy",
       priceDollar: 180,
       priceShekel: exchangeRate
         ? Math.ceil(180 * exchangeRate)
@@ -236,7 +222,6 @@ function GiftPackageDetail({ cart, addToCart }) {
       />
       <h2 className="gift-package-title">{selectedItem.title}</h2>
       <p className="gift-package-description">{selectedItem.description}</p>
-      <p className="gift-package-kashrus">{selectedItem.kashrus}</p>
       {selectedItem.warning && (
         <p className="gift-package-warning">{selectedItem.warning}</p>
       )}

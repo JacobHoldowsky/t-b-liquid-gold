@@ -15,12 +15,12 @@
 .logo-currency-wrapper {
   display: flex;
   align-items: center;
-  gap: 20px; /* Adjust spacing between the logo and the currency toggle */
+  gap: 20px;
 }
 
 .currency-toggle {
   cursor: pointer;
-  font-size: 1.3rem; /* Adjust the size as needed */
+  font-size: 1.3rem;
   color: #333;
   transition: color 0.3s ease;
 }
@@ -36,8 +36,6 @@
 
 .logo img {
   height: 50px;
-  max-width: 100%;
-  transition: transform 0.3s ease;
 }
 
 .logo img:hover {
@@ -62,7 +60,7 @@
   text-decoration: none;
   padding: 5px 10px;
   transition: color 0.3s ease, border-bottom 0.3s ease;
-  display: inline-block; /* Ensure it's inline-block to control the underline */
+  display: inline-block;
   align-items: center;
   justify-content: center;
   text-align: center;
@@ -99,13 +97,7 @@
   position: relative;
 }
 
-.header nav ul li.dropdown:hover .dropdown-menu,
-.header nav ul li.currency-dropdown:hover .currency-dropdown-menu {
-  display: block;
-}
-
-.header nav ul li .dropdown-menu,
-.header nav ul li.currency-dropdown .currency-dropdown-menu {
+.header nav ul li .dropdown-menu {
   display: none;
   position: absolute;
   top: 100%;
@@ -118,18 +110,20 @@
   min-width: max-content;
 }
 
-.header nav ul li .dropdown-menu .dropdown-menu-item,
-.header nav ul li.currency-dropdown .currency-dropdown-menu .currency-option {
+.header nav ul li.active .dropdown-menu {
+  display: block; /* Show dropdown when active */
+}
+
+.header nav ul li .dropdown-menu .dropdown-menu-item {
   color: #333;
   text-decoration: none;
-  display: inline-block; /* Ensure it's inline-block to control the underline */
+  display: inline-block;
   padding: 5px 10px;
   cursor: pointer;
   transition: color 0.3s ease, border-bottom 0.3s ease;
 }
 
-.header nav ul li .dropdown-menu .dropdown-menu-item:hover,
-.header nav ul li.currency-dropdown .currency-dropdown-menu .currency-option:hover {
+.header nav ul li .dropdown-menu .dropdown-menu-item:hover {
   color: #7c2234;
   border-bottom: 1px solid #7c2234;
 }
@@ -148,28 +142,52 @@
   transition: 0.4s;
 }
 
-/* Mobile Navigation */
-@media (max-width: 1150px) {
+/* For screens 750px and above - Show regular header */
+@media (min-width: 770px) {
   .header nav ul {
+    display: flex; /* Show nav links */
+  }
+
+  .hamburger {
+    display: none; /* Hide hamburger */
+  }
+}
+
+/* For screens smaller than 750px - Show hamburger, hide regular nav */
+@media (max-width: 769px) {
+  .hamburger {
+    display: flex; /* Show hamburger on smaller screens */
+  }
+
+  .header nav ul {
+    display: none; /* Hide nav links initially */
     flex-direction: column;
     gap: 15px;
-    font-size: 14px;
     position: absolute;
     top: 60px;
     right: 0;
     background-color: #fff;
     width: 100%;
     padding: 20px 0;
-    display: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   .header nav ul.active {
-    display: flex;
+    display: flex; /* Show nav links when active */
   }
 
   .header {
     justify-content: space-between;
+  }
+
+  .header nav ul li .dropdown-menu {
+    position: relative;
+    top: 0;
+    left: 0;
+  }
+
+  .header nav ul li.active .dropdown-menu {
+    display: block;
   }
 
   .header nav ul li .dropdown-menu li {
@@ -177,6 +195,7 @@
   }
 }
 
+/* For screens smaller than or equal to 576px */
 @media (max-width: 576px) {
   .logo img {
     height: 40px;

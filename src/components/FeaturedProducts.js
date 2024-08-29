@@ -20,13 +20,19 @@ function FeaturedProducts() {
       <div className="product-grid">
         {/* Gift Packages */}
         <div className="product-card">
-          <img src="Deluxe Box $120.jpg" alt="Deluxe Box" />
-          <h3>Deluxe Box</h3>
-          <p>
-            {currency === "Dollar"
-              ? "$120"
-              : `₪${exchangeRate ? Math.ceil(120 * exchangeRate) : Math.ceil(120 * 3.7)}`}
-          </p>
+          <img src="Honey Collection.png" alt="Deluxe Box" />
+          <HashLink
+            smooth
+            to="/honeyCollection"
+            scroll={scrollWithOffset}
+            className="cta-btn"
+          >
+            Shop Honey Collection
+          </HashLink>
+        </div>
+        {/* Corporate Gifts */}
+        <div className="product-card">
+          <img src="gift packages.jpg" alt="For Her" />
           <HashLink
             smooth
             to="/giftPackages"
@@ -36,15 +42,9 @@ function FeaturedProducts() {
             Shop Gift Packages
           </HashLink>
         </div>
-        {/* Corporate Gifts */}
         <div className="product-card">
-          <img src="For Her $55.jpg" alt="For Her" />
-          <h3>For Her</h3>
-          <p>
-            {currency === "Dollar"
-              ? "$55"
-              : `₪${exchangeRate ? Math.ceil(55 * exchangeRate) : Math.ceil(55 * 3.7)}`}
-          </p>
+          <img src="Corporate Gifts.png" alt="Collection Plus" />
+
           <HashLink
             smooth
             to="/corporateGifts"
@@ -52,23 +52,6 @@ function FeaturedProducts() {
             className="cta-btn"
           >
             Shop Corporate Gifts
-          </HashLink>
-        </div>
-        <div className="product-card">
-          <img src="Collection Plus $95.jpg" alt="Collection Plus" />
-          <h3>Collection Plus</h3>
-          <p>
-            {currency === "Dollar"
-              ? "$105"
-              : `₪${exchangeRate ? Math.ceil(105 * exchangeRate) : Math.ceil(105 * 3.7)}`}
-          </p>
-          <HashLink
-            smooth
-            to="/giftPackages"
-            scroll={scrollWithOffset}
-            className="cta-btn"
-          >
-            Shop Gift Packages
           </HashLink>
         </div>
       </div>
