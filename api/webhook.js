@@ -5,6 +5,16 @@ const fs = require("fs");
 const path = require("path");
 const { buffer } = require("micro");
 
+const { S3Client, DeleteObjectCommand } = require("@aws-sdk/client-s3");
+
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-11-15",
 });
@@ -24,6 +34,7 @@ module.exports = async (req, res) => {
   if (req.method === "POST") {
     const sig = req.headers["stripe-signature"];
     let event;
+    let lineItems;
 
     try {
       // Parse raw body for Stripe webhook signature verification
@@ -69,10 +80,9 @@ module.exports = async (req, res) => {
       }
 
       try {
-        const lineItems = await stripe.checkout.sessions.listLineItems(
-          session.id,
-          { expand: ["data.price.product"] }
-        );
+        lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
+          expand: ["data.price.product"],
+        });
 
         // Map of product name to attachments for logo images
         const attachments = await Promise.all(
@@ -247,6 +257,35 @@ module.exports = async (req, res) => {
         return res.status(500).send(`Server Error: ${err.message}`);
       }
     }
+
+    // Collect the S3 keys of logos to delete
+    const s3KeysToDelete = lineItems.data
+      .map((item) => {
+        const logoUrl = item.price.product.metadata?.logoUrl;
+        if (logoUrl) {
+          const key = logoUrl.split("/").pop(); // Extract the file name from the URL
+          return { Key: key };
+        }
+        return null;
+      })
+      .filter(Boolean); // Remove null values
+
+    // Delete each image from S3
+    await Promise.all(
+      s3KeysToDelete.map(async (s3Key) => {
+        try {
+          const deleteParams = {
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: s3Key.Key,
+          };
+          const command = new DeleteObjectCommand(deleteParams);
+          await s3Client.send(command);
+          console.log(`Deleted S3 object: ${s3Key.Key}`);
+        } catch (err) {
+          console.error(`Failed to delete S3 object ${s3Key.Key}:`, err);
+        }
+      })
+    );
 
     try {
       const files = await fs.readdir("/tmp"); // List all files in /tmp
