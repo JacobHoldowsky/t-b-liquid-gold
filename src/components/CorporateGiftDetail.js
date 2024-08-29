@@ -50,6 +50,8 @@ function CorporateGiftDetail({ cart, addToCart }) {
   const [addedToCart, setAddedToCart] = useState(false);
   const [includeLogo, setIncludeLogo] = useState(false);
   const [artwork, setArtwork] = useState(null);
+  const [uploading, setUploading] = useState(false); // State to track if file is uploading
+  const [uploadError, setUploadError] = useState(null); // State to handle upload errors
   const [selectedFlavors, setSelectedFlavors] = useState(
     Array(4).fill("Chocolate Creamed Honey") // Initializing with a default flavor
   );
@@ -64,32 +66,48 @@ function CorporateGiftDetail({ cart, addToCart }) {
 
   const handleArtworkUpload = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const formData = new FormData();
-      formData.append("file", file);
-      const apiUrl =
-        process.env.NODE_ENV === "development"
-          ? "http://localhost:5000/upload-logo"
-          : "/api/upload-logo";
-      try {
-        const response = await fetch(apiUrl, {
-          method: "POST",
-          body: formData,
+
+    // Check file size, limit to 4MB
+    if (file && file.size > 4 * 1024 * 1024) {
+      // 4MB size limit
+      setUploadError("File size must be less than 4MB.");
+      setArtwork(null);
+      return;
+    }
+
+    setUploadError(null); // Clear any previous errors
+    setUploading(true); // Set uploading state to true
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const apiUrl =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:5000/upload-logo"
+        : "/api/upload-logo";
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setArtwork({
+          name: file.name,
+          type: file.type,
+          file: file,
+          previewURL: data.url, // URL from S3
         });
-        const data = await response.json();
-        if (data.success) {
-          setArtwork({
-            name: file.name,
-            type: file.type,
-            file: file,
-            previewURL: data.url, // URL from S3
-          });
-        } else {
-          console.error("Upload failed:", data.message);
-        }
-      } catch (err) {
-        console.error("Error uploading file:", err);
+      } else {
+        setUploadError("Upload failed: " + data.message);
       }
+    } catch (err) {
+      setUploadError("Error uploading file: " + err.message);
+    } finally {
+      setUploading(false); // Set uploading state to false after the upload completes
     }
   };
 
@@ -196,6 +214,10 @@ function CorporateGiftDetail({ cart, addToCart }) {
                 accept="image/*"
                 onChange={handleArtworkUpload}
               />
+              {uploadError && <p className="error">{uploadError}</p>}
+              {uploading && (
+                <p className="loading">Uploading... Please wait.</p>
+              )}
               {artwork && artwork.previewURL && (
                 <p className="uploaded-file">
                   <a
@@ -220,7 +242,11 @@ function CorporateGiftDetail({ cart, addToCart }) {
           Added to cart
         </div>
       ) : (
-        <button onClick={handleAddToCart} className="add-to-cart-btn">
+        <button
+          onClick={handleAddToCart}
+          className="add-to-cart-btn"
+          disabled={uploading || (includeLogo && !artwork?.previewURL)} // Disable button while uploading or if artwork is required but not available
+        >
           Add to Cart
         </button>
       )}
