@@ -33,11 +33,55 @@
     line-height: 1.6;
   }
   
+  .gift-package-kashrus {
+    font-size: 1rem;
+    color: #7c2234;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .gift-package-warning {
+    font-size: 1rem;
+    color: #e74c3c; /* Red color for warnings */
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  
   .gift-package-price {
     font-size: 1.8rem;
     color: #7c2234;
     font-weight: bold;
     margin-bottom: 30px;
+  }
+  
+  .quantity-selector {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  .quantity-selector label {
+    font-size: 1rem;
+    color: #333;
+    margin-right: 10px;
+  }
+  
+  .quantity-selector select {
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .quantity-selector select:focus {
+    outline: none;
+    border-color: #7c2234;
+  }
+  
+  .quantity-selector select:hover {
+    border-color: #7c2234;
   }
   
   .honey-flavor-selector {
@@ -94,13 +138,12 @@
     background-color: #b74058;
     transform: translateY(-2px);
   }
-
+  
   .notification {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 10px;
-    background-color: transparent; /* Transparent background */
     color: #28a745; /* Green text color */
     font-size: 1rem;
     font-weight: bold;
@@ -130,38 +173,6 @@
     color: #28a745;
     font-size: 1.5rem;
   }
-
-  .quantity-selector {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  
-  .quantity-selector label {
-    font-size: 1rem;
-    color: #333;
-    margin-right: 10px;
-  }
-  
-  .quantity-selector select {
-    padding: 8px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  .quantity-selector select:focus {
-    outline: none;
-    border-color: #7c2234;
-  }
-  
-  .quantity-selector select:hover {
-    border-color: #7c2234;
-  }
-  
-  
   
   /* Responsive adjustments */
   @media (max-width: 768px) {

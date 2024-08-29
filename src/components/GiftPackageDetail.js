@@ -13,49 +13,66 @@ function GiftPackageDetail({ cart, addToCart }) {
   const items = {
     forHim: {
       title: "For Him",
-      description:
-        "A perfect gift package for him, including two jars of creamed honey.",
-      priceDollar: 55,
+      description: "2 flavored creamed honeys, moscato, wooden honey dipper.",
+      kashrus: "Parve",
+      priceDollar: 49,
       priceShekel: exchangeRate
-        ? Math.ceil(55 * exchangeRate)
-        : Math.ceil(55 * 3.7),
+        ? Math.ceil(49 * exchangeRate)
+        : Math.ceil(49 * 3.7),
       honeyCount: 2,
       imageUrl: "/For Him $55.jpg",
     },
     forHer: {
       title: "For Her",
+      description: "2 flavored creamed honeys, Rosato, wooden honey dipper",
+      kashrus: "Parve",
+      priceDollar: 49,
+      priceShekel: exchangeRate
+        ? Math.ceil(49 * exchangeRate)
+        : Math.ceil(49 * 3.7),
+      honeyCount: 2,
+      imageUrl: "/For Her $55.jpg",
+    },
+    boxOfFour: {
+      title: "Box of Four",
       description:
-        "A perfect gift package for her, including two jars of creamed honey.",
+        "4 flavored creamed honeys wrapped in a beautiful gift box with a wooden honey dipper",
+      kashrus: "Parve",
       priceDollar: 55,
       priceShekel: exchangeRate
         ? Math.ceil(55 * exchangeRate)
         : Math.ceil(55 * 3.7),
-      honeyCount: 2,
-      imageUrl: "/For Her $55.jpg",
+      honeyCount: 4,
+      imageUrl: "/boxOfFour.jpg",
     },
-    setOfFour: {
-      title: "Set of Four",
-      description: "A gift package containing four jars of creamed honey.",
+    boardOfFour: {
+      title: "Board of Four",
+      description: "4 flavored creamed honeys on a wooden serving board",
+      kashrus: "Parve",
       priceDollar: 58,
       priceShekel: exchangeRate
         ? Math.ceil(58 * exchangeRate)
         : Math.ceil(58 * 3.7),
       honeyCount: 4,
-      imageUrl: "/setOfFour.jpg",
+      imageUrl: "/Board of Four no plastic.jpg",
     },
     chocolateDelight: {
       title: "Chocolate Delight",
-      description: "A delightful gift package with two jars of creamed honey.",
-      priceDollar: 65,
+      description:
+        "2 Flavored creamed honeys, 4 Dairy belgian chocolates, wooden honey dipper.",
+      kashrus: "Dairy",
+      priceDollar: 59,
       priceShekel: exchangeRate
-        ? Math.ceil(65 * exchangeRate)
-        : Math.ceil(65 * 3.7),
+        ? Math.ceil(59 * exchangeRate)
+        : Math.ceil(59 * 3.7),
       honeyCount: 2,
       imageUrl: "/chocolateDelight.png",
     },
     tnBeeCollection: {
-      title: "T&Bee Collection",
-      description: "A premium collection featuring six jars of creamed honey.",
+      title: "T&Bee Collection Box",
+      description:
+        "6 flavored creamed honeys wrapped in a beautiful gift box with a wooden honey dipper.",
+      kashrus: "Parve",
       priceDollar: 79,
       priceShekel: exchangeRate
         ? Math.ceil(79 * exchangeRate)
@@ -63,9 +80,12 @@ function GiftPackageDetail({ cart, addToCart }) {
       honeyCount: 6,
       imageUrl: "/tnbCollection.jpg",
     },
-    aLaConnoisseur: {
-      title: "A' LA Connoisseur",
-      description: "A connoisseur's choice with two jars of creamed honey.",
+    HoneyALaConnoisseur: {
+      title: "Honey A' La Connoissuer",
+      description:
+        "2 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
+      kashrus: "Dairy",
+      warning: "*Wine may vary based on availability",
       priceDollar: 85,
       priceShekel: exchangeRate
         ? Math.ceil(85 * exchangeRate)
@@ -73,35 +93,80 @@ function GiftPackageDetail({ cart, addToCart }) {
       honeyCount: 2,
       imageUrl: "/aLaConnoisseur.jpg",
     },
+    collectionPlusBox: {
+      title: "Collection Plus Box",
+      description:
+        "6 Flavored creamed honeys, 5 Dairy Belgian chocolates, wooden honey dipper.",
+      kashrus: "Dairy",
+      priceDollar: 95,
+      priceShekel: exchangeRate
+        ? Math.ceil(95 * exchangeRate)
+        : Math.ceil(95 * 3.7),
+      honeyCount: 6,
+      imageUrl: "/Collection Plus $95.jpg",
+    },
+    honeycombCollectionBoard: {
+      title: "Honeycomb Collection Board",
+      description:
+        "All of our 7 delicious flavored creamed honeys on a wooden serving board.",
+      kashrus: "Parve",
+      priceDollar: 99,
+      priceShekel: exchangeRate
+        ? Math.ceil(99 * exchangeRate)
+        : Math.ceil(99 * 3.7),
+      honeyCount: 7,
+      imageUrl: "/Honeycomb collection board no plastic.jpg",
+    },
     belgianBox: {
       title: "Belgian Box",
-      description: "A Belgian box containing four jars of creamed honey.",
-      priceDollar: 100,
-      priceShekel: exchangeRate
-        ? Math.ceil(100 * exchangeRate)
-        : Math.ceil(100 * 3.7),
-      honeyCount: 4,
-      imageUrl: "/Belgian Box $100.jpg",
-    },
-    collectionPlus: {
-      title: "Collection Plus",
-      description: "A premium collection with six jars of creamed honey.",
+      description:
+        "4 Flavored creamed honeys, 12 Dairy Belgian chocolates, wooden honey dipper.",
+      kashrus: "Dairy",
       priceDollar: 105,
       priceShekel: exchangeRate
         ? Math.ceil(105 * exchangeRate)
         : Math.ceil(105 * 3.7),
-      honeyCount: 6,
-      imageUrl: "/Collection Plus $95.jpg",
+      honeyCount: 4,
+      imageUrl: "/Belgian Box $100.jpg",
     },
     deluxeBox: {
       title: "Deluxe Box",
-      description: "A deluxe box featuring six jars of creamed honey.",
+      description:
+        "5 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
+      warning: "*Wine may vary based on availability",
+      kashrus: "Dairy",
       priceDollar: 120,
       priceShekel: exchangeRate
         ? Math.ceil(120 * exchangeRate)
         : Math.ceil(120 * 3.7),
-      honeyCount: 6,
+      honeyCount: 5,
       imageUrl: "/Deluxe Box $120.jpg",
+    },
+    deluxeBoard: {
+      title: "Deluxe Board",
+      description:
+        "5 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
+      warning: "*Wine may vary based on availability",
+      kashrus: "Dairy",
+      priceDollar: 136,
+      priceShekel: exchangeRate
+        ? Math.ceil(136 * exchangeRate)
+        : Math.ceil(136 * 3.7),
+      honeyCount: 5,
+      imageUrl: "/Deluxe Board no plastic.jpg",
+    },
+    theBossBoard: {
+      title: "The Boss Board",
+      description:
+        "6 Flavored creamed honeys, Bottle of wine, 9 Dairy Belgian chocolates, Wooden honey dipper, Wooden serving board.",
+      warning: "*Wine may vary based on availability",
+      kashrus: "Dairy",
+      priceDollar: 180,
+      priceShekel: exchangeRate
+        ? Math.ceil(180 * exchangeRate)
+        : Math.ceil(180 * 3.7),
+      honeyCount: 6,
+      imageUrl: "/The Boss Board no plastic.jpg",
     },
   };
 
@@ -109,7 +174,7 @@ function GiftPackageDetail({ cart, addToCart }) {
   const [selectedFlavors, setSelectedFlavors] = useState(
     Array(selectedItem.honeyCount).fill("Chocolate Creamed Honey")
   );
-  const [quantity, setQuantity] = useState(1); // State to track the quantity
+  const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
 
   const handleFlavorChange = (index, flavor) => {
@@ -121,13 +186,29 @@ function GiftPackageDetail({ cart, addToCart }) {
   const handleQuantityChange = (e) => {
     setQuantity(parseInt(e.target.value, 10));
   };
-
   const handleAddToCart = () => {
+    // Check if the selected item is the Honeycomb Collection Board
+    const isHoneycombCollectionBoard = packageId === "honeycombCollectionBoard";
+
+    // Set all available flavors for Honeycomb Collection Board
+    const honeycombFlavors = [
+      "Chocolate Creamed Honey",
+      "Cinnamon Creamed Honey",
+      "Pumpkin Creamed Honey",
+      "Sea Salt Creamed Honey",
+      "Vanilla Creamed Honey",
+      "Bourbon Creamed Honey",
+      "Blueberry Creamed Honey",
+    ];
+
     const itemToAdd = {
       ...selectedItem,
-      selectedFlavors,
-      quantity, // Use the selected quantity
+      selectedFlavors: isHoneycombCollectionBoard
+        ? honeycombFlavors
+        : selectedFlavors,
+      quantity,
     };
+
     addToCart(itemToAdd);
     setAddedToCart(true);
     setTimeout(() => setAddedToCart("hide"), 1500);
@@ -143,6 +224,10 @@ function GiftPackageDetail({ cart, addToCart }) {
       />
       <h2 className="gift-package-title">{selectedItem.title}</h2>
       <p className="gift-package-description">{selectedItem.description}</p>
+      <p className="gift-package-kashrus">{selectedItem.kashrus}</p>
+      {selectedItem.warning && (
+        <p className="gift-package-warning">{selectedItem.warning}</p>
+      )}
       <div className="gift-package-price">
         {currency === "Dollar"
           ? `$${selectedItem.priceDollar}`
@@ -163,41 +248,44 @@ function GiftPackageDetail({ cart, addToCart }) {
           ))}
         </select>
       </div>
-      <div className="honey-flavor-selector">
-        {selectedFlavors.map((flavor, index) => (
-          <div key={index} className="honey-flavor-dropdown">
-            <label htmlFor={`flavor-${index}`}>Honey Flavor {index + 1}:</label>
-            <select
-              id={`flavor-${index}`}
-              value={flavor}
-              onChange={(e) => handleFlavorChange(index, e.target.value)}
-            >
-              <option value="Chocolate Creamed Honey">
-                Chocolate Creamed Honey
-              </option>
-              <option value="Cinnamon Creamed Honey">
-                Cinnamon Creamed Honey
-              </option>
-              <option value="Pumpkin Creamed Honey">
-                Pumpkin Creamed Honey
-              </option>
-              <option value="Sea Salt Creamed Honey">
-                Sea Salt Creamed Honey
-              </option>
-              <option value="Vanilla Creamed Honey">
-                Vanilla Creamed Honey
-              </option>
-              <option value="Bourbon Creamed Honey">
-                Bourbon Creamed Honey
-              </option>
-              <option value="Blueberry Creamed Honey">
-                Blueberry Creamed Honey
-              </option>
-            </select>
-          </div>
-        ))}
-      </div>
-      
+      {selectedItem.honeyCount !== 7 && (
+        <div className="honey-flavor-selector">
+          {selectedFlavors.map((flavor, index) => (
+            <div key={index} className="honey-flavor-dropdown">
+              <label htmlFor={`flavor-${index}`}>
+                Honey Flavor {index + 1}:
+              </label>
+              <select
+                id={`flavor-${index}`}
+                value={flavor}
+                onChange={(e) => handleFlavorChange(index, e.target.value)}
+              >
+                <option value="Chocolate Creamed Honey">
+                  Chocolate Creamed Honey
+                </option>
+                <option value="Cinnamon Creamed Honey">
+                  Cinnamon Creamed Honey
+                </option>
+                <option value="Pumpkin Creamed Honey">
+                  Pumpkin Creamed Honey
+                </option>
+                <option value="Sea Salt Creamed Honey">
+                  Sea Salt Creamed Honey
+                </option>
+                <option value="Vanilla Creamed Honey">
+                  Vanilla Creamed Honey
+                </option>
+                <option value="Bourbon Creamed Honey">
+                  Bourbon Creamed Honey
+                </option>
+                <option value="Blueberry Creamed Honey">
+                  Blueberry Creamed Honey
+                </option>
+              </select>
+            </div>
+          ))}
+        </div>
+      )}
       {addedToCart ? (
         <div
           className={`notification ${addedToCart === "hide" ? "hide" : "show"}`}

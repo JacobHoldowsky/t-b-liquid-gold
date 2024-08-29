@@ -10,6 +10,24 @@ function CorporateGifts({ cart, addToCart }) {
 
   const items = [
     {
+      url: "miniFourBoard.jpg",
+      title: "Mini 4 Board",
+      priceDollar: "34",
+      id: "mini4Board",
+      priceShekel: exchangeRate
+        ? Math.ceil(34 * exchangeRate)
+        : Math.ceil(34 * 3.7),
+    },
+    {
+      url: "standardFourBoard.jpg",
+      title: "Standard 4 Board",
+      priceDollar: "34",
+      id: "standard4Board",
+      priceShekel: exchangeRate
+        ? Math.ceil(42 * exchangeRate)
+        : Math.ceil(42 * 3.7),
+    },
+    {
       url: "miniCollectionBoard.jpeg",
       title: "Mini Collection Board",
       priceDollar: "50",

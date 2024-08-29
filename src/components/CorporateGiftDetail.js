@@ -11,6 +11,28 @@ function CorporateGiftDetail({ cart, addToCart }) {
   const exchangeRate = useContext(ExchangeRateContext);
 
   const items = {
+    miniFourBoard: {
+      title: "Mini Four Board",
+      description:
+        "Gift your employees with 4 of our mini 2oz flavored creamed honey jars on a wooden board. Option to add your personalized logo to these jars. Flavors included on this board: Cinnamon, Vanilla, Chocolate, Sea Salt.",
+      priceDollar: 34,
+      priceShekel: exchangeRate
+        ? Math.ceil(34 * exchangeRate)
+        : Math.ceil(34 * 3.7),
+      imageUrl: "/miniFourBoard.jpg",
+      hasLogoOption: true,
+    },
+    standardFourBoard: {
+      title: "Standard 4 Board",
+      description:
+        "Gift your employees with 4 of our standard 4oz flavored creamed honey jars on a wooden board. Option to add your personalized logo to these jars. Flavors included on this board: Cinnamon, Vanilla, Chocolate, Sea Salt.",
+      priceDollar: 42,
+      priceShekel: exchangeRate
+        ? Math.ceil(42 * exchangeRate)
+        : Math.ceil(42 * 3.7),
+      imageUrl: "/miniFourBoard.jpg",
+      hasLogoOption: false,
+    },
     miniCollectionBoard: {
       title: "Mini Collection Board",
       description:
@@ -21,38 +43,6 @@ function CorporateGiftDetail({ cart, addToCart }) {
         : Math.ceil(50 * 3.7),
       imageUrl: "/miniCollectionBoard.jpeg",
       hasLogoOption: true,
-    },
-    deluxeBox: {
-      title: "Deluxe Box",
-      description: "A deluxe box featuring a selection of premium items.",
-      priceDollar: 120,
-      priceShekel: 400,
-      imageUrl: "/Deluxe Box $120.jpg",
-      hasLogoOption: false,
-    },
-    belgianBox: {
-      title: "Belgian Box",
-      description: "A Belgian box containing premium chocolates.",
-      priceDollar: 100,
-      priceShekel: 350,
-      imageUrl: "/Belgian Box $100.jpg",
-      hasLogoOption: false,
-    },
-    forHim: {
-      title: "For Him",
-      description: "A gift package specially curated for him.",
-      priceDollar: 55,
-      priceShekel: 200,
-      imageUrl: "/For Him $55.jpg",
-      hasLogoOption: false,
-    },
-    forHer: {
-      title: "For Her",
-      description: "A gift package specially curated for her.",
-      priceDollar: 55,
-      priceShekel: 200,
-      imageUrl: "/For Her $55.jpg",
-      hasLogoOption: false,
     },
   };
 
