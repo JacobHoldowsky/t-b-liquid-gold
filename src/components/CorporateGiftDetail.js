@@ -11,32 +11,23 @@ function CorporateGiftDetail({ cart, addToCart }) {
   const exchangeRate = useContext(ExchangeRateContext);
 
   const items = {
-    miniFourBoard: {
-      title: "Mini Four Board",
+    miniFourCollectionBoard: {
+      title: "Mini Four Collection Board",
       description:
-        "Gift your employees with 4 of our mini 2oz flavored creamed honey jars on a wooden board. Option to add your personalized logo to these jars. Flavors included on this board: Cinnamon, Vanilla, Chocolate, Sea Salt.",
-      priceDollar: 34,
+        "4 flavored creamed honeys, wooden honey dipper, wooden serving board.",
+      size: "Jar size 2oz",
+      priceDollar: 35,
       priceShekel: exchangeRate
-        ? Math.ceil(34 * exchangeRate)
-        : Math.ceil(34 * 3.7),
+        ? Math.ceil(35 * exchangeRate)
+        : Math.ceil(35 * 3.7),
       imageUrl: "/miniFourBoard.jpg",
       hasLogoOption: true,
     },
-    standardFourBoard: {
-      title: "Standard 4 Board",
+    miniSixCollectionBoard: {
+      title: "Mini Six Collection Board",
       description:
-        "Gift your employees with 4 of our standard 4oz flavored creamed honey jars on a wooden board. Option to add your personalized logo to these jars. Flavors included on this board: Cinnamon, Vanilla, Chocolate, Sea Salt.",
-      priceDollar: 42,
-      priceShekel: exchangeRate
-        ? Math.ceil(42 * exchangeRate)
-        : Math.ceil(42 * 3.7),
-      imageUrl: "/miniFourBoard.jpg",
-      hasLogoOption: false,
-    },
-    miniCollectionBoard: {
-      title: "Mini Collection Board",
-      description:
-        "Gift your employees with 6 of our mini 2oz flavored creamed honey jars on a wooden board. Option to add your personalized logo to these jars. Flavors included on this board: Cinnamon, Vanilla, Chocolate, Sea Salt, Pumpkin, Bourbon.",
+        "6 flavored creamed honeys, wooden honey dipper, wooden serving board",
+      size: "Jar size 2oz",
       priceDollar: 50,
       priceShekel: exchangeRate
         ? Math.ceil(50 * exchangeRate)

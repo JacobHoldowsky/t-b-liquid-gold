@@ -48,9 +48,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const [deliveryCharge, setDeliveryCharge] = useState(0);
   const [isFormValid, setIsFormValid] = useState(false);
 
+  // Aggregate cart items and calculate unique logo charges
   const aggregatedCart = useMemo(() => {
     const aggregatedCart = [];
     const seenTitles = {};
+    const uniqueLogoItems = new Set();
 
     cart.forEach((item) => {
       const itemQuantity = item.quantity ? parseInt(item.quantity, 10) : 1;
@@ -70,9 +72,14 @@ function Checkout({ cart, setCart, removeFromCart }) {
           selectedFlavors: flavors,
         });
       }
+
+      // Track unique items with logos
+      if (item.includeLogo) {
+        uniqueLogoItems.add(item.title);
+      }
     });
 
-    return aggregatedCart;
+    return { aggregatedCart, uniqueLogoCount: uniqueLogoItems.size };
   }, [cart]);
 
   const apiUrl =
@@ -84,35 +91,58 @@ function Checkout({ cart, setCart, removeFromCart }) {
     try {
       const stripe = await stripePromise;
 
+      // Calculate logo charges
+      const logoChargePerType =
+        currency === "Dollar" ? 5000 : Math.ceil(50 * exchangeRate * 100); // $50 in cents or equivalent
+      const totalLogoCharge =
+        aggregatedCart.uniqueLogoCount * logoChargePerType;
+
+      // Prepare items for checkout session
+      const lineItems = aggregatedCart.aggregatedCart.map((item) => {
+        const basePrice =
+          currency === "Dollar" ? item.priceDollar : item.priceShekel;
+
+        return {
+          price_data: {
+            currency: currency === "Dollar" ? "usd" : "ils",
+            product_data: {
+              name: `${item.title}`,
+              metadata: {
+                logoUrl: item.logoUrl ? item.logoUrl : null,
+              },
+            },
+            unit_amount: basePrice * 100,
+          },
+          quantity: item.quantity,
+        };
+      });
+
+      // Include custom logo charges as a single line item if applicable
+      if (aggregatedCart.uniqueLogoCount > 0) {
+        lineItems.push({
+          price_data: {
+            currency: currency === "Dollar" ? "usd" : "ils",
+            product_data: {
+              name: "Custom Logo Charge",
+            },
+            unit_amount: logoChargePerType,
+          },
+          quantity: aggregatedCart.uniqueLogoCount,
+        });
+      }
+
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          items: aggregatedCart.map((item) => {
-            const basePrice =
-              currency === "Dollar" ? item.priceDollar : item.priceShekel;
-
-            return {
-              price_data: {
-                currency: currency === "Dollar" ? "usd" : "ils",
-                product_data: {
-                  name: `${item.title}`,
-                  metadata: {
-                    logoUrl: item.logoUrl ? item.logoUrl : null,
-                  },
-                },
-                unit_amount: basePrice * 100,
-              },
-              quantity: item.quantity,
-            };
-          }),
+          items: lineItems,
           gift: isGift,
           giftNote: isGift ? giftNote : null,
           shippingDetails,
-          deliveryCharge, // Include delivery charge
-          selectedDeliveryOption, // Include selected delivery option
+          deliveryCharge,
+          selectedDeliveryOption,
         }),
       });
 
@@ -170,13 +200,13 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   const calculateTotalPrice = () => {
     const total =
-      aggregatedCart.reduce((total, item) => {
+      aggregatedCart.aggregatedCart.reduce((total, item) => {
         const price =
           currency === "Dollar" ? item.priceDollar : item.priceShekel;
-        return (
-          total + parseFloat(price) * item.quantity + (item.logoCharge || 0)
-        );
-      }, 0) + deliveryCharge;
+        return total + parseFloat(price) * item.quantity;
+      }, 0) +
+      deliveryCharge +
+      aggregatedCart.uniqueLogoCount * 50; // Add the logo charge per unique item type
 
     return formatNumberWithCommas(parseFloat(total.toFixed(2)));
   };
@@ -260,11 +290,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
       <div className="checkout">
         <h2>Checkout</h2>
         <div className="cart-items">
-          {aggregatedCart.length === 0 ? (
+          {aggregatedCart.aggregatedCart.length === 0 ? (
             <p>Your cart is empty.</p>
           ) : (
             <ul>
-              {aggregatedCart.map((item, index) => (
+              {aggregatedCart.aggregatedCart.map((item, index) => (
                 <li key={index} className="cart-item">
                   <img
                     src={item.imageUrl || item.url}
@@ -281,8 +311,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
                       <p className="item-logo">
                         Personalized Logo (
                         {currency === "Dollar"
-                          ? `+$50`
-                          : `+₪${50 * exchangeRate}`}
+                          ? `+ One time fee of $50`
+                          : `+ One time fee of ₪${50 * exchangeRate}`}
                         )
                       </p>
                     )}
@@ -330,7 +360,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             </ul>
           )}
         </div>
-        {aggregatedCart.length ? (
+        {aggregatedCart.aggregatedCart.length ? (
           <div className="gift-option">
             <label>
               <input
@@ -351,7 +381,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             )}
           </div>
         ) : null}
-        {aggregatedCart.length ? (
+        {aggregatedCart.aggregatedCart.length ? (
           <div className="shipping-details">
             <h3>Shipping Information</h3>
             <input
@@ -453,7 +483,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             />
           </div>
         ) : null}
-        {aggregatedCart.length ? (
+        {aggregatedCart.aggregatedCart.length ? (
           <div className="delivery-options">
             <h3>Delivery Options</h3>
             <select
@@ -478,17 +508,19 @@ function Checkout({ cart, setCart, removeFromCart }) {
             {calculateTotalPrice()}
           </h3>
         </div>
-        {aggregatedCart.length ? (
+        {aggregatedCart.aggregatedCart.length ? (
           <div className="submit-order-btn-wrapper">
             <button
               type="button"
               className="submit-order-btn"
-              disabled={!isFormValid || aggregatedCart.length === 0}
+              disabled={
+                !isFormValid || aggregatedCart.aggregatedCart.length === 0
+              }
               onClick={handleCheckout}
             >
               Proceed to Payment
             </button>
-            {!isFormValid || aggregatedCart.length === 0 ? (
+            {!isFormValid || aggregatedCart.aggregatedCart.length === 0 ? (
               <div className="submit-order-btn-tooltip">
                 Please fill out all fields.
               </div>

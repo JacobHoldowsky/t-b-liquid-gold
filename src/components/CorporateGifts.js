@@ -11,58 +11,21 @@ function CorporateGifts({ cart, addToCart }) {
   const items = [
     {
       url: "miniFourBoard.jpg",
-      title: "Mini 4 Board",
-      priceDollar: "34",
-      id: "mini4Board",
+      title: "Mini Four Collection Board",
+      priceDollar: "35",
+      id: "miniFourCollectionBoard",
       priceShekel: exchangeRate
-        ? Math.ceil(34 * exchangeRate)
-        : Math.ceil(34 * 3.7),
+        ? Math.ceil(35 * exchangeRate)
+        : Math.ceil(35 * 3.7),
     },
     {
-      url: "standardFourBoard.jpg",
-      title: "Standard 4 Board",
-      priceDollar: "34",
-      id: "standard4Board",
-      priceShekel: exchangeRate
-        ? Math.ceil(42 * exchangeRate)
-        : Math.ceil(42 * 3.7),
-    },
-    {
-      url: "miniCollectionBoard.jpeg",
-      title: "Mini Collection Board",
+      url: "miniSixBoard.jpg",
+      title: "Mini Six Collection Board",
       priceDollar: "50",
-      id: "miniCollectionBoard",
+      id: "miniSixCollectionBoard",
       priceShekel: exchangeRate
         ? Math.ceil(50 * exchangeRate)
         : Math.ceil(50 * 3.7),
-    },
-    {
-      url: "Deluxe Box $120.jpg",
-      title: "Deluxe Box",
-      priceDollar: "120",
-      id: "deluxeBox",
-      priceShekel: "400",
-    },
-    {
-      url: "Belgian Box $100.jpg",
-      title: "Belgian Box",
-      priceDollar: "100",
-      id: "belgianBox",
-      priceShekel: "350",
-    },
-    {
-      url: "For Him $55.jpg",
-      title: "For Him",
-      priceDollar: "55",
-      id: "forHim",
-      priceShekel: "200",
-    },
-    {
-      url: "For Her $55.jpg",
-      title: "For Her",
-      priceDollar: "55",
-      id: "forHer",
-      priceShekel: "200",
     },
   ];
 

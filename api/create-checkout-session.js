@@ -19,46 +19,46 @@ module.exports = async (req, res) => {
         throw new Error("No items found in the request");
       }
 
-      let hasLogoCharge = false;
+      const lineItems = [];
+      const logoChargedProducts = new Set(); // Track product types that should be charged for logos
 
-      // Map items and check if any item has a custom logo
-      const lineItems = items.map((item) => {
-        const logoUrl = item.price_data.product_data.metadata.logoUrl;
+      items.forEach((item) => {
+        const logoUrl = item.price_data?.product_data?.metadata?.logoUrl;
+        const productName = item.price_data?.product_data?.name;
+
         console.log("logoUrl", logoUrl);
 
-        if (logoUrl) {
-          hasLogoCharge = true; // Set flag to add a one-time logo charge
-        }
-
-        return {
+        // Add the main item to line items
+        lineItems.push({
           price_data: {
             currency: item.price_data.currency,
             product_data: {
-              name: item.price_data.product_data.name,
+              name: productName,
               metadata: {
-                logoUrl: logoUrl, // Store the logo URL in metadata without showing it in the description
-                ...(giftNote && { giftNote: giftNote }), // Add the gift note to metadata if it exists
+                logoUrl: logoUrl || null,
+                ...(giftNote && { giftNote: giftNote }),
               },
             },
             unit_amount: item.price_data.unit_amount,
           },
           quantity: item.quantity,
-        };
-      });
-
-      // Add a one-time $50 charge for the logo if any item includes a logo
-      if (hasLogoCharge) {
-        lineItems.push({
-          price_data: {
-            currency: "usd", // Assuming the charge should always be in USD
-            product_data: {
-              name: "Custom Logo",
-            },
-            unit_amount: 5000, // $50 charge in cents
-          },
-          quantity: 1, // One-time charge
         });
-      }
+
+        // Add a single logo charge for each unique product type that includes a logo
+        if (logoUrl && !logoChargedProducts.has(productName)) {
+          logoChargedProducts.add(productName); // Add the product type to the set to avoid duplicate charges
+          lineItems.push({
+            price_data: {
+              currency: "usd", // Assuming the charge should always be in USD
+              product_data: {
+                name: `Custom Logo for ${productName}`, // Label the logo charge with the product name
+              },
+              unit_amount: 5000, // $50 charge in cents
+            },
+            quantity: 1, // One-time charge per product type
+          });
+        }
+      });
 
       // Add delivery charge as a line item if applicable
       if (selectedDeliveryOption && deliveryCharge > 0) {
@@ -66,18 +66,25 @@ module.exports = async (req, res) => {
           price_data: {
             currency: "usd", // Set currency as needed, assuming USD here
             product_data: {
-              name: `Delivery Charge - ${selectedDeliveryOption}`, // Include the selected delivery option in the name
+              name: `Delivery Charge - ${selectedDeliveryOption}`,
             },
             unit_amount: deliveryCharge * 100, // Convert to cents
           },
-          quantity: 1, // One-time charge
+          quantity: 1,
         });
       }
 
-      // Create the Stripe checkout session
+      // Remove any unintended extra "Custom Logo Charge" line items
+      const finalLineItems = lineItems.filter((item) => {
+        // Check for unintended "Custom Logo Charge" that doesn't match specific product types
+        const isExtraLogoCharge =
+          item.price_data.product_data.name === "Custom Logo Charge";
+        return !isExtraLogoCharge;
+      });
+
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
-        line_items: lineItems,
+        line_items: finalLineItems,
         mode: "payment",
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/canceled`,

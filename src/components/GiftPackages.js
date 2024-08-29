@@ -118,6 +118,15 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(136 * 3.7),
     },
     {
+      url: "scoth n sweets.png",
+      title: "Scotch n' Sweets Board",
+      priceDollar: 150,
+      id: "scotchNSweetsBoard",
+      priceShekel: exchangeRate
+        ? Math.ceil(150 * exchangeRate)
+        : Math.ceil(150 * 3.7),
+    },
+    {
       url: "The Boss Board no plastic.jpg",
       title: "The Boss Board",
       priceDollar: 180,
@@ -125,15 +134,6 @@ function GiftPackages({ cart, addToCart }) {
       priceShekel: exchangeRate
         ? Math.ceil(180 * exchangeRate)
         : Math.ceil(180 * 3.7),
-    },
-    {
-      url: "scoth n sweets.png",
-      title: "Scotch n' Pop Board",
-      priceDollar: 190,
-      id: "scotchNPopBoard",
-      priceShekel: exchangeRate
-        ? Math.ceil(190 * exchangeRate)
-        : Math.ceil(190 * 3.7),
     },
   ];
 
