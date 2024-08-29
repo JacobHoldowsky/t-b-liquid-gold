@@ -3,6 +3,7 @@ const nodemailer = require("nodemailer");
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
+const { buffer } = require("micro");
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-11-15",
@@ -25,15 +26,17 @@ module.exports = async (req, res) => {
     let event;
 
     try {
+      // Parse raw body for Stripe webhook signature verification
+      const rawBody = await buffer(req);
       event = stripe.webhooks.constructEvent(
-        req.rawBody,
+        rawBody,
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       );
       console.log("Webhook received:", event.type);
     } catch (err) {
-      console.log(`⚠️  Webhook signature verification failed.`, err.message);
-      return res.sendStatus(400);
+      console.error(`⚠️  Webhook signature verification failed.`, err.message);
+      return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
     if (event.type === "checkout.session.completed") {
@@ -41,11 +44,11 @@ module.exports = async (req, res) => {
       const session = event.data.object;
       const customerEmail = session.customer_details.email;
       const giftNote = session.metadata.giftNote || ""; // Retrieve gift note from session metadata
-      let fullName = session.metadata.fullName;
-      let email = session.metadata.email;
-      let recipientName = session.metadata.recipientName;
-      let address = session.metadata.address;
-      let homeType = session.metadata.homeType;
+      const fullName = session.metadata.fullName;
+      const email = session.metadata.email;
+      const recipientName = session.metadata.recipientName;
+      const address = session.metadata.address;
+      const homeType = session.metadata.homeType;
       let apartmentNumber = "";
       let floor = "";
       let code = "";
@@ -56,29 +59,28 @@ module.exports = async (req, res) => {
         code = session.metadata.code;
       }
 
-      let city = session.metadata.city;
-      let zipCode = session.metadata.zipCode;
-      let contactNumber = session.metadata.contactNumber;
+      const city = session.metadata.city;
+      const zipCode = session.metadata.zipCode;
+      const contactNumber = session.metadata.contactNumber;
 
       if (!customerEmail) {
         console.error("No customer email provided. Cannot send email.");
-        return res.sendStatus(200);
+        return res.status(200).send();
       }
 
       try {
         const lineItems = await stripe.checkout.sessions.listLineItems(
           session.id,
-          { expand: ["data.price.product"] } // Ensure product details are included
+          { expand: ["data.price.product"] }
         );
 
         const attachments = await Promise.all(
           lineItems.data.map(async (item) => {
-            // Retrieve the logo URL from metadata
-            let logoUrl = item.price.product.metadata.logoUrl;
+            const logoUrl = item.price.product.metadata.logoUrl;
 
             if (logoUrl) {
               const fileName = path.basename(logoUrl);
-              const filePath = path.join(__dirname, fileName);
+              const filePath = path.join("/tmp", fileName); // Use /tmp for Vercel's temporary storage
 
               try {
                 await new Promise((resolve, reject) => {
@@ -155,52 +157,53 @@ module.exports = async (req, res) => {
         // Gift Note HTML
         const giftNoteHtml = giftNote
           ? `<h3 style="color: #333; margin-top: 20px;">Gift Note</h3>
-       <p style="font-size: 16px; background-color: #f9f9f9; padding: 15px; border-radius: 5px; color: #333;">${giftNote}</p>`
+             <p style="font-size: 16px; background-color: #f9f9f9; padding: 15px; border-radius: 5px; color: #333;">${giftNote}</p>`
           : "";
+
         // Email HTML for Customer
         const customerEmailHtml = `
-      <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-        <header style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
-          <h2 style="color: #7c2234;">Order Confirmation</h2>
-        </header>
-        <p style="font-size: 16px;">Dear ${fullName},</p>
-        <p style="font-size: 16px;">Thank you for your purchase! We are currently processing your order. Below are the details of your order:</p>
-        
-        <h3 style="color: #333; margin-bottom: 10px;">Order Details</h3>
-        <ul style="font-size: 16px; list-style-type: none; padding: 0;">
-          ${itemsListHtml}
-        </ul>
+          <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+            <header style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
+              <h2 style="color: #7c2234;">Order Confirmation</h2>
+            </header>
+            <p style="font-size: 16px;">Dear ${fullName},</p>
+            <p style="font-size: 16px;">Thank you for your purchase! We are currently processing your order. Below are the details of your order:</p>
+            
+            <h3 style="color: #333; margin-bottom: 10px;">Order Details</h3>
+            <ul style="font-size: 16px; list-style-type: none; padding: 0;">
+              ${itemsListHtml}
+            </ul>
 
-        ${giftNoteHtml}
+            ${giftNoteHtml}
 
-        ${shippingAddressHtml}
-        
-        <footer style="text-align: center; padding-top: 20px; border-top: 1px solid #ddd; margin-top: 20px;">
-          <p style="font-size: 14px; color: #777;">Thank you for shopping with us!</p>
-          <p style="font-size: 14px; color: #777;">If you have any questions, feel free to contact us via our contact page form.</p>
-        </footer>
-      </div>
-    `;
+            ${shippingAddressHtml}
+            
+            <footer style="text-align: center; padding-top: 20px; border-top: 1px solid #ddd; margin-top: 20px;">
+              <p style="font-size: 14px; color: #777;">Thank you for shopping with us!</p>
+              <p style="font-size: 14px; color: #777;">If you have any questions, feel free to contact us via our contact page form.</p>
+            </footer>
+          </div>
+        `;
 
         // Email HTML for Seller
         const adminEmailHtml = `
-       <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-         <header style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
-           <h2 style="color: #7c2234;">New Order Received</h2>
-         </header>
-         <p style="font-size: 16px;">You have received a new order from ${fullName} (${customerEmail}). Below are the details:</p>
-         
-         <h3 style="color: #333; margin-bottom: 10px;">Order Details</h3>
-         <ul style="font-size: 16px; list-style-type: none; padding: 0;">
-           ${itemsListHtml}
-         </ul>
+          <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+            <header style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
+              <h2 style="color: #7c2234;">New Order Received</h2>
+            </header>
+            <p style="font-size: 16px;">You have received a new order from ${fullName} (${customerEmail}). Below are the details:</p>
+            
+            <h3 style="color: #333; margin-bottom: 10px;">Order Details</h3>
+            <ul style="font-size: 16px; list-style-type: none; padding: 0;">
+              ${itemsListHtml}
+            </ul>
 
-         ${giftNoteHtml}
+            ${giftNoteHtml}
 
-         ${shippingAddressHtml}
-         
-       </div>
-     `;
+            ${shippingAddressHtml}
+            
+          </div>
+        `;
 
         // Mail Options for Customer
         const mailOptionsCustomer = {
@@ -210,14 +213,9 @@ module.exports = async (req, res) => {
           html: customerEmailHtml,
           attachments: validAttachments,
         };
+
         // Send email to customer
-        transporter.sendMail(mailOptionsCustomer, (error, info) => {
-          if (error) {
-            console.error("Error sending email to customer:", error);
-          } else {
-            console.log("Email sent to customer:", info.response);
-          }
-        });
+        await transporter.sendMail(mailOptionsCustomer);
 
         // Mail Options for Admin
         const mailOptionsAdmin = {
@@ -229,27 +227,25 @@ module.exports = async (req, res) => {
         };
 
         // Send email to admin
-        transporter.sendMail(mailOptionsAdmin, (error, info) => {
-          if (error) {
-            console.error("Error sending email to admin:", error);
-          } else {
-            console.log("Email sent to admin:", info.response);
-          }
+        await transporter.sendMail(mailOptionsAdmin);
 
-          // Delete downloaded images
-          validAttachments.forEach((attachment) => {
-            fs.unlink(attachment.path, (err) => {
-              if (err) console.error("Error deleting file:", err);
-              else console.log(`File deleted: ${attachment.path}`);
-            });
+        // Delete downloaded images from /tmp
+        validAttachments.forEach((attachment) => {
+          fs.unlink(attachment.path, (err) => {
+            if (err) console.error("Error deleting file:", err);
+            else console.log(`File deleted: ${attachment.path}`);
           });
         });
       } catch (err) {
         console.error("Error retrieving line items or sending email:", err);
+        return res.status(500).send(`Server Error: ${err.message}`);
       }
     }
 
-    res.send();
+    res.status(200).json({ received: true });
+  } else {
+    res.setHeader("Allow", "POST");
+    res.status(405).end("Method Not Allowed");
   }
 };
 
