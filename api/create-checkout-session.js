@@ -20,61 +20,28 @@ module.exports = async (req, res) => {
       }
 
       // Calculate subtotal for items only, excluding delivery charge
-      const itemSubtotal = items.reduce((total, item) => {
+      const subtotal = items.reduce((total, item) => {
         return total + item.price_data.unit_amount * item.quantity;
       }, 0);
 
-      // Calculate logo charges and track product types
-      const logoChargedProducts = new Set(); // Track product types for logo charges
-      const lineItems = [];
-      let totalLogoCharge = 0;
-
-      items.forEach((item) => {
-        const logoUrl = item.price_data?.product_data?.metadata?.logoUrl;
-        const flavors = item.price_data.product_data.metadata?.flavors || "";
-        const productName =
-          item.price_data.product_data.name + (flavors ? ` (${flavors})` : "");
-
-        // Add the main item to line items
-        lineItems.push({
-          price_data: {
-            currency: item.price_data.currency,
-            product_data: {
-              name: productName,
-              metadata: {
-                logoUrl: logoUrl || null,
-                ...(giftNote && { giftNote: giftNote }),
-              },
-            },
-            unit_amount: item.price_data.unit_amount,
-          },
-          quantity: item.quantity,
-        });
-
-        // Add a single logo charge for each unique product type that includes a logo
-        if (logoUrl && !logoChargedProducts.has(productName)) {
-          logoChargedProducts.add(productName); // Avoid duplicate logo charges
-          totalLogoCharge += 5000; // $50 charge in cents
-        }
-      });
-
-      // Apply the promo code discount
+      // Check if a valid promo code is entered and calculate the discount
       let discountRate = 0;
       if (promoCode === "SAVE5") {
         discountRate = 0.05; // 5% discount
       }
 
-      // Calculate subtotal including logo charges
-      const subtotalWithLogo = itemSubtotal + totalLogoCharge;
-      const discountAmount = Math.round(subtotalWithLogo * discountRate);
+      // Calculate the total discount amount
+      const discountAmount = Math.round(subtotal * discountRate);
 
-      // Adjust item prices based on the discount
+      // Apply the discount manually to each item price proportionally
       const adjustedItems = items.map((item) => {
+        // Calculate discount for each item proportionally
         const itemDiscount = Math.round(
           item.price_data.unit_amount * discountRate
         );
         const adjustedUnitAmount = item.price_data.unit_amount - itemDiscount;
 
+        // Ensure adjustedUnitAmount is non-negative and an integer
         return {
           price_data: {
             currency: item.price_data.currency,
@@ -86,24 +53,24 @@ module.exports = async (req, res) => {
                 ...(giftNote && { giftNote: giftNote }),
               },
             },
-            unit_amount: adjustedUnitAmount,
+            unit_amount: adjustedUnitAmount, // Adjusted price per unit
           },
           quantity: item.quantity,
         };
       });
 
-      // Add adjusted items to line items
-      lineItems.push(...adjustedItems);
+      // Create line items for Stripe
+      const lineItems = adjustedItems;
 
-      // Add delivery charge as a line item if applicable
+      // Add delivery charge as a separate line item (not discounted)
       if (selectedDeliveryOption && deliveryCharge > 0) {
         lineItems.push({
           price_data: {
-            currency: "usd",
+            currency: "usd", // Set currency as needed, assuming USD here
             product_data: {
               name: `Delivery Charge - ${selectedDeliveryOption}`,
               metadata: {
-                note: "Delivery charge is not discounted",
+                note: "Delivery charge is not discounted", // Add a note in the metadata
               },
             },
             unit_amount: deliveryCharge * 100, // Convert to cents
@@ -112,7 +79,23 @@ module.exports = async (req, res) => {
         });
       }
 
-      // Create the Stripe checkout session
+      // Add a discount line item to make the discount visible to the user
+      if (discountAmount > 0) {
+        lineItems.push({
+          price_data: {
+            currency: "usd", // Set currency as needed
+            product_data: {
+              name: "Discount - 5% off subtotal",
+              metadata: {
+                note: "This discount applies to the subtotal only, excluding delivery charge.",
+              },
+            },
+            unit_amount: -discountAmount, // Negative value to represent the discount
+          },
+          quantity: 1,
+        });
+      }
+
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: lineItems,
@@ -135,9 +118,9 @@ module.exports = async (req, res) => {
           city: shippingDetails.city,
           zipCode: shippingDetails.zipCode,
           contactNumber: shippingDetails.contactNumber,
-          promoCode: promoCode || "",
+          promoCode: promoCode || "", // Include promo code in the metadata
           discountInfo:
-            "5% discount applied to subtotal including logo charges, excluding delivery charge",
+            "5% discount applied to subtotal only, excluding delivery charge",
         },
       });
 
