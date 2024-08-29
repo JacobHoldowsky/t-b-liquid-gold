@@ -109,6 +109,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
               name: `${item.title}`,
               metadata: {
                 logoUrl: item.logoUrl ? item.logoUrl : null,
+                flavors: item.selectedFlavors
+                  ? item.selectedFlavors.join(", ")
+                  : "",
               },
             },
             unit_amount: basePrice * 100,
@@ -219,13 +222,30 @@ function Checkout({ cart, setCart, removeFromCart }) {
           : item.title) === itemKey
     );
 
-    if (itemToUpdate.title === "Mini Collection Board" && newQuantity < 15) {
+    if (
+      itemToUpdate.title === "Mini Four Collection Board" &&
+      newQuantity < 5
+    ) {
       const confirmRemoval = window.confirm(
-        "The minimum quantity for Mini Collection Board is 15. Would you like to remove them all from your cart?"
+        "The minimum quantity for Mini Four Collection Board is 5. Would you like to remove them all from your cart?"
       );
       if (confirmRemoval) {
         const updatedCart = cart.filter(
-          (item) => item.title !== "Mini Collection Board"
+          (item) => item.title !== "Mini Four Collection Board"
+        );
+        setCart(updatedCart);
+        return;
+      }
+      return;
+    }
+
+    if (itemToUpdate.title === "Mini Six Collection Board" && newQuantity < 5) {
+      const confirmRemoval = window.confirm(
+        "The minimum quantity for Mini Six Collection Board is 5. Would you like to remove them all from your cart?"
+      );
+      if (confirmRemoval) {
+        const updatedCart = cart.filter(
+          (item) => item.title !== "Mini Six Collection Board"
         );
         setCart(updatedCart);
         return;

@@ -30,8 +30,15 @@
 .corporate-gift-description {
     font-size: 1.2rem;
     color: #555;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     line-height: 1.6;
+}
+
+.corporate-gift-size {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 20px;
+    font-weight: 500;
 }
 
 .corporate-gift-price {
@@ -188,6 +195,10 @@
         font-size: 1.1rem;
     }
 
+    .corporate-gift-size {
+        font-size: 0.95rem;
+    }
+
     .corporate-gift-price {
         font-size: 1.6rem;
         margin-bottom: 25px;
@@ -217,6 +228,10 @@
         font-size: 1rem;
     }
 
+    .corporate-gift-size {
+        font-size: 0.9rem;
+    }
+
     .corporate-gift-price {
         font-size: 1.4rem;
         margin-bottom: 20px;
@@ -236,6 +251,10 @@
 
     .corporate-gift-description {
         font-size: 0.9rem;
+    }
+
+    .corporate-gift-size {
+        font-size: 0.85rem;
     }
 
     .add-to-cart-btn {

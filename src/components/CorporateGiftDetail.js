@@ -22,6 +22,14 @@ function CorporateGiftDetail({ cart, addToCart }) {
         : Math.ceil(35 * 3.7),
       imageUrl: "/miniFourBoard.jpg",
       hasLogoOption: true,
+      availableFlavors: [
+        "Chocolate Creamed Honey",
+        "Vanilla Creamed Honey",
+        "Cinnamon Creamed Honey",
+        "Sea Salt Creamed Honey",
+        "Bourbon Creamed Honey",
+        "Pumpkin Creamed Honey",
+      ],
     },
     miniSixCollectionBoard: {
       title: "Mini Six Collection Board",
@@ -38,10 +46,13 @@ function CorporateGiftDetail({ cart, addToCart }) {
   };
 
   const selectedItem = items[corporateId];
-  const [quantity, setQuantity] = useState(15);
+  const [quantity, setQuantity] = useState(5);
   const [addedToCart, setAddedToCart] = useState(false);
   const [includeLogo, setIncludeLogo] = useState(false);
   const [artwork, setArtwork] = useState(null);
+  const [selectedFlavors, setSelectedFlavors] = useState(
+    Array(4).fill("Chocolate Creamed Honey") // Initializing with a default flavor
+  );
 
   const handleQuantityChange = (e) => {
     setQuantity(parseInt(e.target.value, 10));
@@ -53,22 +64,18 @@ function CorporateGiftDetail({ cart, addToCart }) {
 
   const handleArtworkUpload = async (e) => {
     const file = e.target.files[0];
-
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-
       const apiUrl =
         process.env.NODE_ENV === "development"
           ? "http://localhost:5000/upload-logo"
           : "/api/upload-logo";
-
       try {
         const response = await fetch(apiUrl, {
           method: "POST",
           body: formData,
         });
-
         const data = await response.json();
         if (data.success) {
           setArtwork({
@@ -86,7 +93,21 @@ function CorporateGiftDetail({ cart, addToCart }) {
     }
   };
 
+  const handleFlavorChange = (index, flavor) => {
+    const newFlavors = [...selectedFlavors];
+    newFlavors[index] = flavor;
+    setSelectedFlavors(newFlavors);
+  };
+
   const handleAddToCart = () => {
+    if (
+      selectedItem.title === "Mini Four Collection Board" &&
+      selectedFlavors.length !== 4
+    ) {
+      alert("Please select exactly 4 flavors.");
+      return;
+    }
+
     const itemToAdd = {
       ...selectedItem,
       priceDollar: selectedItem.priceDollar,
@@ -95,7 +116,8 @@ function CorporateGiftDetail({ cart, addToCart }) {
       includeLogo,
       artwork,
       logoCharge: includeLogo ? 50 : 0,
-      logoUrl: includeLogo && artwork ? artwork.previewURL : null, // Ensure this is added
+      logoUrl: includeLogo && artwork ? artwork.previewURL : null,
+      selectedFlavors,
     };
     addToCart(itemToAdd);
     setAddedToCart(true);
@@ -112,6 +134,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
       />
       <h2 className="corporate-gift-title">{selectedItem.title}</h2>
       <p className="corporate-gift-description">{selectedItem.description}</p>
+      <p className="corporate-gift-size">{selectedItem.size}</p>
       <div className="corporate-gift-price">
         {currency === "Dollar"
           ? `$${selectedItem.priceDollar}`
@@ -126,12 +149,34 @@ function CorporateGiftDetail({ cart, addToCart }) {
           className="select-dropdown"
         >
           {[...Array(86).keys()].map((num) => (
-            <option key={num + 15} value={num + 15}>
-              {num + 15}
+            <option key={num + 5} value={num + 5}>
+              {num + 5}
             </option>
           ))}
         </select>
       </div>
+      {selectedItem.title === "Mini Four Collection Board" && (
+        <div className="flavor-selection">
+          {selectedFlavors.map((flavor, index) => (
+            <div key={index} className="honey-flavor-dropdown">
+              <label htmlFor={`flavor-${index}`}>
+                Honey Flavor {index + 1}:
+              </label>
+              <select
+                id={`flavor-${index}`}
+                value={flavor}
+                onChange={(e) => handleFlavorChange(index, e.target.value)}
+              >
+                {selectedItem.availableFlavors.map((flavorOption) => (
+                  <option key={flavorOption} value={flavorOption}>
+                    {flavorOption}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ))}
+        </div>
+      )}
       {selectedItem.hasLogoOption && (
         <div className="logo-option">
           <label>

@@ -24,7 +24,9 @@ module.exports = async (req, res) => {
 
       items.forEach((item) => {
         const logoUrl = item.price_data?.product_data?.metadata?.logoUrl;
-        const productName = item.price_data?.product_data?.name;
+        const flavors = item.price_data.product_data.metadata?.flavors || "";
+        const productName =
+          item.price_data.product_data.name + (flavors ? ` (${flavors})` : "");
 
         console.log("logoUrl", logoUrl);
 

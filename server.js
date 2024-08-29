@@ -121,8 +121,6 @@ app.get("/api/exchange-rate", async (req, res) => {
 
 app.post("/api/create-checkout-session", async (req, res) => {
   try {
-    console.log("Received request body:", JSON.stringify(req.body, null, 2));
-
     const {
       items,
       giftNote,
@@ -131,49 +129,28 @@ app.post("/api/create-checkout-session", async (req, res) => {
       selectedDeliveryOption,
     } = req.body;
 
-    if (!items || !Array.isArray(items) || items.length === 0) {
-      throw new Error("No items found in the request");
-    }
-
-    const lineItems = [];
-    const logoChargedProducts = new Set(); // Track product types that should be charged for logos
-
-    items.forEach((item) => {
-      const logoUrl = item.price_data?.product_data?.metadata?.logoUrl;
-      const productName = item.price_data?.product_data?.name;
-
-      console.log("logoUrl", logoUrl);
+    const lineItems = items.map((item) => {
+      // Safely access metadata and its properties
+      const logoUrl = item.price_data.product_data.metadata?.logoUrl || null;
+      const flavors = item.price_data.product_data.metadata?.flavors || "";
+      const productName =
+        item.price_data.product_data.name + (flavors ? ` (${flavors})` : "");
 
       // Add the main item to line items
-      lineItems.push({
+      return {
         price_data: {
           currency: item.price_data.currency,
           product_data: {
             name: productName,
             metadata: {
-              logoUrl: logoUrl || null,
+              logoUrl,
               ...(giftNote && { giftNote: giftNote }),
             },
           },
           unit_amount: item.price_data.unit_amount,
         },
         quantity: item.quantity,
-      });
-
-      // Add a single logo charge for each unique product type that includes a logo
-      if (logoUrl && !logoChargedProducts.has(productName)) {
-        logoChargedProducts.add(productName); // Add the product type to the set to avoid duplicate charges
-        lineItems.push({
-          price_data: {
-            currency: "usd", // Assuming the charge should always be in USD
-            product_data: {
-              name: `Custom Logo for ${productName}`, // Label the logo charge with the product name
-            },
-            unit_amount: 5000, // $50 charge in cents
-          },
-          quantity: 1, // One-time charge per product type
-        });
-      }
+      };
     });
 
     // Add delivery charge as a line item if applicable
@@ -190,23 +167,15 @@ app.post("/api/create-checkout-session", async (req, res) => {
       });
     }
 
-    // Remove any unintended extra "Custom Logo Charge" line items
-    const finalLineItems = lineItems.filter((item) => {
-      // Check for unintended "Custom Logo Charge" that doesn't match specific product types
-      const isExtraLogoCharge =
-        item.price_data.product_data.name === "Custom Logo Charge";
-      return !isExtraLogoCharge;
-    });
-
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      line_items: finalLineItems,
+      line_items: lineItems,
       mode: "payment",
       success_url: `${req.headers.origin}/success`,
       cancel_url: `${req.headers.origin}/canceled`,
       metadata: {
-        ...(giftNote && { giftNote: giftNote }), // Include the gift note in the session metadata if it exists
-        fullName: shippingDetails.fullName, // Include additional customer information
+        ...(giftNote && { giftNote: giftNote }),
+        fullName: shippingDetails.fullName,
         email: shippingDetails.email,
         recipientName: shippingDetails.recipientName,
         address: shippingDetails.address,
