@@ -326,7 +326,7 @@ app.post(
           <p><strong>Email:</strong> ${email}</p>
           <p><strong>Recipient Name:</strong> ${recipientName}</p>
           <p><strong>Address:</strong> ${address}</p>
-          <p><strong>Building or Private Home:</strong> ${capitalizedHomeType}</p>
+          <p><strong>Home Type:</strong> ${capitalizedHomeType}</p>
           ${
             homeType === "building"
               ? `<p><strong>Apartment Number:</strong> ${apartmentNumber}</p>
