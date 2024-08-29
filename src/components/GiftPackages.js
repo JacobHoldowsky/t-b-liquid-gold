@@ -126,6 +126,15 @@ function GiftPackages({ cart, addToCart }) {
         ? Math.ceil(180 * exchangeRate)
         : Math.ceil(180 * 3.7),
     },
+    {
+      url: "scoth n sweets.png",
+      title: "Scotch n' Pop Board",
+      priceDollar: 190,
+      id: "scotchNPopBoard",
+      priceShekel: exchangeRate
+        ? Math.ceil(190 * exchangeRate)
+        : Math.ceil(190 * 3.7),
+    },
   ];
 
   console.log(items[0].url);
@@ -139,6 +148,9 @@ function GiftPackages({ cart, addToCart }) {
           contact us directly.
         </p>
       </div>
+      <p className="availability-note">
+        **Packaging may vary based on availability**
+      </p>
       <h2 className="gift-packages-section-title">Gift Packages</h2>
       <div className="gift-packages-images">
         {items.map((item, index) => (

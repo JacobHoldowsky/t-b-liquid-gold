@@ -168,6 +168,18 @@ function GiftPackageDetail({ cart, addToCart }) {
       honeyCount: 6,
       imageUrl: "/The Boss Board no plastic.jpg",
     },
+    scotchNPopBoard: {
+      title: "Scotch n' Pop Board",
+      description:
+        "4 Flavored creamed honeys, 5 Dairy Belgian chocolates, 700ml Bottle of Glenlivet, wooden honey dipper, wooden honey board.",
+      kashrus: "Dairy",
+      priceDollar: 190,
+      priceShekel: exchangeRate
+        ? Math.ceil(190 * exchangeRate)
+        : Math.ceil(190 * 3.7),
+      honeyCount: 4,
+      imageUrl: "/scoth n sweets.png",
+    },
   };
 
   const selectedItem = items[packageId];
