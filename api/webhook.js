@@ -86,7 +86,7 @@ module.exports = async (req, res) => {
                 / /g,
                 "_"
               )}_Logo_${path.basename(logoUrl)}`;
-              const filePath = path.join(__dirname, fileName);
+              const filePath = path.join("/tmp", fileName); // Use /tmp for storage
 
               try {
                 await new Promise((resolve, reject) => {
