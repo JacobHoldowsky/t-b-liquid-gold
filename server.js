@@ -1,4 +1,8 @@
-const { S3Client, PutObjectCommand, DeleteObjectCommand  } = require("@aws-sdk/client-s3");
+const {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} = require("@aws-sdk/client-s3");
 const express = require("express");
 const cors = require("cors");
 const nodemailer = require("nodemailer");
@@ -127,39 +131,62 @@ app.post("/api/create-checkout-session", async (req, res) => {
       shippingDetails,
       deliveryCharge,
       selectedDeliveryOption,
+      promoCode, // Include promoCode in the request body
     } = req.body;
 
-    const lineItems = items.map((item) => {
-      // Safely access metadata and its properties
-      const logoUrl = item.price_data.product_data.metadata?.logoUrl || null;
-      const flavors = item.price_data.product_data.metadata?.flavors || "";
-      const productName =
-        item.price_data.product_data.name + (flavors ? ` (${flavors})` : "");
+    // Calculate subtotal for items only, excluding delivery charge
+    const subtotal = items.reduce((total, item) => {
+      return total + item.price_data.unit_amount * item.quantity;
+    }, 0);
 
-      // Add the main item to line items
+    // Check if a valid promo code is entered and calculate the discount
+    let discountRate = 0;
+    if (promoCode === "SAVE5") {
+      discountRate = 0.05; // 5% discount
+    }
+
+    // Calculate the total discount amount
+    const discountAmount = Math.round(subtotal * discountRate);
+
+    // Apply the discount manually to each item price proportionally
+    const adjustedItems = items.map((item) => {
+      // Calculate discount for each item proportionally
+      const itemDiscount = Math.round(
+        item.price_data.unit_amount * discountRate
+      );
+      const adjustedUnitAmount = item.price_data.unit_amount - itemDiscount;
+
+      // Ensure adjustedUnitAmount is non-negative and an integer
       return {
         price_data: {
           currency: item.price_data.currency,
           product_data: {
-            name: productName,
+            name: item.price_data.product_data.name,
             metadata: {
-              logoUrl,
+              logoUrl: item.price_data.product_data.metadata?.logoUrl || null,
+              flavors: item.price_data.product_data.metadata?.flavors || "",
               ...(giftNote && { giftNote: giftNote }),
             },
           },
-          unit_amount: item.price_data.unit_amount,
+          unit_amount: adjustedUnitAmount, // Adjusted price per unit
         },
         quantity: item.quantity,
       };
     });
 
-    // Add delivery charge as a line item if applicable
+    // Create line items for Stripe
+    const lineItems = adjustedItems;
+
+    // Add delivery charge as a separate line item (not discounted)
     if (selectedDeliveryOption && deliveryCharge > 0) {
       lineItems.push({
         price_data: {
           currency: "usd", // Set currency as needed, assuming USD here
           product_data: {
             name: `Delivery Charge - ${selectedDeliveryOption}`,
+            metadata: {
+              note: "Delivery charge is not discounted", // Add a note in the metadata
+            },
           },
           unit_amount: deliveryCharge * 100, // Convert to cents
         },
@@ -177,6 +204,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
         ...(giftNote && { giftNote: giftNote }),
         fullName: shippingDetails.fullName,
         email: shippingDetails.email,
+        number: shippingDetails.number,
         recipientName: shippingDetails.recipientName,
         address: shippingDetails.address,
         homeType: shippingDetails.homeType,
@@ -188,6 +216,9 @@ app.post("/api/create-checkout-session", async (req, res) => {
         city: shippingDetails.city,
         zipCode: shippingDetails.zipCode,
         contactNumber: shippingDetails.contactNumber,
+        promoCode: promoCode || "", // Include promo code in the metadata
+        discountInfo:
+          "5% discount applied to subtotal only, excluding delivery charge",
       },
     });
 
@@ -225,6 +256,7 @@ app.post(
       const giftNote = session.metadata.giftNote || ""; // Retrieve gift note from session metadata
       let fullName = session.metadata.fullName;
       let email = session.metadata.email;
+      let number = session.metadata.number;
       let recipientName = session.metadata.recipientName;
       let address = session.metadata.address;
       let homeType = session.metadata.homeType;
@@ -324,6 +356,7 @@ app.post(
           <h3 style="color: #333; margin-top: 20px;">Shipping Information</h3>
           <p><strong>Full Name:</strong> ${fullName}</p>
           <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Number:</strong> ${number}</p>
           <p><strong>Recipient Name:</strong> ${recipientName}</p>
           <p><strong>Address:</strong> ${address}</p>
           <p><strong>Home Type:</strong> ${capitalizedHomeType}</p>

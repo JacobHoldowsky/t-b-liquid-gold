@@ -8,6 +8,10 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
 const DELIVERY_OPTIONS = [
   {
+    label: "Pick up in Ramat Eshkol",
+    charge: 0,
+  },
+  {
     label:
       "Ramat Eshkol, Maalot Dafna, Arzei Habira, French Hill, Sanhedria, Givat Hamivtar",
     charge: 10,
@@ -34,6 +38,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const [shippingDetails, setShippingDetails] = useState({
     fullName: "",
     email: "",
+    number: "",
     recipientName: "",
     address: "",
     homeType: "",
@@ -47,6 +52,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState(null);
   const [deliveryCharge, setDeliveryCharge] = useState(0);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [promoCode, setPromoCode] = useState(""); // State for promo code input
+  const [isPromoApplied, setIsPromoApplied] = useState(false); // State to track if promo is applied
+  const [promoMessage, setPromoMessage] = useState({ message: "", type: "" }); // State for promo feedback
 
   // Aggregate cart items and calculate unique logo charges
   const aggregatedCart = useMemo(() => {
@@ -146,6 +154,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
           shippingDetails,
           deliveryCharge,
           selectedDeliveryOption,
+          promoCode: promoCode,
         }),
       });
 
@@ -197,21 +206,53 @@ function Checkout({ cart, setCart, removeFromCart }) {
     setDeliveryCharge(selectedOption.charge);
   };
 
+  const handlePromoCodeChange = (e) => {
+    setPromoCode(e.target.value);
+  };
+
+  const applyPromoCode = () => {
+    if (promoCode === "SAVE5") {
+      // Example promo code
+      setIsPromoApplied(true);
+      setPromoMessage({
+        message: "Promo code accepted! 5% discount applied.",
+        type: "success",
+      });
+    } else {
+      setPromoMessage({
+        message: "Invalid promo code. Please try again.",
+        type: "error",
+      });
+      setIsPromoApplied(false);
+    }
+  };
+
   const formatNumberWithCommas = (number) => {
     return number.toLocaleString();
   };
 
   const calculateTotalPrice = () => {
-    const total =
-      aggregatedCart.aggregatedCart.reduce((total, item) => {
-        const price =
-          currency === "Dollar" ? item.priceDollar : item.priceShekel;
-        return total + parseFloat(price) * item.quantity;
-      }, 0) +
-      deliveryCharge +
-      aggregatedCart.uniqueLogoCount * 50; // Add the logo charge per unique item type
+    // Calculate subtotal including logo charges
+    const itemSubtotal = aggregatedCart.aggregatedCart.reduce((total, item) => {
+      const price = currency === "Dollar" ? item.priceDollar : item.priceShekel;
+      return total + parseFloat(price) * item.quantity;
+    }, 0);
 
-    return formatNumberWithCommas(parseFloat(total.toFixed(2)));
+    // Calculate the logo charge
+    const logoChargePerType = currency === "Dollar" ? 50 : 50 * exchangeRate;
+    const totalLogoCharge = aggregatedCart.uniqueLogoCount * logoChargePerType;
+
+    // Calculate subtotal including logo charges
+    const subtotal = itemSubtotal + totalLogoCharge;
+
+    // Calculate the discount
+    const discount = isPromoApplied ? subtotal * 0.05 : 0; // Apply 5% discount
+
+    // Calculate the final total
+    const total = subtotal - discount + deliveryCharge;
+
+    // Ensure two decimal places for cents
+    return formatNumberWithCommas(total.toFixed(2));
   };
 
   const updateItemQuantity = (itemKey, newQuantity) => {
@@ -281,6 +322,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
     const areMandatoryFieldsFilled = [
       shippingDetails.fullName,
       shippingDetails.email,
+      shippingDetails.number,
       shippingDetails.recipientName,
       shippingDetails.address,
       shippingDetails.homeType,
@@ -380,6 +422,32 @@ function Checkout({ cart, setCart, removeFromCart }) {
             </ul>
           )}
         </div>
+        <div className="total-price">
+          <h3>
+            Total: {currency === "Dollar" ? "$" : "₪"}
+            {calculateTotalPrice()}
+          </h3>
+        </div>
+        {aggregatedCart.aggregatedCart.length ? (
+          <div className="promo-code">
+            <label htmlFor="promoCode">Promo Code:</label>
+            <input
+              type="text"
+              id="promoCode"
+              value={promoCode}
+              onChange={handlePromoCodeChange}
+              placeholder="Enter promo code"
+            />
+            <button onClick={applyPromoCode} className="apply-promo-btn">
+              Apply
+            </button>
+            {promoMessage.message && (
+              <div className={`promo-message ${promoMessage.type}`}>
+                {promoMessage.message}
+              </div>
+            )}
+          </div>
+        ) : null}
         {aggregatedCart.aggregatedCart.length ? (
           <div className="gift-option">
             <label>
@@ -403,7 +471,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
         ) : null}
         {aggregatedCart.aggregatedCart.length ? (
           <div className="shipping-details">
-            <h3>Shipping Information</h3>
+            <h3>Customer Details</h3>
             <input
               type="text"
               name="fullName"
@@ -420,6 +488,19 @@ function Checkout({ cart, setCart, removeFromCart }) {
               onChange={handleInputChange}
               required
             />
+            <input
+              type="tel"
+              name="number"
+              placeholder="Your number"
+              value={shippingDetails.number}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+        ) : null}
+        {aggregatedCart.aggregatedCart.length ? (
+          <div className="shipping-details">
+            <h3>Delivery Information</h3>
             <input
               type="text"
               name="recipientName"

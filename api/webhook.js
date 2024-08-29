@@ -57,6 +57,7 @@ module.exports = async (req, res) => {
       const giftNote = session.metadata.giftNote || ""; // Retrieve gift note from session metadata
       const fullName = session.metadata.fullName;
       const email = session.metadata.email;
+      const number = session.metadata.number;
       const recipientName = session.metadata.recipientName;
       const address = session.metadata.address;
       const homeType = session.metadata.homeType;
@@ -155,6 +156,7 @@ module.exports = async (req, res) => {
           <h3 style="color: #333; margin-top: 20px;">Shipping Information</h3>
           <p><strong>Full Name:</strong> ${fullName}</p>
           <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Number:</strong> ${number}</p>
           <p><strong>Recipient Name:</strong> ${recipientName}</p>
           <p><strong>Address:</strong> ${address}</p>
           <p><strong>Home Type:</strong> ${capitalizedHomeType}</p>

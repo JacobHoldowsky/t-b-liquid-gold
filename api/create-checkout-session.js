@@ -1,4 +1,3 @@
-// create-checkout-session.js
 const Stripe = require("stripe");
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-11-15",
@@ -13,22 +12,28 @@ module.exports = async (req, res) => {
         shippingDetails,
         deliveryCharge,
         selectedDeliveryOption,
+        promoCode,
       } = req.body;
 
       if (!items || !Array.isArray(items) || items.length === 0) {
         throw new Error("No items found in the request");
       }
 
+      // Calculate subtotal for items only, excluding delivery charge
+      const itemSubtotal = items.reduce((total, item) => {
+        return total + item.price_data.unit_amount * item.quantity;
+      }, 0);
+
+      // Calculate logo charges and track product types
+      const logoChargedProducts = new Set(); // Track product types for logo charges
       const lineItems = [];
-      const logoChargedProducts = new Set(); // Track product types that should be charged for logos
+      let totalLogoCharge = 0;
 
       items.forEach((item) => {
         const logoUrl = item.price_data?.product_data?.metadata?.logoUrl;
         const flavors = item.price_data.product_data.metadata?.flavors || "";
         const productName =
           item.price_data.product_data.name + (flavors ? ` (${flavors})` : "");
-
-        console.log("logoUrl", logoUrl);
 
         // Add the main item to line items
         lineItems.push({
@@ -48,27 +53,58 @@ module.exports = async (req, res) => {
 
         // Add a single logo charge for each unique product type that includes a logo
         if (logoUrl && !logoChargedProducts.has(productName)) {
-          logoChargedProducts.add(productName); // Add the product type to the set to avoid duplicate charges
-          lineItems.push({
-            price_data: {
-              currency: "usd", // Assuming the charge should always be in USD
-              product_data: {
-                name: `Custom Logo for ${productName}`, // Label the logo charge with the product name
-              },
-              unit_amount: 5000, // $50 charge in cents
-            },
-            quantity: 1, // One-time charge per product type
-          });
+          logoChargedProducts.add(productName); // Avoid duplicate logo charges
+          totalLogoCharge += 5000; // $50 charge in cents
         }
       });
+
+      // Apply the promo code discount
+      let discountRate = 0;
+      if (promoCode === "SAVE5") {
+        discountRate = 0.05; // 5% discount
+      }
+
+      // Calculate subtotal including logo charges
+      const subtotalWithLogo = itemSubtotal + totalLogoCharge;
+      const discountAmount = Math.round(subtotalWithLogo * discountRate);
+
+      // Adjust item prices based on the discount
+      const adjustedItems = items.map((item) => {
+        const itemDiscount = Math.round(
+          item.price_data.unit_amount * discountRate
+        );
+        const adjustedUnitAmount = item.price_data.unit_amount - itemDiscount;
+
+        return {
+          price_data: {
+            currency: item.price_data.currency,
+            product_data: {
+              name: item.price_data.product_data.name,
+              metadata: {
+                logoUrl: item.price_data.product_data.metadata?.logoUrl || null,
+                flavors: item.price_data.product_data.metadata?.flavors || "",
+                ...(giftNote && { giftNote: giftNote }),
+              },
+            },
+            unit_amount: adjustedUnitAmount,
+          },
+          quantity: item.quantity,
+        };
+      });
+
+      // Add adjusted items to line items
+      lineItems.push(...adjustedItems);
 
       // Add delivery charge as a line item if applicable
       if (selectedDeliveryOption && deliveryCharge > 0) {
         lineItems.push({
           price_data: {
-            currency: "usd", // Set currency as needed, assuming USD here
+            currency: "usd",
             product_data: {
               name: `Delivery Charge - ${selectedDeliveryOption}`,
+              metadata: {
+                note: "Delivery charge is not discounted",
+              },
             },
             unit_amount: deliveryCharge * 100, // Convert to cents
           },
@@ -76,24 +112,18 @@ module.exports = async (req, res) => {
         });
       }
 
-      // Remove any unintended extra "Custom Logo Charge" line items
-      const finalLineItems = lineItems.filter((item) => {
-        // Check for unintended "Custom Logo Charge" that doesn't match specific product types
-        const isExtraLogoCharge =
-          item.price_data.product_data.name === "Custom Logo Charge";
-        return !isExtraLogoCharge;
-      });
-
+      // Create the Stripe checkout session
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
-        line_items: finalLineItems,
+        line_items: lineItems,
         mode: "payment",
         success_url: `${req.headers.origin}/success`,
         cancel_url: `${req.headers.origin}/canceled`,
         metadata: {
-          ...(giftNote && { giftNote: giftNote }), // Include the gift note in the session metadata if it exists
-          fullName: shippingDetails.fullName, // Include additional customer information
+          ...(giftNote && { giftNote: giftNote }),
+          fullName: shippingDetails.fullName,
           email: shippingDetails.email,
+          number: shippingDetails.number,
           recipientName: shippingDetails.recipientName,
           address: shippingDetails.address,
           homeType: shippingDetails.homeType,
@@ -105,17 +135,18 @@ module.exports = async (req, res) => {
           city: shippingDetails.city,
           zipCode: shippingDetails.zipCode,
           contactNumber: shippingDetails.contactNumber,
+          promoCode: promoCode || "",
+          discountInfo:
+            "5% discount applied to subtotal including logo charges, excluding delivery charge",
         },
       });
 
-      // Respond with the session ID
       res.status(200).json({ id: session.id });
     } catch (err) {
       console.error("Error creating checkout session:", err.message);
       res.status(500).json({ error: err.message });
     }
   } else {
-    // Respond with 405 if the method is not POST
     res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
   }
