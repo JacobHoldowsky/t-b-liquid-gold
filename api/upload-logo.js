@@ -4,6 +4,7 @@ const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
+const sharp = require("sharp");
 
 // Configure S3 client with environment variables
 const s3Client = new S3Client({
@@ -39,16 +40,24 @@ module.exports = async (req, res) => {
           .json({ success: false, message: "No file uploaded" });
       }
 
-      // Define S3 upload parameters
-      const uploadParams = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: `${Date.now()}_${file.originalname}`, // Generate a unique file name
-        Body: fs.createReadStream(file.path),
-        ContentType: file.mimetype,
-      };
+      const outputPath = `/tmp/resized_${file.originalname}`;
 
       try {
-        // Upload the file to S3
+        // Use sharp to resize/compress the image
+        await sharp(file.path)
+          .resize({ width: 800 }) // Resize to a width of 800px, maintain aspect ratio
+          .jpeg({ quality: 80 }) // Convert to JPEG with 80% quality
+          .toFile(outputPath); // Save the processed file
+
+        // Define S3 upload parameters
+        const uploadParams = {
+          Bucket: process.env.AWS_BUCKET_NAME,
+          Key: `${Date.now()}_resized_${file.originalname}`, // Unique file name
+          Body: fs.createReadStream(outputPath),
+          ContentType: "image/jpeg", // Set correct MIME type for the resized image
+        };
+
+        // Upload the resized/compressed image to S3
         const command = new PutObjectCommand(uploadParams);
         await s3Client.send(command);
 
@@ -56,23 +65,22 @@ module.exports = async (req, res) => {
         const location = `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${uploadParams.Key}`;
         res.status(200).json({ success: true, url: location });
       } catch (err) {
-        console.error("Error uploading file:", err);
-        res
-          .status(500)
-          .json({ success: false, message: "Failed to upload file" });
+        console.error("Error processing or uploading file:", err);
+        res.status(500).json({
+          success: false,
+          message: "Failed to process or upload file",
+        });
       } finally {
-        // Delete the temporary file
+        // Cleanup: Delete the original and resized files
         fs.unlink(file.path, (err) => {
-          if (err) {
-            console.error("Error deleting temporary file:", err);
-          } else {
-            console.log(`Temporary file deleted: ${file.path}`);
-          }
+          if (err) console.error("Error deleting original file:", err);
+        });
+        fs.unlink(outputPath, (err) => {
+          if (err) console.error("Error deleting resized file:", err);
         });
       }
     });
   } else {
-    // Respond with 405 if the method is not POST
     res.setHeader("Allow", "POST");
     res.status(405).end("Method Not Allowed");
   }
