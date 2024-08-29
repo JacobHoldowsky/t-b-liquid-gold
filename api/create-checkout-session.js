@@ -79,23 +79,6 @@ module.exports = async (req, res) => {
         });
       }
 
-      // Add a discount line item to make the discount visible to the user
-      if (discountAmount > 0) {
-        lineItems.push({
-          price_data: {
-            currency: "usd", // Set currency as needed
-            product_data: {
-              name: "Discount - 5% off subtotal",
-              metadata: {
-                note: "This discount applies to the subtotal only, excluding delivery charge.",
-              },
-            },
-            unit_amount: -discountAmount, // Negative value to represent the discount
-          },
-          quantity: 1,
-        });
-      }
-
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: lineItems,
