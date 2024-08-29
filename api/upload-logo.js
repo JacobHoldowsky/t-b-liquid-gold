@@ -15,7 +15,10 @@ const s3Client = new S3Client({
 });
 
 // Configure multer to use /tmp as the storage directory for uploaded files
-const upload = multer({ dest: "/tmp" });
+const upload = multer({
+  dest: "/tmp",
+  limits: { fileSize: 10 * 1024 * 1024 }, // Set file size limit to 10MB
+});
 
 module.exports = async (req, res) => {
   if (req.method === "POST") {
