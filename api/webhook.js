@@ -74,13 +74,19 @@ module.exports = async (req, res) => {
           { expand: ["data.price.product"] }
         );
 
+        // Map of product name to attachments for logo images
         const attachments = await Promise.all(
           lineItems.data.map(async (item) => {
-            const logoUrl = item.price.product.metadata.logoUrl;
+            // Retrieve the logo URL from metadata
+            let logoUrl = item.price.product.metadata.logoUrl;
+            const productName = item.price.product.name; // Get the product name
 
             if (logoUrl) {
-              const fileName = path.basename(logoUrl);
-              const filePath = path.join("/tmp", fileName); // Use /tmp for Vercel's temporary storage
+              const fileName = `${productName.replace(
+                / /g,
+                "_"
+              )}_Logo_${path.basename(logoUrl)}`;
+              const filePath = path.join(__dirname, fileName);
 
               try {
                 await new Promise((resolve, reject) => {
