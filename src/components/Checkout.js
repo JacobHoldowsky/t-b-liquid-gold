@@ -102,8 +102,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
       // Calculate logo charges
       const logoChargePerType =
         currency === "Dollar" ? 5000 : Math.ceil(50 * exchangeRate * 100); // $50 in cents or equivalent
-      const totalLogoCharge =
-        aggregatedCart.uniqueLogoCount * logoChargePerType;
 
       // Prepare items for checkout session
       const lineItems = aggregatedCart.aggregatedCart.map((item) => {
