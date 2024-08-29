@@ -1,4 +1,4 @@
-import React, { useMemo, useContext, useState } from "react";
+import React, { useMemo, useContext, useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import "./Checkout.css";
 import { CurrencyContext } from "../context/CurrencyContext";
@@ -6,11 +6,47 @@ import { ExchangeRateContext } from "../context/ExchangeRateContext";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
+const DELIVERY_OPTIONS = [
+  {
+    label:
+      "Ramat Eshkol, Maalot Dafna, Arzei Habira, French Hill, Sanhedria, Givat Hamivtar",
+    charge: 10,
+  },
+  { label: "Anywhere in Jerusalem and Bet Shemesh/RBS", charge: 15 },
+  {
+    label:
+      "Givat Zev, Modiin, Mevaseret, Beitar, Mitzpei Yericho, Maaleh Adumim",
+    charge: 20,
+  },
+  {
+    label:
+      "All other locations in Israel (order deadline for this delivery option is September 22)",
+    charge: 25,
+    deadline: "2024-09-23",
+  },
+];
+
 function Checkout({ cart, setCart, removeFromCart }) {
   const { currency } = useContext(CurrencyContext);
   const exchangeRate = useContext(ExchangeRateContext);
   const [isGift, setIsGift] = useState(false);
   const [giftNote, setGiftNote] = useState("");
+  const [shippingDetails, setShippingDetails] = useState({
+    fullName: "",
+    email: "",
+    recipientName: "",
+    address: "",
+    homeType: "",
+    apartmentNumber: "",
+    floor: "",
+    code: "",
+    city: "",
+    zipCode: "",
+    contactNumber: "",
+  });
+  const [selectedDeliveryOption, setSelectedDeliveryOption] = useState(null);
+  const [deliveryCharge, setDeliveryCharge] = useState(0);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const aggregatedCart = useMemo(() => {
     const aggregatedCart = [];
@@ -64,16 +100,19 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 product_data: {
                   name: `${item.title}`,
                   metadata: {
-                    logoUrl: item.logoUrl ? item.logoUrl : null, // Store the logo URL in metadata
+                    logoUrl: item.logoUrl ? item.logoUrl : null,
                   },
                 },
-                unit_amount: basePrice * 100, // Add the logo charge to the base price
+                unit_amount: basePrice * 100,
               },
               quantity: item.quantity,
             };
           }),
           gift: isGift,
-          giftNote: isGift ? giftNote : null, // Include gift note only if it's a gift
+          giftNote: isGift ? giftNote : null,
+          shippingDetails,
+          deliveryCharge, // Include delivery charge
+          selectedDeliveryOption, // Include selected delivery option
         }),
       });
 
@@ -105,22 +144,41 @@ function Checkout({ cart, setCart, removeFromCart }) {
     }
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setShippingDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
+  };
+
+  const handleDeliveryOptionChange = (e) => {
+    const selectedOption = DELIVERY_OPTIONS[e.target.value];
+    if (
+      selectedOption.deadline &&
+      new Date() > new Date(selectedOption.deadline)
+    ) {
+      alert("This delivery option is no longer available due to the deadline.");
+      setSelectedDeliveryOption(null);
+      setDeliveryCharge(0);
+      return;
+    }
+    setSelectedDeliveryOption(selectedOption.label);
+    setDeliveryCharge(selectedOption.charge);
+  };
+
   const formatNumberWithCommas = (number) => {
     return number.toLocaleString();
   };
 
   const calculateTotalPrice = () => {
-    const total = aggregatedCart
-      .reduce((total, item) => {
+    const total =
+      aggregatedCart.reduce((total, item) => {
         const price =
           currency === "Dollar" ? item.priceDollar : item.priceShekel;
         return (
           total + parseFloat(price) * item.quantity + (item.logoCharge || 0)
         );
-      }, 0)
-      .toFixed(2);
+      }, 0) + deliveryCharge;
 
-    return formatNumberWithCommas(parseFloat(total));
+    return formatNumberWithCommas(parseFloat(total.toFixed(2)));
   };
 
   const updateItemQuantity = (itemKey, newQuantity) => {
@@ -131,7 +189,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
           : item.title) === itemKey
     );
 
-    // Special handling for "Mini Collection Board"
     if (itemToUpdate.title === "Mini Collection Board" && newQuantity < 15) {
       const confirmRemoval = window.confirm(
         "The minimum quantity for Mini Collection Board is 15. Would you like to remove them all from your cart?"
@@ -141,12 +198,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
           (item) => item.title !== "Mini Collection Board"
         );
         setCart(updatedCart);
-        return; // Exit function to prevent further processing
+        return;
       }
-      return; // Exit function to prevent further processing if not removing
+      return;
     }
 
-    // If quantity is 1 and is being reduced, trigger removal confirmation
     if (newQuantity <= 0) {
       const confirmRemoval = window.confirm(
         "Do you want to remove this item from your cart?"
@@ -155,7 +211,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
         removeFromCart(itemToUpdate.id);
       }
     } else {
-      // Update the quantity for items that can be reduced to zero
       const updatedCart = cart.map((item) => {
         if (
           (item.selectedFlavors?.length
@@ -170,6 +225,35 @@ function Checkout({ cart, setCart, removeFromCart }) {
       setCart(updatedCart);
     }
   };
+
+  // Validation check for the form
+  useEffect(() => {
+    const areMandatoryFieldsFilled = [
+      shippingDetails.fullName,
+      shippingDetails.email,
+      shippingDetails.recipientName,
+      shippingDetails.address,
+      shippingDetails.homeType,
+      shippingDetails.city,
+      shippingDetails.zipCode,
+      shippingDetails.contactNumber,
+    ].every((field) => field.trim() !== "");
+
+    const areBuildingFieldsFilled =
+      shippingDetails.homeType === "building"
+        ? [
+            shippingDetails.apartmentNumber,
+            shippingDetails.floor,
+            shippingDetails.code,
+          ].every((field) => field.trim() !== "")
+        : true;
+
+    setIsFormValid(
+      areMandatoryFieldsFilled &&
+        areBuildingFieldsFilled &&
+        selectedDeliveryOption
+    );
+  }, [shippingDetails, selectedDeliveryOption]);
 
   return (
     <div className="checkout-container">
@@ -246,39 +330,171 @@ function Checkout({ cart, setCart, removeFromCart }) {
             </ul>
           )}
         </div>
-        <div className="gift-option">
-          <label>
+        {aggregatedCart.length ? (
+          <div className="gift-option">
+            <label>
+              <input
+                type="checkbox"
+                checked={isGift}
+                onChange={(e) => setIsGift(e.target.checked)}
+              />
+              This is a gift
+            </label>
+            {isGift && (
+              <textarea
+                value={giftNote}
+                onChange={(e) => setGiftNote(e.target.value.slice(0, 400))}
+                placeholder="Include a gift note (max 400 characters)"
+                rows="4"
+                maxLength="400"
+              />
+            )}
+          </div>
+        ) : null}
+        {aggregatedCart.length ? (
+          <div className="shipping-details">
+            <h3>Shipping Information</h3>
             <input
-              type="checkbox"
-              checked={isGift}
-              onChange={(e) => setIsGift(e.target.checked)}
+              type="text"
+              name="fullName"
+              placeholder="Your full name"
+              value={shippingDetails.fullName}
+              onChange={handleInputChange}
+              required
             />
-            This is a gift
-          </label>
-          {isGift && (
-            <textarea
-              value={giftNote}
-              onChange={(e) => setGiftNote(e.target.value.slice(0, 400))} // Limit to 400 characters
-              placeholder="Include a gift note (max 400 characters)"
-              rows="4"
-              maxLength="400" // Additional safeguard
+            <input
+              type="email"
+              name="email"
+              placeholder="Your email"
+              value={shippingDetails.email}
+              onChange={handleInputChange}
+              required
             />
-          )}
-        </div>
+            <input
+              type="text"
+              name="recipientName"
+              placeholder="Recipient name"
+              value={shippingDetails.recipientName}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              value={shippingDetails.address}
+              onChange={handleInputChange}
+              required
+            />
+            <select
+              name="homeType"
+              value={shippingDetails.homeType}
+              onChange={handleInputChange}
+              required
+            >
+              <option value="" disabled hidden>
+                Is this a building or private home?
+              </option>
+              <option value="building">Building</option>
+              <option value="home">Private Home</option>
+            </select>
+
+            {shippingDetails.homeType === "building" && (
+              <>
+                <input
+                  type="text"
+                  name="apartmentNumber"
+                  placeholder="Apartment number"
+                  value={shippingDetails.apartmentNumber}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="floor"
+                  placeholder="Floor"
+                  value={shippingDetails.floor}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="code"
+                  placeholder="Building code"
+                  value={shippingDetails.code}
+                  onChange={handleInputChange}
+                  required
+                />
+              </>
+            )}
+            <input
+              type="text"
+              name="city"
+              placeholder="City"
+              value={shippingDetails.city}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="text"
+              name="zipCode"
+              placeholder="Zip code"
+              value={shippingDetails.zipCode}
+              onChange={handleInputChange}
+              required
+            />
+            <input
+              type="text"
+              name="contactNumber"
+              placeholder="Recipient contact number"
+              value={shippingDetails.contactNumber}
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+        ) : null}
+        {aggregatedCart.length ? (
+          <div className="delivery-options">
+            <h3>Delivery Options</h3>
+            <select
+              onChange={handleDeliveryOptionChange}
+              defaultValue=""
+              required
+            >
+              <option value="" disabled hidden>
+                Select a delivery option
+              </option>
+              {DELIVERY_OPTIONS.map((option, index) => (
+                <option key={index} value={index}>
+                  {option.label} - ${option.charge}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : null}
         <div className="total-price">
           <h3>
             Total: {currency === "Dollar" ? "$" : "₪"}
             {calculateTotalPrice()}
           </h3>
         </div>
-        <button
-          type="button"
-          className="submit-order-btn"
-          disabled={aggregatedCart.length === 0}
-          onClick={handleCheckout}
-        >
-          Proceed to Payment
-        </button>
+        {aggregatedCart.length ? (
+          <div className="submit-order-btn-wrapper">
+            <button
+              type="button"
+              className="submit-order-btn"
+              disabled={!isFormValid || aggregatedCart.length === 0}
+              onClick={handleCheckout}
+            >
+              Proceed to Payment
+            </button>
+            {!isFormValid || aggregatedCart.length === 0 ? (
+              <div className="submit-order-btn-tooltip">
+                Please fill out all fields.
+              </div>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     </div>
   );

@@ -123,7 +123,13 @@ app.post("/api/create-checkout-session", async (req, res) => {
   try {
     console.log("Received request body:", JSON.stringify(req.body, null, 2));
 
-    const { items, giftNote } = req.body; // Retrieve items and giftNote from the request body
+    const {
+      items,
+      giftNote,
+      shippingDetails,
+      deliveryCharge,
+      selectedDeliveryOption,
+    } = req.body;
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       throw new Error("No items found in the request");
@@ -169,17 +175,41 @@ app.post("/api/create-checkout-session", async (req, res) => {
       });
     }
 
+    // Add delivery charge as a line item
+    if (selectedDeliveryOption && deliveryCharge > 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd", // Set currency as needed, assuming USD here
+          product_data: {
+            name: `Delivery Charge - ${selectedDeliveryOption}`, // Include the selected delivery option in the name
+          },
+          unit_amount: deliveryCharge * 100, // Convert to cents
+        },
+        quantity: 1, // One-time charge
+      });
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
       mode: "payment",
       success_url: `${req.headers.origin}/success`,
       cancel_url: `${req.headers.origin}/canceled`,
-      shipping_address_collection: {
-        allowed_countries: ["US", "IL"],
-      },
       metadata: {
         ...(giftNote && { giftNote: giftNote }), // Include the gift note in the session metadata if it exists
+        fullName: shippingDetails.fullName, // Include additional customer information
+        email: shippingDetails.email,
+        recipientName: shippingDetails.recipientName,
+        address: shippingDetails.address,
+        homeType: shippingDetails.homeType,
+        ...(shippingDetails.homeType === "building" && {
+          apartmentNumber: shippingDetails.apartmentNumber,
+          floor: shippingDetails.floor,
+          code: shippingDetails.code,
+        }),
+        city: shippingDetails.city,
+        zipCode: shippingDetails.zipCode,
+        contactNumber: shippingDetails.contactNumber,
       },
     });
 
@@ -214,8 +244,25 @@ app.post(
       console.log("Processing checkout.session.completed event");
       const session = event.data.object;
       const customerEmail = session.customer_details.email;
-      const shippingDetails = session.customer_details.address;
       const giftNote = session.metadata.giftNote || ""; // Retrieve gift note from session metadata
+      let fullName = session.metadata.fullName;
+      let email = session.metadata.email;
+      let recipientName = session.metadata.recipientName;
+      let address = session.metadata.address;
+      let homeType = session.metadata.homeType;
+      let apartmentNumber = "";
+      let floor = "";
+      let code = "";
+
+      if (homeType === "building") {
+        apartmentNumber = session.metadata.apartmentNumber;
+        floor = session.metadata.floor;
+        code = session.metadata.code;
+      }
+
+      let city = session.metadata.city;
+      let zipCode = session.metadata.zipCode;
+      let contactNumber = session.metadata.contactNumber;
 
       if (!customerEmail) {
         console.error("No customer email provided. Cannot send email.");
@@ -232,7 +279,6 @@ app.post(
           lineItems.data.map(async (item) => {
             // Retrieve the logo URL from metadata
             let logoUrl = item.price.product.metadata.logoUrl;
-            console.log(`Processed Logo URL: ${logoUrl}`);
 
             if (logoUrl) {
               const fileName = path.basename(logoUrl);
@@ -287,49 +333,87 @@ app.post(
           })
           .join("");
 
-        // Format the shipping address
+        const capitalizedHomeType =
+          homeType.charAt(0).toUpperCase() + homeType.slice(1);
+
+        // HTML for Shipping Address
         const shippingAddressHtml = `
-          <p>${shippingDetails.line1}</p>
-          ${shippingDetails.line2 ? `<p>${shippingDetails.line2}</p>` : ""}
-          <p>${shippingDetails.city}, ${
-          shippingDetails.state ? shippingDetails.state : ""
-        } ${shippingDetails.postal_code}</p>
-          <p>${shippingDetails.country}</p>
+          <h3 style="color: #333; margin-top: 20px;">Shipping Information</h3>
+          <p><strong>Full Name:</strong> ${fullName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Recipient Name:</strong> ${recipientName}</p>
+          <p><strong>Address:</strong> ${address}</p>
+          <p><strong>Building or Private Home:</strong> ${capitalizedHomeType}</p>
+          ${
+            homeType === "building"
+              ? `<p><strong>Apartment Number:</strong> ${apartmentNumber}</p>
+                 <p><strong>Floor:</strong> ${floor}</p>
+                 <p><strong>Building Code:</strong> ${code}</p>`
+              : ""
+          }
+          <p><strong>City:</strong> ${city}</p>
+          <p><strong>Zip Code:</strong> ${zipCode}</p>
+          <p><strong>Recipient Contact Number:</strong> ${contactNumber}</p>
         `;
 
-        // Include the gift note in the email if it exists
+        // Gift Note HTML
         const giftNoteHtml = giftNote
           ? `<h3 style="color: #333; margin-top: 20px;">Gift Note</h3>
              <p style="font-size: 16px; background-color: #f9f9f9; padding: 15px; border-radius: 5px; color: #333;">${giftNote}</p>`
           : "";
 
-        // Send the confirmation email to the customer
+        // Email HTML for Customer
+        const customerEmailHtml = `
+          <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+            <header style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
+              <h2 style="color: #7c2234;">Order Confirmation</h2>
+            </header>
+            <p style="font-size: 16px;">Dear ${fullName},</p>
+            <p style="font-size: 16px;">Thank you for your purchase! We are currently processing your order. Below are the details of your order:</p>
+            
+            <h3 style="color: #333; margin-bottom: 10px;">Order Details</h3>
+            <ul style="font-size: 16px; list-style-type: none; padding: 0;">
+              ${itemsListHtml}
+            </ul>
+
+            ${giftNoteHtml}
+
+            ${shippingAddressHtml}
+            
+            <footer style="text-align: center; padding-top: 20px; border-top: 1px solid #ddd; margin-top: 20px;">
+              <p style="font-size: 14px; color: #777;">Thank you for shopping with us!</p>
+              <p style="font-size: 14px; color: #777;">If you have any questions, feel free to contact us via our contact page form.</p>
+            </footer>
+          </div>
+        `;
+
+        // Email HTML for Seller
+        const adminEmailHtml = `
+          <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+            <header style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
+              <h2 style="color: #7c2234;">New Order Received</h2>
+            </header>
+            <p style="font-size: 16px;">You have received a new order from ${fullName} (${customerEmail}). Below are the details:</p>
+            
+            <h3 style="color: #333; margin-bottom: 10px;">Order Details</h3>
+            <ul style="font-size: 16px; list-style-type: none; padding: 0;">
+              ${itemsListHtml}
+            </ul>
+
+            ${giftNoteHtml}
+
+            ${shippingAddressHtml}
+            
+          </div>
+        `;
+
+        // Mail Options for Customer
         const mailOptionsCustomer = {
           from: process.env.MAIL_USERNAME,
           to: customerEmail,
           subject: "Order Confirmation",
-          html: `
-            <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-              <h2 style="color: #7c2234; border-bottom: 2px solid #ddd; padding-bottom: 10px;">Order Confirmation</h2>
-              <p style="font-size: 16px;">Dear Customer,</p>
-              <p style="font-size: 16px;">Thank you for your purchase! We are currently processing your order. Below are the details of your order:</p>
-              
-              <h3 style="color: #333; margin-bottom: 10px;">Order Details</h3>
-              <ul style="font-size: 16px; list-style-type: none; padding: 0;">
-                ${itemsListHtml}
-              </ul>
-
-              ${giftNoteHtml} <!-- Include the gift note here -->
-
-              <h3 style="color: #333; margin-bottom: 10px;">Shipping Address</h3>
-              <div style="font-size: 16px;">
-                ${shippingAddressHtml}
-              </div>
-              
-              <p style="font-size: 14px; color: #777; margin-top: 30px; text-align: center;">Thank you for shopping with us!</p>
-            </div>
-          `,
-          attachments: validAttachments, // Attach the downloaded images
+          html: customerEmailHtml,
+          attachments: validAttachments,
         };
 
         // Send email to customer
@@ -339,17 +423,15 @@ app.post(
           } else {
             console.log("Email sent to customer:", info.response);
           }
-
-          // Delete downloaded images
         });
 
-        // Send a copy of the order details to your personal email
+        // Mail Options for Admin
         const mailOptionsAdmin = {
           from: process.env.MAIL_USERNAME,
           to: process.env.PERSONAL_EMAIL,
           subject: `New Order from ${customerEmail}`,
-          html: mailOptionsCustomer.html,
-          attachments: validAttachments, // Attach the downloaded images
+          html: adminEmailHtml,
+          attachments: validAttachments,
         };
 
         // Send email to admin

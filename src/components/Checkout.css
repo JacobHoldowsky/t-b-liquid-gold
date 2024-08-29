@@ -208,6 +208,120 @@
   transform: translateY(-3px);
 }
 
+/* Shipping Details Section */
+.shipping-details {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fafafa;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.shipping-details h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.shipping-details input,
+.shipping-details select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.shipping-details input:focus,
+.shipping-details select:focus {
+  border-color: #7c2234;
+  outline: none;
+}
+
+/* Required Fields */
+
+/* Highlighting Required Labels */
+.shipping-details label.required:after {
+  content: " *"; /* Add an asterisk to indicate required fields */
+  color: #e74c3c; /* Red color for the asterisk */
+  font-weight: bold;
+}
+
+/* Disabled Button Styles */
+.submit-order-btn:disabled {
+  cursor: not-allowed; /* Change cursor to not-allowed */
+  transform: none; /* Remove hover effect */
+}
+
+.submit-order-btn:disabled:hover {
+  background-color: #ddd; 
+}
+
+.submit-order-btn-wrapper {
+  position: relative;
+}
+
+.submit-order-btn-tooltip {
+  visibility: hidden;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 8px;
+  position: absolute;
+  bottom: 125%; /* Position above the button */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  width: 200px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  font-size: 0.875rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.submit-order-btn-wrapper:hover .submit-order-btn-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Delivery Options Section */
+.delivery-options {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fafafa;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.delivery-options h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+.delivery-options select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: Arial, Helvetica, sans-serif;
+  background: white;
+  color: #555;
+}
+
+.delivery-options select:focus {
+  border-color: #7c2234;
+  outline: none;
+}
+
+
 /* Responsive Adjustments */
 @media (max-width: 576px) {
   .checkout {
