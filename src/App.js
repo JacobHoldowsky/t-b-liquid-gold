@@ -124,6 +124,10 @@ function App() {
                 path="/wholesale"
                 element={<Wholesale cart={cart} addToCart={addToCart} />}
               />
+              {/* <Route
+                path="/sponsorABox"
+                element={<SponsorABox cart={cart} addToCart={addToCart} />}
+              /> */}
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route
