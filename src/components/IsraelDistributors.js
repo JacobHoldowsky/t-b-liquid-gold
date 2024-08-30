@@ -25,7 +25,7 @@ function IsraelDistributors() {
           <div className="distributor-card">
             <h4>RBS D2</h4>
             <a
-              href="https://wa.me/qr/3KPZUWAGUXV2C1"
+              href="https://wa.me/message/W7IN5L774FZJJ1"
               className="whatsapp-link"
               target="_blank"
               rel="noopener noreferrer"
@@ -49,7 +49,7 @@ function IsraelDistributors() {
           <div className="distributor-card">
             <h4>Carmei Gat</h4>
             <a
-              href="https://wa.me/18485250358"
+              href="https://wa.me/message/W7IN5L774FZJJ1"
               className="whatsapp-link"
               target="_blank"
               rel="noopener noreferrer"
@@ -61,7 +61,7 @@ function IsraelDistributors() {
           <div className="distributor-card">
             <h4>Modiin</h4>
             <a
-              href="https://wa.me/18485250358"
+              href="https://wa.me/message/W7IN5L774FZJJ1"
               className="whatsapp-link"
               target="_blank"
               rel="noopener noreferrer"
