@@ -24,9 +24,9 @@ function HoneyCollection({ cart, addToCart }) {
       url: "cinnamon small jar.jpg",
       title: "Cinnamon Creamed Honey",
       sizeUS: "4oz",
-      priceDollar: "12",
+      priceDollar: "0.01",
       sizeIL: "120ml",
-      priceShekel: "45",
+      priceShekel: "0.01",
     },
     {
       url: "pumpkin small jar.JPG",
