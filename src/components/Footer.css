@@ -49,13 +49,32 @@
   color: lightgray;
 }
 
+.holdowsky a {
+  
+  color: rgb(95, 176, 242);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.holdowsky a:hover {
+  color: #fff;
+  font-weight: bold; /* Adds a slight bold effect on hover */
+  text-decoration: underline;
+}
+
 @media (max-width: 576px) {
   .footer-content {
     font-size: 10px;
   }
 
   .holdowsky {
-    font-size: 8px;
+    font-size: 10px;
+  }
+
+  .holdowsky a:hover {
+    color: rgb(95, 176, 242) !important;
+    text-decoration: none !important;
+    font-weight: 100;
   }
 }
 

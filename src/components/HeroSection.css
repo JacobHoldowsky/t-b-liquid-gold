@@ -1,4 +1,4 @@
-/* HeroSection.css */
+/* src/components/HeroSection.css */
 
 .hero-section {
   position: relative;
@@ -8,7 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: black;
+  color: #000;
+  overflow: hidden; /* Prevent potential overflow issues */
 }
 
 .hero-overlay {
@@ -21,19 +22,24 @@
 
 .hero-content {
   position: relative;
-  z-index: 2;
+  z-index: 2; /* Content is above overlay */
   max-width: 800px;
   text-align: center;
   padding: 20px;
-  background: rgba(249, 249, 249, 0.5);
+  background: rgba(249, 249, 249, 0.8); /* Slightly more opaque for better text readability */
   border-radius: 20px;
   opacity: 0; /* Initially hidden */
-  animation: fadeIn 2s ease-in-out .4s forwards; /* Fade in with a delay */
+  animation: fadeIn 1s ease-in-out 0.4s forwards; /* Fade in with a delay */
 }
 
 /* Fade-in animation */
 @keyframes fadeIn {
-  to {
+  0% {
+    transform: translateY(20px); /* Start below */
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0); /* End at normal position */
     opacity: 1;
   }
 }
@@ -60,13 +66,16 @@
   border-radius: 5px;
   text-decoration: none;
   transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
 }
 
 .cta-btn:hover {
   background-color: #d49428;
   transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Increase shadow on hover */
 }
 
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   .hero-content h1 {
     font-size: 2.5rem;

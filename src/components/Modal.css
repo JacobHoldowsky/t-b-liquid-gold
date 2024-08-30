@@ -1,0 +1,113 @@
+/* src/components/confirmation-Modal.css */
+.confirmation-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Slightly darker background for better focus */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Higher z-index to appear above other content */
+    padding: 15px; /* Add padding to avoid content touching screen edges */
+    overflow: auto; /* Allow scrolling if confirmation-modal content exceeds screen size */
+  }
+  
+  .confirmation-modal {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 500px; /* Increased max-width for better usability on larger screens */
+    width: 100%; /* Use 100% width up to max-width */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Slightly more pronounced shadow */
+    text-align: center;
+    animation: slideDown 0.3s ease-out; /* Add a subtle animation */
+  }
+  
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .confirmation-modal-title {
+    margin-bottom: 15px; /* More spacing for better readability */
+    font-size: 1.75rem; /* Larger font size */
+    color: #333;
+    font-weight: bold; /* Make title stand out */
+  }
+  
+  .confirmation-modal-message {
+    margin-bottom: 25px; /* More spacing for better readability */
+    font-size: 1.1rem; /* Slightly larger font for better readability */
+    color: #555;
+    line-height: 1.5; /* Better line spacing */
+  }
+  
+  .confirmation-modal-buttons {
+    display: flex;
+    justify-content: center; /* Center buttons */
+    gap: 20px; /* Add spacing between buttons */
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+  }
+  
+  .confirmation-modal-button {
+    padding: 12px 25px; /* Increased padding for a better click area */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem; /* Slightly larger font size */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Add hover effect */
+    min-width: 120px; /* Minimum width for buttons for consistency */
+  }
+  
+  .confirmation-modal-button.confirm {
+    background-color: #7c2234;
+    color: #fff;
+  }
+  
+  .confirmation-modal-button.cancel {
+    background-color: #ddd;
+    color: #333;
+  }
+  
+  .confirmation-modal-button.confirm:hover {
+    background-color: #b74058;
+    transform: translateY(-2px); /* Subtle lift effect */
+  }
+  
+  .confirmation-modal-button.cancel:hover {
+    background-color: #ccc;
+    transform: translateY(-2px); /* Subtle lift effect */
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 576px) {
+    .confirmation-modal {
+      padding: 15px; /* Reduce padding on smaller screens */
+      max-width: 220px; /* Increased max-width for better usability on larger screens */
+
+    }
+  
+    .confirmation-modal-title {
+      font-size: 1.5rem; /* Slightly smaller font size on small screens */
+    }
+  
+    .confirmation-modal-message {
+      font-size: 1rem; /* Slightly smaller font size on small screens */
+    }
+  
+    .confirmation-modal-button {
+      font-size: 1rem; /* Adjust button font size */
+      padding: 10px 20px; /* Adjust button padding */
+      min-width: 100px ; /* Smaller minimum width for small screens */
+    }
+
+  }
+  

@@ -6,6 +6,13 @@ function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <p>&copy; 2024 T&B Liquid Gold. All rights reserved.</p>
+        <p className="holdowsky">Website developed by Y. Holdowsky. </p>
+        <p className="holdowsky">
+          <a href="mailto:jacobedward1995@gmail.com">
+            Let's connect
+          </a>
+          .
+        </p>
       </div>
     </footer>
   );

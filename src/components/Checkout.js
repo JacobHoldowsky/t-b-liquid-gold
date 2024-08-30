@@ -3,6 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import "./Checkout.css";
 import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
+import Modal from "../components/Modal"; // Import the new Modal component
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
@@ -55,6 +56,22 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const [promoCode, setPromoCode] = useState(""); // State for promo code input
   const [isPromoApplied, setIsPromoApplied] = useState(false); // State to track if promo is applied
   const [promoMessage, setPromoMessage] = useState({ message: "", type: "" }); // State for promo feedback
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalConfig, setModalConfig] = useState({
+    title: "",
+    message: "",
+    onConfirm: () => {},
+  });
+
+  // Function to open modal
+  const openModal = (title, message, onConfirm) => {
+    setModalConfig({ title, message, onConfirm });
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   // Aggregate cart items and calculate unique logo charges
   const aggregatedCart = useMemo(() => {
@@ -265,40 +282,44 @@ function Checkout({ cart, setCart, removeFromCart }) {
       itemToUpdate.title === "Mini Four Collection Board" &&
       newQuantity < 5
     ) {
-      const confirmRemoval = window.confirm(
-        "The minimum quantity for Mini Four Collection Board is 5. Would you like to remove them all from your cart?"
+      openModal(
+        "Remove Item?",
+        "The minimum quantity for Mini Four Collection Board is 5. Would you like to remove them all from your cart?",
+        () => {
+          const updatedCart = cart.filter(
+            (item) => item.title !== "Mini Four Collection Board"
+          );
+          setCart(updatedCart);
+          closeModal();
+        }
       );
-      if (confirmRemoval) {
-        const updatedCart = cart.filter(
-          (item) => item.title !== "Mini Four Collection Board"
-        );
-        setCart(updatedCart);
-        return;
-      }
       return;
     }
 
     if (itemToUpdate.title === "Mini Six Collection Board" && newQuantity < 5) {
-      const confirmRemoval = window.confirm(
-        "The minimum quantity for Mini Six Collection Board is 5. Would you like to remove them all from your cart?"
+      openModal(
+        "Remove Item?",
+        "The minimum quantity for Mini Six Collection Board is 5. Would you like to remove them all from your cart?",
+        () => {
+          const updatedCart = cart.filter(
+            (item) => item.title !== "Mini Six Collection Board"
+          );
+          setCart(updatedCart);
+          closeModal();
+        }
       );
-      if (confirmRemoval) {
-        const updatedCart = cart.filter(
-          (item) => item.title !== "Mini Six Collection Board"
-        );
-        setCart(updatedCart);
-        return;
-      }
       return;
     }
 
     if (newQuantity <= 0) {
-      const confirmRemoval = window.confirm(
-        "Do you want to remove this item from your cart?"
+      openModal(
+        "Remove Item?",
+        "Do you want to remove this item from your cart?",
+        () => {
+          removeFromCart(itemToUpdate.id);
+          closeModal();
+        }
       );
-      if (confirmRemoval) {
-        removeFromCart(itemToUpdate.id);
-      }
     } else {
       const updatedCart = cart.map((item) => {
         if (
@@ -622,6 +643,13 @@ function Checkout({ cart, setCart, removeFromCart }) {
             ) : null}
           </div>
         ) : null}
+        <Modal
+          isOpen={isModalOpen}
+          title={modalConfig.title}
+          message={modalConfig.message}
+          onConfirm={modalConfig.onConfirm}
+          onCancel={closeModal}
+        />
       </div>
     </div>
   );

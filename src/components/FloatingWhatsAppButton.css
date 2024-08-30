@@ -1,30 +1,80 @@
 .floating-whatsapp-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.whatsapp-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 15px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50px;
+  text-decoration: none;
+  font-size: 18px; /* Adjusted for better responsiveness */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.whatsapp-button i {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+.whatsapp-button:hover {
+  background-color: #1ebe57;
+}
+
+/* Media Queries for Responsiveness */
+
+/* Small devices (phones) */
+@media (max-width: 576px) {
+  .floating-whatsapp-button {
+    bottom: 15px !important; /* Reduce margin for smaller screens */
+    right: 15px !important;
   }
   
   .whatsapp-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 10px 15px;
-    background-color: #25d366;
-    color: #fff;
-    border-radius: 50px;
-    text-decoration: none;
-    font-size: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
+    padding: 8px 12px !important; /* Reduce padding */
+    font-size: 16px !important; /* Smaller font size */
   }
-  
+
   .whatsapp-button i {
-    margin-right: 8px;
-    font-size: 20px;
+    font-size: 18px !important; /* Adjust icon size */
   }
-  
-  .whatsapp-button:hover {
-    background-color: #1ebe57;
+}
+
+/* Medium devices (tablets) */
+@media (max-width: 768px) {
+  .floating-whatsapp-button {
+    bottom: 18px;
+    right: 18px;
   }
-  
+
+  .whatsapp-button {
+    padding: 9px 13px;
+    font-size: 18px;
+  }
+
+  .whatsapp-button i {
+    font-size: 19px;
+  }
+}
+
+
+
+/* Large devices (desktops) */
+@media (min-width: 992px) {
+  .whatsapp-button {
+    padding: 12px 20px;
+    font-size: 20px; /* Slightly larger font size */
+  }
+
+  .whatsapp-button i {
+    font-size: 22px; /* Larger icon size */
+  }
+}
