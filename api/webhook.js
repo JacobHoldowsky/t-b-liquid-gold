@@ -251,7 +251,7 @@ module.exports = async (req, res) => {
         validAttachments.forEach((attachment) => {
           fs.unlink(attachment.path, (err) => {
             if (err) console.error("Error deleting file:", err);
-            else 
+            
           });
         });
       } catch (err) {
