@@ -9,11 +9,11 @@ function About() {
         <h2>About Us</h2>
         <p>
           Welcome to <strong>T&B Liquid Gold</strong>, a flavored creamed honey
-          company in the heart of Jerusalem. Our famous handcrafted honey is
-          the best stuff on earth! We offer the following 7 flavors: Vanilla,
-          cinnamon, sea salt, chocolate, blueberry, pumpkin, and bourbon. All
-          of our products are made of pure honey and natural flavors. Every jar
-          is made with lots of love. We can't wait to serve you!
+          company in the heart of Jerusalem. Our famous handcrafted honey is the
+          best stuff on earth! We offer the following 7 flavors: Vanilla,
+          cinnamon, sea salt, chocolate, blueberry, pumpkin, and bourbon. All of
+          our products are made of pure honey and natural flavors. Every jar is
+          made with lots of love. We can't wait to serve you!
         </p>
         <p>
           <strong>Kashrus:</strong> We are under the strict supervision of Rabbi
@@ -25,13 +25,9 @@ function About() {
           alt="Kashrus Certification"
         />
         <p>
-          <strong>Delivery:</strong> We deliver anywhere in Israel. Delivery
-          rates vary based on location. Deliveries in Jerusalem range between
-          $10-$20. Deliveries to RBS are $15. For any other location in Israel,
-          please reach out to us and we will give you a quote. Pickup is in
-          Ramat Eshkol, Jerusalem. We have distributors in many locations in the
-          US so if you would like to purchase our honeys in the US, please check
-          out the list of distributors.
+          <strong>Delivery:</strong> We deliver anywhere in Israel and the US.
+          Delivery rates vary based on location. We have various pickup
+          locations all over Israel and US.
         </p>
         <p>
           <strong>Allergy information:</strong> All of our honey flavors are

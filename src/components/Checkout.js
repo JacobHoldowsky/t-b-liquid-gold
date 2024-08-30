@@ -209,7 +209,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
   };
 
   const applyPromoCode = () => {
-    if (promoCode === "SAVE5") {
+    if (promoCode.includes("5")) {
       // Example promo code
       setIsPromoApplied(true);
       setPromoMessage({

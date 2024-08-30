@@ -1,13 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { HashLink } from "react-router-hash-link"; // Import HashLink
 import "./FeaturedProducts.css";
-import { CurrencyContext } from "../context/CurrencyContext"; // Import CurrencyContext
-import { ExchangeRateContext } from "../context/ExchangeRateContext"; // Import the context
 
 function FeaturedProducts() {
-  const { currency } = useContext(CurrencyContext); // Use context here
-  const exchangeRate = useContext(ExchangeRateContext); // Use the context here
-
   const scrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -100; // Adjust this value to match the height of your sticky header
