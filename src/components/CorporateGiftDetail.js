@@ -20,7 +20,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
       priceShekel: exchangeRate
         ? Math.ceil(35 * exchangeRate)
         : Math.ceil(35 * 3.7),
-      imageUrl: "/Mini four collection board with plastic.png",
+      imageUrl: "/Mini four collection board with plastic-min.png",
       hasLogoOption: true,
       availableFlavors: [
         "Chocolate Creamed Honey",
@@ -40,7 +40,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
       priceShekel: exchangeRate
         ? Math.ceil(50 * exchangeRate)
         : Math.ceil(50 * 3.7),
-      imageUrl: "/Mini six collection board with plastic.png",
+      imageUrl: "/Mini six collection board with plastic-min.png",
       hasLogoOption: true,
     },
   };

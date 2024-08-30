@@ -10,7 +10,7 @@ function GiftPackages({ cart, addToCart }) {
 
   const items = [
     {
-      url: "For Him $55.jpg",
+      url: "For Him $55-min.jpg",
       title: "For Him",
       priceDollar: 49,
       id: "forHim",
@@ -19,7 +19,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(49 * 3.7),
     },
     {
-      url: "For Her $55.jpg",
+      url: "For Her $55-min.jpg",
       title: "For Her",
       priceDollar: 49,
       id: "forHer",
@@ -28,7 +28,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(49 * 3.7),
     },
     {
-      url: "boxOfFour.jpg",
+      url: "boxOfFour-min.jpg",
       title: "Box of Four",
       priceDollar: 55,
       id: "boxOfFour",
@@ -37,7 +37,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(55 * 3.7),
     },
     {
-      url: "Board of Four no plastic.jpg",
+      url: "Board of Four no plastic-min.jpg",
       title: "Board of Four",
       priceDollar: 58,
       id: "boardOfFour",
@@ -46,7 +46,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(58 * 3.7),
     },
     {
-      url: "chocolateDelight.png",
+      url: "chocolateDelight-min.png",
       title: "Chocolate Delight",
       priceDollar: 59,
       id: "chocolateDelight",
@@ -55,7 +55,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(59 * 3.7),
     },
     {
-      url: "tnbCollection.jpg",
+      url: "tnbCollection-min.jpg",
       title: "T&Bee Collection Box",
       priceDollar: 79,
       id: "tnBeeCollection",
@@ -64,7 +64,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(79 * 3.7),
     },
     {
-      url: "aLaConnoisseur.jpg",
+      url: "aLaConnoisseur-min.jpg",
       title: "Honey A' La Connoissuer",
       priceDollar: 85,
       id: "HoneyALaConnoisseur",
@@ -73,7 +73,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(85 * 3.7),
     },
     {
-      url: "Collection Plus $95.jpg",
+      url: "Collection Plus $95-min.jpg",
       title: "Collection Plus Box",
       priceDollar: 95,
       id: "collectionPlusBox",
@@ -82,7 +82,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(95 * 3.7),
     },
     {
-      url: "Honeycomb collection board no plastic.jpg",
+      url: "Honeycomb collection board no plastic-min.jpg",
       title: "Honeycomb Collection Board",
       priceDollar: 99,
       id: "honeycombCollectionBoard",
@@ -91,7 +91,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(99 * 3.7),
     },
     {
-      url: "Belgian Box $100.jpg",
+      url: "Belgian Box $100-min.jpg",
       title: "Belgian Box",
       priceDollar: 105,
       id: "belgianBox",
@@ -100,7 +100,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(105 * 3.7),
     },
     {
-      url: "Deluxe Box $120.jpg",
+      url: "Deluxe Box $120-min.jpg",
       title: "Deluxe Box",
       priceDollar: 120,
       id: "deluxeBox",
@@ -109,7 +109,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(120 * 3.7),
     },
     {
-      url: "Deluxe Board no plastic.jpg",
+      url: "Deluxe Board no plastic-min.jpg",
       title: "Deluxe Board",
       priceDollar: 136,
       id: "deluxeBoard",
@@ -118,7 +118,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(136 * 3.7),
     },
     {
-      url: "scoth n sweets.png",
+      url: "scoth n sweets-min.png",
       title: "Scotch n' Sweets Board",
       priceDollar: 150,
       id: "scotchNSweetsBoard",
@@ -127,7 +127,7 @@ function GiftPackages({ cart, addToCart }) {
         : Math.ceil(150 * 3.7),
     },
     {
-      url: "The Boss Board no plastic.jpg",
+      url: "The Boss Board no plastic-min.jpg",
       title: "The Boss Board",
       priceDollar: 180,
       id: "theBossBoard",

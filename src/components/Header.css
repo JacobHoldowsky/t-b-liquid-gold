@@ -143,7 +143,7 @@
 }
 
 /* For screens 750px and above - Show regular header */
-@media (min-width: 770px) {
+@media (min-width: 201px) {
   .header nav ul {
     display: flex; /* Show nav links */
   }
@@ -154,7 +154,7 @@
 }
 
 /* For screens smaller than 750px - Show hamburger, hide regular nav */
-@media (max-width: 769px) {
+@media (max-width: 200px) {
   .hamburger {
     display: flex; /* Show hamburger on smaller screens */
   }
@@ -195,9 +195,284 @@
   }
 }
 
-/* For screens smaller than or equal to 576px */
-@media (max-width: 576px) {
+@media (max-width: 770px) {
+  .logo img {
+    height: 50px;
+  }
+
+  .header nav ul {
+
+    gap: 15px;
+    font-size: 14px;
+
+  }
+
+  .currency-toggle {
+   
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: #333;
+      transition: none
+    
+  }
+
+  .currency-toggle:hover {
+    color: #333;
+  }
+
+  .header nav ul li a,
+.currency-toggle {
+  color: #333;
+  padding: 5px 2px;
+  transition: none;
+
+}
+
+.header nav ul li a:hover,
+.currency-toggle:hover {
+  color: #333;
+  border-bottom: none;
+}
+
+.logo img:hover {
+  transform: none;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.logo-currency-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cart-count {
+  background-color: #7c2234;
+  transition: none;
+  color: white;
+  border-radius: 50%;
+  padding: 1px 6px;
+  font-size: 10px;
+  position: absolute;
+  top: -5px;
+  right: -15px;
+}
+
+.header nav ul li.cart-link a:hover .cart-count {
+  background-color: #7c2234;
+}
+}
+
+@media (max-width: 430px) {
   .logo img {
     height: 40px;
   }
+
+  .header nav ul {
+
+    gap: 5px;
+    font-size: 12px;
+
+  }
+
+  .currency-toggle {
+   
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: #333;
+      transition: none
+    
+  }
+
+  .currency-toggle:hover {
+    color: #333;
+  }
+
+  .header nav ul li a,
+.currency-toggle {
+  color: #333;
+  padding: 5px 2px;
+  transition: none;
+
+}
+
+.header nav ul li a:hover,
+.currency-toggle:hover {
+  color: #333;
+  border-bottom: none;
+}
+
+.logo img:hover {
+  transform: none;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.logo-currency-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cart-count {
+  background-color: #7c2234;
+  transition: none;
+  color: white;
+  border-radius: 50%;
+  padding: 1px 6px;
+  font-size: 9px;
+  position: absolute;
+  top: -5px;
+  right: -14px;
+}
+
+.header nav ul li.cart-link a:hover .cart-count {
+  background-color: #7c2234;
+}
+}
+
+@media (max-width: 380px) {
+  .logo img {
+    height: 40px;
+  }
+
+  .header nav ul {
+
+    gap: 5px;
+    font-size: 12px;
+
+  }
+
+  .currency-toggle {
+   
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: #333;
+      transition: none
+    
+  }
+
+  .currency-toggle:hover {
+    color: #333;
+  }
+
+  .header nav ul li a,
+.currency-toggle {
+  color: #333;
+  padding: 5px 2px;
+  transition: none;
+
+}
+
+.header nav ul li a:hover,
+.currency-toggle:hover {
+  color: #333;
+  border-bottom: none;
+}
+
+.logo img:hover {
+  transform: none;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.logo-currency-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cart-count {
+  background-color: #7c2234;
+  transition: none;
+  color: white;
+  border-radius: 50%;
+  padding: 1px 6px;
+  font-size: 9px;
+  position: absolute;
+  top: -5px;
+  right: -15px;
+}
+
+.header nav ul li.cart-link a:hover .cart-count {
+  background-color: #7c2234;
+}
+}
+
+
+/* For screens smaller than or equal to 576px */
+@media (max-width: 365px) {
+  .logo img {
+    height: 40px;
+  }
+
+  .header nav ul {
+
+    gap: 1px;
+    font-size: 12px;
+
+  }
+
+  .currency-toggle {
+   
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: #333;
+      transition: none
+    
+  }
+
+  .currency-toggle:hover {
+    color: #333;
+  }
+
+  .header nav ul li a,
+.currency-toggle {
+  color: #333;
+  padding: 5px 2px;
+  transition: none;
+
+}
+
+.header nav ul li a:hover,
+.currency-toggle:hover {
+  color: #333;
+  border-bottom: none;
+}
+
+.logo img:hover {
+  transform: none;
+}
+
+.logo img {
+  height: 25px;
+}
+
+.logo-currency-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.cart-count {
+  background-color: #7c2234;
+  transition: none;
+  color: white;
+  border-radius: 50%;
+  padding: 1px 6px;
+  font-size: 9px;
+  position: absolute;
+  top: -5px;
+  right: -12px;
+}
+
+.header nav ul li.cart-link a:hover .cart-count {
+  background-color: #7c2234;
+}
 }

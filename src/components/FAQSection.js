@@ -11,7 +11,7 @@ function FAQSection() {
           <p>
             We are under the strict supervision of Rabbi Weiner of ZNT Kosher.
           </p>
-          <img className="hechsher" src="hechsher 5.png" alt="hechsher" />
+          <img className="hechsher" src="hechsher 5-min.png" alt="hechsher" />
         </div>
         <div className="faq-item">
           <h3>How do I store my honey?</h3>

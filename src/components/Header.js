@@ -66,7 +66,7 @@ function Header({ cartItemCount }) {
       <div className="logo-currency-wrapper">
         <div className="logo">
           <Link to="/" onClick={closeMenu}>
-            <img src="tnbLiquidGoldLogo.png" alt="TnB Liquid Gold" />
+            <img src="tnbLiquidGoldLogo-min.png" alt="TnB Liquid Gold" />
           </Link>
         </div>
         <div className="currency-toggle" onClick={handleCurrencyToggle}>
@@ -83,20 +83,11 @@ function Header({ cartItemCount }) {
 
       <nav>
         <ul className={isOpen ? "active" : ""}>
-          <li>
-            <Link className="top-level-header-item" to="/" onClick={closeMenu}>
-              Home
-            </Link>
-          </li>
           <li
-            className={`dropdown ${
-              activeDropdown === "shop" ? "active" : ""
-            }`}
+            className={`dropdown ${activeDropdown === "shop" ? "active" : ""}`}
             onClick={() => toggleDropdown("shop")}
           >
-            <Link className="top-level-header-item">
-              Shop
-            </Link>
+            <Link className="top-level-header-item">Shop</Link>
             <ul className="dropdown-menu">
               <li>
                 <HashLink
@@ -179,9 +170,7 @@ function Header({ cartItemCount }) {
             }`}
             onClick={() => toggleDropdown("distributors")}
           >
-            <Link className="top-level-header-item">
-              Distributors
-            </Link>
+            <Link className="top-level-header-item">Distributors</Link>
             <ul className="dropdown-menu">
               <li>
                 <Link

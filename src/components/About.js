@@ -21,7 +21,7 @@ function About() {
         </p>
         <img
           className="kashrus"
-          src="hechsher 5.png"
+          src="hechsher 5-min.png"
           alt="Kashrus Certification"
         />
         <p>

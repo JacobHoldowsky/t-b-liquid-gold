@@ -62,7 +62,7 @@ function Contact() {
           <p>
             We would love to hear from you. Reach out to us on{" "}
             <a
-              href="https://wa.me/+972534309254"
+              href="https://wa.me/message/W7IN5L774FZJJ1"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -72,16 +72,6 @@ function Contact() {
           </p>
           <p>
             Call us directly at: <a href="tel:0534309254">0534309254</a>
-          </p>
-          <p>
-            Follow our journey on Instagram:{" "}
-            <a
-              href="https://www.instagram.com/T&BLiquidGold"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              @T&BLiquidGold
-            </a>
           </p>
           <p>We look forward to connecting with you.</p>
         </div>

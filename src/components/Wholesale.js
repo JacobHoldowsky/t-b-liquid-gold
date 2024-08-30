@@ -7,12 +7,12 @@ function Wholesale({ cart, addToCart }) {
 
   const items = [
     {
-      url: "mini jar pyramid.jpg",
+      url: "mini jar pyramid-min.jpg",
       title: "T&Bee 2oz Jars",
       size: "small",
     },
     {
-      url: "Honey Collection.png",
+      url: "Honey Collection-min.png",
       title: "T&Bee 4oz Jars",
       size: "large",
     },

@@ -13,7 +13,7 @@ function HoneyCollection({ cart, addToCart }) {
   const { currency } = useContext(CurrencyContext); // Use context here
   const items = [
     {
-      url: "chocolate small jar.jpg",
+      url: "chocolate small jar-min.jpg",
       title: "Chocolate Creamed Honey",
       sizeUS: "4oz",
       priceDollar: "12",
@@ -21,7 +21,7 @@ function HoneyCollection({ cart, addToCart }) {
       priceShekel: "45",
     },
     {
-      url: "cinnamon small jar.jpg",
+      url: "cinnamon small jar-min.jpg",
       title: "Cinnamon Creamed Honey",
       sizeUS: "4oz",
       priceDollar: "12",
@@ -29,7 +29,7 @@ function HoneyCollection({ cart, addToCart }) {
       priceShekel: "45",
     },
     {
-      url: "pumpkin small jar.JPG",
+      url: "pumpkin small jar-min.JPG",
       title: "Pumpkin Creamed Honey",
       sizeUS: "4oz",
       priceDollar: "12",
@@ -37,7 +37,7 @@ function HoneyCollection({ cart, addToCart }) {
       priceShekel: "45",
     },
     {
-      url: "sea salt small jar.jpg",
+      url: "sea salt small jar-min.jpg",
       title: "Sea Salt Creamed Honey",
       sizeUS: "4oz",
       priceDollar: "12",
@@ -45,7 +45,7 @@ function HoneyCollection({ cart, addToCart }) {
       priceShekel: "45",
     },
     {
-      url: "vanilla small jar.jpg",
+      url: "vanilla small jar-min.jpg",
       title: "Vanilla Creamed Honey",
       sizeUS: "4oz",
       priceDollar: "12",
@@ -53,7 +53,7 @@ function HoneyCollection({ cart, addToCart }) {
       priceShekel: "45",
     },
     {
-      url: "bourbon small jar.jpg",
+      url: "bourbon small jar-min.jpg",
       title: "Bourbon Creamed Honey",
       sizeUS: "4oz",
       priceDollar: "14",
@@ -61,7 +61,7 @@ function HoneyCollection({ cart, addToCart }) {
       priceShekel: "55",
     },
     {
-      url: "blueberry screenshot.png",
+      url: "blueberry screenshot-min.png",
       title: "Blueberry Creamed Honey",
       sizeUS: "4oz",
       priceDollar: "14",

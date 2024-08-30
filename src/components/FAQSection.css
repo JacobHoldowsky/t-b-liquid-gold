@@ -40,12 +40,18 @@
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .faq-grid {
-      justify-content: flex-start; /* Align items to the start */
+      flex-wrap: nowrap;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
   
     .faq-item {
       max-width: 100%;
+      text-align: center;
     }
+
+   
   }
   
   @media (max-width: 576px) {

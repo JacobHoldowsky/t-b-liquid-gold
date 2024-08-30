@@ -73,3 +73,20 @@ h2 {
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 769px) {
+  /* Disable hover effects for all elements */
+  *:hover {
+    all: unset; /* Remove all properties set by hover */
+  }
+
+  /* Specifically for links */
+  a:hover,
+  button:hover,
+  .your-class:hover {
+    color: inherit; /* Reset color */
+    background-color: inherit; /* Reset background */
+    text-decoration: none; /* Reset underline */
+    cursor: default; /* Remove pointer cursor */
+  }
+}

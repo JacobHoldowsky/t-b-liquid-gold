@@ -10,7 +10,7 @@ function CorporateGifts({ cart, addToCart }) {
 
   const items = [
     {
-      url: "Mini four collection board with plastic.png",
+      url: "Mini four collection board with plastic-min.png",
       title: "Mini Four Collection Board",
       priceDollar: "35",
       id: "miniFourCollectionBoard",
@@ -19,7 +19,7 @@ function CorporateGifts({ cart, addToCart }) {
         : Math.ceil(35 * 3.7),
     },
     {
-      url: "Mini six collection board with plastic.png",
+      url: "Mini six collection board with plastic-min.png",
       title: "Mini Six Collection Board",
       priceDollar: "50",
       id: "miniSixCollectionBoard",

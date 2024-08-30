@@ -425,4 +425,13 @@
   .total-price h3 {
     font-size: 1.375rem;
   }
+
+  .quantity-btn:hover {
+    background-color: #7c2234;
+  }
+
+  .apply-promo-btn:hover {
+    background-color: #7c2234;
+  }
+  
 }

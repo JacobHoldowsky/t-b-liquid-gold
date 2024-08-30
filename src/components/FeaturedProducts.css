@@ -66,6 +66,12 @@
   .product-card {
     max-width: 100%;
   }
+  .product-card:hover {
+    transform:none;
+  }
+  .product-card img:hover {
+    transform: none;
+  }
 }
 
 @media (max-width: 576px) {

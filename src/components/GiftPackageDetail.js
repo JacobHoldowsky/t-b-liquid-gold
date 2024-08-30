@@ -19,7 +19,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(49 * exchangeRate)
         : Math.ceil(49 * 3.7),
       honeyCount: 2,
-      imageUrl: "/For Him $55.jpg",
+      imageUrl: "/For Him $55-min.jpg",
     },
     forHer: {
       title: "For Her",
@@ -29,7 +29,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(49 * exchangeRate)
         : Math.ceil(49 * 3.7),
       honeyCount: 2,
-      imageUrl: "/For Her $55.jpg",
+      imageUrl: "/For Her $55-min.jpg",
     },
     boxOfFour: {
       title: "Box of Four",
@@ -40,7 +40,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(55 * exchangeRate)
         : Math.ceil(55 * 3.7),
       honeyCount: 4,
-      imageUrl: "/boxOfFour.jpg",
+      imageUrl: "/boxOfFour-min.jpg",
     },
     boardOfFour: {
       title: "Board of Four",
@@ -50,7 +50,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(58 * exchangeRate)
         : Math.ceil(58 * 3.7),
       honeyCount: 4,
-      imageUrl: "/Board of Four no plastic.jpg",
+      imageUrl: "/Board of Four no plastic-min.jpg",
     },
     chocolateDelight: {
       title: "Chocolate Delight",
@@ -61,7 +61,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(59 * exchangeRate)
         : Math.ceil(59 * 3.7),
       honeyCount: 2,
-      imageUrl: "/chocolateDelight.png",
+      imageUrl: "/chocolateDelight-min.png",
     },
     tnBeeCollection: {
       title: "T&Bee Collection Box",
@@ -72,7 +72,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(79 * exchangeRate)
         : Math.ceil(79 * 3.7),
       honeyCount: 6,
-      imageUrl: "/tnbCollection.jpg",
+      imageUrl: "/tnbCollection-min.jpg",
     },
     HoneyALaConnoisseur: {
       title: "Honey A' La Connoissuer",
@@ -84,7 +84,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(85 * exchangeRate)
         : Math.ceil(85 * 3.7),
       honeyCount: 2,
-      imageUrl: "/aLaConnoisseur.jpg",
+      imageUrl: "/aLaConnoisseur-min.jpg",
     },
     collectionPlusBox: {
       title: "Collection Plus Box",
@@ -95,7 +95,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(95 * exchangeRate)
         : Math.ceil(95 * 3.7),
       honeyCount: 6,
-      imageUrl: "/Collection Plus $95.jpg",
+      imageUrl: "/Collection Plus $95-min.jpg",
     },
     honeycombCollectionBoard: {
       title: "Honeycomb Collection Board",
@@ -106,7 +106,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(99 * exchangeRate)
         : Math.ceil(99 * 3.7),
       honeyCount: 7,
-      imageUrl: "/Honeycomb collection board no plastic.jpg",
+      imageUrl: "/Honeycomb collection board no plastic-min.jpg",
     },
     belgianBox: {
       title: "Belgian Box",
@@ -117,7 +117,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(105 * exchangeRate)
         : Math.ceil(105 * 3.7),
       honeyCount: 4,
-      imageUrl: "/Belgian Box $100.jpg",
+      imageUrl: "/Belgian Box $100-min.jpg",
     },
     deluxeBox: {
       title: "Deluxe Box",
@@ -129,7 +129,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(120 * exchangeRate)
         : Math.ceil(120 * 3.7),
       honeyCount: 5,
-      imageUrl: "/Deluxe Box $120.jpg",
+      imageUrl: "/Deluxe Box $120-min.jpg",
     },
     deluxeBoard: {
       title: "Deluxe Board",
@@ -141,7 +141,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(136 * exchangeRate)
         : Math.ceil(136 * 3.7),
       honeyCount: 5,
-      imageUrl: "/Deluxe Board no plastic.jpg",
+      imageUrl: "/Deluxe Board no plastic-min.jpg",
     },
     scotchNSweetsBoard: {
       title: "Scotch n' Sweets Board",
@@ -152,7 +152,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(160 * exchangeRate)
         : Math.ceil(160 * 3.7),
       honeyCount: 4,
-      imageUrl: "/scoth n sweets.png",
+      imageUrl: "/scoth n sweets-min.png",
     },
     theBossBoard: {
       title: "The Boss Board",
@@ -164,7 +164,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         ? Math.ceil(180 * exchangeRate)
         : Math.ceil(180 * 3.7),
       honeyCount: 6,
-      imageUrl: "/The Boss Board no plastic.jpg",
+      imageUrl: "/The Boss Board no plastic-min.jpg",
     },
   };
 

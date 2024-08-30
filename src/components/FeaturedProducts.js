@@ -15,7 +15,7 @@ function FeaturedProducts() {
       <div className="product-grid">
         {/* Gift Packages */}
         <div className="product-card">
-          <img src="Honey Collection.png" alt="Deluxe Box" />
+          <img src="Honey Collection-min.png" alt="Deluxe Box" />
           <HashLink
             smooth
             to="/honeyCollection"
@@ -27,7 +27,7 @@ function FeaturedProducts() {
         </div>
         {/* Corporate Gifts */}
         <div className="product-card">
-          <img src="gift packages.jpg" alt="For Her" />
+          <img src="gift packages-min.jpg" alt="For Her" />
           <HashLink
             smooth
             to="/giftPackages"
@@ -38,7 +38,7 @@ function FeaturedProducts() {
           </HashLink>
         </div>
         <div className="product-card">
-          <img src="Corporate Gifts.png" alt="Collection Plus" />
+          <img src="Corporate Gifts-min.png" alt="Collection Plus" />
 
           <HashLink
             smooth
