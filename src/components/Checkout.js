@@ -507,7 +507,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             <input
               type="text"
               name="fullName"
-              placeholder="Your full name"
+              placeholder="Your full name *"
               value={shippingDetails.fullName}
               onChange={handleInputChange}
               required
@@ -515,7 +515,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             <input
               type="email"
               name="email"
-              placeholder="Your email"
+              placeholder="Your email *"
               value={shippingDetails.email}
               onChange={handleInputChange}
               required
@@ -523,7 +523,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             <input
               type="tel"
               name="number"
-              placeholder="Your number"
+              placeholder="Your number *"
               value={shippingDetails.number}
               onChange={handleInputChange}
               required
@@ -536,7 +536,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             <input
               type="text"
               name="recipientName"
-              placeholder="Recipient name"
+              placeholder="Recipient name *"
               value={shippingDetails.recipientName}
               onChange={handleInputChange}
               required
@@ -544,7 +544,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             <input
               type="text"
               name="address"
-              placeholder="Address"
+              placeholder="Address *"
               value={shippingDetails.address}
               onChange={handleInputChange}
               required
@@ -556,7 +556,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
               required
             >
               <option value="" disabled hidden>
-                Is this a building or private home?
+                Is this a building or private home? *
               </option>
               <option value="building">Building</option>
               <option value="home">Private Home</option>
@@ -567,7 +567,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 <input
                   type="text"
                   name="apartmentNumber"
-                  placeholder="Apartment number"
+                  placeholder="Apartment number *"
                   value={shippingDetails.apartmentNumber}
                   onChange={handleInputChange}
                   required
@@ -591,7 +591,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             <input
               type="text"
               name="city"
-              placeholder="City"
+              placeholder="City *"
               value={shippingDetails.city}
               onChange={handleInputChange}
               required
@@ -606,7 +606,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             <input
               type="text"
               name="contactNumber"
-              placeholder="Recipient contact number"
+              placeholder="Recipient contact number *"
               value={shippingDetails.contactNumber}
               onChange={handleInputChange}
               required
@@ -622,7 +622,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
               required
             >
               <option value="" disabled hidden>
-                Select a delivery option
+                Select a delivery option *
               </option>
               {DELIVERY_OPTIONS.map((option, index) => (
                 <option key={index} value={index}>
@@ -654,7 +654,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             </button>
             {!isFormValid || aggregatedCart.aggregatedCart.length === 0 ? (
               <div className="submit-order-btn-tooltip">
-                Please fill out all fields.
+                Please fill out all required fields.
               </div>
             ) : null}
           </div>
