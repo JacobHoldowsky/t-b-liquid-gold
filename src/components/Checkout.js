@@ -36,6 +36,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const exchangeRate = useContext(ExchangeRateContext);
   const [isGift, setIsGift] = useState(false);
   const [giftNote, setGiftNote] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Loading state added
+
   const [shippingDetails, setShippingDetails] = useState({
     fullName: "",
     email: "",
@@ -113,6 +115,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
       : "/api/create-checkout-session";
 
   const handleCheckout = async () => {
+    setIsLoading(true); // Set loading to true when proceeding to payment
+
     try {
       const stripe = await stripePromise;
 
@@ -198,6 +202,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
       localStorage.removeItem("cart");
     } catch (error) {
       alert(`Checkout failed: ${error.message}`);
+    } finally {
+      setIsLoading(false); // Reset loading state after checkout process is complete or fails
     }
   };
 
@@ -269,6 +275,16 @@ function Checkout({ cart, setCart, removeFromCart }) {
     // Ensure two decimal places for cents
     return formatNumberWithCommas(total.toFixed(2));
   };
+
+  function Loading() {
+    return (
+      <div className="loading-spinner">
+        {/* Customize this spinner as needed */}
+        <div className="spinner"></div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   const updateItemQuantity = (itemKey, newQuantity) => {
     const itemToUpdate = cart.find(
@@ -643,6 +659,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
             ) : null}
           </div>
         ) : null}
+
+        {isLoading && <Loading />}
+
         <Modal
           isOpen={isModalOpen}
           title={modalConfig.title}

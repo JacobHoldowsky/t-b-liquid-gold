@@ -72,13 +72,17 @@
   .product-card img:hover {
     transform: none;
   }
+  
 }
 
 @media (max-width: 576px) {
   .featured-products h2 {
     font-size: 2.2rem;
   }
-
+  
+  .product-card img {
+    height: 300px; /* Fixed height for uniformity */
+  }
   .product-card h3 {
     font-size: 1.4rem;
   }

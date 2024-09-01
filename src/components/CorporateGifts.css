@@ -38,7 +38,7 @@
 
 .corporate-gifts-image img {
   width: 100%;
-  height: 700px; /* Fixed height for uniformity */
+  height: 500px; /* Fixed height for uniformity */
   object-fit: cover; /* Ensures image is scaled correctly to cover area */
   border-bottom: 2px solid #e9e9e9;
   transition: transform 0.3s ease;
@@ -143,6 +143,10 @@
   .corporate-gifts-section-title {
     font-size: 1.8rem;
     margin-bottom: 30px;
+  }
+
+  .corporate-gifts-image img {
+    height: 400px;
   }
 
   .corporate-gifts-info h3 {

@@ -262,6 +262,10 @@
     .corporate-gift-detail {
       padding: 10px;
     }
+
+    .corporate-gift-image { 
+        height: 300px;
+    }
   
     .corporate-gift-title {
       font-size: 1.8rem;
