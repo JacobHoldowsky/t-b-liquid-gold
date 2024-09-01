@@ -133,7 +133,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
           price_data: {
             currency: currency === "Dollar" ? "usd" : "ils",
             product_data: {
-              name: `${item.title}`,
+              name: `${item.title} ${
+                item.selectedFlavors
+                  ? "(" + item.selectedFlavors.join(", ") + ")"
+                  : ""
+              }`,
               metadata: {
                 logoUrl: item.logoUrl ? item.logoUrl : null,
                 flavors: item.selectedFlavors
