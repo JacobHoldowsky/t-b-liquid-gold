@@ -141,8 +141,6 @@ app.post("/api/create-checkout-session", async (req, res) => {
       return total + item.price_data.unit_amount * item.quantity;
     }, 0);
 
-    console.log("promocode", promoCode);
-
     // Check if a valid promo code is entered and calculate the discount
     let discountRate = 0;
     if (promoCode.includes("5")) {
@@ -152,19 +150,14 @@ app.post("/api/create-checkout-session", async (req, res) => {
     // Calculate the total discount amount
     const discountAmount = Math.round(subtotal * discountRate);
 
-    console.log("discount", discountRate);
-
     // Apply the discount manually to each item price proportionally
     const adjustedItems = items.map((item) => {
       // Calculate discount for each item proportionally
-      console.log("original price", item.price_data.unit_amount);
 
       const itemDiscount = Math.round(
         item.price_data.unit_amount * discountRate
       );
       const adjustedUnitAmount = item.price_data.unit_amount - itemDiscount;
-
-      console.log("new price", adjustedUnitAmount);
 
       // Ensure adjustedUnitAmount is non-negative and an integer
       return {

@@ -120,8 +120,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
     (item) => item.title === "Sponsor a Honey Board"
   );
 
-  console.log(currency);
-
   const apiUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:5000/api/create-checkout-session"
