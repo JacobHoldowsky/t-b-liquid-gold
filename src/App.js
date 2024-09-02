@@ -5,7 +5,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Checkout from "./components/Checkout";
 import Success from "./components/Success";
-import SponsorABox from "./components/SponsorABox";
+import SponsorAHoneyBoard from "./components/SponsorAHoneyBoard";
 import Canceled from "./components/Canceled";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
@@ -129,7 +129,7 @@ function App() {
               <Route
                 path="/sponsorAHoneyBoard"
                 element={
-                  <SponsorABox
+                  <SponsorAHoneyBoard
                     cart={cart}
                     addToCart={addToCart}
                     setDeliveryFee={setSpecialDeliveryFee}

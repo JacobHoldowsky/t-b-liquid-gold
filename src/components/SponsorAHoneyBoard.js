@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import { CurrencyContext } from "../context/CurrencyContext"; // Assuming you have a currency context
-import "./SponsorABox.css"; // Custom CSS for styling
+import "./SponsorAHoneyBoard.css"; // Custom CSS for styling
 import { FaCheckCircle } from "react-icons/fa"; // Import a checkmark icon
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
 
-function SponsorABox({ cart, addToCart, setDeliveryFee }) {
+function SponsorAHoneyBoard({ cart, addToCart, setDeliveryFee }) {
   const { currency } = useContext(CurrencyContext);
   const exchangeRate = useContext(ExchangeRateContext);
   const [addedToCart, setAddedToCart] = useState(false);
@@ -92,4 +92,4 @@ function SponsorABox({ cart, addToCart, setDeliveryFee }) {
   );
 }
 
-export default SponsorABox;
+export default SponsorAHoneyBoard;
