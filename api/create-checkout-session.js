@@ -16,6 +16,7 @@ module.exports = async (req, res) => {
         promoCode,
         currency,
         exchangeRate,
+        specialDeliveryOnly,
       } = req.body;
 
       if (!items || !Array.isArray(items) || items.length === 0) {
@@ -134,6 +135,7 @@ module.exports = async (req, res) => {
           }),
           city: shippingDetails.city,
           zipCode: shippingDetails.zipCode,
+          specialDeliveryOnly: specialDeliveryOnly,
           contactNumber: shippingDetails.contactNumber,
           promoCode: promoCode || "", // Include promo code in the metadata
           discountInfo:

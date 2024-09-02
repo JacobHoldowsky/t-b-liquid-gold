@@ -189,6 +189,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
           promoCode: promoCode,
           currency,
           exchangeRate,
+          specialDeliveryOnly
         }),
       });
 
@@ -406,30 +407,45 @@ function Checkout({ cart, setCart, removeFromCart }) {
   };
 
   useEffect(() => {
-    const areMandatoryFieldsFilled = [
-      shippingDetails.fullName,
-      shippingDetails.email,
-      shippingDetails.number,
-      shippingDetails.recipientName,
-      shippingDetails.address,
-      shippingDetails.homeType,
-      shippingDetails.city,
-      shippingDetails.contactNumber,
-    ].every((field) => field.trim() !== "");
+    let isFormValid = false; // Default to false
 
-    const areBuildingFieldsFilled =
-      shippingDetails.homeType === "building"
-        ? [shippingDetails.apartmentNumber].every(
-            (field) => field.trim() !== ""
-          )
-        : true;
+    if (specialDeliveryOnly) {
+      // When specialDeliveryOnly is true, only these fields are required
+      const areMandatoryFieldsFilled = [
+        shippingDetails.fullName,
+        shippingDetails.email,
+        shippingDetails.number,
+      ].every((field) => field.trim() !== "");
 
-    setIsFormValid(
-      areMandatoryFieldsFilled &&
+      isFormValid = areMandatoryFieldsFilled; // Only check these fields
+    } else {
+      // When specialDeliveryOnly is false, perform full validation
+      const areMandatoryFieldsFilled = [
+        shippingDetails.fullName,
+        shippingDetails.email,
+        shippingDetails.number,
+        shippingDetails.recipientName,
+        shippingDetails.address,
+        shippingDetails.homeType,
+        shippingDetails.city,
+        shippingDetails.contactNumber,
+      ].every((field) => field.trim() !== "");
+
+      const areBuildingFieldsFilled =
+        shippingDetails.homeType === "building"
+          ? [shippingDetails.apartmentNumber].every(
+              (field) => field.trim() !== ""
+            )
+          : true;
+
+      isFormValid =
+        areMandatoryFieldsFilled &&
         areBuildingFieldsFilled &&
-        (specialDeliveryOnly || selectedDeliveryOption)
-    );
-  }, [shippingDetails, selectedDeliveryOption]);
+        selectedDeliveryOption; // Validate all fields
+    }
+
+    setIsFormValid(isFormValid);
+  }, [shippingDetails, selectedDeliveryOption, specialDeliveryOnly]);
 
   return (
     <div className="checkout-container">
@@ -541,157 +557,162 @@ function Checkout({ cart, setCart, removeFromCart }) {
           </div>
         ) : null}
         {aggregatedCart.aggregatedCart.length ? (
-          <div className="gift-option">
-            <label>
+          <>
+            <div className="gift-option">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isGift}
+                  onChange={(e) => setIsGift(e.target.checked)}
+                />
+                This is a gift
+              </label>
+              {isGift && (
+                <textarea
+                  value={giftNote}
+                  onChange={(e) => setGiftNote(e.target.value.slice(0, 400))}
+                  placeholder="Include a gift note (max 400 characters)"
+                  rows="4"
+                  maxLength="400"
+                />
+              )}
+            </div>
+            {/* Customer Details */}
+            <div className="shipping-details">
+              <h3>Customer Details</h3>
               <input
-                type="checkbox"
-                checked={isGift}
-                onChange={(e) => setIsGift(e.target.checked)}
+                type="text"
+                name="fullName"
+                placeholder="Your full name *"
+                value={shippingDetails.fullName}
+                onChange={handleInputChange}
+                required
               />
-              This is a gift
-            </label>
-            {isGift && (
-              <textarea
-                value={giftNote}
-                onChange={(e) => setGiftNote(e.target.value.slice(0, 400))}
-                placeholder="Include a gift note (max 400 characters)"
-                rows="4"
-                maxLength="400"
+              <input
+                type="email"
+                name="email"
+                placeholder="Your email *"
+                value={shippingDetails.email}
+                onChange={handleInputChange}
+                required
               />
-            )}
-          </div>
-        ) : null}
-        {aggregatedCart.aggregatedCart.length ? (
-          <div className="shipping-details">
-            <h3>Customer Details</h3>
-            <input
-              type="text"
-              name="fullName"
-              placeholder="Your full name *"
-              value={shippingDetails.fullName}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              placeholder="Your email *"
-              value={shippingDetails.email}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              type="tel"
-              name="number"
-              placeholder="Your number *"
-              value={shippingDetails.number}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-        ) : null}
-        {aggregatedCart.aggregatedCart.length ? (
-          <div className="shipping-details">
-            <h3>Delivery Information</h3>
-            <input
-              type="text"
-              name="recipientName"
-              placeholder="Recipient name *"
-              value={shippingDetails.recipientName}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              type="text"
-              name="address"
-              placeholder="Address *"
-              value={shippingDetails.address}
-              onChange={handleInputChange}
-              required
-            />
-            <select
-              name="homeType"
-              value={shippingDetails.homeType}
-              onChange={handleInputChange}
-              required
-            >
-              <option value="" disabled hidden>
-                Is this a building or private home? *
-              </option>
-              <option value="building">Building</option>
-              <option value="home">Private Home</option>
-            </select>
-
-            {shippingDetails.homeType === "building" && (
+              <input
+                type="tel"
+                name="number"
+                placeholder="Your number *"
+                value={shippingDetails.number}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            {/* Conditionally render delivery information based on specialDeliveryOnly */}
+            {!specialDeliveryOnly ? (
               <>
-                <input
-                  type="text"
-                  name="apartmentNumber"
-                  placeholder="Apartment number *"
-                  value={shippingDetails.apartmentNumber}
-                  onChange={handleInputChange}
-                  required
-                />
-                <input
-                  type="text"
-                  name="floor"
-                  placeholder="Floor"
-                  value={shippingDetails.floor}
-                  onChange={handleInputChange}
-                />
-                <input
-                  type="text"
-                  name="code"
-                  placeholder="Building code"
-                  value={shippingDetails.code}
-                  onChange={handleInputChange}
-                />
+                {/* Delivery Information */}
+                <div className="shipping-details">
+                  <h3>Delivery Information</h3>
+                  {/* Delivery Information Fields */}
+                  <input
+                    type="text"
+                    name="recipientName"
+                    placeholder="Recipient name *"
+                    value={shippingDetails.recipientName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="address"
+                    placeholder="Address *"
+                    value={shippingDetails.address}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <select
+                    name="homeType"
+                    value={shippingDetails.homeType}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="" disabled hidden>
+                      Is this a building or private home? *
+                    </option>
+                    <option value="building">Building</option>
+                    <option value="home">Private Home</option>
+                  </select>
+                  {/* Additional Fields for Buildings */}
+                  {shippingDetails.homeType === "building" && (
+                    <>
+                      <input
+                        type="text"
+                        name="apartmentNumber"
+                        placeholder="Apartment number *"
+                        value={shippingDetails.apartmentNumber}
+                        onChange={handleInputChange}
+                        required
+                      />
+                      <input
+                        type="text"
+                        name="floor"
+                        placeholder="Floor"
+                        value={shippingDetails.floor}
+                        onChange={handleInputChange}
+                      />
+                      <input
+                        type="text"
+                        name="code"
+                        placeholder="Building code"
+                        value={shippingDetails.code}
+                        onChange={handleInputChange}
+                      />
+                    </>
+                  )}
+                  <input
+                    type="text"
+                    name="city"
+                    placeholder="City *"
+                    value={shippingDetails.city}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <input
+                    type="text"
+                    name="zipCode"
+                    placeholder="Zip code"
+                    value={shippingDetails.zipCode}
+                    onChange={handleInputChange}
+                  />
+                  <input
+                    type="text"
+                    name="contactNumber"
+                    placeholder="Recipient contact number *"
+                    value={shippingDetails.contactNumber}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+                {/* Delivery Options */}
+                <div className="delivery-options">
+                  <h3>Delivery Options</h3>
+                  <select
+                    onChange={handleDeliveryOptionChange}
+                    defaultValue=""
+                    required
+                  >
+                    <option value="" disabled hidden>
+                      Select a delivery option *
+                    </option>
+                    {DELIVERY_OPTIONS.map((option, index) => (
+                      <option key={index} value={index}>
+                        {option.label} - {currency === "Dollar" ? "$" : "₪"}
+                        {option.charge}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </>
-            )}
-            <input
-              type="text"
-              name="city"
-              placeholder="City *"
-              value={shippingDetails.city}
-              onChange={handleInputChange}
-              required
-            />
-            <input
-              type="text"
-              name="zipCode"
-              placeholder="Zip code"
-              value={shippingDetails.zipCode}
-              onChange={handleInputChange}
-            />
-            <input
-              type="text"
-              name="contactNumber"
-              placeholder="Recipient contact number *"
-              value={shippingDetails.contactNumber}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-        ) : null}
-        {!specialDeliveryOnly ? (
-          <div className="delivery-options">
-            <h3>Delivery Options</h3>
-            <select
-              onChange={handleDeliveryOptionChange}
-              defaultValue=""
-              required={!specialDeliveryOnly} // This line conditionally sets the 'required' attribute
-            >
-              <option value="" disabled hidden>
-                Select a delivery option *
-              </option>
-              {DELIVERY_OPTIONS.map((option, index) => (
-                <option key={index} value={index}>
-                  {option.label} - {currency === "Dollar" ? "$" : "₪"}
-                  {option.charge}
-                </option>
-              ))}
-            </select>
-          </div>
+            ) : null}
+          </>
         ) : null}
 
         {aggregatedCart.aggregatedCart.length ? (

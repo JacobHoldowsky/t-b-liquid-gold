@@ -134,6 +134,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
       promoCode, // Include promoCode in the request body
       currency,
       exchangeRate,
+      specialDeliveryOnly,
     } = req.body;
 
     // Calculate subtotal for items only, excluding delivery charge
@@ -247,6 +248,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
         }),
         city: shippingDetails.city,
         zipCode: shippingDetails.zipCode,
+        specialDeliveryOnly: specialDeliveryOnly,
         contactNumber: shippingDetails.contactNumber,
         promoCode: promoCode || "", // Include promo code in the metadata
         discountInfo:
@@ -302,6 +304,7 @@ app.post(
       let city = session.metadata.city;
       let zipCode = session.metadata.zipCode;
       let contactNumber = session.metadata.contactNumber;
+      let specialDeliveryOnly = session.metadata.specialDeliveryOnly;
 
       if (!customerEmail) {
         console.error("No customer email provided. Cannot send email.");
@@ -380,25 +383,33 @@ app.post(
           homeType.charAt(0).toUpperCase() + homeType.slice(1);
 
         // HTML for Shipping Address
-        const shippingAddressHtml = `
-          <h3 style="color: #333; margin-top: 20px;">Shipping Information</h3>
-          <p><strong>Full Name:</strong> ${fullName}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Number:</strong> ${number}</p>
-          <p><strong>Recipient Name:</strong> ${recipientName}</p>
-          <p><strong>Address:</strong> ${address}</p>
-          <p><strong>Home Type:</strong> ${capitalizedHomeType}</p>
-          ${
-            homeType === "building"
-              ? `<p><strong>Apartment Number:</strong> ${apartmentNumber}</p>
-                 <p><strong>Floor:</strong> ${floor}</p>
-                 <p><strong>Building Code:</strong> ${code}</p>`
-              : ""
-          }
-          <p><strong>City:</strong> ${city}</p>
-          <p><strong>Zip Code:</strong> ${zipCode}</p>
-          <p><strong>Recipient Contact Number:</strong> ${contactNumber}</p>
-        `;
+        let shippingAddressHtml = specialDeliveryOnly === 'true'
+          ? `
+  <h3 style="color: #333; margin-top: 20px;">Customer Details</h3>
+  <p><strong>Full Name:</strong> ${fullName}</p>
+  <p><strong>Email:</strong> ${email}</p>
+  <p><strong>Number:</strong> ${number}</p>
+`
+          : `
+  <h3 style="color: #333; margin-top: 20px;">Customer Details</h3>
+  <p><strong>Full Name:</strong> ${fullName}</p>
+  <p><strong>Email:</strong> ${email}</p>
+  <p><strong>Number:</strong> ${number}</p>
+  <h3 style="color: #333; margin-top: 20px;">Delivery Information</h3>
+  <p><strong>Recipient Name:</strong> ${recipientName}</p>
+  <p><strong>Address:</strong> ${address}</p>
+  <p><strong>Home Type:</strong> ${capitalizedHomeType}</p>
+  ${
+    homeType === "building"
+      ? `<p><strong>Apartment Number:</strong> ${apartmentNumber}</p>
+         <p><strong>Floor:</strong> ${floor}</p>
+         <p><strong>Building Code:</strong> ${code}</p>`
+      : ""
+  }
+  <p><strong>City:</strong> ${city}</p>
+  <p><strong>Zip Code:</strong> ${zipCode}</p>
+  <p><strong>Recipient Contact Number:</strong> ${contactNumber}</p>
+`;
 
         // Gift Note HTML
         const giftNoteHtml = giftNote

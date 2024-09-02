@@ -44,14 +44,12 @@ module.exports = async (req, res) => {
         sig,
         process.env.STRIPE_WEBHOOK_SECRET
       );
-      
     } catch (err) {
       console.error(`⚠️  Webhook signature verification failed.`, err.message);
       return res.status(400).send(`Webhook Error: ${err.message}`);
     }
 
     if (event.type === "checkout.session.completed") {
-      
       const session = event.data.object;
       const customerEmail = session.customer_details.email;
       const giftNote = session.metadata.giftNote || ""; // Retrieve gift note from session metadata
@@ -74,6 +72,7 @@ module.exports = async (req, res) => {
       const city = session.metadata.city;
       const zipCode = session.metadata.zipCode;
       const contactNumber = session.metadata.contactNumber;
+      let specialDeliveryOnly = session.metadata.specialDeliveryOnly;
 
       if (!customerEmail) {
         console.error("No customer email provided. Cannot send email.");
@@ -129,7 +128,6 @@ module.exports = async (req, res) => {
         );
 
         const validAttachments = attachments.filter(Boolean);
-        
 
         // Create HTML list of purchased items
         const itemsListHtml = lineItems.data
@@ -151,26 +149,35 @@ module.exports = async (req, res) => {
         const capitalizedHomeType =
           homeType.charAt(0).toUpperCase() + homeType.slice(1);
 
-        // HTML for Shipping Address
-        const shippingAddressHtml = `
-          <h3 style="color: #333; margin-top: 20px;">Shipping Information</h3>
-          <p><strong>Full Name:</strong> ${fullName}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Number:</strong> ${number}</p>
-          <p><strong>Recipient Name:</strong> ${recipientName}</p>
-          <p><strong>Address:</strong> ${address}</p>
-          <p><strong>Home Type:</strong> ${capitalizedHomeType}</p>
-          ${
-            homeType === "building"
-              ? `<p><strong>Apartment Number:</strong> ${apartmentNumber}</p>
-                 <p><strong>Floor:</strong> ${floor}</p>
-                 <p><strong>Building Code:</strong> ${code}</p>`
-              : ""
-          }
-          <p><strong>City:</strong> ${city}</p>
-          <p><strong>Zip Code:</strong> ${zipCode}</p>
-          <p><strong>Recipient Contact Number:</strong> ${contactNumber}</p>
-        `;
+        /// HTML for Shipping Address
+        let shippingAddressHtml =
+          specialDeliveryOnly === "true"
+            ? `
+<h3 style="color: #333; margin-top: 20px;">Customer Details</h3>
+<p><strong>Full Name:</strong> ${fullName}</p>
+<p><strong>Email:</strong> ${email}</p>
+<p><strong>Number:</strong> ${number}</p>
+`
+            : `
+<h3 style="color: #333; margin-top: 20px;">Customer Details</h3>
+<p><strong>Full Name:</strong> ${fullName}</p>
+<p><strong>Email:</strong> ${email}</p>
+<p><strong>Number:</strong> ${number}</p>
+<h3 style="color: #333; margin-top: 20px;">Delivery Information</h3>
+<p><strong>Recipient Name:</strong> ${recipientName}</p>
+<p><strong>Address:</strong> ${address}</p>
+<p><strong>Home Type:</strong> ${capitalizedHomeType}</p>
+${
+  homeType === "building"
+    ? `<p><strong>Apartment Number:</strong> ${apartmentNumber}</p>
+       <p><strong>Floor:</strong> ${floor}</p>
+       <p><strong>Building Code:</strong> ${code}</p>`
+    : ""
+}
+<p><strong>City:</strong> ${city}</p>
+<p><strong>Zip Code:</strong> ${zipCode}</p>
+<p><strong>Recipient Contact Number:</strong> ${contactNumber}</p>
+`;
 
         // Gift Note HTML
         const giftNoteHtml = giftNote
@@ -251,7 +258,6 @@ module.exports = async (req, res) => {
         validAttachments.forEach((attachment) => {
           fs.unlink(attachment.path, (err) => {
             if (err) console.error("Error deleting file:", err);
-            
           });
         });
       } catch (err) {
@@ -282,7 +288,6 @@ module.exports = async (req, res) => {
           };
           const command = new DeleteObjectCommand(deleteParams);
           await s3Client.send(command);
-          
         } catch (err) {
           console.error(`Failed to delete S3 object ${s3Key.Key}:`, err);
         }
@@ -293,7 +298,6 @@ module.exports = async (req, res) => {
       const files = await fs.readdir("/tmp"); // List all files in /tmp
       for (const file of files) {
         await fs.unlink(path.join("/tmp", file)); // Delete each file
-        
       }
     } catch (err) {
       console.error("Error cleaning up /tmp directory:", err);
