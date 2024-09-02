@@ -37,15 +37,22 @@ function App() {
   }, []);
 
   const addToCart = (item) => {
+    // Find if an item with the same title and selected flavors already exists in the cart
     const existingItemIndex = cart.findIndex(
-      (cartItem) => cartItem.title === item.title
+      (cartItem) =>
+        cartItem.title === item.title &&
+        JSON.stringify(cartItem.selectedFlavors) ===
+          JSON.stringify(item.selectedFlavors)
     );
+
     let updatedCart;
 
     if (existingItemIndex !== -1) {
+      // If the item exists, update its quantity
       updatedCart = [...cart];
       updatedCart[existingItemIndex].quantity += item.quantity; // Add the selected quantity
     } else {
+      // If it doesn't exist, add a new item to the cart with a unique ID
       const itemWithId = { ...item, id: uuidv4() };
       updatedCart = [...cart, itemWithId];
     }

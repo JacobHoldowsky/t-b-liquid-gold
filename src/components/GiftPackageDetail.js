@@ -243,6 +243,7 @@ function GiftPackageDetail({ cart, addToCart }) {
     };
 
     addToCart(itemToAdd);
+
     setAddedToCart(true);
     setTimeout(() => setAddedToCart("hide"), 1500);
     setTimeout(() => setAddedToCart(false), 2000);
