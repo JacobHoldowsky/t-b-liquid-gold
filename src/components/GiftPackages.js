@@ -124,9 +124,9 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "scoth n sweets-min.png",
         title: "Scotch n' Sweets Board",
-        priceDollar: 150,
+        priceDollar: 160,
         id: "scotchNSweetsBoard",
-        priceShekel: calculatePriceInShekels(150, exchangeRate),
+        priceShekel: calculatePriceInShekels(160, exchangeRate),
       },
       {
         url: "The Boss Board no plastic-min.jpg",
