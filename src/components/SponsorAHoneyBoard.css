@@ -81,7 +81,7 @@
     line-height: 1;
   }
   
-  .add-to-cart-btn {
+  .sponsor-board-add-to-cart-btn {
     padding: 15px 30px;
     background-color: #7c2234;
     color: #fff;
@@ -97,7 +97,7 @@
     display: block;
   }
   
-  .add-to-cart-btn:hover {
+  .sponsor-board-add-to-cart-btn:hover {
     background-color: #b74058;
     transform: translateY(-3px);
   }
@@ -151,7 +151,7 @@
       font-size: 1.8rem;
     }
   
-    .add-to-cart-btn {
+    .sponsor-board-add-to-cart-btn {
       padding: 12px 25px;
       font-size: 1.1rem;
     }
@@ -170,7 +170,7 @@
       font-size: 1.6rem;
     }
   
-    .add-to-cart-btn {
+    .sponsor-board-add-to-cart-btn {
       padding: 10px 20px;
       font-size: 1rem;
     }

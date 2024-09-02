@@ -83,7 +83,7 @@ function SponsorAHoneyBoard({ cart, addToCart, setDeliveryFee }) {
             Added to cart
           </div>
         ) : (
-          <button onClick={handleAddToCart} className="add-to-cart-btn">
+          <button onClick={handleAddToCart} className="sponsor-board-add-to-cart-btn">
             Sponsor Now
           </button>
         )}
