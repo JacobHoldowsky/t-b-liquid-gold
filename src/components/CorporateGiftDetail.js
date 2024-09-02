@@ -4,6 +4,7 @@ import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
 import { FaCheckCircle } from "react-icons/fa";
 import "./CorporateGiftDetail.css";
+import useFlavorSelector from "../hooks/useFlavorSelector"; // Import your custom hook
 
 function CorporateGiftDetail({ cart, addToCart }) {
   const { corporateId } = useParams();
@@ -52,9 +53,12 @@ function CorporateGiftDetail({ cart, addToCart }) {
   const [artwork, setArtwork] = useState(null);
   const [uploading, setUploading] = useState(false); // State to track if file is uploading
   const [uploadError, setUploadError] = useState(null); // State to handle upload errors
-  const [selectedFlavors, setSelectedFlavors] = useState(
-    Array(4).fill("Chocolate Creamed Honey") // Initializing with a default flavor
-  );
+  const { selectedFlavors, handleFlavorChange, validateFlavorSelection } =
+    useFlavorSelector(
+      Array(4).fill("Chocolate Creamed Honey"), // Initial flavors
+      selectedItem.availableFlavors, // Available flavors
+      4 // Required number of flavors for validation
+    );
 
   const handleQuantityChange = (e) => {
     setQuantity(parseInt(e.target.value, 10));
@@ -111,16 +115,10 @@ function CorporateGiftDetail({ cart, addToCart }) {
     }
   };
 
-  const handleFlavorChange = (index, flavor) => {
-    const newFlavors = [...selectedFlavors];
-    newFlavors[index] = flavor;
-    setSelectedFlavors(newFlavors);
-  };
-
   const handleAddToCart = () => {
     if (
       selectedItem.title === "Mini Four Collection Board" &&
-      selectedFlavors.length !== 4
+      !validateFlavorSelection()
     ) {
       alert("Please select exactly 4 flavors.");
       return;

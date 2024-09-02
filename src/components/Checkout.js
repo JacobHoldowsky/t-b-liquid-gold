@@ -317,6 +317,15 @@ function Checkout({ cart, setCart, removeFromCart }) {
           : item.title) === itemKey
     );
 
+    if (!itemToUpdate) {
+      return; // If no item is found, return early
+    }
+
+    const itemUniqueKey = itemToUpdate.selectedFlavors?.length
+      ? `${itemToUpdate.title}-${itemToUpdate.selectedFlavors.join(",")}`
+      : itemToUpdate.title;
+
+    // Handling for "Mini Four Collection Board" with a minimum quantity check
     if (
       itemToUpdate.title === "Mini Four Collection Board" &&
       newQuantity < 5
@@ -326,7 +335,13 @@ function Checkout({ cart, setCart, removeFromCart }) {
         "The minimum quantity for Mini Four Collection Board is 5. Would you like to remove them all from your cart?",
         () => {
           const updatedCart = cart.filter(
-            (item) => item.title !== "Mini Four Collection Board"
+            (item) =>
+              !(
+                item.title === "Mini Four Collection Board" &&
+                (item.selectedFlavors?.length
+                  ? `${item.title}-${item.selectedFlavors.join(",")}`
+                  : item.title) === itemUniqueKey
+              )
           );
           setCart(updatedCart);
           closeModal();
@@ -335,13 +350,20 @@ function Checkout({ cart, setCart, removeFromCart }) {
       return;
     }
 
+    // Handling for "Mini Six Collection Board" with a minimum quantity check
     if (itemToUpdate.title === "Mini Six Collection Board" && newQuantity < 5) {
       openModal(
         "Remove Item?",
         "The minimum quantity for Mini Six Collection Board is 5. Would you like to remove them all from your cart?",
         () => {
           const updatedCart = cart.filter(
-            (item) => item.title !== "Mini Six Collection Board"
+            (item) =>
+              !(
+                item.title === "Mini Six Collection Board" &&
+                (item.selectedFlavors?.length
+                  ? `${item.title}-${item.selectedFlavors.join(",")}`
+                  : item.title) === itemUniqueKey
+              )
           );
           setCart(updatedCart);
           closeModal();
@@ -350,16 +372,24 @@ function Checkout({ cart, setCart, removeFromCart }) {
       return;
     }
 
+    // Removing an item when quantity is less than or equal to 0
     if (newQuantity <= 0) {
       openModal(
         "Remove Item?",
         "Do you want to remove this item from your cart?",
         () => {
-          removeFromCart(itemToUpdate.id);
+          const updatedCart = cart.filter(
+            (item) =>
+              (item.selectedFlavors?.length
+                ? `${item.title}-${item.selectedFlavors.join(",")}`
+                : item.title) !== itemKey
+          );
+          setCart(updatedCart);
           closeModal();
         }
       );
     } else {
+      // Updating item quantity
       const updatedCart = cart.map((item) => {
         if (
           (item.selectedFlavors?.length
