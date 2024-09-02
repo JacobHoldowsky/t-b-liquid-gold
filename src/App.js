@@ -5,6 +5,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Checkout from "./components/Checkout";
 import Success from "./components/Success";
+import SponsorABox from "./components/SponsorABox";
 import Canceled from "./components/Canceled";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
@@ -26,6 +27,7 @@ import CorporateGiftDetail from "./components/CorporateGiftDetail";
 
 function App() {
   const [cart, setCart] = useState([]);
+  const [specialDeliveryFee, setSpecialDeliveryFee] = useState(0); // New state for the special delivery fee
 
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
@@ -124,10 +126,16 @@ function App() {
                 path="/wholesale"
                 element={<Wholesale cart={cart} addToCart={addToCart} />}
               />
-              {/* <Route
+              <Route
                 path="/sponsorABox"
-                element={<SponsorABox cart={cart} addToCart={addToCart} />}
-              /> */}
+                element={
+                  <SponsorABox
+                    cart={cart}
+                    addToCart={addToCart}
+                    setDeliveryFee={setSpecialDeliveryFee}
+                  />
+                }
+              />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route
@@ -137,6 +145,7 @@ function App() {
                     cart={cart}
                     removeFromCart={removeFromCart}
                     setCart={setCart}
+                    specialDeliveryFee={specialDeliveryFee}
                   />
                 }
               />

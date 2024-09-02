@@ -3,41 +3,16 @@ import { loadStripe } from "@stripe/stripe-js";
 import "./Checkout.css";
 import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
-import Modal from "../components/Modal"; // Import the new Modal component
+import Modal from "../components/Modal";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
-
-const DELIVERY_OPTIONS = [
-  {
-    label: "Pick up in Ramat Eshkol",
-    charge: 0,
-  },
-  {
-    label:
-      "Ramat Eshkol, Maalot Dafna, Arzei Habira, French Hill, Sanhedria, Givat Hamivtar",
-    charge: 10,
-  },
-  { label: "Anywhere in Jerusalem and Bet Shemesh/RBS", charge: 15 },
-  {
-    label:
-      "Givat Zev, Modiin, Mevaseret, Beitar, Mitzpei Yericho, Maaleh Adumim",
-    charge: 20,
-  },
-  {
-    label:
-      "All other locations in Israel (order deadline for this delivery option is September 22)",
-    charge: 25,
-    deadline: "2024-09-23",
-  },
-];
 
 function Checkout({ cart, setCart, removeFromCart }) {
   const { currency } = useContext(CurrencyContext);
   const exchangeRate = useContext(ExchangeRateContext);
   const [isGift, setIsGift] = useState(false);
   const [giftNote, setGiftNote] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Loading state added
-
+  const [isLoading, setIsLoading] = useState(false);
   const [shippingDetails, setShippingDetails] = useState({
     fullName: "",
     email: "",
@@ -55,15 +30,42 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState(null);
   const [deliveryCharge, setDeliveryCharge] = useState(0);
   const [isFormValid, setIsFormValid] = useState(false);
-  const [promoCode, setPromoCode] = useState(""); // State for promo code input
-  const [isPromoApplied, setIsPromoApplied] = useState(false); // State to track if promo is applied
-  const [promoMessage, setPromoMessage] = useState({ message: "", type: "" }); // State for promo feedback
+  const [promoCode, setPromoCode] = useState("");
+  const [isPromoApplied, setIsPromoApplied] = useState(false);
+  const [promoMessage, setPromoMessage] = useState({ message: "", type: "" });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalConfig, setModalConfig] = useState({
     title: "",
     message: "",
     onConfirm: () => {},
   });
+
+  const DELIVERY_OPTIONS = [
+    {
+      label: "Pick up in Ramat Eshkol",
+      charge: 0,
+    },
+    {
+      label:
+        "Ramat Eshkol, Maalot Dafna, Arzei Habira, French Hill, Sanhedria, Givat Hamivtar",
+      charge: currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate),
+    },
+    {
+      label: "Anywhere in Jerusalem and Bet Shemesh/RBS",
+      charge: currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate),
+    },
+    {
+      label:
+        "Givat Zev, Modiin, Mevaseret, Beitar, Mitzpei Yericho, Maaleh Adumim",
+      charge: currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate),
+    },
+    {
+      label:
+        "All other locations in Israel (order deadline for this delivery option is September 22)",
+      charge: currency === "Dollar" ? 25 : Math.ceil(25 * exchangeRate),
+      deadline: "2024-09-23",
+    },
+  ];
 
   // Function to open modal
   const openModal = (title, message, onConfirm) => {
@@ -74,6 +76,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  // Check if "Sponsor a Honey Board" is in the cart
+  const isSponsorHoneyBoardInCart = useMemo(() => {
+    return cart.some((item) => item.title === "Sponsor a Honey Board");
+  }, [cart]);
 
   // Aggregate cart items and calculate unique logo charges
   const aggregatedCart = useMemo(() => {
@@ -109,22 +116,26 @@ function Checkout({ cart, setCart, removeFromCart }) {
     return { aggregatedCart, uniqueLogoCount: uniqueLogoItems.size };
   }, [cart]);
 
+  let specialDeliveryOnly = aggregatedCart.aggregatedCart.every(
+    (item) => item.title === "Sponsor a Honey Board"
+  );
+
+  console.log(currency);
+
   const apiUrl =
     process.env.NODE_ENV === "development"
       ? "http://localhost:5000/api/create-checkout-session"
       : "/api/create-checkout-session";
 
   const handleCheckout = async () => {
-    setIsLoading(true); // Set loading to true when proceeding to payment
+    setIsLoading(true);
 
     try {
       const stripe = await stripePromise;
 
-      // Calculate logo charges
       const logoChargePerType =
-        currency === "Dollar" ? 5000 : Math.ceil(50 * exchangeRate * 100); // $50 in cents or equivalent
+        currency === "Dollar" ? 5000 : Math.ceil(50 * exchangeRate * 100);
 
-      // Prepare items for checkout session
       const lineItems = aggregatedCart.aggregatedCart.map((item) => {
         const basePrice =
           currency === "Dollar" ? item.priceDollar : item.priceShekel;
@@ -134,7 +145,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             currency: currency === "Dollar" ? "usd" : "ils",
             product_data: {
               name: `${item.title} ${
-                item.selectedFlavors
+                item.selectedFlavors.length > 0
                   ? "(" + item.selectedFlavors.join(", ") + ")"
                   : ""
               }`,
@@ -151,7 +162,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
         };
       });
 
-      // Include custom logo charges as a single line item if applicable
       if (aggregatedCart.uniqueLogoCount > 0) {
         lineItems.push({
           price_data: {
@@ -177,7 +187,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
           shippingDetails,
           deliveryCharge,
           selectedDeliveryOption,
+          isSponsorHoneyBoardInCart,
           promoCode: promoCode,
+          currency,
+          exchangeRate,
         }),
       });
 
@@ -207,7 +220,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
     } catch (error) {
       alert(`Checkout failed: ${error.message}`);
     } finally {
-      setIsLoading(false); // Reset loading state after checkout process is complete or fails
+      setIsLoading(false);
     }
   };
 
@@ -237,7 +250,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   const applyPromoCode = () => {
     if (promoCode.includes("5")) {
-      // Example promo code
       setIsPromoApplied(true);
       setPromoMessage({
         message: "Promo code accepted! 5% discount applied.",
@@ -257,33 +269,42 @@ function Checkout({ cart, setCart, removeFromCart }) {
   };
 
   const calculateTotalPrice = () => {
-    // Calculate subtotal including logo charges
     const itemSubtotal = aggregatedCart.aggregatedCart.reduce((total, item) => {
       const price = currency === "Dollar" ? item.priceDollar : item.priceShekel;
       return total + parseFloat(price) * item.quantity;
     }, 0);
 
-    // Calculate the logo charge
     const logoChargePerType = currency === "Dollar" ? 50 : 50 * exchangeRate;
     const totalLogoCharge = aggregatedCart.uniqueLogoCount * logoChargePerType;
+    const specialDeliveryCharge =
+      currency === "Dollar" ? 10 : 10 * exchangeRate;
 
-    // Calculate subtotal including logo charges
+    let totalDeliveryCharge = 0;
+    aggregatedCart.aggregatedCart.forEach((item) => {
+      if (item.title === "Sponsor a Honey Board") {
+        totalDeliveryCharge += specialDeliveryCharge * item.quantity; // Flat rate of $10 for each "Sponsor a Honey Board"
+      }
+    });
+
+    if (
+      !specialDeliveryOnly &&
+      aggregatedCart.aggregatedCart.some(
+        (item) => item.title !== "Sponsor a Honey Board"
+      )
+    ) {
+      totalDeliveryCharge += deliveryCharge; // Add normal delivery charge for other items
+    }
+
     const subtotal = itemSubtotal + totalLogoCharge;
+    const discount = isPromoApplied ? subtotal * 0.05 : 0;
+    const total = subtotal - discount + totalDeliveryCharge;
 
-    // Calculate the discount
-    const discount = isPromoApplied ? subtotal * 0.05 : 0; // Apply 5% discount
-
-    // Calculate the final total
-    const total = subtotal - discount + deliveryCharge;
-
-    // Ensure two decimal places for cents
     return formatNumberWithCommas(total.toFixed(2));
   };
 
   function Loading() {
     return (
       <div className="loading-spinner">
-        {/* Customize this spinner as needed */}
         <div className="spinner"></div>
         <p>Loading...</p>
       </div>
@@ -356,7 +377,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
     }
   };
 
-  // Validation check for the form
   useEffect(() => {
     const areMandatoryFieldsFilled = [
       shippingDetails.fullName,
@@ -379,7 +399,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
     setIsFormValid(
       areMandatoryFieldsFilled &&
         areBuildingFieldsFilled &&
-        selectedDeliveryOption
+        (specialDeliveryOnly || selectedDeliveryOption)
     );
   }, [shippingDetails, selectedDeliveryOption]);
 
@@ -403,6 +423,14 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     {item.selectedFlavors?.length ? (
                       <p className="item-flavors">
                         Flavors: {item.selectedFlavors.join(", ")}
+                      </p>
+                    ) : null}
+                    {item.title === "Sponsor a Honey Board" ? (
+                      <p className="item-flavors">
+                        Delivery Fee:{" "}
+                        {currency === "Dollar"
+                          ? `$10 each`
+                          : `₪${10 * exchangeRate} each`}
                       </p>
                     ) : null}
                     {item.includeLogo && (
@@ -617,25 +645,27 @@ function Checkout({ cart, setCart, removeFromCart }) {
             />
           </div>
         ) : null}
-        {aggregatedCart.aggregatedCart.length ? (
+        {!specialDeliveryOnly ? (
           <div className="delivery-options">
             <h3>Delivery Options</h3>
             <select
               onChange={handleDeliveryOptionChange}
               defaultValue=""
-              required
+              required={!specialDeliveryOnly} // This line conditionally sets the 'required' attribute
             >
               <option value="" disabled hidden>
                 Select a delivery option *
               </option>
               {DELIVERY_OPTIONS.map((option, index) => (
                 <option key={index} value={index}>
-                  {option.label} - ${option.charge}
+                  {option.label} - {currency === "Dollar" ? "$" : "₪"}
+                  {option.charge}
                 </option>
               ))}
             </select>
           </div>
         ) : null}
+
         {aggregatedCart.aggregatedCart.length ? (
           <div className="total-price">
             <h3>

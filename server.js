@@ -130,7 +130,10 @@ app.post("/api/create-checkout-session", async (req, res) => {
       shippingDetails,
       deliveryCharge,
       selectedDeliveryOption,
+      isSponsorHoneyBoardInCart,
       promoCode, // Include promoCode in the request body
+      currency,
+      exchangeRate,
     } = req.body;
 
     // Calculate subtotal for items only, excluding delivery charge
@@ -138,22 +141,30 @@ app.post("/api/create-checkout-session", async (req, res) => {
       return total + item.price_data.unit_amount * item.quantity;
     }, 0);
 
+    console.log("promocode", promoCode);
+
     // Check if a valid promo code is entered and calculate the discount
     let discountRate = 0;
-    if (promoCode === "SAVE5") {
+    if (promoCode.includes("5")) {
       discountRate = 0.05; // 5% discount
     }
 
     // Calculate the total discount amount
     const discountAmount = Math.round(subtotal * discountRate);
 
+    console.log("discount", discountRate);
+
     // Apply the discount manually to each item price proportionally
     const adjustedItems = items.map((item) => {
       // Calculate discount for each item proportionally
+      console.log("original price", item.price_data.unit_amount);
+
       const itemDiscount = Math.round(
         item.price_data.unit_amount * discountRate
       );
       const adjustedUnitAmount = item.price_data.unit_amount - itemDiscount;
+
+      console.log("new price", adjustedUnitAmount);
 
       // Ensure adjustedUnitAmount is non-negative and an integer
       return {
@@ -177,10 +188,15 @@ app.post("/api/create-checkout-session", async (req, res) => {
     const lineItems = adjustedItems;
 
     // Add delivery charge as a separate line item (not discounted)
-    if (selectedDeliveryOption && deliveryCharge > 0) {
+    if (
+      selectedDeliveryOption &&
+      deliveryCharge > 0 &&
+      selectedDeliveryOption !== "Sponsor a Honey Board Flat Rate" &&
+      !(isSponsorHoneyBoardInCart && items.length === 1)
+    ) {
       lineItems.push({
         price_data: {
-          currency: "usd", // Set currency as needed, assuming USD here
+          currency: currency === "Dollar" ? "usd" : "ils", // Set currency as needed, assuming USD here
           product_data: {
             name: `Delivery Charge - ${selectedDeliveryOption}`,
             metadata: {
@@ -190,6 +206,30 @@ app.post("/api/create-checkout-session", async (req, res) => {
           unit_amount: deliveryCharge * 100, // Convert to cents
         },
         quantity: 1,
+      });
+    }
+    if (isSponsorHoneyBoardInCart) {
+      const sponsorHoneyBoardItems = items.filter(
+        (item) => item.price_data.product_data.name === "Sponsor a Honey Board "
+      );
+
+      let sponsorDeliveryFee =
+        currency === "Dollar" ? 10 * 100 : 10 * exchangeRate * 100; // $10 delivery fee in cents
+      if (!currency === "Dollar")
+        sponsorDeliveryFee = sponsorDeliveryFee * exchangeRate;
+
+      lineItems.push({
+        price_data: {
+          currency: currency === "Dollar" ? "usd" : "ils", // Set currency as needed, assuming USD here
+          product_data: {
+            name: `Delivery Charge - Sponsor a Honey Board Flat Rate`,
+            metadata: {
+              note: "Delivery charge is not discounted", // Add a note in the metadata
+            },
+          },
+          unit_amount: sponsorDeliveryFee,
+        },
+        quantity: sponsorHoneyBoardItems[0].quantity,
       });
     }
 
@@ -552,4 +592,6 @@ app.post("/send-email", async (req, res) => {
 
 // Start server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {console.log(`Server is running on port ${PORT}`)});
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

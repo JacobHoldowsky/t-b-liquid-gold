@@ -133,7 +133,7 @@ function Header({ cartItemCount }) {
                   Wholesale
                 </HashLink>
               </li>
-              {/* <li>
+              <li>
                 <HashLink
                   className="dropdown-menu-item"
                   smooth
@@ -143,7 +143,7 @@ function Header({ cartItemCount }) {
                 >
                   Sponsor-a-Box
                 </HashLink>
-              </li> */}
+              </li>
             </ul>
           </li>
           <li>

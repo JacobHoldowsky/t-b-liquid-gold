@@ -12,7 +12,10 @@ module.exports = async (req, res) => {
         shippingDetails,
         deliveryCharge,
         selectedDeliveryOption,
+        isSponsorHoneyBoardInCart,
         promoCode,
+        currency,
+        exchangeRate,
       } = req.body;
 
       if (!items || !Array.isArray(items) || items.length === 0) {
@@ -26,7 +29,7 @@ module.exports = async (req, res) => {
 
       // Check if a valid promo code is entered and calculate the discount
       let discountRate = 0;
-      if (promoCode === "SAVE5") {
+      if (promoCode.includes("5")) {
         discountRate = 0.05; // 5% discount
       }
 
@@ -63,10 +66,15 @@ module.exports = async (req, res) => {
       const lineItems = adjustedItems;
 
       // Add delivery charge as a separate line item (not discounted)
-      if (selectedDeliveryOption && deliveryCharge > 0) {
+      if (
+        selectedDeliveryOption &&
+        deliveryCharge > 0 &&
+        selectedDeliveryOption !== "Sponsor a Honey Board Flat Rate" &&
+        !(isSponsorHoneyBoardInCart && items.length === 1)
+      ) {
         lineItems.push({
           price_data: {
-            currency: "usd", // Set currency as needed, assuming USD here
+            currency: currency === "Dollar" ? "usd" : "ils", // Set currency as needed, assuming USD here
             product_data: {
               name: `Delivery Charge - ${selectedDeliveryOption}`,
               metadata: {
@@ -76,6 +84,32 @@ module.exports = async (req, res) => {
             unit_amount: deliveryCharge * 100, // Convert to cents
           },
           quantity: 1,
+        });
+      }
+
+      if (isSponsorHoneyBoardInCart) {
+        const sponsorHoneyBoardItems = items.filter(
+          (item) =>
+            item.price_data.product_data.name === "Sponsor a Honey Board "
+        );
+
+        let sponsorDeliveryFee =
+          currency === "Dollar" ? 10 * 100 : 10 * exchangeRate * 100; // $10 delivery fee in cents
+        if (!currency === "Dollar")
+          sponsorDeliveryFee = sponsorDeliveryFee * exchangeRate;
+
+        lineItems.push({
+          price_data: {
+            currency: currency === "Dollar" ? "usd" : "ils", // Set currency as needed, assuming USD here
+            product_data: {
+              name: `Delivery Charge - Sponsor a Honey Board Flat Rate`,
+              metadata: {
+                note: "Delivery charge is not discounted", // Add a note in the metadata
+              },
+            },
+            unit_amount: sponsorDeliveryFee,
+          },
+          quantity: sponsorHoneyBoardItems[0].quantity,
         });
       }
 

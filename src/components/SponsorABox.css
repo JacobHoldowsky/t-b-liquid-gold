@@ -1,0 +1,178 @@
+.sponsor-honey-board {
+    padding: 30px;
+    background-color: #f8f8f8;
+    max-width: 900px;
+    margin: 40px auto;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .sponsor-honey-board:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .sponsor-board-details {
+    margin-top: 30px;
+    text-align: center;
+    padding: 0 20px;
+  }
+  
+  .sponsor-image {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  
+  .sponsor-image img {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .sponsor-honey-board h2 {
+    font-size: 2.8rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sponsor-board-details h3 {
+    font-size: 2rem;
+    color: #7c2234;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .sponsor-board-details p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  
+  .sponsor-board-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    font-size: 1.1rem;
+    color: #555;
+    text-align: left;
+  }
+  
+  .sponsor-board-details ul li {
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+  }
+  
+  .sponsor-board-details ul li::before {
+    content: '•';
+    color: #7c2234;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 1.5rem;
+    line-height: 1;
+  }
+  
+  .add-to-cart-btn {
+    padding: 15px 30px;
+    background-color: #7c2234;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    width: 80%;
+    margin: 30px auto;
+    display: block;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #b74058;
+    transform: translateY(-3px);
+  }
+  
+  .notification {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    width: 75%;
+    text-align: center;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .notification.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .notification.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  
+  .notification .checkmark {
+    margin-right: 8px;
+    font-size: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    .sponsor-honey-board {
+      padding: 20px;
+    }
+  
+    .sponsor-honey-board h2 {
+      font-size: 2.2rem;
+    }
+  
+    .sponsor-board-details h3 {
+      font-size: 1.8rem;
+    }
+  
+    .add-to-cart-btn {
+      padding: 12px 25px;
+      font-size: 1.1rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .sponsor-honey-board {
+      padding: 15px;
+    }
+  
+    .sponsor-honey-board h2 {
+      font-size: 2rem;
+    }
+  
+    .sponsor-board-details h3 {
+      font-size: 1.6rem;
+    }
+  
+    .add-to-cart-btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+  }
+  
