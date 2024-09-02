@@ -127,7 +127,7 @@ function App() {
                 element={<Wholesale cart={cart} addToCart={addToCart} />}
               />
               <Route
-                path="/sponsorABox"
+                path="/sponsorAHoneyBoard"
                 element={
                   <SponsorABox
                     cart={cart}

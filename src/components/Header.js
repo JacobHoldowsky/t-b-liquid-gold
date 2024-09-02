@@ -137,11 +137,11 @@ function Header({ cartItemCount }) {
                 <HashLink
                   className="dropdown-menu-item"
                   smooth
-                  to="/sponsorABox"
+                  to="/sponsorAHoneyBoard"
                   scroll={scrollWithOffset}
                   onClick={closeMenu}
                 >
-                  Sponsor-a-Box
+                  Sponsor a Honey Board
                 </HashLink>
               </li>
             </ul>
