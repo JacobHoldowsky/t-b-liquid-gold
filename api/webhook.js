@@ -84,6 +84,18 @@ module.exports = async (req, res) => {
           expand: ["data.price.product"],
         });
 
+        // Calculate the total price of all line items
+        const totalAmount = lineItems.data.reduce(
+          (acc, item) => acc + item.amount_total,
+          0
+        );
+
+        // Format the total price in the appropriate currency format
+        const formattedTotalAmount =
+          session.currency.toUpperCase() === "USD"
+            ? `$${(totalAmount / 100).toFixed(2)}`
+            : `₪${(totalAmount / 100).toFixed(2)}`;
+
         // Map of product name to attachments for logo images
         const attachments = await Promise.all(
           lineItems.data.map(async (item) => {
@@ -199,6 +211,8 @@ ${
               ${itemsListHtml}
             </ul>
 
+            <p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Total Price: ${formattedTotalAmount}</p>
+
             ${giftNoteHtml}
 
             ${shippingAddressHtml}
@@ -222,6 +236,8 @@ ${
             <ul style="font-size: 16px; list-style-type: none; padding: 0;">
               ${itemsListHtml}
             </ul>
+
+            <p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Total Price: ${formattedTotalAmount}</p>
 
             ${giftNoteHtml}
 

@@ -284,7 +284,7 @@ app.post(
     if (event.type === "checkout.session.completed") {
       const session = event.data.object;
       const customerEmail = session.customer_details.email;
-      const giftNote = session.metadata.giftNote || ""; // Retrieve gift note from session metadata
+      const giftNote = session.metadata.giftNote || "";
       let fullName = session.metadata.fullName;
       let email = session.metadata.email;
       let number = session.metadata.number;
@@ -314,15 +314,25 @@ app.post(
       try {
         const lineItems = await stripe.checkout.sessions.listLineItems(
           session.id,
-          { expand: ["data.price.product"] } // Ensure product details are included
+          { expand: ["data.price.product"] }
         );
 
-        // Map of product name to attachments for logo images
+        // Calculate the total price of all line items
+        const totalAmount = lineItems.data.reduce(
+          (acc, item) => acc + item.amount_total,
+          0
+        );
+
+        // Format the total price in the appropriate currency format
+        const formattedTotalAmount =
+          session.currency.toUpperCase() === "USD"
+            ? `$${(totalAmount / 100).toFixed(2)}`
+            : `₪${(totalAmount / 100).toFixed(2)}`;
+
         const attachments = await Promise.all(
           lineItems.data.map(async (item) => {
-            // Retrieve the logo URL from metadata
             let logoUrl = item.price.product.metadata.logoUrl;
-            const productName = item.price.product.name; // Get the product name
+            const productName = item.price.product.name;
 
             if (logoUrl) {
               const fileName = `${productName.replace(
@@ -346,7 +356,7 @@ app.post(
                       }
                     })
                     .on("error", (err) => {
-                      fs.unlink(filePath, () => {}); // Delete the file on error
+                      fs.unlink(filePath, () => {});
                       reject(`Download error: ${err.message}`);
                     });
                 });
@@ -362,7 +372,6 @@ app.post(
 
         const validAttachments = attachments.filter(Boolean);
 
-        // Create HTML list of purchased items
         const itemsListHtml = lineItems.data
           .map((item) => {
             const isCustomLogoCharge = item.description.includes("Custom Logo");
@@ -382,15 +391,15 @@ app.post(
         const capitalizedHomeType =
           homeType.charAt(0).toUpperCase() + homeType.slice(1);
 
-        // HTML for Shipping Address
-        let shippingAddressHtml = specialDeliveryOnly === 'true'
-          ? `
+        let shippingAddressHtml =
+          specialDeliveryOnly === "true"
+            ? `
   <h3 style="color: #333; margin-top: 20px;">Customer Details</h3>
   <p><strong>Full Name:</strong> ${fullName}</p>
   <p><strong>Email:</strong> ${email}</p>
   <p><strong>Number:</strong> ${number}</p>
 `
-          : `
+            : `
   <h3 style="color: #333; margin-top: 20px;">Customer Details</h3>
   <p><strong>Full Name:</strong> ${fullName}</p>
   <p><strong>Email:</strong> ${email}</p>
@@ -411,7 +420,6 @@ app.post(
   <p><strong>Recipient Contact Number:</strong> ${contactNumber}</p>
 `;
 
-        // Gift Note HTML
         const giftNoteHtml = giftNote
           ? `<h3 style="color: #333; margin-top: 20px;">Gift Note</h3>
              <p style="font-size: 16px; background-color: #f9f9f9; padding: 15px; border-radius: 5px; color: #333;">${giftNote}</p>`
@@ -430,6 +438,8 @@ app.post(
             <ul style="font-size: 16px; list-style-type: none; padding: 0;">
               ${itemsListHtml}
             </ul>
+
+            <p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Total Price: ${formattedTotalAmount}</p>
 
             ${giftNoteHtml}
 
@@ -455,6 +465,8 @@ app.post(
               ${itemsListHtml}
             </ul>
 
+            <p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Total Price: ${formattedTotalAmount}</p>
+
             ${giftNoteHtml}
 
             ${shippingAddressHtml}
@@ -462,7 +474,6 @@ app.post(
           </div>
         `;
 
-        // Mail Options for Customer
         const mailOptionsCustomer = {
           from: process.env.MAIL_USERNAME,
           to: customerEmail,
@@ -471,15 +482,12 @@ app.post(
           attachments: validAttachments,
         };
 
-        // Send email to customer
         transporter.sendMail(mailOptionsCustomer, (error, info) => {
           if (error) {
             console.error("Error sending email to customer:", error);
-          } else {
           }
         });
 
-        // Mail Options for Admin
         const mailOptionsAdmin = {
           from: process.env.MAIL_USERNAME,
           to: process.env.PERSONAL_EMAIL,
@@ -488,14 +496,11 @@ app.post(
           attachments: validAttachments,
         };
 
-        // Send email to admin
         transporter.sendMail(mailOptionsAdmin, (error, info) => {
           if (error) {
             console.error("Error sending email to admin:", error);
-          } else {
           }
 
-          // Delete downloaded images
           validAttachments.forEach((attachment) => {
             fs.unlink(attachment.path, (err) => {
               if (err) console.error("Error deleting file:", err);
@@ -503,19 +508,17 @@ app.post(
           });
         });
 
-        // Collect the S3 keys of logos to delete
         const s3KeysToDelete = lineItems.data
           .map((item) => {
             const logoUrl = item.price.product.metadata?.logoUrl;
             if (logoUrl) {
-              const key = logoUrl.split("/").pop(); // Extract the file name from the URL
+              const key = logoUrl.split("/").pop();
               return { Key: key };
             }
             return null;
           })
-          .filter(Boolean); // Remove null values
+          .filter(Boolean);
 
-        // Delete each image from S3
         await Promise.all(
           s3KeysToDelete.map(async (s3Key) => {
             try {
