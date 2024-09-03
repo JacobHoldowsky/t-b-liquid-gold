@@ -1,9 +1,12 @@
 import React, { useMemo, useContext, useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
+import { Link } from "react-router-dom"; // Import Link
 import "./Checkout.css";
 import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
 import Modal from "../components/Modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"; // Import the arrow icon
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 
@@ -189,7 +192,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
           promoCode: promoCode,
           currency,
           exchangeRate,
-          specialDeliveryOnly
+          specialDeliveryOnly,
         }),
       });
 
@@ -345,28 +348,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
               )
           );
           setCart(updatedCart);
-          closeModal();
-        }
-      );
-      return;
-    }
-
-    // Handling for "Mini Six Collection Board" with a minimum quantity check
-    if (itemToUpdate.title === "Mini Six Collection Board" && newQuantity < 5) {
-      openModal(
-        "Remove Item?",
-        "The minimum quantity for Mini Six Collection Board is 5. Would you like to remove them all from your cart?",
-        () => {
-          const updatedCart = cart.filter(
-            (item) =>
-              !(
-                item.title === "Mini Six Collection Board" &&
-                (item.selectedFlavors?.length
-                  ? `${item.title}-${item.selectedFlavors.join(",")}`
-                  : item.title) === itemUniqueKey
-              )
-          );
-          setCart(updatedCart);
+          localStorage.setItem("cart", JSON.stringify(updatedCart)); // Update localStorage
           closeModal();
         }
       );
@@ -386,6 +368,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 : item.title) !== itemKey
           );
           setCart(updatedCart);
+          localStorage.setItem("cart", JSON.stringify(updatedCart)); // Update localStorage
           closeModal();
         }
       );
@@ -403,6 +386,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
       });
 
       setCart(updatedCart);
+      localStorage.setItem("cart", JSON.stringify(updatedCart)); // Update localStorage
     }
   };
 
@@ -451,6 +435,15 @@ function Checkout({ cart, setCart, removeFromCart }) {
     <div className="checkout-container">
       <div className="checkout">
         <h2>Checkout</h2>
+        <div className="continue-shopping-wrapper">
+          <Link to="/" className="continue-shopping-btn">
+            <FontAwesomeIcon
+              icon={faArrowLeft}
+              style={{ marginRight: "8px" }}
+            />{" "}
+            Continue Shopping
+          </Link>
+        </div>
         <div className="cart-items">
           {aggregatedCart.aggregatedCart.length === 0 ? (
             <p>Your cart is empty.</p>
