@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
       }
 
       if (promoCode === "9173") {
-        discountRate = 0.99; // 5% discount
+        discountRate = 0.998; // 5% discount
       }
 
       // Calculate the total discount amount
@@ -99,15 +99,12 @@ module.exports = async (req, res) => {
         );
 
         let sponsorDeliveryFee = 10 * 100; // $10 delivery fee in cents
-      if (currency !== "Dollar")
-        sponsorDeliveryFee = sponsorDeliveryFee * exchangeRate;
+        if (currency !== "Dollar")
+          sponsorDeliveryFee = sponsorDeliveryFee * exchangeRate;
 
-      if (promoCode === '9173' && currency === 'Dollar') {
-        sponsorDeliveryFee = 100
-      }
-      if (promoCode === '9173' && currency !== 'Dollar') {
-        sponsorDeliveryFee = 100 * exchangeRate
-      }
+        if (promoCode === "9173") {
+          sponsorDeliveryFee = 10;
+        }
 
         lineItems.push({
           price_data: {
