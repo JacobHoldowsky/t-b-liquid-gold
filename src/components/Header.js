@@ -4,7 +4,7 @@ import { HashLink } from "react-router-hash-link";
 import { CurrencyContext } from "../context/CurrencyContext";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDollarSign, faShekelSign } from "@fortawesome/free-solid-svg-icons";
+import { faDollarSign, faShekelSign, faShoppingCart  } from "@fortawesome/free-solid-svg-icons";
 
 function Header({ cartItemCount }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -198,7 +198,7 @@ function Header({ cartItemCount }) {
               to="/checkout"
               onClick={closeMenu}
             >
-              Checkout
+              <FontAwesomeIcon icon={faShoppingCart} />
               {cartItemCount > 0 && (
                 <span className="cart-count">{cartItemCount}</span>
               )}
