@@ -25,13 +25,16 @@
   }
   
   .distributors-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
+    display: flex; /* Use Flexbox instead of Grid */
+    flex-wrap: wrap; /* Allow items to wrap */
+    gap: 20px; /* Maintain the gap between items */
+    justify-content: center; /* Center the items horizontally */
   }
   
   .distributor-card {
     background-color: #fff;
+    flex: 1 1 250px; /* Allow the item to grow and shrink, with a base width of 250px */
+    max-width: 300px; /* Optional: Limit the maximum width */
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 20px;
