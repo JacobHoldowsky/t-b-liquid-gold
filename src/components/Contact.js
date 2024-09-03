@@ -7,9 +7,10 @@ function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    number: "", // Added number field
+    number: "",
     message: "",
   });
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,6 +28,7 @@ function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Set loading state to true
 
     try {
       const response = await fetch(apiUrl, {
@@ -51,6 +53,8 @@ function Contact() {
     } catch (error) {
       console.error("Error:", error);
       toast.error("Failed to send message. Please try again."); // Error notification
+    } finally {
+      setIsLoading(false); // Reset loading state
     }
   };
 
@@ -96,7 +100,7 @@ function Contact() {
           />
           <input
             type="tel"
-            name="number" // Number field
+            name="number"
             value={formData.number}
             onChange={handleChange}
             placeholder="Your Phone Number"
@@ -109,8 +113,19 @@ function Contact() {
             placeholder="Your Message"
             required
           />
-          <button type="submit" className="submit-btn">
-            Send Message
+          <button
+            type="submit"
+            className="submit-btn"
+            disabled={isLoading} // Disable button when loading
+          >
+            {isLoading ? (
+              <>
+                <span style={{ marginRight: "10px" }}>Sending...</span>{" "}
+                <div className="loader"></div> {/* Spinner */}
+              </>
+            ) : (
+              "Send Message"
+            )}
           </button>
         </form>
       </div>
