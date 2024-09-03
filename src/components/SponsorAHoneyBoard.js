@@ -1,51 +1,51 @@
-import React, { useContext, useState } from "react";
-import { CurrencyContext } from "../context/CurrencyContext"; // Assuming you have a currency context
-import "./SponsorAHoneyBoard.css"; // Custom CSS for styling
-import { FaCheckCircle } from "react-icons/fa"; // Import a checkmark icon
+import React, { useContext, useState, useMemo } from "react";
+import { CurrencyContext } from "../context/CurrencyContext";
+import "./SponsorAHoneyBoard.css";
+import { FaCheckCircle } from "react-icons/fa";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
 import QuantitySelector from "./QuantitySelector";
+
+// Function to calculate price in Shekels
+const calculatePriceInShekels = (priceDollar, exchangeRate) => {
+  return exchangeRate
+    ? Math.ceil(priceDollar * exchangeRate)
+    : Math.ceil(priceDollar * 3.7);
+};
 
 function SponsorAHoneyBoard({ cart, addToCart, setDeliveryFee }) {
   const { currency } = useContext(CurrencyContext);
   const exchangeRate = useContext(ExchangeRateContext);
   const [addedToCart, setAddedToCart] = useState(false);
-  const [quantity, setQuantity] = useState(1); // New state for quantity
-
-  const calculatePriceInShekels = (priceDollar, exchangeRate) => {
-    return exchangeRate
-      ? Math.ceil(priceDollar * exchangeRate)
-      : Math.ceil(priceDollar * 3.7);
-  };
+  const [quantity, setQuantity] = useState(1);
 
   const price = 75; // Fixed price in USD
   const deliveryFee = 10; // Flat rate delivery fee for the special gift
 
+  // Memoize price calculation to avoid re-computation on every render
+  const priceInShekels = useMemo(
+    () => calculatePriceInShekels(price, exchangeRate),
+    [price, quantity, exchangeRate]
+  );
+
+  // Handle adding to cart
   const handleAddToCart = () => {
-    // Create an item object for the honey board
     const itemToAdd = {
       url: "Sponsor a honey board with plastic-min.png",
       title: "Sponsor a Honey Board",
       description:
         "5 flavored creamed honeys size 70ml, Half bottle of wine, 5 Dairy Belgian chocolates, Wooden honey dipper",
-      priceDollar: price, // Calculate total price based on quantity
-      priceShekel: calculatePriceInShekels(price, exchangeRate), // Calculate price in Shekels
-      quantity: quantity,
-      deliveryFee, // Assign the special delivery fee
+      priceDollar: price,
+      priceShekel: priceInShekels,
+      quantity,
+      deliveryFee,
     };
 
-    // Add the item to the cart
     addToCart(itemToAdd);
-
-    // Set the flat rate delivery fee in the checkout component
     setDeliveryFee(deliveryFee);
-
-    // Show confirmation notification
     setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 2000);
-  };
 
-  const handleQuantityChange = (e) => {
-    setQuantity(parseInt(e.target.value, 10));
+    // Reset addedToCart after 2 seconds
+    setTimeout(() => setAddedToCart(false), 2000);
   };
 
   return (
@@ -64,7 +64,6 @@ function SponsorAHoneyBoard({ cart, addToCart, setDeliveryFee }) {
         to the ones who need it most.
       </p>
       <div className="sponsor-board-details">
-        {/* Add the image here */}
         <div className="sponsor-image">
           <img
             src="/Sponsor a honey board with plastic-min.png"
@@ -75,12 +74,14 @@ function SponsorAHoneyBoard({ cart, addToCart, setDeliveryFee }) {
         <p>
           <strong>Price:</strong>{" "}
           {currency === "Dollar"
-            ? `$${price}` // Display price based on quantity
-            : `₪${calculatePriceInShekels(price, exchangeRate)}`}
+            ? `$${price}`
+            : `₪${priceInShekels}`}
         </p>
         <QuantitySelector
           quantity={quantity}
-          handleQuantityChange={handleQuantityChange}
+          handleQuantityChange={(e) =>
+            setQuantity(parseInt(e.target.value, 10))
+          }
         />
         <ul>
           <li>5 flavored creamed honeys size 70ml</li>
