@@ -266,34 +266,6 @@ ${
       }
     }
 
-    // Collect the S3 keys of logos to delete
-    const s3KeysToDelete = lineItems.data
-      .map((item) => {
-        const logoUrl = item.price.product.metadata?.logoUrl;
-        if (logoUrl) {
-          const key = logoUrl.split("/").pop(); // Extract the file name from the URL
-          return { Key: key };
-        }
-        return null;
-      })
-      .filter(Boolean); // Remove null values
-
-    // Delete each image from S3
-    await Promise.all(
-      s3KeysToDelete.map(async (s3Key) => {
-        try {
-          const deleteParams = {
-            Bucket: process.env.AWS_BUCKET_NAME,
-            Key: s3Key.Key,
-          };
-          const command = new DeleteObjectCommand(deleteParams);
-          await s3Client.send(command);
-        } catch (err) {
-          console.error(`Failed to delete S3 object ${s3Key.Key}:`, err);
-        }
-      })
-    );
-
     try {
       const files = await fs.readdir("/tmp"); // List all files in /tmp
       for (const file of files) {
