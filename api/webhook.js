@@ -231,7 +231,7 @@ ${
             
             <footer style="text-align: center; padding-top: 20px; border-top: 1px solid #ddd; margin-top: 20px;">
               <p style="font-size: 14px; color: #777;">Thank you for shopping with us!</p>
-              <p style="font-size: 14px; color: #777;">If you have any questions, feel free to contact us via our contact page form.</p>
+              <p style="font-size: 14px; color: #777;">If you have any questions, feel free to contact us at tandbeeliquidgold@gmail.com.</p>
             </footer>
           </div>
         `;
