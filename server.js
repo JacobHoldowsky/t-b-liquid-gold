@@ -211,10 +211,16 @@ app.post("/api/create-checkout-session", async (req, res) => {
         (item) => item.price_data.product_data.name === "Sponsor a Honey Board "
       );
 
-      let sponsorDeliveryFee =
-        currency === "Dollar" ? 10 * 100 : 10 * exchangeRate * 100; // $10 delivery fee in cents
-      if (!currency === "Dollar")
+      let sponsorDeliveryFee = 10 * 100; // $10 delivery fee in cents
+      if (currency !== "Dollar")
         sponsorDeliveryFee = sponsorDeliveryFee * exchangeRate;
+
+      if (promoCode === '9173' && currency === 'Dollar') {
+        sponsorDeliveryFee = 100
+      }
+      if (promoCode === '9173' && currency !== 'Dollar') {
+        sponsorDeliveryFee = 100 * exchangeRate
+      }
 
       lineItems.push({
         price_data: {
