@@ -4,7 +4,11 @@ import { HashLink } from "react-router-hash-link";
 import { CurrencyContext } from "../context/CurrencyContext";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDollarSign, faShekelSign, faShoppingCart  } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDollarSign,
+  faShekelSign,
+  faShoppingCart,
+} from "@fortawesome/free-solid-svg-icons";
 
 function Header({ cartItemCount }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -66,7 +70,7 @@ function Header({ cartItemCount }) {
       <div className="logo-currency-wrapper">
         <div className="logo">
           <Link to="/" onClick={closeMenu}>
-            <img src="tnbLiquidGoldLogo-min.png" alt="TnB Liquid Gold" />
+            <img src="/tnbLiquidGoldLogo-min.png" alt="TnB Liquid Gold" />
           </Link>
         </div>
         <div className="currency-toggle" onClick={handleCurrencyToggle}>
