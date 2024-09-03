@@ -4,25 +4,7 @@ import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
 import { FaCheckCircle } from "react-icons/fa";
 import "./GiftPackageDetail.css";
-
-// Reusable Quantity Selector Component
-const QuantitySelector = ({ quantity, handleQuantityChange }) => (
-  <div className="quantity-selector">
-    <label htmlFor="quantity">Quantity:</label>
-    <select
-      id="quantity"
-      value={quantity}
-      onChange={handleQuantityChange}
-      className="select-dropdown"
-    >
-      {[...Array(10).keys()].map((num) => (
-        <option key={num + 1} value={num + 1}>
-          {num + 1}
-        </option>
-      ))}
-    </select>
-  </div>
-);
+import QuantitySelector from "./QuantitySelector";
 
 // Reusable Flavor Selector Component
 const FlavorSelector = ({ flavors, selectedFlavors, handleFlavorChange }) => (

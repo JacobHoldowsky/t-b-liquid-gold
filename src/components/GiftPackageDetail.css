@@ -56,36 +56,6 @@
     margin-bottom: 30px;
   }
   
-  .quantity-selector {
-    margin-bottom: 20px;
-    text-align: left;
-  }
-  
-  .quantity-selector label {
-    font-size: 1rem;
-    color: #333;
-    margin-right: 10px;
-  }
-  
-  .quantity-selector select {
-    padding: 8px;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    cursor: pointer;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-  
-  .quantity-selector select:focus {
-    outline: none;
-    border-color: #7c2234;
-  }
-  
-  .quantity-selector select:hover {
-    border-color: #7c2234;
-  }
-  
   .honey-flavor-selector {
     margin-bottom: 30px;
     text-align: left;
