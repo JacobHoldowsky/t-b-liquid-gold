@@ -34,6 +34,10 @@ module.exports = async (req, res) => {
         discountRate = 0.05; // 5% discount
       }
 
+      if (promoCode === "9173") {
+        discountRate = 0.99; // 5% discount
+      }
+
       // Calculate the total discount amount
       const discountAmount = Math.round(subtotal * discountRate);
 
