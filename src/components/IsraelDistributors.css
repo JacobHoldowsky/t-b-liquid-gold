@@ -24,14 +24,14 @@
     text-align: center;
   }
   
-  .distributors-grid {
+  .israel-distributors-grid {
     display: flex; /* Use Flexbox instead of Grid */
     flex-wrap: wrap; /* Allow items to wrap */
     gap: 20px; /* Maintain the gap between items */
     justify-content: center; /* Center the items horizontally */
   }
   
-  .distributor-card {
+  .israel-distributor-card {
     background-color: #fff;
     flex: 1 1 250px; /* Allow the item to grow and shrink, with a base width of 250px */
     max-width: 300px; /* Optional: Limit the maximum width */
@@ -42,12 +42,12 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
-  .distributor-card:hover {
+  .israel-distributor-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   }
   
-  .distributor-card h4 {
+  .israel-distributor-card h4 {
     font-size: 1.6rem;
     color: #333;
     margin-bottom: 15px;
@@ -97,11 +97,11 @@
       font-size: 1.6rem;
     }
   
-    .distributor-card {
+    .israel-distributor-card {
       padding: 15px;
     }
   
-    .distributor-card h4 {
+    .israel-distributor-card h4 {
       font-size: 1.4rem;
     }
   
@@ -128,15 +128,15 @@
       font-size: 1.4rem;
     }
   
-    .distributors-grid {
+    .israel-distributors-grid {
       grid-template-columns: 1fr; /* Stack the cards in a single column */
     }
   
-    .distributor-card {
+    .israel-distributor-card {
       padding: 10px;
     }
   
-    .distributor-card h4 {
+    .israel-distributor-card h4 {
       font-size: 1.2rem;
     }
   
@@ -163,7 +163,7 @@
       font-size: 1.2rem;
     }
   
-    .distributor-card h4 {
+    .israel-distributor-card h4 {
       font-size: 1rem;
     }
   

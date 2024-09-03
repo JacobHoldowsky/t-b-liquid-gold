@@ -70,7 +70,7 @@ function USDistributors() {
       </div>
 
       <div className="nationwide-section">
-        <div className="distributor-card">
+        <div className="nationwide-distributor-card">
           <h4>For Nationwide Shipping Please Contact</h4>
           <a
             href="https://wa.me/message/AUHFRK2KKV27O1"

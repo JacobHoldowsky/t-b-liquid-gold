@@ -7,10 +7,10 @@ function IsraelDistributors() {
     <div className="israel-distributors">
       <h2 className="page-title">Israel Distributors</h2>
 
-      <div className="distributors-section">
+      <div className="israel-distributors-section">
         <h3 className="section-title">Distributors</h3>
-        <div className="distributors-grid">
-          <div className="distributor-card">
+        <div className="israel-distributors-grid">
+          <div className="israel-distributor-card">
             <h4>Efrat</h4>
             <a
               href="https://wa.me/qr/GOWJ5JWFFQFRE1"
@@ -22,7 +22,7 @@ function IsraelDistributors() {
               Rivky Krest
             </a>
           </div>
-          <div className="distributor-card">
+          <div className="israel-distributor-card">
             <h4>RBS D2</h4>
             <a
               href="https://wa.me/message/W7IN5L774FZJJ1"
@@ -34,7 +34,7 @@ function IsraelDistributors() {
               Chaya Kamenetsky
             </a>
           </div>
-          <div className="distributor-card">
+          <div className="israel-distributor-card">
             <h4>Mevaseret</h4>
             <a
               href="https://wa.me/qr/L626LCCV47NOL1"
@@ -46,7 +46,7 @@ function IsraelDistributors() {
               Tehilla Siman Tov
             </a>
           </div>
-          <div className="distributor-card">
+          <div className="israel-distributor-card">
             <h4>Carmei Gat</h4>
             <a
               href="https://wa.me/message/W7IN5L774FZJJ1"
@@ -58,7 +58,7 @@ function IsraelDistributors() {
               Jordana Cohen
             </a>
           </div>
-          <div className="distributor-card">
+          <div className="israel-distributor-card">
             <h4>Modiin</h4>
             <a
               href="https://wa.me/message/W7IN5L774FZJJ1"
@@ -70,7 +70,7 @@ function IsraelDistributors() {
               Heather Zomer
             </a>
           </div>
-          <div className="distributor-card">
+          <div className="israel-distributor-card">
             <h4>Jerusalem</h4>
             <a
               href="https://wa.me/message/W7IN5L774FZJJ1"

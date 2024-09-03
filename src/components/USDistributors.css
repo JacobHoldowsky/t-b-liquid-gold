@@ -23,6 +23,7 @@
     font-weight: 600;
     text-align: center;
   }
+  
   .distributors-grid {
     display: flex; /* Use Flexbox instead of Grid */
     flex-wrap: wrap; /* Allow items to wrap */
@@ -47,6 +48,27 @@
   }
   
   .distributor-card h4 {
+    font-size: 1.6rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  .nationwide-distributor-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .nationwide-distributor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .nationwide-distributor-card h4 {
     font-size: 1.6rem;
     color: #333;
     margin-bottom: 15px;
