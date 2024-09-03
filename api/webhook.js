@@ -4,6 +4,7 @@ const https = require("https");
 const fs = require("fs");
 const path = require("path");
 const { buffer } = require("micro");
+const crypto = require("crypto"); // Import crypto for generating random strings
 
 const { S3Client, DeleteObjectCommand } = require("@aws-sdk/client-s3");
 
@@ -95,6 +96,15 @@ module.exports = async (req, res) => {
           session.currency.toUpperCase() === "USD"
             ? `$${(totalAmount / 100).toFixed(2)}`
             : `₪${(totalAmount / 100).toFixed(2)}`;
+
+        // Generate a unique order number
+        const generateOrderNumber = () => {
+          const timestamp = Date.now().toString(36); // Base36 timestamp
+          const randomString = crypto.randomBytes(4).toString("hex"); // Random 4-byte hex string
+          return `ORD-${timestamp}-${randomString}`; // Order number format
+        };
+
+        const orderNumber = generateOrderNumber();
 
         // Map of product name to attachments for logo images
         const attachments = await Promise.all(
@@ -202,6 +212,8 @@ ${
           <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
             <header style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
               <h2 style="color: #7c2234;">Order Confirmation</h2>
+              <p style="font-size: 16px; color: #777;">Order Number: <strong>${orderNumber}</strong></p>
+
             </header>
             <p style="font-size: 16px;">Dear ${fullName},</p>
             <p style="font-size: 16px;">Thank you for your purchase! We are currently processing your order. Below are the details of your order:</p>
@@ -229,6 +241,8 @@ ${
           <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
             <header style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
               <h2 style="color: #7c2234;">New Order Received</h2>
+              <p style="font-size: 16px; color: #777;">Order Number: <strong>${orderNumber}</strong></p>
+
             </header>
             <p style="font-size: 16px;">You have received a new order from ${fullName} (${customerEmail}). Below are the details:</p>
             
@@ -250,7 +264,7 @@ ${
         const mailOptionsCustomer = {
           from: process.env.MAIL_USERNAME,
           to: customerEmail,
-          subject: "Order Confirmation",
+          subject: `Order Confirmation - ${orderNumber}`,
           html: customerEmailHtml,
           attachments: validAttachments,
         };
@@ -262,7 +276,7 @@ ${
         const mailOptionsAdmin = {
           from: process.env.MAIL_USERNAME,
           to: process.env.PERSONAL_EMAIL,
-          subject: `New Order from ${customerEmail}`,
+          subject: `New Order from ${customerEmail} - ${orderNumber}`,
           html: adminEmailHtml,
           attachments: validAttachments,
         };
