@@ -9,7 +9,7 @@ function Footer() {
         <p className="holdowsky">Website crafted by Y. Holdowsky.</p>
         <p className="holdowsky">Need a your own website?</p>
         <p className="holdowsky">
-          <a href="mailto:jacobedward1995@gmail.com?subject=Saw%20your%20website%20on%20TandBeeLiquidGold.com!">
+          <a href="mailto:jacobedward1995@gmail.com?subject=Reaching%20out%20from%20TandBeeLiquidGold.com!">
             Reach out today!{" "}
           </a>
         </p>
