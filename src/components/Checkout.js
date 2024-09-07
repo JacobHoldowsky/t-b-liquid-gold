@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"; // Import Link
 import "./Checkout.css";
 import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
+import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
 import Modal from "../components/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"; // Import the arrow icon
@@ -13,6 +14,7 @@ const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
 function Checkout({ cart, setCart, removeFromCart }) {
   const { currency } = useContext(CurrencyContext);
   const exchangeRate = useContext(ExchangeRateContext);
+  const { shopRegion } = useShopContext(); // Use shop context to get the current region
   const [isGift, setIsGift] = useState(false);
   const [giftNote, setGiftNote] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +29,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
     floor: "",
     code: "",
     city: "",
+    state: "",
     zipCode: "",
     contactNumber: "",
   });
@@ -120,7 +123,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
   }, [cart]);
 
   let specialDeliveryOnly = aggregatedCart.aggregatedCart.every(
-    (item) => item.title === "Sponsor a Honey Board"
+    (item) =>
+      item.title === "Sponsor a Honey Board" ||
+      (item.title === "T&Bee Collection Box" && shopRegion === "US") ||
+      (item.title === "Box of Four" && shopRegion === "US")
   );
 
   const apiUrl =
@@ -139,7 +145,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
       const lineItems = aggregatedCart.aggregatedCart.map((item) => {
         const basePrice =
-          currency === "Dollar" ? item.priceDollar : item.priceShekel;
+          currency === "Dollar"
+            ? item.priceDollar
+            : Math.ceil(item.priceShekel);
 
         return {
           price_data: {
@@ -176,6 +184,21 @@ function Checkout({ cart, setCart, removeFromCart }) {
         });
       }
 
+      // Add delivery charge as a separate line item (not discounted)
+      const totalDeliveryCharge = calculateShippingCharge(); // Calculate delivery charge
+      // if (totalDeliveryCharge > 0) {
+      //   lineItems.push({
+      //     price_data: {
+      //       currency: currency === "Dollar" ? "usd" : "ils",
+      //       product_data: {
+      //         name: "Delivery Charge",
+      //       },
+      //       unit_amount: totalDeliveryCharge * 100, // Convert to cents
+      //     },
+      //     quantity: 1,
+      //   });
+      // }
+
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -186,8 +209,12 @@ function Checkout({ cart, setCart, removeFromCart }) {
           gift: isGift,
           giftNote: isGift ? giftNote : null,
           shippingDetails,
-          deliveryCharge,
-          selectedDeliveryOption,
+          deliveryCharge:
+            shopRegion === "US" ? totalDeliveryCharge : deliveryCharge, // Pass the calculated delivery charge
+          selectedDeliveryOption:
+            shopRegion === "US"
+              ? "Total Delivery Charge"
+              : selectedDeliveryOption,
           isSponsorHoneyBoardInCart,
           promoCode: promoCode,
           currency,
@@ -270,18 +297,94 @@ function Checkout({ cart, setCart, removeFromCart }) {
     return number.toLocaleString();
   };
 
+  const calculateHoneyJarShippingFee = () => {
+    if (shopRegion !== "US") return 0; // Only calculate if shopRegion is "US"
+
+    let honeyJarCount = 0;
+
+    aggregatedCart.aggregatedCart.forEach((item) => {
+      if (item.category === "honey jars") {
+        honeyJarCount += item.quantity;
+      }
+    });
+
+    if (honeyJarCount > 0) {
+      return honeyJarCount <= 5
+        ? currency === "Dollar"
+          ? 15
+          : Math.ceil(15 * exchangeRate) // Round up
+        : currency === "Dollar"
+        ? 20
+        : Math.ceil(20 * exchangeRate); // Round up
+    }
+
+    return 0;
+  };
+
+  const calculateShippingCharge = () => {
+    if (shopRegion !== "US") return 0; // Only calculate if shopRegion is "US"
+
+    let honeyJarCount = 0;
+    let boardOfFourCount = 0;
+    let otherGiftPackageCount = 0;
+
+    aggregatedCart.aggregatedCart.forEach((item) => {
+      if (item.category === "honey jars") {
+        honeyJarCount += item.quantity;
+      } else if (item.category === "gift packages") {
+        if (item.title.includes("Board of Four")) {
+          boardOfFourCount += item.quantity;
+        } else {
+          otherGiftPackageCount += item.quantity;
+        }
+      }
+    });
+
+    let shippingCharge = 0;
+
+    // Calculate shipping for all honey jars together
+    if (honeyJarCount > 0) {
+      shippingCharge +=
+        honeyJarCount <= 5
+          ? currency === "Dollar"
+            ? 15
+            : Math.ceil(15 * exchangeRate) // Round up
+          : currency === "Dollar"
+          ? 20
+          : Math.ceil(20 * exchangeRate); // Round up
+    }
+
+    // Calculate shipping for gift packages
+    shippingCharge +=
+      boardOfFourCount *
+        (currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate)) +
+      otherGiftPackageCount *
+        (currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate));
+
+    return shippingCharge;
+  };
+
+  const honeyJarExists = aggregatedCart.aggregatedCart.some(
+    (item) => item.category === "honey jars"
+  );
+
   const calculateTotalPrice = () => {
     const itemSubtotal = aggregatedCart.aggregatedCart.reduce((total, item) => {
-      const price = currency === "Dollar" ? item.priceDollar : item.priceShekel;
+      const price =
+        currency === "Dollar" ? item.priceDollar : Math.ceil(item.priceShekel);
       return total + parseFloat(price) * item.quantity;
     }, 0);
 
-    const logoChargePerType = currency === "Dollar" ? 50 : 50 * exchangeRate;
+    const logoChargePerType =
+      currency === "Dollar" ? 50 : Math.ceil(50 * exchangeRate);
     const totalLogoCharge = aggregatedCart.uniqueLogoCount * logoChargePerType;
-    const specialDeliveryCharge =
-      currency === "Dollar" ? 10 : 10 * exchangeRate;
 
-    let totalDeliveryCharge = 0;
+    const specialDeliveryCharge =
+      currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate);
+
+    // Use new shipping calculation function
+    let totalDeliveryCharge = calculateShippingCharge();
+
     aggregatedCart.aggregatedCart.forEach((item) => {
       if (item.title === "Sponsor a Honey Board") {
         totalDeliveryCharge += specialDeliveryCharge * item.quantity; // Flat rate of $10 for each "Sponsor a Honey Board"
@@ -297,11 +400,22 @@ function Checkout({ cart, setCart, removeFromCart }) {
       totalDeliveryCharge += deliveryCharge; // Add normal delivery charge for other items
     }
 
-    const subtotal = itemSubtotal + totalLogoCharge;
-    const discount = isPromoApplied ? subtotal * 0.05 : 0;
-    const total = subtotal - discount + totalDeliveryCharge;
+    // Calculate the subtotal for items and additional charges only (excluding delivery charge)
+    const subtotalForDiscount = itemSubtotal + totalLogoCharge;
 
-    return formatNumberWithCommas(total.toFixed(2));
+    // Apply discount only on the subtotal excluding delivery charge
+    const discount = isPromoApplied ? subtotalForDiscount * 0.05 : 0;
+
+    // Calculate the final total price, including the selected delivery charge
+    const total = subtotalForDiscount - discount + totalDeliveryCharge; // Include the selected delivery charge
+
+    // Check if the total has a decimal part
+    const hasDecimal = total % 1 !== 0;
+
+    // Round up the total only if it's a whole number (e.g., 50.0 should become 51)
+    const finalTotal = hasDecimal ? total : Math.ceil(total);
+
+    return formatNumberWithCommas(finalTotal.toFixed(2));
   };
 
   function Loading() {
@@ -390,6 +504,25 @@ function Checkout({ cart, setCart, removeFromCart }) {
     }
   };
 
+  // New effect to recalculate delivery charge on currency change
+  useEffect(() => {
+    if (selectedDeliveryOption) {
+      const selectedOption = DELIVERY_OPTIONS.find(
+        (option) => option.label === selectedDeliveryOption
+      );
+      if (selectedOption) {
+        setDeliveryCharge(selectedOption.charge);
+      }
+    }
+  }, [currency, exchangeRate, selectedDeliveryOption]);
+
+  useEffect(() => {
+    if (cart.length === 0) {
+      setDeliveryCharge(0);
+      setSelectedDeliveryOption(null);
+    }
+  }, [cart]);
+
   useEffect(() => {
     let isFormValid = false; // Default to false
 
@@ -402,6 +535,19 @@ function Checkout({ cart, setCart, removeFromCart }) {
       ].every((field) => field.trim() !== "");
 
       isFormValid = areMandatoryFieldsFilled; // Only check these fields
+    } else if (shopRegion === "US") {
+      const areMandatoryFieldsFilled = [
+        shippingDetails.fullName,
+        shippingDetails.email,
+        shippingDetails.number,
+        shippingDetails.recipientName,
+        shippingDetails.address,
+        shippingDetails.city,
+        shippingDetails.state,
+        shippingDetails.contactNumber,
+      ].every((field) => field.trim() !== "");
+
+      isFormValid = areMandatoryFieldsFilled;
     } else {
       // When specialDeliveryOnly is false, perform full validation
       const areMandatoryFieldsFilled = [
@@ -457,25 +603,50 @@ function Checkout({ cart, setCart, removeFromCart }) {
                   />
                   <div className="item-details">
                     <p className="item-title">{item.title}</p>
+
                     {item.selectedFlavors?.length ? (
                       <p className="item-flavors">
                         Flavors: {item.selectedFlavors.join(", ")}
                       </p>
                     ) : null}
-                    {item.title === "Sponsor a Honey Board" ? (
+                    {shopRegion === "US" &&
+                    item.category === "gift packages" &&
+                    item.title !== "T&Bee Collection Box" &&
+                    item.title !== "Board of Four" &&
+                    item.title !== "Box of Four" ? (
+                      <p className="item-flavors">
+                        Delivery:{" "}
+                        {currency === "Dollar"
+                          ? `$20 each`
+                          : `₪${Math.ceil(20 * exchangeRate)} each`}{" "}
+                        each
+                      </p>
+                    ) : null}
+                    {shopRegion === "US" && item.title === "Board of Four" ? (
+                      <p className="item-flavors">
+                        Delivery:{" "}
+                        {currency === "Dollar"
+                          ? `$15 each`
+                          : `₪${Math.ceil(15 * exchangeRate)} each`}{" "}
+                        each
+                      </p>
+                    ) : null}
+                    {item.title === "Sponsor a Honey Board" && (
                       <p className="item-flavors">
                         Delivery Fee:{" "}
                         {currency === "Dollar"
                           ? `$10 each`
-                          : `₪${10 * exchangeRate} each`}
+                          : `₪${Math.ceil(10 * exchangeRate)} each`}
                       </p>
-                    ) : null}
+                    )}
                     {item.includeLogo && (
                       <p className="item-logo">
                         Personalized Logo (
                         {currency === "Dollar"
                           ? `+ One time fee of $50`
-                          : `+ One time fee of ₪${50 * exchangeRate}`}
+                          : `+ One time fee of ₪${Math.ceil(
+                              50 * exchangeRate
+                            )}`}
                         )
                       </p>
                     )}
@@ -485,7 +656,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                             parseFloat(item.priceDollar)
                           )}`
                         : `₪${formatNumberWithCommas(
-                            parseFloat(item.priceShekel)
+                            Math.ceil(item.priceShekel)
                           )}`}
                     </p>
                   </div>
@@ -520,6 +691,14 @@ function Checkout({ cart, setCart, removeFromCart }) {
                   </div>
                 </li>
               ))}
+              {honeyJarExists && shopRegion === "US" && (
+                <p className="item-flavors">
+                  Delivery Fee for Honey Jars:{" "}
+                  {currency === "Dollar"
+                    ? `$${calculateHoneyJarShippingFee()}`
+                    : `₪${calculateHoneyJarShippingFee()}`}
+                </p>
+              )}
             </ul>
           )}
         </div>
@@ -621,45 +800,48 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     onChange={handleInputChange}
                     required
                   />
-                  <select
-                    name="homeType"
-                    value={shippingDetails.homeType}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="" disabled hidden>
-                      Is this a building or private home? *
-                    </option>
-                    <option value="building">Building</option>
-                    <option value="home">Private Home</option>
-                  </select>
+                  {shopRegion !== "US" ? (
+                    <select
+                      name="homeType"
+                      value={shippingDetails.homeType}
+                      onChange={handleInputChange}
+                      required
+                    >
+                      <option value="" disabled hidden>
+                        Is this a building or private home? *
+                      </option>
+                      <option value="building">Building</option>
+                      <option value="home">Private Home</option>
+                    </select>
+                  ) : null}
                   {/* Additional Fields for Buildings */}
-                  {shippingDetails.homeType === "building" && (
-                    <>
-                      <input
-                        type="text"
-                        name="apartmentNumber"
-                        placeholder="Apartment number *"
-                        value={shippingDetails.apartmentNumber}
-                        onChange={handleInputChange}
-                        required
-                      />
-                      <input
-                        type="text"
-                        name="floor"
-                        placeholder="Floor"
-                        value={shippingDetails.floor}
-                        onChange={handleInputChange}
-                      />
-                      <input
-                        type="text"
-                        name="code"
-                        placeholder="Building code"
-                        value={shippingDetails.code}
-                        onChange={handleInputChange}
-                      />
-                    </>
-                  )}
+                  {shippingDetails.homeType === "building" &&
+                    shopRegion !== "US" && (
+                      <>
+                        <input
+                          type="text"
+                          name="apartmentNumber"
+                          placeholder="Apartment number *"
+                          value={shippingDetails.apartmentNumber}
+                          onChange={handleInputChange}
+                          required
+                        />
+                        <input
+                          type="text"
+                          name="floor"
+                          placeholder="Floor"
+                          value={shippingDetails.floor}
+                          onChange={handleInputChange}
+                        />
+                        <input
+                          type="text"
+                          name="code"
+                          placeholder="Building code"
+                          value={shippingDetails.code}
+                          onChange={handleInputChange}
+                        />
+                      </>
+                    )}
                   <input
                     type="text"
                     name="city"
@@ -668,10 +850,34 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     onChange={handleInputChange}
                     required
                   />
+                  {shopRegion === "US" ? (
+                    <input
+                      type="text"
+                      name="state"
+                      placeholder="State *"
+                      value={shippingDetails.state}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  ) : null}
+                  <input
+                    type="text"
+                    name="country"
+                    value={shopRegion === "US" ? "USA" : "Israel"}
+                    readOnly
+                    className="country-field"
+                  />
+
+                  {/* Informative Note Below the Country Field */}
+                  <p className="country-info">
+                    You can switch the country by clicking the toggle in the
+                    header.
+                  </p>
+
                   <input
                     type="text"
                     name="zipCode"
-                    placeholder="Zip code"
+                    placeholder={`Zip code ${shopRegion === "US" ? "*" : ""}`}
                     value={shippingDetails.zipCode}
                     onChange={handleInputChange}
                   />
@@ -685,24 +891,26 @@ function Checkout({ cart, setCart, removeFromCart }) {
                   />
                 </div>
                 {/* Delivery Options */}
-                <div className="delivery-options">
-                  <h3>Delivery Options</h3>
-                  <select
-                    onChange={handleDeliveryOptionChange}
-                    defaultValue=""
-                    required
-                  >
-                    <option value="" disabled hidden>
-                      Select a delivery option *
-                    </option>
-                    {DELIVERY_OPTIONS.map((option, index) => (
-                      <option key={index} value={index}>
-                        {option.label} - {currency === "Dollar" ? "$" : "₪"}
-                        {option.charge}
+                {shopRegion !== "US" ? (
+                  <div className="delivery-options">
+                    <h3>Delivery Options</h3>
+                    <select
+                      onChange={handleDeliveryOptionChange}
+                      defaultValue=""
+                      required
+                    >
+                      <option value="" disabled hidden>
+                        Select a delivery option *
                       </option>
-                    ))}
-                  </select>
-                </div>
+                      {DELIVERY_OPTIONS.map((option, index) => (
+                        <option key={index} value={index}>
+                          {option.label} - {currency === "Dollar" ? "$" : "₪"}
+                          {option.charge}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                ) : null}
               </>
             ) : null}
           </>

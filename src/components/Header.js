@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom"; // Import useNavigate and useLocation
 import { HashLink } from "react-router-hash-link";
 import { CurrencyContext } from "../context/CurrencyContext";
+import { useShopContext } from "../context/ShopContext";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,12 +10,23 @@ import {
   faShekelSign,
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGlobeAmericas,
+  faGlobeAsia,
+} from "@fortawesome/free-solid-svg-icons"; // New Icons
+import Modal from "../components/Modal"; // Import the reusable Modal component
 
-function Header({ cartItemCount }) {
+function Header({ cart, cartItemCount, clearCart }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null); // Track active dropdown
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [showWarning, setShowWarning] = useState(false); // State for showing warning modal
+  const [showRedirectModal, setShowRedirectModal] = useState(false); // State for showing the redirect modal
+  const [cartIndicatorAnimated, setCartIndicatorAnimated] = useState(false); // State for animating the cart indicator
   const { currency, toggleCurrency } = useContext(CurrencyContext);
+  const { shopRegion, toggleShopRegion } = useShopContext();
   const headerRef = useRef(null);
+  const navigate = useNavigate(); // Initialize useNavigate for programmatic navigation
+  const location = useLocation(); // Initialize useLocation to get current path
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -22,11 +34,29 @@ function Header({ cartItemCount }) {
 
   const closeMenu = () => {
     setIsOpen(false);
-    setActiveDropdown(null); // Close all dropdowns when the menu is closed
+    setActiveDropdown(null);
   };
 
   const handleCurrencyToggle = () => {
     toggleCurrency(currency === "Dollar" ? "Shekel" : "Dollar");
+  };
+
+  const handleShopRegionChange = () => {
+    if (cartItemCount > 0) {
+      setShowWarning(true); // Show warning if cart is not empty
+    } else {
+      toggleShopRegion(); // Change shop region directly if cart is empty
+    }
+  };
+
+  const confirmRegionChange = () => {
+    setShowWarning(false); // Hide the warning modal
+    clearCart(); // Empty the cart
+    toggleShopRegion(); // Change the shop region
+  };
+
+  const cancelRegionChange = () => {
+    setShowWarning(false); // Simply hide the warning modal
   };
 
   useEffect(() => {
@@ -55,6 +85,31 @@ function Header({ cartItemCount }) {
     };
   }, [headerRef]);
 
+  // Animate the cart indicator badge when cartItemCount changes
+  useEffect(() => {
+    if (cartItemCount > 0) {
+      setCartIndicatorAnimated(true);
+      const timeout = setTimeout(() => setCartIndicatorAnimated(false), 500); // Remove animation after 500ms
+      return () => clearTimeout(timeout);
+    }
+  }, [cartItemCount]);
+
+  // Show modal if on restricted pages and region changes to US
+  useEffect(() => {
+    if (
+      shopRegion === "US" &&
+      (location.pathname === "/wholesale" ||
+        location.pathname === "/corporateGifts")
+    ) {
+      setShowRedirectModal(true); // Show modal
+    }
+  }, [shopRegion, location.pathname]); // Dependency on shopRegion and current path
+
+  const handleRedirectConfirm = () => {
+    setShowRedirectModal(false); // Hide modal
+    navigate("/"); // Redirect to the homepage
+  };
+
   const scrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -100;
@@ -78,11 +133,33 @@ function Header({ cartItemCount }) {
             icon={currency === "Dollar" ? faDollarSign : faShekelSign}
           />
         </div>
+        {/* Enhanced Toggle Slider for Shop Region */}
+        <div className="shop-toggle-slider">
+          <span className="slider-label">Shop Israel</span>
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={shopRegion === "US"}
+              onChange={handleShopRegionChange} // Use the new handler
+            />
+            <span className="slider round"></span>
+          </label>
+          <span className="slider-label">Shop USA</span>
+        </div>
       </div>
       <div className="hamburger" onClick={toggleMenu}>
         <div></div>
         <div></div>
         <div></div>
+        {cartItemCount > 0 && ( // Cart indicator for small screens
+          <span
+            className={`cart-indicator ${
+              cartIndicatorAnimated ? "animate" : ""
+            }`}
+          >
+            {cartItemCount}
+          </span>
+        )}
       </div>
 
       <nav>
@@ -115,28 +192,33 @@ function Header({ cartItemCount }) {
                   Gift Packages
                 </HashLink>
               </li>
-              <li>
-                <HashLink
-                  className="dropdown-menu-item"
-                  smooth
-                  to="/corporateGifts"
-                  scroll={scrollWithOffset}
-                  onClick={closeMenu}
-                >
-                  Corporate Gifts
-                </HashLink>
-              </li>
-              <li>
-                <HashLink
-                  className="dropdown-menu-item"
-                  smooth
-                  to="/wholesale"
-                  scroll={scrollWithOffset}
-                  onClick={closeMenu}
-                >
-                  Wholesale
-                </HashLink>
-              </li>
+              {shopRegion !== "US" ? (
+                <li>
+                  <HashLink
+                    className="dropdown-menu-item"
+                    smooth
+                    to="/corporateGifts"
+                    scroll={scrollWithOffset}
+                    onClick={closeMenu}
+                  >
+                    Corporate Gifts
+                  </HashLink>
+                </li>
+              ) : null}
+              {shopRegion !== "US" ? (
+                <li>
+                  <HashLink
+                    className="dropdown-menu-item"
+                    smooth
+                    to="/wholesale"
+                    scroll={scrollWithOffset}
+                    onClick={closeMenu}
+                  >
+                    Wholesale
+                  </HashLink>
+                </li>
+              ) : null}
+
               <li>
                 <HashLink
                   className="dropdown-menu-item"
@@ -210,6 +292,24 @@ function Header({ cartItemCount }) {
           </li>
         </ul>
       </nav>
+
+      {/* Modal for confirming region change */}
+      <Modal
+        isOpen={showWarning}
+        title="Change Shop Region"
+        message="Changing the shop region will empty your cart. Do you want to proceed?"
+        onConfirm={confirmRegionChange}
+        onCancel={cancelRegionChange}
+      />
+
+      {/* Modal for redirecting to home page */}
+      <Modal
+        isOpen={showRedirectModal}
+        title="Page Not Available"
+        message="This page is not available for US shipping. You will be redirected to the homepage."
+        onConfirm={handleRedirectConfirm} // Redirect when the user clicks OK
+        noOptions={true}
+      />
     </header>
   );
 }

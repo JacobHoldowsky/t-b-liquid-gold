@@ -1,7 +1,12 @@
 import React, { useState, useContext, useMemo } from "react";
 import "./HoneyCollection.css";
 import { CurrencyContext } from "../context/CurrencyContext"; // Import CurrencyContext
+import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
 import { FaCheckCircle } from "react-icons/fa"; // Import a checkmark icon
+import { ExchangeRateContext } from "../context/ExchangeRateContext";
+
+// Helper function to round up to the nearest shekel
+const formatPrice = (value) => Math.ceil(value);
 
 // Reusable Quantity Selector Component
 const QuantitySelector = ({ id, value, onChange }) => (
@@ -24,7 +29,8 @@ const HoneyItem = ({
   addedToCart,
   openModal,
 }) => {
-  const price = currency === "Dollar" ? item.priceDollar : item.priceShekel;
+  const price =
+    currency === "Dollar" ? item.priceDollar : formatPrice(item.priceShekel); // Format price
   const size = currency === "Dollar" ? item.sizeUS : item.sizeIL;
   const notificationClass = addedToCart[item.title];
 
@@ -78,12 +84,14 @@ function HoneyCollection({ cart, addToCart }) {
   const [selectedItem, setSelectedItem] = useState(null);
   const [quantities, setQuantities] = useState({}); // State to track quantities
   const [addedToCart, setAddedToCart] = useState({}); // Track which items have been added
+  const exchangeRate = useContext(ExchangeRateContext);
 
   const { currency } = useContext(CurrencyContext); // Use context here
+  const { shopRegion } = useShopContext(); // Use shop context to get the current region
 
   // Memoize the items list to prevent re-creating on each render
-  const items = useMemo(
-    () => [
+  const items = useMemo(() => {
+    const baseItems = [
       {
         url: "chocolate small jar-min.jpg",
         title: "Chocolate Creamed Honey",
@@ -91,6 +99,7 @@ function HoneyCollection({ cart, addToCart }) {
         priceDollar: "12",
         sizeIL: "120ml",
         priceShekel: "45",
+        category: "honey jars", // Added category
       },
       {
         url: "cinnamon small jar-min.jpg",
@@ -99,6 +108,7 @@ function HoneyCollection({ cart, addToCart }) {
         priceDollar: "12",
         sizeIL: "120ml",
         priceShekel: "45",
+        category: "honey jars", // Added category
       },
       {
         url: "pumpkin small jar-min.JPG",
@@ -107,6 +117,7 @@ function HoneyCollection({ cart, addToCart }) {
         priceDollar: "12",
         sizeIL: "120ml",
         priceShekel: "45",
+        category: "honey jars", // Added category
       },
       {
         url: "sea salt small jar-min.jpg",
@@ -115,6 +126,7 @@ function HoneyCollection({ cart, addToCart }) {
         priceDollar: "12",
         sizeIL: "120ml",
         priceShekel: "45",
+        category: "honey jars", // Added category
       },
       {
         url: "vanilla small jar-min.jpg",
@@ -123,26 +135,48 @@ function HoneyCollection({ cart, addToCart }) {
         priceDollar: "12",
         sizeIL: "120ml",
         priceShekel: "45",
+        category: "honey jars", // Added category
       },
       {
         url: "bourbon small jar-min.jpg",
         title: "Bourbon Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: "14",
+        priceDollar: shopRegion === "US" ? "16" : "14", // Price change based on region
         sizeIL: "120ml",
-        priceShekel: "55",
+        priceShekel:
+          shopRegion === "US"
+            ? formatPrice(16 * (exchangeRate ? exchangeRate : 3.7))
+            : "55",
+        category: "honey jars", // Added category
       },
       {
         url: "blueberry screenshot-min.png",
         title: "Blueberry Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: "14",
+        priceDollar: shopRegion === "US" ? "16" : "14", // Price change based on region
         sizeIL: "120ml",
-        priceShekel: "55",
+        priceShekel:
+          shopRegion === "US"
+            ? formatPrice(16 * (exchangeRate ? exchangeRate : 3.7))
+            : "55",
+        category: "honey jars", // Added category
       },
-    ],
-    []
-  );
+    ];
+
+    // Update other honey items prices if "Shop US" is selected
+    if (shopRegion === "US") {
+      baseItems.forEach((item) => {
+        if (item.priceDollar === "12") {
+          item.priceDollar = "15"; // Change base honey items price
+          item.priceShekel = formatPrice(
+            15 * (exchangeRate ? exchangeRate : 3.7)
+          );
+        }
+      });
+    }
+
+    return baseItems;
+  }, [shopRegion, exchangeRate]); // Re-compute when `shopRegion` or `exchangeRate` changes
 
   const openModal = (item) => {
     setSelectedItem(item);
@@ -160,7 +194,7 @@ function HoneyCollection({ cart, addToCart }) {
 
   const handleAddToCart = (item, inModal = false) => {
     const quantity = quantities[item.title] || 1;
-    addToCart({ ...item, quantity });
+    addToCart({ ...item, quantity }); // Add to cart with `category` included
     setQuantities((prev) => ({ ...prev, [item.title]: 1 }));
 
     triggerNotification(item, inModal);

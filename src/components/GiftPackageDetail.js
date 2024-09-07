@@ -5,6 +5,7 @@ import { ExchangeRateContext } from "../context/ExchangeRateContext";
 import { FaCheckCircle } from "react-icons/fa";
 import "./GiftPackageDetail.css";
 import QuantitySelector from "./QuantitySelector";
+import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
 
 // Reusable Flavor Selector Component
 const FlavorSelector = ({ flavors, selectedFlavors, handleFlavorChange }) => (
@@ -40,6 +41,8 @@ const Notification = ({ addedToCart }) =>
 function GiftPackageDetail({ cart, addToCart }) {
   const { packageId } = useParams();
   const { currency } = useContext(CurrencyContext);
+  const { shopRegion } = useShopContext(); // Use shop context to get the current region
+
   const exchangeRate = useContext(ExchangeRateContext);
 
   // Available honey flavors
@@ -61,10 +64,9 @@ function GiftPackageDetail({ cart, addToCart }) {
     exchangeRate
       ? Math.ceil(priceDollar * exchangeRate)
       : Math.ceil(priceDollar * 3.7);
-
   // Memoize the items object to prevent unnecessary recalculations
-  const items = useMemo(
-    () => ({
+  const items = useMemo(() => {
+    const allItems = {
       forHim: {
         title: "For Him",
         description: "2 flavored creamed honeys, moscato, wooden honey dipper.",
@@ -72,6 +74,8 @@ function GiftPackageDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(49),
         honeyCount: 2,
         imageUrl: "/For Him $55-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel"],
       },
 
       forHer: {
@@ -81,23 +85,33 @@ function GiftPackageDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(49),
         honeyCount: 2,
         imageUrl: "/For Her $55-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel"],
       },
       boxOfFour: {
         title: "Box of Four",
         description:
           "4 flavored creamed honeys wrapped in a beautiful gift box with a wooden honey dipper",
-        priceDollar: 55,
-        priceShekel: calculatePriceInShekels(55),
+        priceDollar: shopRegion === "US" ? 65 : 55,
+        warning:
+          shopRegion === "US"
+            ? "*This item is available for pickup in Five Towns, Lakewood, or Monsey and does not ship"
+            : "",
+        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 65 : 55),
         honeyCount: 4,
         imageUrl: "/boxOfFour-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel", "US"],
       },
       boardOfFour: {
         title: "Board of Four",
         description: "4 flavored creamed honeys on a wooden serving board",
-        priceDollar: 58,
-        priceShekel: calculatePriceInShekels(58),
+        priceDollar: shopRegion === "US" ? 70 : 58,
+        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 70 : 58),
         honeyCount: 4,
         imageUrl: "/Board of Four no plastic-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel", "US"],
       },
       chocolateDelight: {
         title: "Chocolate Delight",
@@ -107,18 +121,26 @@ function GiftPackageDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(59),
         honeyCount: 2,
         imageUrl: "/chocolateDelight-min.png",
+        category: "gift packages",
+        availableInRegions: ["Israel"],
       },
       tnBeeCollection: {
         title: "T&Bee Collection Box",
         description:
           "6 flavored creamed honeys wrapped in a beautiful gift box with a wooden honey dipper.",
-        priceDollar: 79,
-        priceShekel: calculatePriceInShekels(79),
+        priceDollar: shopRegion === "US" ? 85 : 79,
+        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 85 : 79),
+        warning:
+          shopRegion === "US"
+            ? "*This item is available for pickup in Five Towns, Lakewood, or Monsey and does not ship"
+            : "",
         honeyCount: 6,
         imageUrl: "/tnbCollection-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel", "US"],
       },
       HoneyALaConnoisseur: {
-        title: "Honey A' La Connoissuer",
+        title: "Honey A' La Connoisseur",
         description:
           "2 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
         warning: "*Wine may vary based on availability",
@@ -126,6 +148,8 @@ function GiftPackageDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(85),
         honeyCount: 2,
         imageUrl: "/aLaConnoisseur-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel"],
       },
       collectionPlusBox: {
         title: "Collection Plus Box",
@@ -135,15 +159,19 @@ function GiftPackageDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(95),
         honeyCount: 6,
         imageUrl: "/Collection Plus $95-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel"],
       },
       honeycombCollectionBoard: {
         title: "Honeycomb Collection Board",
         description:
           "All of our 7 delicious flavored creamed honeys on a wooden serving board.",
-        priceDollar: 99,
-        priceShekel: calculatePriceInShekels(99),
+        priceDollar: shopRegion === "US" ? 120 : 99,
+        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 120 : 99),
         honeyCount: 7,
         imageUrl: "/Honeycomb collection board no plastic-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel", "US"],
       },
       belgianBox: {
         title: "Belgian Box",
@@ -153,6 +181,8 @@ function GiftPackageDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(105),
         honeyCount: 4,
         imageUrl: "/Belgian Box $100-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel"],
       },
       deluxeBox: {
         title: "Deluxe Box",
@@ -163,16 +193,21 @@ function GiftPackageDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(120),
         honeyCount: 5,
         imageUrl: "/Deluxe Box $120-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel"],
       },
       deluxeBoard: {
         title: "Deluxe Board",
-        description:
-          "5 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
+        description: `5 Flavored creamed honeys, ${
+          shopRegion === "US" ? "750ml" : "375ml"
+        } bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.`,
         warning: "*Wine may vary based on availability",
-        priceDollar: 136,
-        priceShekel: calculatePriceInShekels(136),
+        priceDollar: shopRegion === "US" ? 145 : 136,
+        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 145 : 136),
         honeyCount: 5,
         imageUrl: "/Deluxe Board no plastic-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel", "US"],
       },
       scotchNSweetsBoard: {
         title: "Scotch n' Sweets Board",
@@ -182,6 +217,8 @@ function GiftPackageDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(160),
         honeyCount: 4,
         imageUrl: "/scoth n sweets-min.png",
+        category: "gift packages",
+        availableInRegions: ["Israel"],
       },
       theBossBoard: {
         title: "The Boss Board",
@@ -192,14 +229,17 @@ function GiftPackageDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(180),
         honeyCount: 6,
         imageUrl: "/The Boss Board no plastic-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel"],
       },
-    }),
-    [exchangeRate]
-  );
+    };
+
+    return allItems; // Return all items if not in the US region
+  }, [exchangeRate, shopRegion]);
 
   const selectedItem = items[packageId];
   const [selectedFlavors, setSelectedFlavors] = useState(
-    Array(selectedItem.honeyCount).fill("Chocolate Creamed Honey")
+    Array(selectedItem?.honeyCount).fill("Chocolate Creamed Honey")
   );
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
@@ -231,28 +271,32 @@ function GiftPackageDetail({ cart, addToCart }) {
     setTimeout(() => setAddedToCart(false), 2000);
   };
 
+  // Determine if the item is available in the current region
+  const isAvailableInRegion =
+    selectedItem?.availableInRegions.includes(shopRegion);
+
   return (
     <div className="gift-package-detail">
       <img
-        src={selectedItem.imageUrl}
-        alt={selectedItem.title}
+        src={selectedItem?.imageUrl}
+        alt={selectedItem?.title}
         className="gift-package-image"
       />
-      <h2 className="gift-package-title">{selectedItem.title}</h2>
-      <p className="gift-package-description">{selectedItem.description}</p>
-      {selectedItem.warning && (
-        <p className="gift-package-warning">{selectedItem.warning}</p>
+      <h2 className="gift-package-title">{selectedItem?.title}</h2>
+      <p className="gift-package-description">{selectedItem?.description}</p>
+      {selectedItem?.warning && (
+        <p className="gift-package-warning">{selectedItem?.warning}</p>
       )}
       <div className="gift-package-price">
         {currency === "Dollar"
-          ? `$${selectedItem.priceDollar}`
-          : `₪${selectedItem.priceShekel}`}
+          ? `$${selectedItem?.priceDollar}`
+          : `₪${selectedItem?.priceShekel}`}
       </div>
       <QuantitySelector
         quantity={quantity}
         handleQuantityChange={handleQuantityChange}
       />
-      {selectedItem.honeyCount !== 7 && (
+      {selectedItem?.honeyCount !== 7 && (
         <FlavorSelector
           flavors={honeyFlavors}
           selectedFlavors={selectedFlavors}
@@ -261,7 +305,16 @@ function GiftPackageDetail({ cart, addToCart }) {
       )}
       <Notification addedToCart={addedToCart} />
       {!addedToCart && (
-        <button onClick={handleAddToCart} className="add-to-cart-btn">
+        <button
+          onClick={handleAddToCart}
+          className="add-to-cart-btn"
+          disabled={!isAvailableInRegion}
+          title={
+            !isAvailableInRegion
+              ? "This item is only available for Israel shipping"
+              : ""
+          }
+        >
           Add to Cart
         </button>
       )}

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./GiftPackages.css";
 import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
+import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
 
 // Reusable Component for Each Gift Package Item
 const GiftPackageItem = ({ item, currency }) => (
@@ -32,11 +33,13 @@ const calculatePriceInShekels = (priceDollar, exchangeRate) => {
 
 function GiftPackages({ cart, addToCart }) {
   const { currency } = useContext(CurrencyContext);
+  const { shopRegion } = useShopContext(); // Use shop context to get the current region
+
   const exchangeRate = useContext(ExchangeRateContext);
 
   // Memoize the items list to prevent unnecessary re-calculations on every render
-  const items = useMemo(
-    () => [
+  const items = useMemo(() => {
+    const allItems = [
       {
         url: "For Him $55-min.jpg",
         title: "For Him",
@@ -54,16 +57,22 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "boxOfFour-min.jpg",
         title: "Box of Four",
-        priceDollar: 55,
+        priceDollar: shopRegion === "US" ? 65 : 55,
         id: "boxOfFour",
-        priceShekel: calculatePriceInShekels(55, exchangeRate),
+        priceShekel: calculatePriceInShekels(
+          shopRegion === "US" ? 65 : 55,
+          exchangeRate
+        ),
       },
       {
         url: "Board of Four no plastic-min.jpg",
         title: "Board of Four",
-        priceDollar: 58,
+        priceDollar: shopRegion === "US" ? 70 : 58,
         id: "boardOfFour",
-        priceShekel: calculatePriceInShekels(58, exchangeRate),
+        priceShekel: calculatePriceInShekels(
+          shopRegion === "US" ? 70 : 58,
+          exchangeRate
+        ),
       },
       {
         url: "chocolateDelight-min.png",
@@ -75,9 +84,12 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "tnbCollection-min.jpg",
         title: "T&Bee Collection Box",
-        priceDollar: 79,
+        priceDollar: shopRegion === "US" ? 85 : 79,
         id: "tnBeeCollection",
-        priceShekel: calculatePriceInShekels(79, exchangeRate),
+        priceShekel: calculatePriceInShekels(
+          shopRegion === "US" ? 85 : 79,
+          exchangeRate
+        ),
       },
       {
         url: "aLaConnoisseur-min.jpg",
@@ -96,9 +108,12 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "Honeycomb collection board no plastic-min.jpg",
         title: "Honeycomb Collection Board",
-        priceDollar: 99,
+        priceDollar: shopRegion === "US" ? 120 : 99,
         id: "honeycombCollectionBoard",
-        priceShekel: calculatePriceInShekels(99, exchangeRate),
+        priceShekel: calculatePriceInShekels(
+          shopRegion === "US" ? 120 : 99,
+          exchangeRate
+        ),
       },
       {
         url: "Belgian Box $100-min.jpg",
@@ -117,9 +132,12 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "Deluxe Board no plastic-min.jpg",
         title: "Deluxe Board",
-        priceDollar: 136,
+        priceDollar: shopRegion === "US" ? 145 : 136,
         id: "deluxeBoard",
-        priceShekel: calculatePriceInShekels(136, exchangeRate),
+        priceShekel: calculatePriceInShekels(
+          shopRegion === "US" ? 140 : 136,
+          exchangeRate
+        ),
       },
       {
         url: "scoth n sweets-min.png",
@@ -135,9 +153,21 @@ function GiftPackages({ cart, addToCart }) {
         id: "theBossBoard",
         priceShekel: calculatePriceInShekels(180, exchangeRate),
       },
-    ],
-    [exchangeRate]
-  );
+    ];
+
+    // Filter items based on the US region
+    if (shopRegion === "US") {
+      return allItems.filter((item) =>
+        [
+          "honeycombCollectionBoard",
+          "boardOfFour",
+          "deluxeBoard",
+        ].includes(item.id)
+      );
+    }
+
+    return allItems; // Return all items if not in the US region
+  }, [exchangeRate, shopRegion]);
 
   return (
     <div className="gift-packages">

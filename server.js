@@ -255,6 +255,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
           code: shippingDetails.code,
         }),
         city: shippingDetails.city,
+        state: shippingDetails.state,
         zipCode: shippingDetails.zipCode,
         specialDeliveryOnly: specialDeliveryOnly,
         contactNumber: shippingDetails.contactNumber,
@@ -310,6 +311,7 @@ app.post(
       }
 
       let city = session.metadata.city;
+      let state = session.metadata.state;
       let zipCode = session.metadata.zipCode;
       let contactNumber = session.metadata.contactNumber;
       let specialDeliveryOnly = session.metadata.specialDeliveryOnly;
@@ -424,7 +426,8 @@ app.post(
   <h3 style="color: #333; margin-top: 20px;">Delivery Information</h3>
   <p><strong>Recipient Name:</strong> ${recipientName}</p>
   <p><strong>Address:</strong> ${address}</p>
-  <p><strong>Home Type:</strong> ${capitalizedHomeType}</p>
+
+  ${homeType ? `<p><strong>Home Type:</strong> ${capitalizedHomeType}</p>` : ""}
   ${
     homeType === "building"
       ? `<p><strong>Apartment Number:</strong> ${apartmentNumber}</p>
@@ -433,6 +436,13 @@ app.post(
       : ""
   }
   <p><strong>City:</strong> ${city}</p>
+  ${
+    state
+      ? `<p>
+      <strong>State:</strong> ${state}
+    </p>`
+      : ""
+  }
   <p><strong>Zip Code:</strong> ${zipCode}</p>
   <p><strong>Recipient Contact Number:</strong> ${contactNumber}</p>
 `;

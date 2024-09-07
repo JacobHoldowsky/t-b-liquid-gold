@@ -71,6 +71,7 @@ module.exports = async (req, res) => {
       }
 
       const city = session.metadata.city;
+      const state = session.metadata.state;
       const zipCode = session.metadata.zipCode;
       const contactNumber = session.metadata.contactNumber;
       let specialDeliveryOnly = session.metadata.specialDeliveryOnly;
@@ -189,6 +190,7 @@ module.exports = async (req, res) => {
 <p><strong>Recipient Name:</strong> ${recipientName}</p>
 <p><strong>Address:</strong> ${address}</p>
 <p><strong>Home Type:</strong> ${capitalizedHomeType}</p>
+${homeType ? `<p><strong>Home Type:</strong> ${capitalizedHomeType}</p>` : ""}
 ${
   homeType === "building"
     ? `<p><strong>Apartment Number:</strong> ${apartmentNumber}</p>
@@ -197,6 +199,13 @@ ${
     : ""
 }
 <p><strong>City:</strong> ${city}</p>
+  ${
+    state
+      ? `<p>
+      <strong>State:</strong> ${state}
+    </p>`
+      : ""
+  }
 <p><strong>Zip Code:</strong> ${zipCode}</p>
 <p><strong>Recipient Contact Number:</strong> ${contactNumber}</p>
 `;

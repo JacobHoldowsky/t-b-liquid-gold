@@ -48,6 +48,45 @@
     margin-bottom: 20px;
     font-style: italic;
   }
+
+  /* GiftPackageDetail.css */
+
+/* Tooltip container */
+.add-to-cart-btn[disabled]:hover::after {
+  content: attr(title); /* Use the title attribute as the tooltip content */
+  position: absolute;   /* Position it absolutely */
+  bottom: 100%;         /* Position it above the button */
+  left: 50%;            /* Center the tooltip */
+  transform: translateX(-50%); /* Adjust to truly center */
+  background-color: #333; /* Background color of the tooltip */
+  color: #fff;          /* Text color */
+  padding: 8px;         /* Padding around the text */
+  border-radius: 4px;   /* Rounded corners */
+  white-space: nowrap;  /* Prevent text from wrapping */
+  font-size: 12px;      /* Font size of the tooltip */
+  z-index: 10;          /* Ensure it is above other elements */
+  opacity: 0;           /* Initially hidden */
+  transition: opacity 0.3s; /* Smooth fade-in transition */
+  pointer-events: none; /* Ensure tooltip does not interfere with mouse events */
+}
+
+/* Show tooltip on hover */
+.add-to-cart-btn[disabled]:hover::after {
+  opacity: 1; /* Make it visible on hover */
+}
+
+/* Optional: Adjust positioning if button is within a container with overflow */
+.gift-package-detail {
+  position: relative; /* Ensure positioning context */
+}
+
+/* Button disabled state styling */
+.add-to-cart-btn[disabled] {
+  cursor: not-allowed; /* Show not-allowed cursor */
+  background-color: #ccc; /* Gray out the button */
+  color: #666; /* Dim the text color */
+}
+
   
   .gift-package-price {
     font-size: 1.8rem;

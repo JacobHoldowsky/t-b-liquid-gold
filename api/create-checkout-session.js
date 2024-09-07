@@ -141,6 +141,7 @@ module.exports = async (req, res) => {
             code: shippingDetails.code,
           }),
           city: shippingDetails.city,
+          state: shippingDetails.state,
           zipCode: shippingDetails.zipCode,
           specialDeliveryOnly: specialDeliveryOnly,
           contactNumber: shippingDetails.contactNumber,

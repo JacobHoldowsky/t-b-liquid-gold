@@ -24,6 +24,7 @@ import { CurrencyProvider } from "./context/CurrencyContext";
 import { ExchangeRateProvider } from "./context/ExchangeRateContext"; // Import the new context
 import "./index.css";
 import CorporateGiftDetail from "./components/CorporateGiftDetail";
+import { ShopProvider } from "./context/ShopContext";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -79,91 +80,106 @@ function App() {
     localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
+  const clearCart = () => {
+    setCart([]);
+    localStorage.removeItem("cart");
+  };
+
   const calculateCartItemCount = () => {
     return cart.reduce((total, item) => total + item.quantity, 0);
   };
 
   return (
     <CurrencyProvider>
-      <ExchangeRateProvider>
-        {" "}
-        {/* Wrap with ExchangeRateProvider */}
-        <Router>
-          <ScrollToTop />
-          <div className="App">
-            <Header cartItemCount={calculateCartItemCount()} />
-            <Routes>
-              <Route path="/" element={<LandingPage />} />
-              <Route
-                path="/honeyCollection"
-                element={<HoneyCollection cart={cart} addToCart={addToCart} />}
+      <ShopProvider>
+        <ExchangeRateProvider>
+          {" "}
+          {/* Wrap with ExchangeRateProvider */}
+          <Router>
+            <ScrollToTop />
+            <div className="App">
+              <Header
+                cartItemCount={calculateCartItemCount()}
+                clearCart={clearCart}
               />
-              <Route
-                path="/giftPackages"
-                element={<GiftPackages cart={cart} addToCart={addToCart} />}
-              />
-              <Route
-                path="/giftPackages/:packageId"
-                element={
-                  <GiftPackageDetail cart={cart} addToCart={addToCart} />
-                }
-              />
-              <Route
-                path="/corporateGifts"
-                element={<CorporateGifts cart={cart} addToCart={addToCart} />}
-              />
-              <Route
-                path="/corporateGifts/:corporateId"
-                element={
-                  <CorporateGiftDetail cart={cart} addToCart={addToCart} />
-                }
-              />
-              <Route
-                path="/distributors/us"
-                element={<USDistributors cart={cart} addToCart={addToCart} />}
-              />
-              <Route
-                path="/distributors/israel"
-                element={
-                  <IsraelDistributors cart={cart} addToCart={addToCart} />
-                }
-              />
+              <Routes>
+                <Route path="/" element={<LandingPage />} />
+                <Route
+                  path="/honeyCollection"
+                  element={
+                    <HoneyCollection cart={cart} addToCart={addToCart} />
+                  }
+                />
+                <Route
+                  path="/giftPackages"
+                  element={<GiftPackages cart={cart} addToCart={addToCart} />}
+                />
+                <Route
+                  path="/giftPackages/:packageId"
+                  element={
+                    <GiftPackageDetail cart={cart} addToCart={addToCart} />
+                  }
+                />
+                <Route
+                  path="/corporateGifts"
+                  element={<CorporateGifts cart={cart} addToCart={addToCart} />}
+                />
+                <Route
+                  path="/corporateGifts/:corporateId"
+                  element={
+                    <CorporateGiftDetail cart={cart} addToCart={addToCart} />
+                  }
+                />
+                <Route
+                  path="/distributors/us"
+                  element={<USDistributors cart={cart} addToCart={addToCart} />}
+                />
+                <Route
+                  path="/distributors/israel"
+                  element={
+                    <IsraelDistributors cart={cart} addToCart={addToCart} />
+                  }
+                />
 
-              <Route
-                path="/wholesale"
-                element={<Wholesale cart={cart} addToCart={addToCart} />}
-              />
-              <Route
-                path="/sponsorAHoneyBoard"
-                element={
-                  <SponsorAHoneyBoard
-                    cart={cart}
-                    addToCart={addToCart}
-                    setDeliveryFee={setSpecialDeliveryFee}
-                  />
-                }
-              />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route
-                path="/checkout"
-                element={
-                  <Checkout
-                    cart={cart}
-                    removeFromCart={removeFromCart}
-                    setCart={setCart}
-                    specialDeliveryFee={specialDeliveryFee}
-                  />
-                }
-              />
-              <Route path="/success" element={<Success setCart={setCart} />} />
-              <Route path="/canceled" element={<Canceled />} />
-            </Routes>
-            <Footer />
-            <FloatingWhatsAppButton />
-          </div>
-        </Router>
-      </ExchangeRateProvider>
+                <Route
+                  path="/wholesale"
+                  element={<Wholesale cart={cart} addToCart={addToCart} />}
+                />
+                <Route
+                  path="/sponsorAHoneyBoard"
+                  element={
+                    <SponsorAHoneyBoard
+                      cart={cart}
+                      addToCart={addToCart}
+                      setDeliveryFee={setSpecialDeliveryFee}
+                    />
+                  }
+                />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route
+                  path="/checkout"
+                  element={
+                    <Checkout
+                      cart={cart}
+                      removeFromCart={removeFromCart}
+                      setCart={setCart}
+                      specialDeliveryFee={specialDeliveryFee}
+                    />
+                  }
+                />
+                <Route
+                  path="/success"
+                  element={<Success setCart={setCart} />}
+                />
+                <Route path="/canceled" element={<Canceled />} />
+              </Routes>
+              <Footer />
+              <FloatingWhatsAppButton />
+            </div>
+          </Router>
+        </ExchangeRateProvider>
+      </ShopProvider>
     </CurrencyProvider>
   );
 }
