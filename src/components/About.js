@@ -8,35 +8,26 @@ function About() {
       <div className="about-content">
         <h2>About Us</h2>
         <p>
-          Welcome to <strong>T&B Liquid Gold</strong>, a flavored creamed honey
-          company in the heart of Jerusalem. Our famous handcrafted honey is the
-          best stuff on earth! We offer the following 7 flavors: Vanilla,
-          cinnamon, sea salt, chocolate, blueberry, pumpkin, and bourbon. All of
-          our products are made of pure honey and natural flavors. Every jar is
-          made with lots of love. We can't wait to serve you!
+          Hi, I’m Batya! About 12 years ago I began handcrafting a unique line
+          of flavored creamed honeys for Rosh Hashana. It started as a fun
+          hobby. I loved creating something different than the classic honey
+          that most people dip their apples into.
         </p>
         <p>
-          <strong>Kashrus:</strong> We are under the strict supervision of Rabbi
-          Weiner of ZNT Kosher.
+          This was a different honey experience, tasted incredible, and added an
+          extra touch to the Rosh Hashana table. Very quickly that hobby turned
+          into a deep passion for sharing sweetness to people all over the
+          world.
         </p>
-        <img
-          className="kashrus"
-          src="hechsher 5-min.png"
-          alt="Kashrus Certification"
-        />
+
         <p>
-          <strong>Delivery:</strong> We deliver anywhere in Israel and the US.
-          Delivery rates vary based on location. We have various pickup
-          locations all over Israel and US.
+          We have 7 rich flavors of creamed honeys all handracfted in Israel.
         </p>
+        <p>Every jar is made with lots of love.</p>
+        <p>We look forward to sharing the goodness with you.</p>
         <p>
-          <strong>Allergy information:</strong> All of our honey flavors are
-          dairy-free, gluten-free, and nut-free. Made in the same facility as
-          nuts, dairy, and gluten.
-        </p>
-        <p>
-          <strong>How to store:</strong> Store in a cool/room temperature place
-          for up to 1 year. Refrigeration is not needed.
+          Thanks, <br />
+          Batya
         </p>
         <Link to="/honeyCollection" className="cta-btn">
           Browse Our Collection
