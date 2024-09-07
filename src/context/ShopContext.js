@@ -7,7 +7,7 @@ export const ShopProvider = ({ children }) => {
   // Initialize shopRegion from localStorage or default to "US"
   const [shopRegion, setShopRegion] = useState(() => {
     const storedRegion = localStorage.getItem("shopRegion");
-    return storedRegion ? storedRegion : "US";
+    return storedRegion ? storedRegion : "Israel";
   });
 
   // Update localStorage whenever shopRegion changes
