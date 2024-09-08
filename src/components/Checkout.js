@@ -619,7 +619,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
                         {currency === "Dollar"
                           ? `$20 each`
                           : `₪${Math.ceil(20 * exchangeRate)} each`}{" "}
-                        each
                       </p>
                     ) : null}
                     {shopRegion === "US" && item.title === "Board of Four" ? (
@@ -628,7 +627,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
                         {currency === "Dollar"
                           ? `$15 each`
                           : `₪${Math.ceil(15 * exchangeRate)} each`}{" "}
-                        each
                       </p>
                     ) : null}
                     {item.title === "Sponsor a Honey Board" && (
