@@ -288,7 +288,6 @@ input:checked + .slider:before {
     gap: 20px;
   }
 
-  .currency-toggle,
   .shop-toggle {
     font-size: 1.1rem;
     padding: 6px 12px;
@@ -330,7 +329,6 @@ input:checked + .slider:before {
     height: 40px;
   }
 
-  .currency-toggle,
   .shop-toggle {
     font-size: 0.9rem;
     padding: 4px 8px;
@@ -403,7 +401,6 @@ input:checked + .slider:before {
     font-size: 12px;
   }
 
-  .currency-toggle,
   .shop-toggle {
     font-size: 0.8rem;
     padding: 3px 6px;
