@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom"; // Import useNavigate and useLocation
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import { CurrencyContext } from "../context/CurrencyContext";
 import { useShopContext } from "../context/ShopContext";
@@ -10,23 +10,23 @@ import {
   faShekelSign,
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  faGlobeAmericas,
-  faGlobeAsia,
-} from "@fortawesome/free-solid-svg-icons"; // New Icons
-import Modal from "../components/Modal"; // Import the reusable Modal component
+import Modal from "../components/Modal";
 
 function Header({ cart, cartItemCount, clearCart }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const [showWarning, setShowWarning] = useState(false); // State for showing warning modal
-  const [showRedirectModal, setShowRedirectModal] = useState(false); // State for showing the redirect modal
-  const [cartIndicatorAnimated, setCartIndicatorAnimated] = useState(false); // State for animating the cart indicator
+  const [showWarning, setShowWarning] = useState(false);
+  const [showRedirectModal, setShowRedirectModal] = useState(false);
+  const [cartIndicatorAnimated, setCartIndicatorAnimated] = useState(false);
   const { currency, toggleCurrency } = useContext(CurrencyContext);
   const { shopRegion, toggleShopRegion } = useShopContext();
   const headerRef = useRef(null);
-  const navigate = useNavigate(); // Initialize useNavigate for programmatic navigation
-  const location = useLocation(); // Initialize useLocation to get current path
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // New states for drag and slider position
+  const [isDragging, setIsDragging] = useState(false);
+  const sliderRef = useRef(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -41,22 +41,82 @@ function Header({ cart, cartItemCount, clearCart }) {
     toggleCurrency(currency === "Dollar" ? "Shekel" : "Dollar");
   };
 
+  const handleShopRegionSelect = (region) => {
+    if (cartItemCount > 0) {
+      setShowWarning(true);
+    } else {
+      if (
+        (region === "US" && shopRegion !== "US") ||
+        (region === "Israel" && shopRegion === "US")
+      ) {
+        toggleShopRegion();
+      }
+    }
+  };
+
   const handleShopRegionChange = () => {
     if (cartItemCount > 0) {
-      setShowWarning(true); // Show warning if cart is not empty
+      setShowWarning(true);
     } else {
-      toggleShopRegion(); // Change shop region directly if cart is empty
+      toggleShopRegion();
     }
   };
 
   const confirmRegionChange = () => {
-    setShowWarning(false); // Hide the warning modal
-    clearCart(); // Empty the cart
-    toggleShopRegion(); // Change the shop region
+    setShowWarning(false);
+    clearCart();
+    toggleShopRegion();
   };
 
   const cancelRegionChange = () => {
-    setShowWarning(false); // Simply hide the warning modal
+    setShowWarning(false);
+  };
+
+  // New handlers for dragging the slider
+  const handleMouseDown = (event) => {
+    setIsDragging(true);
+    event.preventDefault();
+  };
+
+  const handleMouseMove = (event) => {
+    if (isDragging) {
+      const sliderWidth = sliderRef.current.offsetWidth;
+      const sliderOffset = sliderRef.current.getBoundingClientRect().left;
+      const mouseX = event.clientX - sliderOffset;
+
+      if (mouseX > sliderWidth / 2 && shopRegion !== "US") {
+        handleShopRegionSelect("US");
+      } else if (mouseX <= sliderWidth / 2 && shopRegion === "US") {
+        handleShopRegionSelect("Israel");
+      }
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleTouchStart = (event) => {
+    setIsDragging(true);
+    event.preventDefault();
+  };
+
+  const handleTouchMove = (event) => {
+    if (isDragging) {
+      const sliderWidth = sliderRef.current.offsetWidth;
+      const sliderOffset = sliderRef.current.getBoundingClientRect().left;
+      const touchX = event.touches[0].clientX - sliderOffset;
+
+      if (touchX > sliderWidth / 2 && shopRegion !== "US") {
+        handleShopRegionSelect("US");
+      } else if (touchX <= sliderWidth / 2 && shopRegion === "US") {
+        handleShopRegionSelect("Israel");
+      }
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
   };
 
   useEffect(() => {
@@ -85,29 +145,27 @@ function Header({ cart, cartItemCount, clearCart }) {
     };
   }, [headerRef]);
 
-  // Animate the cart indicator badge when cartItemCount changes
   useEffect(() => {
     if (cartItemCount > 0) {
       setCartIndicatorAnimated(true);
-      const timeout = setTimeout(() => setCartIndicatorAnimated(false), 500); // Remove animation after 500ms
+      const timeout = setTimeout(() => setCartIndicatorAnimated(false), 500);
       return () => clearTimeout(timeout);
     }
   }, [cartItemCount]);
 
-  // Show modal if on restricted pages and region changes to US
   useEffect(() => {
     if (
       shopRegion === "US" &&
       (location.pathname === "/wholesale" ||
         location.pathname === "/corporateGifts")
     ) {
-      setShowRedirectModal(true); // Show modal
+      setShowRedirectModal(true);
     }
-  }, [shopRegion, location.pathname]); // Dependency on shopRegion and current path
+  }, [shopRegion, location.pathname]);
 
   const handleRedirectConfirm = () => {
-    setShowRedirectModal(false); // Hide modal
-    navigate("/"); // Redirect to the homepage
+    setShowRedirectModal(false);
+    navigate("/");
   };
 
   const scrollWithOffset = (el) => {
@@ -134,17 +192,35 @@ function Header({ cart, cartItemCount, clearCart }) {
           />
         </div>
         {/* Enhanced Toggle Slider for Shop Region */}
-        <div className="shop-toggle-slider">
-          <span className="slider-label">Shop Israel</span>
-          <label className="switch">
+        <div className="shop-toggle-slider" ref={sliderRef}>
+          <span
+            className="slider-label"
+            onClick={() => handleShopRegionSelect("Israel")}
+          >
+            Shop Israel
+          </span>
+          <label
+            className="switch"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             <input
               type="checkbox"
               checked={shopRegion === "US"}
-              onChange={handleShopRegionChange} // Use the new handler
+              onChange={handleShopRegionChange}
             />
             <span className="slider round"></span>
           </label>
-          <span className="slider-label">Shop USA</span>
+          <span
+            className="slider-label"
+            onClick={() => handleShopRegionSelect("US")}
+          >
+            Shop USA
+          </span>
         </div>
       </div>
       <div className="hamburger" onClick={toggleMenu}>

@@ -210,13 +210,14 @@ input:checked + .slider:before {
   justify-content: center;
   text-align: center;
   align-items: center;
+  cursor: pointer;
 }
 
 /* Hover effects for larger screens only */
 @media (min-width: 769px) {
   .currency-toggle:hover,
   .header nav ul li a:hover,
-  .header nav ul li .dropdown-menu .dropdown-menu-item:hover {
+  .header nav ul li .dropdown-menu .dropdown-menu-item:hover, .slider-label:hover {
     color: #7c2234;
     border-bottom: 1px solid #7c2234;
     transform: translateY(-2px);
@@ -298,6 +299,7 @@ input:checked + .slider:before {
   .header nav ul li a:hover,
   .shop-toggle:hover,
   .header nav ul li .dropdown-menu .dropdown-menu-item:hover,
+  .slider-label:hover,
   .logo img:hover,
   .header nav ul li.cart-link a:hover .cart-count {
     
@@ -378,6 +380,7 @@ input:checked + .slider:before {
   .header nav ul li a:hover,
   .shop-toggle:hover,
   .header nav ul li .dropdown-menu .dropdown-menu-item:hover,
+  .slider-label:hover,
   .logo img:hover,
   .header nav ul li.cart-link a:hover .cart-count {
     
