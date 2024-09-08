@@ -105,8 +105,6 @@ function Header({ cart, cartItemCount, clearCart }) {
     event.preventDefault();
   };
 
-  console.log(isDragging);
-
   const handleTouchMove = (event) => {
     if (isDragging) {
       const sliderWidth = sliderRef.current.offsetWidth;
