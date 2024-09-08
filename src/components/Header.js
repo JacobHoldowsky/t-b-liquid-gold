@@ -96,10 +96,16 @@ function Header({ cart, cartItemCount, clearCart }) {
     setIsDragging(false);
   };
 
+  const handleMouseOut = () => {
+    setIsDragging(false);
+  };
+
   const handleTouchStart = (event) => {
     setIsDragging(true);
     event.preventDefault();
   };
+
+  console.log(isDragging);
 
   const handleTouchMove = (event) => {
     if (isDragging) {
@@ -204,9 +210,11 @@ function Header({ cart, cartItemCount, clearCart }) {
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
+            onMouseOut={handleMouseOut}
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
+            onTouch={handleTouchEnd}
           >
             <input
               type="checkbox"
