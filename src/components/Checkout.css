@@ -254,6 +254,7 @@
   font-size: 1rem;
   transition: border-color 0.3s ease;
   font-family: Arial, Helvetica, sans-serif;
+  color:#333
 }
 
 .shipping-details input:focus,

@@ -47,6 +47,7 @@
   border-radius: 5px;
   border: 1px solid #ddd;
   transition: all 0.3s ease; /* Smooth transition */
+  color:#333
 }
 
 .select-dropdown {

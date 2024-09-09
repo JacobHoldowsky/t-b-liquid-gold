@@ -17,6 +17,7 @@
     background-color: #fff;
     cursor: pointer;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    color:#333
   }
 
   .quantity-selector select:focus {

@@ -121,6 +121,7 @@
     background-color: #fff;
     cursor: pointer;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    color:#333
   }
   
   .honey-flavor-dropdown select:focus {
