@@ -189,7 +189,7 @@ module.exports = async (req, res) => {
 <h3 style="color: #333; margin-top: 20px;">Delivery Information</h3>
 <p><strong>Recipient Name:</strong> ${recipientName}</p>
 <p><strong>Address:</strong> ${address}</p>
-<p><strong>Home Type:</strong> ${capitalizedHomeType}</p>
+
 ${homeType ? `<p><strong>Home Type:</strong> ${capitalizedHomeType}</p>` : ""}
 ${
   homeType === "building"
