@@ -458,7 +458,7 @@ app.post(
               <h2 style="color: #7c2234;">Order Confirmation</h2>
               <p style="font-size: 16px; color: #777;">Order Number: <strong>${orderNumber}</strong></p>
             </header>
-            <p style="font-size: 16px;">Dear ${fullName},</p>
+            <p style="font-size: 16px;">Dear ${fullName.trim()},</p>
             <p style="font-size: 16px;">Thank you for your purchase! We are currently processing your order. Below are the details of your order:</p>
             
             <h3 style="color: #333; margin-bottom: 10px;">Order Details</h3>
