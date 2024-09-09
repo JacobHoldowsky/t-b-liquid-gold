@@ -106,8 +106,8 @@ function GiftPackageDetail({ cart, addToCart }) {
       boardOfFour: {
         title: "Board of Four",
         description: "4 flavored creamed honeys on a wooden serving board",
-        priceDollar: shopRegion === "US" ? 70 : 58,
-        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 70 : 58),
+        priceDollar: shopRegion === "US" ? 75 : 58,
+        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 75 : 58),
         honeyCount: 4,
         imageUrl: "/Board of Four no plastic-min.jpg",
         category: "gift packages",
@@ -155,8 +155,8 @@ function GiftPackageDetail({ cart, addToCart }) {
         title: "Collection Plus Box",
         description:
           "6 Flavored creamed honeys, 5 Dairy Belgian chocolates, wooden honey dipper.",
-        priceDollar: 95,
-        priceShekel: calculatePriceInShekels(95),
+        priceDollar: 110,
+        priceShekel: calculatePriceInShekels(110),
         honeyCount: 6,
         imageUrl: "/Collection Plus $95-min.jpg",
         category: "gift packages",
@@ -166,8 +166,8 @@ function GiftPackageDetail({ cart, addToCart }) {
         title: "Honeycomb Collection Board",
         description:
           "All of our 7 delicious flavored creamed honeys on a wooden serving board.",
-        priceDollar: shopRegion === "US" ? 120 : 99,
-        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 120 : 99),
+        priceDollar: shopRegion === "US" ? 125 : 99,
+        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 125 : 99),
         honeyCount: 7,
         imageUrl: "/Honeycomb collection board no plastic-min.jpg",
         category: "gift packages",
@@ -202,8 +202,8 @@ function GiftPackageDetail({ cart, addToCart }) {
           shopRegion === "US" ? "750ml" : "375ml"
         } bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.`,
         warning: "*Wine may vary based on availability",
-        priceDollar: shopRegion === "US" ? 145 : 136,
-        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 145 : 136),
+        priceDollar: shopRegion === "US" ? 150 : 136,
+        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 150 : 136),
         honeyCount: 5,
         imageUrl: "/Deluxe Board no plastic-min.jpg",
         category: "gift packages",

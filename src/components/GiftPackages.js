@@ -67,10 +67,10 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "Board of Four no plastic-min.jpg",
         title: "Board of Four",
-        priceDollar: shopRegion === "US" ? 70 : 58,
+        priceDollar: shopRegion === "US" ? 75 : 58,
         id: "boardOfFour",
         priceShekel: calculatePriceInShekels(
-          shopRegion === "US" ? 70 : 58,
+          shopRegion === "US" ? 75 : 58,
           exchangeRate
         ),
       },
@@ -101,17 +101,17 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "Collection Plus $95-min.jpg",
         title: "Collection Plus Box",
-        priceDollar: 95,
+        priceDollar: 110,
         id: "collectionPlusBox",
-        priceShekel: calculatePriceInShekels(95, exchangeRate),
+        priceShekel: calculatePriceInShekels(110, exchangeRate),
       },
       {
         url: "Honeycomb collection board no plastic-min.jpg",
         title: "Honeycomb Collection Board",
-        priceDollar: shopRegion === "US" ? 120 : 99,
+        priceDollar: shopRegion === "US" ? 125 : 99,
         id: "honeycombCollectionBoard",
         priceShekel: calculatePriceInShekels(
-          shopRegion === "US" ? 120 : 99,
+          shopRegion === "US" ? 125 : 99,
           exchangeRate
         ),
       },
@@ -132,10 +132,10 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "Deluxe Board no plastic-min.jpg",
         title: "Deluxe Board",
-        priceDollar: shopRegion === "US" ? 145 : 136,
+        priceDollar: shopRegion === "US" ? 150 : 136,
         id: "deluxeBoard",
         priceShekel: calculatePriceInShekels(
-          shopRegion === "US" ? 140 : 136,
+          shopRegion === "US" ? 150 : 136,
           exchangeRate
         ),
       },
@@ -158,11 +158,9 @@ function GiftPackages({ cart, addToCart }) {
     // Filter items based on the US region
     if (shopRegion === "US") {
       return allItems.filter((item) =>
-        [
-          "honeycombCollectionBoard",
-          "boardOfFour",
-          "deluxeBoard",
-        ].includes(item.id)
+        ["honeycombCollectionBoard", "boardOfFour", "deluxeBoard"].includes(
+          item.id
+        )
       );
     }
 
