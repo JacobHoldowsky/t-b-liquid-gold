@@ -73,7 +73,6 @@ module.exports = async (req, res) => {
       // Add delivery charge as a separate line item (not discounted)
       if (
         selectedDeliveryOption &&
-        deliveryCharge > 0 &&
         selectedDeliveryOption !== "Sponsor a Honey Board Flat Rate" &&
         !(isSponsorHoneyBoardInCart && items.length === 1)
       ) {
