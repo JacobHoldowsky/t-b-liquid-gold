@@ -422,28 +422,46 @@ app.post(
   <p><strong>Full Name:</strong> ${fullName}</p>
   <p><strong>Email:</strong> ${email}</p>
   <p><strong>Number:</strong> ${number}</p>
-  <h3 style="color: #333; margin-top: 20px;">Delivery Information</h3>
-  <p><strong>Recipient Name:</strong> ${recipientName}</p>
-  <p><strong>Address:</strong> ${address}</p>
+  ${
+    recipientName
+      ? `<h3 style="color: #333; margin-top: 20px;">Delivery Information</h3>`
+      : ""
+  }
+  ${
+    recipientName
+      ? `<p><strong>Recipient Name:</strong> ${recipientName}</p>`
+      : ""
+  }
+  ${address ? `<p><strong>Address:</strong> ${address}</p>` : ""}
+  
 
   ${homeType ? `<p><strong>Home Type:</strong> ${capitalizedHomeType}</p>` : ""}
   ${
     homeType === "building"
       ? `<p><strong>Apartment Number:</strong> ${apartmentNumber}</p>
-         <p><strong>Floor:</strong> ${floor}</p>
-         <p><strong>Building Code:</strong> ${code}</p>`
+    <p><strong>Floor:</strong> ${floor}</p>
+    <p><strong>Building Code:</strong> ${code}</p>`
       : ""
   }
-  <p><strong>City:</strong> ${city}</p>
+  ${city ? `<p><strong>City:</strong> ${city}</p>` : ""}
+  
   ${
     state
       ? `<p>
-      <strong>State:</strong> ${state}
+    <strong>State:</strong> ${state}
     </p>`
       : ""
   }
-  <p><strong>Zip Code:</strong> ${zipCode}</p>
-  <p><strong>Recipient Contact Number:</strong> ${contactNumber}</p>
+
+  ${zipCode ? `<p><strong>Zip Code:</strong> ${zipCode}</p>` : ""}
+
+  ${
+    contactNumber
+      ? `<p><strong>Recipient Contact Number:</strong> ${contactNumber}</p>`
+      : ""
+  }
+  
+  
 `;
 
         const giftNoteHtml = giftNote

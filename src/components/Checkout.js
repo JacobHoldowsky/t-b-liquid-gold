@@ -526,7 +526,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
   useEffect(() => {
     let isFormValid = false; // Default to false
 
-    if (specialDeliveryOnly) {
+    if (
+      specialDeliveryOnly ||
+      (deliveryCharge === 0 && selectedDeliveryOption)
+    ) {
       // When specialDeliveryOnly is true, only these fields are required
       const areMandatoryFieldsFilled = [
         shippingDetails.fullName,
@@ -778,116 +781,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
             {/* Conditionally render delivery information based on specialDeliveryOnly */}
             {!specialDeliveryOnly ? (
               <>
-                {/* Delivery Information */}
-                <div className="shipping-details">
-                  <h3>Delivery Information</h3>
-                  {/* Delivery Information Fields */}
-                  <input
-                    type="text"
-                    name="recipientName"
-                    placeholder="Recipient name *"
-                    value={shippingDetails.recipientName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                  <input
-                    type="text"
-                    name="address"
-                    placeholder="Address *"
-                    value={shippingDetails.address}
-                    onChange={handleInputChange}
-                    required
-                  />
-                  {shopRegion !== "US" ? (
-                    <select
-                      name="homeType"
-                      value={shippingDetails.homeType}
-                      onChange={handleInputChange}
-                      required
-                    >
-                      <option value="" disabled hidden>
-                        Is this a building or private home? *
-                      </option>
-                      <option value="building">Building</option>
-                      <option value="home">Private Home</option>
-                    </select>
-                  ) : null}
-                  {/* Additional Fields for Buildings */}
-                  {shippingDetails.homeType === "building" &&
-                    shopRegion !== "US" && (
-                      <>
-                        <input
-                          type="text"
-                          name="apartmentNumber"
-                          placeholder="Apartment number *"
-                          value={shippingDetails.apartmentNumber}
-                          onChange={handleInputChange}
-                          required
-                        />
-                        <input
-                          type="text"
-                          name="floor"
-                          placeholder="Floor"
-                          value={shippingDetails.floor}
-                          onChange={handleInputChange}
-                        />
-                        <input
-                          type="text"
-                          name="code"
-                          placeholder="Building code"
-                          value={shippingDetails.code}
-                          onChange={handleInputChange}
-                        />
-                      </>
-                    )}
-                  <input
-                    type="text"
-                    name="city"
-                    placeholder="City *"
-                    value={shippingDetails.city}
-                    onChange={handleInputChange}
-                    required
-                  />
-                  {shopRegion === "US" ? (
-                    <input
-                      type="text"
-                      name="state"
-                      placeholder="State *"
-                      value={shippingDetails.state}
-                      onChange={handleInputChange}
-                      required
-                    />
-                  ) : null}
-                  <input
-                    type="text"
-                    name="country"
-                    value={shopRegion === "US" ? "USA" : "Israel"}
-                    readOnly
-                    className="country-field"
-                  />
-
-                  {/* Informative Note Below the Country Field */}
-                  <p className="country-info">
-                    You can switch the country by clicking the toggle in the
-                    header.
-                  </p>
-
-                  <input
-                    type="text"
-                    name="zipCode"
-                    placeholder={`Zip code ${shopRegion === "US" ? "*" : ""}`}
-                    value={shippingDetails.zipCode}
-                    onChange={handleInputChange}
-                  />
-                  <input
-                    type="text"
-                    name="contactNumber"
-                    placeholder="Recipient contact number *"
-                    value={shippingDetails.contactNumber}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
                 {/* Delivery Options */}
                 {shopRegion !== "US" ? (
                   <div className="delivery-options">
@@ -907,6 +800,118 @@ function Checkout({ cart, setCart, removeFromCart }) {
                         </option>
                       ))}
                     </select>
+                  </div>
+                ) : null}
+                {/* Delivery Information */}
+                {shopRegion === "US" || deliveryCharge > 0 ? (
+                  <div className="shipping-details">
+                    <h3>Delivery Information</h3>
+                    {/* Delivery Information Fields */}
+                    <input
+                      type="text"
+                      name="recipientName"
+                      placeholder="Recipient name *"
+                      value={shippingDetails.recipientName}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    <input
+                      type="text"
+                      name="address"
+                      placeholder="Address *"
+                      value={shippingDetails.address}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    {shopRegion !== "US" ? (
+                      <select
+                        name="homeType"
+                        value={shippingDetails.homeType}
+                        onChange={handleInputChange}
+                        required
+                      >
+                        <option value="" disabled hidden>
+                          Is this a building or private home? *
+                        </option>
+                        <option value="building">Building</option>
+                        <option value="home">Private Home</option>
+                      </select>
+                    ) : null}
+                    {/* Additional Fields for Buildings */}
+                    {shippingDetails.homeType === "building" &&
+                      shopRegion !== "US" && (
+                        <>
+                          <input
+                            type="text"
+                            name="apartmentNumber"
+                            placeholder="Apartment number *"
+                            value={shippingDetails.apartmentNumber}
+                            onChange={handleInputChange}
+                            required
+                          />
+                          <input
+                            type="text"
+                            name="floor"
+                            placeholder="Floor"
+                            value={shippingDetails.floor}
+                            onChange={handleInputChange}
+                          />
+                          <input
+                            type="text"
+                            name="code"
+                            placeholder="Building code"
+                            value={shippingDetails.code}
+                            onChange={handleInputChange}
+                          />
+                        </>
+                      )}
+                    <input
+                      type="text"
+                      name="city"
+                      placeholder="City *"
+                      value={shippingDetails.city}
+                      onChange={handleInputChange}
+                      required
+                    />
+                    {shopRegion === "US" ? (
+                      <input
+                        type="text"
+                        name="state"
+                        placeholder="State *"
+                        value={shippingDetails.state}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    ) : null}
+                    <input
+                      type="text"
+                      name="country"
+                      value={shopRegion === "US" ? "USA" : "Israel"}
+                      readOnly
+                      className="country-field"
+                    />
+
+                    {/* Informative Note Below the Country Field */}
+                    <p className="country-info">
+                      You can switch the country by clicking the toggle in the
+                      header.
+                    </p>
+
+                    <input
+                      type="text"
+                      name="zipCode"
+                      placeholder={`Zip code ${shopRegion === "US" ? "*" : ""}`}
+                      value={shippingDetails.zipCode}
+                      onChange={handleInputChange}
+                    />
+                    <input
+                      type="text"
+                      name="contactNumber"
+                      placeholder="Recipient contact number *"
+                      value={shippingDetails.contactNumber}
+                      onChange={handleInputChange}
+                      required
+                    />
                   </div>
                 ) : null}
               </>
