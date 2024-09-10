@@ -171,7 +171,7 @@ function GiftPackages({ cart, addToCart }) {
     <div className="gift-packages">
       <div className="banner">
         <p>
-          All gift packages will be delivered the week of September 29th, 2024.
+          All gift packages will be delivered the week of September 22nd, 2024.
           If you need a specific delivery date outside of this week, please
           contact us directly.
         </p>
