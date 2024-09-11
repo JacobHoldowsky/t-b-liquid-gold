@@ -67,10 +67,10 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "Board of Four no plastic-min.jpg",
         title: "Board of Four",
-        priceDollar: shopRegion === "US" ? 75 : 58,
+        priceDollar: shopRegion === "US" ? 75 : 60,
         id: "boardOfFour",
         priceShekel: calculatePriceInShekels(
-          shopRegion === "US" ? 75 : 58,
+          shopRegion === "US" ? 75 : 60,
           exchangeRate
         ),
       },

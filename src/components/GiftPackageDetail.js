@@ -106,8 +106,8 @@ function GiftPackageDetail({ cart, addToCart }) {
       boardOfFour: {
         title: "Board of Four",
         description: "4 flavored creamed honeys on a wooden serving board",
-        priceDollar: shopRegion === "US" ? 75 : 58,
-        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 75 : 58),
+        priceDollar: shopRegion === "US" ? 75 : 60,
+        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 75 : 60),
         honeyCount: 4,
         imageUrl: "/Board of Four no plastic-min.jpg",
         category: "gift packages",
