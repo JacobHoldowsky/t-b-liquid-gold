@@ -345,7 +345,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
     // Calculate shipping for all honey jars together
     if (honeyJarCount > 0) {
       shippingCharge +=
-        honeyJarCount <= 5
+        honeyJarCount <= 4
           ? currency === "Dollar"
             ? 15
             : Math.ceil(15 * exchangeRate) // Round up
