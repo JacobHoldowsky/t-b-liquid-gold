@@ -7,13 +7,13 @@ import { useShopContext } from "../context/ShopContext"; // Import ShopContext f
 
 // Reusable Component for Each Gift Package Item
 const SponsorAHoneyBoardItem = ({ item, currency }) => (
-  <div className="gift-packages-div">
-    <div className="gift-packages-image">
+  <div className="sponsor-boards-div">
+    <div className="sponsor-boards-image">
       <Link to={`/sponsorAHoneyBoard/${item.id}`}>
         <img src={item.url} alt={item.title} />
       </Link>
     </div>
-    <div className="gift-packages-info">
+    <div className="sponsor-boards-info">
       <h3>{item.title}</h3>
       <p>
         {currency === "Dollar"
@@ -65,7 +65,7 @@ function SponsorAHoneyBoard({ cart, addToCart }) {
       {/* Introductory Blurb Section */}
 
       {/* Sponsor Honey Board Items Gallery */}
-      <div className="gift-packages">
+      <div className="sponsor-boards">
         <div className="sponsor-boards-blurb">
           <h2>Sponsor a Honey Board</h2>
           <p>
@@ -82,10 +82,10 @@ function SponsorAHoneyBoard({ cart, addToCart }) {
             it most.
           </p>
         </div>
-        <h2 className="gift-packages-section-title">
+        <h2 className="sponsor-boards-section-title">
           Choose a Honey Board to Sponsor
         </h2>
-        <div className="gift-packages-images">
+        <div className="sponsor-boards-images">
           {items.map((item) => (
             <SponsorAHoneyBoardItem
               key={item.id}
