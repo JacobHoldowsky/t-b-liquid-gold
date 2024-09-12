@@ -206,33 +206,33 @@ app.post("/api/create-checkout-session", async (req, res) => {
         quantity: 1,
       });
     }
-    if (isSponsorHoneyBoardInCart) {
-      const sponsorHoneyBoardItems = items.filter(
-        (item) => item.price_data.product_data.name === "Sponsor a Honey Board "
-      );
+    // if (isSponsorHoneyBoardInCart) {
+    //   const sponsorHoneyBoardItems = items.filter(
+    //     (item) => item.price_data.product_data.name === "Sponsor a Honey Board "
+    //   );
 
-      let sponsorDeliveryFee = 10 * 100; // $10 delivery fee in cents
-      if (currency !== "Dollar")
-        sponsorDeliveryFee = sponsorDeliveryFee * exchangeRate;
+    //   let sponsorDeliveryFee = 10 * 100; // $10 delivery fee in cents
+    //   if (currency !== "Dollar")
+    //     sponsorDeliveryFee = sponsorDeliveryFee * exchangeRate;
 
-      if (promoCode === "9173") {
-        sponsorDeliveryFee = 10;
-      }
+    //   if (promoCode === "9173") {
+    //     sponsorDeliveryFee = 10;
+    //   }
 
-      lineItems.push({
-        price_data: {
-          currency: currency === "Dollar" ? "usd" : "ils", // Set currency as needed, assuming USD here
-          product_data: {
-            name: `Delivery Charge - Sponsor a Honey Board Flat Rate`,
-            metadata: {
-              note: "Delivery charge is not discounted", // Add a note in the metadata
-            },
-          },
-          unit_amount: sponsorDeliveryFee,
-        },
-        quantity: sponsorHoneyBoardItems[0].quantity,
-      });
-    }
+    //   lineItems.push({
+    //     price_data: {
+    //       currency: currency === "Dollar" ? "usd" : "ils", // Set currency as needed, assuming USD here
+    //       product_data: {
+    //         name: `Delivery Charge - Sponsor a Honey Board Flat Rate`,
+    //         metadata: {
+    //           note: "Delivery charge is not discounted", // Add a note in the metadata
+    //         },
+    //       },
+    //       unit_amount: sponsorDeliveryFee,
+    //     },
+    //     quantity: sponsorHoneyBoardItems[0].quantity,
+    //   });
+    // }
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],

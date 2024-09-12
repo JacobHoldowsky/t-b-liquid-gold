@@ -85,7 +85,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   // Check if "Sponsor a Honey Board" is in the cart
   const isSponsorHoneyBoardInCart = useMemo(() => {
-    return cart.some((item) => item.title === "Sponsor a Honey Board");
+    return cart.some((item) => item.category === "sponsor a board");
   }, [cart]);
 
   // Aggregate cart items and calculate unique logo charges
@@ -96,6 +96,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
     cart.forEach((item) => {
       const itemQuantity = item.quantity ? parseInt(item.quantity, 10) : 1;
+      console.log(itemQuantity);
       const flavors = item.selectedFlavors ? item.selectedFlavors : [];
       const key = flavors.length
         ? `${item.title}-${flavors.join(",")}-${item.includeLogo ? "Logo" : ""}`
@@ -123,11 +124,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
   }, [cart]);
 
   let specialDeliveryOnly = aggregatedCart.aggregatedCart.every(
-    (item) =>
-      item.title === "Sponsor a Honey Board" ||
-      (item.title === "T&Bee Collection Box" && shopRegion === "US") ||
-      (item.title === "Box of Four" && shopRegion === "US")
+    (item) => item.category === "sponsor a board"
   );
+  console.log(aggregatedCart.aggregatedCart);
 
   const apiUrl =
     process.env.NODE_ENV === "development"
@@ -379,22 +378,13 @@ function Checkout({ cart, setCart, removeFromCart }) {
       currency === "Dollar" ? 50 : Math.ceil(50 * exchangeRate);
     const totalLogoCharge = aggregatedCart.uniqueLogoCount * logoChargePerType;
 
-    const specialDeliveryCharge =
-      currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate);
-
     // Use new shipping calculation function
     let totalDeliveryCharge = calculateShippingCharge();
-
-    aggregatedCart.aggregatedCart.forEach((item) => {
-      if (item.title === "Sponsor a Honey Board") {
-        totalDeliveryCharge += specialDeliveryCharge * item.quantity; // Flat rate of $10 for each "Sponsor a Honey Board"
-      }
-    });
 
     if (
       !specialDeliveryOnly &&
       aggregatedCart.aggregatedCart.some(
-        (item) => item.title !== "Sponsor a Honey Board"
+        (item) => item.category !== "sponsor a board"
       )
     ) {
       totalDeliveryCharge += deliveryCharge; // Add normal delivery charge for other items
@@ -632,14 +622,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
                           : `₪${Math.ceil(15 * exchangeRate)} each`}{" "}
                       </p>
                     ) : null}
-                    {item.title === "Sponsor a Honey Board" && (
-                      <p className="item-flavors">
-                        Delivery Fee:{" "}
-                        {currency === "Dollar"
-                          ? `$10 each`
-                          : `₪${Math.ceil(10 * exchangeRate)} each`}
-                      </p>
-                    )}
                     {item.includeLogo && (
                       <p className="item-logo">
                         Personalized Logo (

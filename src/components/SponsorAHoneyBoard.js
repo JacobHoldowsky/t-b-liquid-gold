@@ -1,107 +1,99 @@
-import React, { useContext, useState, useMemo } from "react";
-import { CurrencyContext } from "../context/CurrencyContext";
+import React, { useContext, useMemo } from "react";
+import { Link } from "react-router-dom";
 import "./SponsorAHoneyBoard.css";
-import { FaCheckCircle } from "react-icons/fa";
+import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
-import QuantitySelector from "./QuantitySelector";
+import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
 
-// Function to calculate price in Shekels
+// Reusable Component for Each Gift Package Item
+const SponsorAHoneyBoardItem = ({ item, currency }) => (
+  <div className="gift-packages-div">
+    <div className="gift-packages-image">
+      <Link to={`/sponsorAHoneyBoard/${item.id}`}>
+        <img src={item.url} alt={item.title} />
+      </Link>
+    </div>
+    <div className="gift-packages-info">
+      <h3>{item.title}</h3>
+      <p>
+        {currency === "Dollar"
+          ? `$${item.priceDollar}`
+          : `₪${item.priceShekel}`}
+      </p>
+    </div>
+  </div>
+);
+
+// Helper function to calculate price in Shekels
 const calculatePriceInShekels = (priceDollar, exchangeRate) => {
   return exchangeRate
     ? Math.ceil(priceDollar * exchangeRate)
     : Math.ceil(priceDollar * 3.7);
 };
 
-function SponsorAHoneyBoard({ cart, addToCart, setDeliveryFee }) {
+function SponsorAHoneyBoard({ cart, addToCart }) {
   const { currency } = useContext(CurrencyContext);
+  const { shopRegion } = useShopContext(); // Use shop context to get the current region
+
   const exchangeRate = useContext(ExchangeRateContext);
-  const [addedToCart, setAddedToCart] = useState(false);
-  const [quantity, setQuantity] = useState(1);
 
-  const price = 75; // Fixed price in USD
-  const deliveryFee = 10; // Flat rate delivery fee for the special gift
+  // Memoize the items list to prevent unnecessary re-calculations on every render
+  const items = useMemo(() => {
+    const allItems = [
+      {
+        url: "sweet-board-min.jpeg",
+        title: "Sponsor a Sweet Board",
+        priceDollar: 60,
+        id: "sponsorASweetBoard",
+        priceShekel: calculatePriceInShekels(60, exchangeRate),
+      },
+      {
+        url: "Sponsor a honey board with plastic-min.png",
+        title: "Sponsor a Family Board",
+        priceDollar: 75,
+        id: "sponsorAHoneyBoard",
+        priceShekel: calculatePriceInShekels(75, exchangeRate),
+      },
+    ];
 
-  // Memoize price calculation to avoid re-computation on every render
-  const priceInShekels = useMemo(
-    () => calculatePriceInShekels(price, exchangeRate),
-    [price, quantity, exchangeRate]
-  );
-
-  // Handle adding to cart
-  const handleAddToCart = () => {
-    const itemToAdd = {
-      url: "Sponsor a honey board with plastic-min.png",
-      title: "Sponsor a Honey Board",
-      description:
-        "5 flavored creamed honeys size 70ml, Half bottle of wine, 5 Dairy Belgian chocolates, Wooden honey dipper",
-      priceDollar: price,
-      priceShekel: priceInShekels,
-      quantity,
-      deliveryFee,
-    };
-
-    addToCart(itemToAdd);
-    setDeliveryFee(deliveryFee);
-    setAddedToCart(true);
-
-    // Reset addedToCart after 2 seconds
-    setTimeout(() => setAddedToCart(false), 2000);
-  };
+    // Filter items based on the US region
+    return allItems;
+  }, [exchangeRate, shopRegion]);
 
   return (
-    <div className="sponsor-honey-board">
-      <h2>Sponsor a Honey Board</h2>
-      <p>
-        This year, we have been through very challenging times in Israel. Many
-        people are grieving the loss of their loved ones, many are anxiously
-        awaiting the return of their loved ones, and many women are alone for
-        many months while their husbands are fighting the war. We invite you to
-        partner with us and send sweetness and support to our brothers in
-        Israel. We created a special board for these families to gift them with
-        5 of our unique flavored creamed honeys along with wine and chocolate.
-        Please consider sponsoring a honey board, and we will distribute it on
-        your behalf. Thank you for helping us spread the sweetness of our honeys
-        to the ones who need it most.
-      </p>
-      <div className="sponsor-board-details">
-        <div className="sponsor-image">
-          <img
-            src="/Sponsor a honey board with plastic-min.png"
-            alt="Sponsor a Honey Board"
-          />
+    <div className="sponsor-honey-board-page">
+      {/* Introductory Blurb Section */}
+
+      {/* Sponsor Honey Board Items Gallery */}
+      <div className="gift-packages">
+        <div className="sponsor-boards-blurb">
+          <h2>Sponsor a Honey Board</h2>
+          <p>
+            This year, we have been through very challenging times in Israel.
+            Many people are grieving the loss of their loved ones, many are
+            anxiously awaiting the return of their loved ones, and many women
+            are alone for many months while their husbands are fighting the war.
+            We invite you to partner with us and send sweetness and support to
+            our brothers in Israel. We created a special board for these
+            families to gift them with 5 of our unique flavored creamed honeys
+            along with wine and chocolate. Please consider sponsoring a honey
+            board, and we will distribute it on your behalf. Thank you for
+            helping us spread the sweetness of our honeys to the ones who need
+            it most.
+          </p>
         </div>
-        <h3>Sponsor a Honey Board</h3>
-        <p>
-          <strong>Price:</strong>{" "}
-          {currency === "Dollar"
-            ? `$${price}`
-            : `₪${priceInShekels}`}
-        </p>
-        <QuantitySelector
-          quantity={quantity}
-          handleQuantityChange={(e) =>
-            setQuantity(parseInt(e.target.value, 10))
-          }
-        />
-        <ul>
-          <li>5 flavored creamed honeys size 70ml</li>
-          <li>Half bottle of wine</li>
-          <li>5 Dairy Belgian chocolates</li>
-          <li>Wooden honey dipper</li>
-        </ul>
-        {addedToCart ? (
-          <div className="notification show">
-            <FaCheckCircle className="checkmark" />
-            Added to cart
-          </div>
-        ) : (
-          <button
-            onClick={handleAddToCart}
-            className="sponsor-board-add-to-cart-btn"
-          >
-            Sponsor Now
-          </button>
-        )}
+        <h2 className="gift-packages-section-title">
+          Choose a Honey Board to Sponsor
+        </h2>
+        <div className="gift-packages-images">
+          {items.map((item) => (
+            <SponsorAHoneyBoardItem
+              key={item.id}
+              item={item}
+              currency={currency}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

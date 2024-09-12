@@ -6,6 +6,7 @@ import Contact from "./components/Contact";
 import Checkout from "./components/Checkout";
 import Success from "./components/Success";
 import SponsorAHoneyBoard from "./components/SponsorAHoneyBoard";
+import SponsorAHoneyBoardDetail from "./components/SponsorAHoneyBoardDetail";
 import Canceled from "./components/Canceled";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
@@ -121,6 +122,26 @@ function App() {
                   }
                 />
                 <Route
+                  path="/sponsorAHoneyBoard"
+                  element={
+                    <SponsorAHoneyBoard
+                      cart={cart}
+                      addToCart={addToCart}
+                      setDeliveryFee={setSpecialDeliveryFee}
+                    />
+                  }
+                />
+                <Route
+                  path="/sponsorAHoneyBoard/:sponsorAHoneyBoardId"
+                  element={
+                    <SponsorAHoneyBoardDetail
+                      cart={cart}
+                      addToCart={addToCart}
+                      setDeliveryFee={setSpecialDeliveryFee}
+                    />
+                  }
+                />
+                <Route
                   path="/corporateGifts"
                   element={<CorporateGifts cart={cart} addToCart={addToCart} />}
                 />
@@ -144,16 +165,6 @@ function App() {
                 <Route
                   path="/wholesale"
                   element={<Wholesale cart={cart} addToCart={addToCart} />}
-                />
-                <Route
-                  path="/sponsorAHoneyBoard"
-                  element={
-                    <SponsorAHoneyBoard
-                      cart={cart}
-                      addToCart={addToCart}
-                      setDeliveryFee={setSpecialDeliveryFee}
-                    />
-                  }
                 />
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
