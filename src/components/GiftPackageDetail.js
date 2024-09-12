@@ -88,6 +88,17 @@ function GiftPackageDetail({ cart, addToCart }) {
         category: "gift packages",
         availableInRegions: ["Israel"],
       },
+      theSweetBoard: {
+        title: "The Sweet Board",
+        description:
+          "Two flavored creamed honeys with 5 chocolates on a wooden board.",
+        priceDollar: 60,
+        priceShekel: calculatePriceInShekels(60),
+        honeyCount: 2,
+        imageUrl: "/sweet-board-min.jpeg",
+        category: "gift packages",
+        availableInRegions: ["US"],
+      },
       boxOfFour: {
         title: "Box of Four",
         description:

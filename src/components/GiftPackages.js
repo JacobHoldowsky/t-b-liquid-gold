@@ -55,6 +55,13 @@ function GiftPackages({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(49, exchangeRate),
       },
       {
+        url: "sweet-board-min.jpeg",
+        title: "The Sweet Board",
+        priceDollar: 60,
+        id: "theSweetBoard",
+        priceShekel: calculatePriceInShekels(60, exchangeRate),
+      },
+      {
         url: "boxOfFour-min.jpg",
         title: "Box of Four",
         priceDollar: shopRegion === "US" ? 65 : 55,
@@ -158,13 +165,16 @@ function GiftPackages({ cart, addToCart }) {
     // Filter items based on the US region
     if (shopRegion === "US") {
       return allItems.filter((item) =>
-        ["honeycombCollectionBoard", "boardOfFour", "deluxeBoard"].includes(
-          item.id
-        )
+        [
+          "honeycombCollectionBoard",
+          "boardOfFour",
+          "deluxeBoard",
+          "theSweetBoard",
+        ].includes(item.id)
       );
+    } else {
+      return allItems.filter((item) => !["theSweetBoard"].includes(item.id));
     }
-
-    return allItems; // Return all items if not in the US region
   }, [exchangeRate, shopRegion]);
 
   return (
