@@ -41,7 +41,7 @@ function SponsorAHoneyBoard({ cart, addToCart }) {
   const items = useMemo(() => {
     const allItems = [
       {
-        url: "sweet-board-min.jpeg",
+        url: "sponsor-a-sweet-board-min.jpg",
         title: "Sponsor a Sweet Board",
         priceDollar: 50,
         id: "sponsorASweetBoard",
