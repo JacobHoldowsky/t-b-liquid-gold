@@ -43,9 +43,9 @@ function SponsorAHoneyBoard({ cart, addToCart }) {
       {
         url: "sweet-board-min.jpeg",
         title: "Sponsor a Sweet Board",
-        priceDollar: 60,
+        priceDollar: 50,
         id: "sponsorASweetBoard",
-        priceShekel: calculatePriceInShekels(60, exchangeRate),
+        priceShekel: calculatePriceInShekels(50, exchangeRate),
       },
       {
         url: "Sponsor a honey board with plastic-min.png",

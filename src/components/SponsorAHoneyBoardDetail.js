@@ -71,8 +71,8 @@ function SponsorAHoneyBoardDetail({ cart, addToCart }) {
         title: "Sponsor a Sweet Board",
         description:
           "3 Flavored creamed honeys, 5 Dairy belgian chocolates, wooden honey dipper.",
-        priceDollar: 60,
-        priceShekel: calculatePriceInShekels(60),
+        priceDollar: 50,
+        priceShekel: calculatePriceInShekels(50),
         honeyCount: 0,
         imageUrl: "/sponsor-a-sweet-board-min.jpg",
         category: "sponsor a board",
