@@ -50,7 +50,7 @@
 }
 
 .holdowsky a {
-  color: #2a79aa;
+  color: rgb(95, 176, 242);
   font-weight: bold; /* Make it bold */
   text-decoration: none;
   transition: color 0.3s ease, transform 0.2s ease; /* Enhance hover effect */
@@ -73,7 +73,7 @@
   }
 
   .holdowsky a:hover {
-    color: #2a79aa !important;
+    color: rgb(95, 176, 242) !important;
     text-decoration: none !important;
     font-weight: 100;
   }
