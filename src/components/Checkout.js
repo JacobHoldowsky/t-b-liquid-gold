@@ -312,10 +312,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
     });
 
     if (honeyJarCount > 0) {
-      return honeyJarCount <= 5
+      return honeyJarCount <= 4
         ? currency === "Dollar"
-          ? 15
-          : Math.ceil(15 * exchangeRate) // Round up
+          ? 16
+          : Math.ceil(16 * exchangeRate) // Round up
         : currency === "Dollar"
         ? 20
         : Math.ceil(20 * exchangeRate); // Round up
@@ -350,8 +350,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
       shippingCharge +=
         honeyJarCount <= 4
           ? currency === "Dollar"
-            ? 15
-            : Math.ceil(15 * exchangeRate) // Round up
+            ? 16
+            : Math.ceil(16 * exchangeRate) // Round up
           : currency === "Dollar"
           ? 20
           : Math.ceil(20 * exchangeRate); // Round up
