@@ -8,7 +8,9 @@ function USDistributors() {
       <h2 className="page-title">US Distributors</h2>
 
       <div className="distributors-section">
-        <h3 className="section-title">Distributors</h3>
+        <h3 className="section-title">
+          Pick up your honey at any of our local distributors
+        </h3>
         <div className="distributors-grid">
           <div className="distributor-card">
             <h4>Monsey</h4>
@@ -19,7 +21,7 @@ function USDistributors() {
               rel="noopener noreferrer"
             >
               <FaWhatsapp className="whatsapp-icon" />
-              Devora Bracha Sommer
+              Order Now
             </a>
           </div>
           <div className="distributor-card">
@@ -31,7 +33,7 @@ function USDistributors() {
               rel="noopener noreferrer"
             >
               <FaWhatsapp className="whatsapp-icon" />
-              Shira Heinemann
+              Order Now
             </a>
           </div>
           <div className="distributor-card">
@@ -43,7 +45,7 @@ function USDistributors() {
               rel="noopener noreferrer"
             >
               <FaWhatsapp className="whatsapp-icon" />
-              Chana Tokarsky
+              Order Now
             </a>
           </div>
           <div className="distributor-card">
@@ -55,7 +57,7 @@ function USDistributors() {
               rel="noopener noreferrer"
             >
               <FaWhatsapp className="whatsapp-icon" />
-              Rochel Hershberg
+              Order Now
             </a>
           </div>
         </div>
@@ -71,7 +73,7 @@ function USDistributors() {
 
       <div className="nationwide-section">
         <div className="nationwide-distributor-card">
-          <h4>For Nationwide Shipping Please Contact</h4>
+          <h4>Nationwide Shipping</h4>
           <a
             href="https://wa.me/message/AUHFRK2KKV27O1"
             className="whatsapp-link"
@@ -79,7 +81,7 @@ function USDistributors() {
             rel="noopener noreferrer"
           >
             <FaWhatsapp className="whatsapp-icon" />
-            Chana Tokarsky
+            Order Now
           </a>
         </div>
       </div>

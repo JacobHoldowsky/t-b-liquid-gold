@@ -8,7 +8,9 @@ function IsraelDistributors() {
       <h2 className="page-title">Israel Distributors</h2>
 
       <div className="israel-distributors-section">
-        <h3 className="section-title">Distributors</h3>
+        <h3 className="section-title">
+          Pick up your honey at any of our local distributors
+        </h3>
         <div className="israel-distributors-grid">
           <div className="israel-distributor-card">
             <h4>Efrat</h4>
@@ -19,19 +21,19 @@ function IsraelDistributors() {
               rel="noopener noreferrer"
             >
               <FaWhatsapp className="whatsapp-icon" />
-              Rivky Krest
+              Order Now
             </a>
           </div>
           <div className="israel-distributor-card">
             <h4>RBS D2</h4>
             <a
-              href="https://wa.me/message/W7IN5L774FZJJ1"
+              href="https://wa.me/972534309254"
               className="whatsapp-link"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FaWhatsapp className="whatsapp-icon" />
-              Chaya Kamenetsky
+              Order Now
             </a>
           </div>
           <div className="israel-distributor-card">
@@ -43,31 +45,43 @@ function IsraelDistributors() {
               rel="noopener noreferrer"
             >
               <FaWhatsapp className="whatsapp-icon" />
-              Tehilla Siman Tov
+              Order Now
             </a>
           </div>
           <div className="israel-distributor-card">
             <h4>Carmei Gat</h4>
             <a
-              href="https://wa.me/message/W7IN5L774FZJJ1"
+              href="https://wa.me/972586725613"
               className="whatsapp-link"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FaWhatsapp className="whatsapp-icon" />
-              Jordana Cohen
+              Order Now
             </a>
           </div>
           <div className="israel-distributor-card">
             <h4>Modiin</h4>
             <a
-              href="https://wa.me/message/W7IN5L774FZJJ1"
+              href="https://wa.me/972549475747"
               className="whatsapp-link"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FaWhatsapp className="whatsapp-icon" />
-              Heather Zomer
+              Order Now
+            </a>
+          </div>
+          <div className="israel-distributor-card">
+            <h4>Rechavia</h4>
+            <a
+              href="https://wa.me/972555576539"
+              className="whatsapp-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaWhatsapp className="whatsapp-icon" />
+              Order Now
             </a>
           </div>
           <div className="israel-distributor-card">
@@ -79,7 +93,7 @@ function IsraelDistributors() {
               rel="noopener noreferrer"
             >
               <FaWhatsapp className="whatsapp-icon" />
-              Batya Sommer
+              Order Now
             </a>
           </div>
         </div>
