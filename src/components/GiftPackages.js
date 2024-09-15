@@ -55,13 +55,6 @@ function GiftPackages({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(49, exchangeRate),
       },
       {
-        url: "sweet-board-min.jpeg",
-        title: "The Sweet Board",
-        priceDollar: 60,
-        id: "theSweetBoard",
-        priceShekel: calculatePriceInShekels(60, exchangeRate),
-      },
-      {
         url: "boxOfFour-min.jpg",
         title: "Box of Four",
         priceDollar: shopRegion === "US" ? 65 : 55,
