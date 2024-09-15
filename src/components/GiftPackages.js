@@ -162,7 +162,6 @@ function GiftPackages({ cart, addToCart }) {
           "honeycombCollectionBoard",
           "boardOfFour",
           "deluxeBoard",
-          "theSweetBoard",
         ].includes(item.id)
       );
     } else {
