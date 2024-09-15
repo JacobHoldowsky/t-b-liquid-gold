@@ -165,7 +165,7 @@ function GiftPackages({ cart, addToCart }) {
         ].includes(item.id)
       );
     } else {
-      return allItems.filter((item) => !["theSweetBoard"].includes(item.id));
+      return allItems
     }
   }, [exchangeRate, shopRegion]);
 
