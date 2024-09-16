@@ -285,7 +285,7 @@ input:checked + .slider:before {
   }
 
   .header nav ul {
-    gap: 20px;
+    gap: 10px;
   }
 
   .shop-toggle {
