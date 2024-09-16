@@ -412,5 +412,7 @@ input:checked + .slider:before {
 }
 /* Very small screens */
 @media (max-width: 350px) {
- 
+  .slider-label{
+    width: 40px;
+  }
 }
