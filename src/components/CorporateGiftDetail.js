@@ -63,7 +63,12 @@ function CorporateGiftDetail({ cart, addToCart }) {
     );
 
   const handleQuantityChange = (e) => {
-    setQuantity(parseInt(e.target.value, 10));
+    const value = parseInt(e.target.value, 10);
+    if (isNaN(value)) {
+      setQuantity("");
+    } else {
+      setQuantity(value);
+    }
   };
 
   const handleLogoChange = (e) => {
@@ -73,10 +78,21 @@ function CorporateGiftDetail({ cart, addToCart }) {
   const handleArtworkUpload = async (e) => {
     const file = e.target.files[0];
 
+    // Check if a file was selected
+    if (!file) {
+      return;
+    }
+
     // Check file size, limit to 4MB
-    if (file && file.size > 4 * 1024 * 1024) {
-      // 4MB size limit
+    if (file.size > 4 * 1024 * 1024) {
       setUploadError("File size must be less than 4MB.");
+      setArtwork(null);
+      return;
+    }
+
+    // **New: Check filename length, limit to 100 characters**
+    if (file.name.length > 100) {
+      setUploadError("File name must be less than 100 characters.");
       setArtwork(null);
       return;
     }
@@ -116,7 +132,6 @@ function CorporateGiftDetail({ cart, addToCart }) {
       setUploading(false); // Set uploading state to false after the upload completes
     }
   };
-
   const handleAddToCart = () => {
     if (
       selectedItem.title === "Mini Four Collection Board" &&
@@ -163,18 +178,17 @@ function CorporateGiftDetail({ cart, addToCart }) {
       </div>
       <div className="quantity-selector">
         <label htmlFor="quantity">Quantity:</label>
-        <select
+        <input
+          type="number"
           id="quantity"
           value={quantity}
           onChange={handleQuantityChange}
-          className="select-dropdown"
-        >
-          {[...Array(86).keys()].map((num) => (
-            <option key={num + 5} value={num + 5}>
-              {num + 5}
-            </option>
-          ))}
-        </select>
+          step="1"
+          className="quantity-input"
+        />
+        {(quantity < 5 || isNaN(quantity)) && quantity !== "" && (
+          <p className="error-message">Minimum order quantity is 5.</p>
+        )}
       </div>
       {selectedItem.title === "Mini Four Collection Board" && (
         <div className="flavor-selection">
@@ -248,7 +262,13 @@ function CorporateGiftDetail({ cart, addToCart }) {
         <button
           onClick={handleAddToCart}
           className="add-to-cart-btn"
-          disabled={uploading || (includeLogo && !artwork?.previewURL)} // Disable button while uploading or if artwork is required but not available
+          disabled={
+            uploading ||
+            (includeLogo && !artwork?.previewURL) ||
+            quantity < 5 ||
+            isNaN(quantity) ||
+            quantity === ""
+          } // Disable button while uploading or if artwork is required but not available
         >
           Add to Cart
         </button>

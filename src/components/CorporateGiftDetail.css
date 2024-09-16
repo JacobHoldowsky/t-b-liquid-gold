@@ -66,6 +66,40 @@
     width: 60%;
     color:#333
   }
+
+  .quantity-selector {
+    margin-bottom: 30px;
+    text-align: left;
+  }
+  
+  .quantity-selector label {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .quantity-selector .quantity-input {
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 60%;
+    color: #333;
+    margin-top: 5px;
+  }
+  
+  .quantity-selector .quantity-input:focus {
+    border-color: #7c2234;
+    box-shadow: 0 0 5px rgba(124, 34, 52, 0.5);
+    outline: none;
+  }
+
+  .error-message {
+    color: #ff4d4f;
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+  
+  
   
   .logo-option {
     margin: 20px 0;
