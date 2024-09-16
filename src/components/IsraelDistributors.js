@@ -73,6 +73,18 @@ function IsraelDistributors() {
             </a>
           </div>
           <div className="israel-distributor-card">
+            <h4>Ramat Eshkol</h4>
+            <a
+              href="https://wa.me/message/W7IN5L774FZJJ1"
+              className="whatsapp-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaWhatsapp className="whatsapp-icon" />
+              Order Now
+            </a>
+          </div>
+          <div className="israel-distributor-card">
             <h4>Rechavia</h4>
             <a
               href="https://wa.me/972555576539"
@@ -85,9 +97,9 @@ function IsraelDistributors() {
             </a>
           </div>
           <div className="israel-distributor-card">
-            <h4>Jerusalem</h4>
+            <h4>French Hill</h4>
             <a
-              href="https://wa.me/message/W7IN5L774FZJJ1"
+              href="https://wa.me/972535698266"
               className="whatsapp-link"
               target="_blank"
               rel="noopener noreferrer"
