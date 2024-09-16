@@ -100,7 +100,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
     cart.forEach((item) => {
       const itemQuantity = item.quantity ? parseInt(item.quantity, 10) : 1;
-      console.log(itemQuantity);
       const flavors = item.selectedFlavors ? item.selectedFlavors : [];
       const key = flavors.length
         ? `${item.title}-${flavors.join(",")}-${item.includeLogo ? "Logo" : ""}`
@@ -130,7 +129,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
   let specialDeliveryOnly = aggregatedCart.aggregatedCart.every(
     (item) => item.category === "sponsor a board"
   );
-  console.log(aggregatedCart.aggregatedCart);
 
   const apiUrl =
     process.env.NODE_ENV === "development"
