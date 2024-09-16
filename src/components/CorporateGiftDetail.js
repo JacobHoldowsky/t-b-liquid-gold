@@ -22,6 +22,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
         ? Math.ceil(35 * exchangeRate)
         : Math.ceil(35 * 3.7),
       imageUrl: "/Mini four collection board with plastic-min.png",
+      warning: "*Minimum orders on this gift is 5 boards",
       hasLogoOption: true,
       availableFlavors: [
         "Chocolate Creamed Honey",
@@ -42,6 +43,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
         ? Math.ceil(50 * exchangeRate)
         : Math.ceil(50 * 3.7),
       imageUrl: "/Mini six collection board with plastic-min.png",
+      warning: "*Minimum orders on this gift is 5 boards",
       hasLogoOption: true,
     },
   };
@@ -151,6 +153,9 @@ function CorporateGiftDetail({ cart, addToCart }) {
       <h2 className="corporate-gift-title">{selectedItem.title}</h2>
       <p className="corporate-gift-description">{selectedItem.description}</p>
       <p className="corporate-gift-size">{selectedItem.size}</p>
+      {selectedItem?.warning && (
+        <p className="gift-package-warning">{selectedItem?.warning}</p>
+      )}
       <div className="corporate-gift-price">
         {currency === "Dollar"
           ? `$${selectedItem.priceDollar}`
