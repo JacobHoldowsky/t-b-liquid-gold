@@ -16,6 +16,7 @@
     object-fit: cover; /* Ensures the image fills the area while maintaining aspect ratio */
     border-radius: 10px;
     margin-bottom: 20px;
+    background-color: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
