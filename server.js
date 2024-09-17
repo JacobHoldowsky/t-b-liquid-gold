@@ -313,6 +313,7 @@ app.post(
       let state = session.metadata.state;
       let zipCode = session.metadata.zipCode;
       let contactNumber = session.metadata.contactNumber;
+      let promoCode = session.metadata.promoCode;
       let specialDeliveryOnly = session.metadata.specialDeliveryOnly;
 
       if (!customerEmail) {
@@ -512,6 +513,13 @@ app.post(
             </ul>
 
             <p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Total Price: ${formattedTotalAmount}</p>
+            
+            ${
+              promoCode
+                ? `<p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Promo Code: ${promoCode}</p>`
+                : `<p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Promo Code: None</p>`
+            }
+            
 
             ${giftNoteHtml}
 

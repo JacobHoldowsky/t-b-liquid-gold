@@ -74,6 +74,7 @@ module.exports = async (req, res) => {
       const state = session.metadata.state;
       const zipCode = session.metadata.zipCode;
       const contactNumber = session.metadata.contactNumber;
+      const promoCode = session.metadata.promoCode;
       let specialDeliveryOnly = session.metadata.specialDeliveryOnly;
 
       if (!customerEmail) {
@@ -272,6 +273,12 @@ ${
             </ul>
 
             <p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Total Price: ${formattedTotalAmount}</p>
+
+             ${
+               promoCode
+                 ? `<p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Promo Code: ${promoCode}</p>`
+                 : `<p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Promo Code: None</p>`
+             }
 
             ${giftNoteHtml}
 
