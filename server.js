@@ -470,63 +470,104 @@ app.post(
              <p style="font-size: 16px; background-color: #f9f9f9; padding: 15px; border-radius: 5px; color: #333;">${giftNote}</p>`
           : "";
 
-        // Email HTML for Customer
+        // Separate product items and delivery fee
+        const productItems = lineItems.data.filter(
+          (item) => !item.description.toLowerCase().includes("delivery charge")
+        );
+        const deliveryItem = lineItems.data.find((item) =>
+          item.description.toLowerCase().includes("delivery charge")
+        );
+
+        // Calculate the subtotal for product items only (without delivery fee)
+        const subtotalAmount = productItems.reduce(
+          (acc, item) => acc + item.amount_total,
+          0
+        );
+
+        // Extract the delivery fee if it exists
+        const deliveryFee = deliveryItem ? deliveryItem.amount_total : 0;
+
+        // Calculate the final total after adding the delivery fee
+        const finalTotalAmount = subtotalAmount + deliveryFee;
+
+        // Format the amounts in the appropriate currency format
+        const formattedSubtotalAmount =
+          session.currency.toUpperCase() === "USD"
+            ? `$${(subtotalAmount / 100).toFixed(2)}`
+            : `₪${(subtotalAmount / 100).toFixed(2)}`;
+
+        const formattedDeliveryFee =
+          session.currency.toUpperCase() === "USD"
+            ? `$${(deliveryFee / 100).toFixed(2)}`
+            : `₪${(deliveryFee / 100).toFixed(2)}`;
+
+        const formattedFinalTotalAmount =
+          session.currency.toUpperCase() === "USD"
+            ? `$${(finalTotalAmount / 100).toFixed(2)}`
+            : `₪${(finalTotalAmount / 100).toFixed(2)}`;
+
+        // Update the customer email HTML to include the totals breakdown
         const customerEmailHtml = `
-          <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-            <header style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
-              <h2 style="color: #7c2234;">Order Confirmation</h2>
-              <p style="font-size: 16px; color: #777;">Order Number: <strong>${orderNumber}</strong></p>
-            </header>
-            <p style="font-size: 16px;">Dear ${fullName.trim()},</p>
-            <p style="font-size: 16px;">Thank you for your purchase! We are currently processing your order. Below are the details of your order:</p>
-            
-            <h3 style="color: #333; margin-bottom: 10px;">Order Details</h3>
-            <ul style="font-size: 16px; list-style-type: none; padding: 0;">
-              ${itemsListHtml}
-            </ul>
+  <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+    <header style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
+      <h2 style="color: #7c2234;">Order Confirmation</h2>
+      <p style="font-size: 16px; color: #777;">Order Number: <strong>${orderNumber}</strong></p>
+    </header>
+    <p style="font-size: 16px;">Dear ${fullName.trim()},</p>
+    <p style="font-size: 16px;">Thank you for your purchase! We are currently processing your order. Below are the details of your order:</p>
+    
+    <h3 style="color: #333; margin-bottom: 10px;">Order Details</h3>
+    <ul style="font-size: 16px; list-style-type: none; padding: 0;">
+      ${itemsListHtml}
+    </ul>
 
-            <p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Total Price: ${formattedTotalAmount}</p>
+    <h3 style="color: #333; margin-bottom: 10px;">Price Summary</h3>
+    <p style="font-size: 16px;">Total for items (without delivery fee): <strong>${formattedSubtotalAmount}</strong></p>
+    <p style="font-size: 16px;">Delivery Fee: <strong>${formattedDeliveryFee}</strong></p>
+    <p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Total after adding delivery fee: <strong>${formattedFinalTotalAmount}</strong></p>
 
-            ${giftNoteHtml}
+    ${giftNoteHtml}
 
-            ${shippingAddressHtml}
-            
-            <footer style="text-align: center; padding-top: 20px; border-top: 1px solid #ddd; margin-top: 20px;">
-              <p style="font-size: 14px; color: #777;">Thank you for shopping with us!</p>
-              <p style="font-size: 14px; color: #777;">If you have any questions, feel free to contact us at tandbeeliquidgold@gmail.com.</p>
-            </footer>
-          </div>
-        `;
+    ${shippingAddressHtml}
+    
+    <footer style="text-align: center; padding-top: 20px; border-top: 1px solid #ddd; margin-top: 20px;">
+      <p style="font-size: 14px; color: #777;">Thank you for shopping with us!</p>
+      <p style="font-size: 14px; color: #777;">If you have any questions, feel free to contact us at tandbeeliquidgold@gmail.com.</p>
+    </footer>
+  </div>
+`;
 
-        // Email HTML for Seller
+        // Update the admin email HTML to include the totals breakdown
         const adminEmailHtml = `
-          <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-            <header style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
-              <h2 style="color: #7c2234;">New Order Received</h2>
-              <p style="font-size: 16px; color: #777;">Order Number: <strong>${orderNumber}</strong></p>
-            </header>
-            <p style="font-size: 16px;">You have received a new order from ${fullName} (${customerEmail}). Below are the details:</p>
-            
-            <h3 style="color: #333; margin-bottom: 10px;">Order Details</h3>
-            <ul style="font-size: 16px; list-style-type: none; padding: 0;">
-              ${itemsListHtml}
-            </ul>
+  <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+    <header style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #ddd;">
+      <h2 style="color: #7c2234;">New Order Received</h2>
+      <p style="font-size: 16px; color: #777;">Order Number: <strong>${orderNumber}</strong></p>
+    </header>
+    <p style="font-size: 16px;">You have received a new order from ${fullName} (${customerEmail}). Below are the details:</p>
+    
+    <h3 style="color: #333; margin-bottom: 10px;">Order Details</h3>
+    <ul style="font-size: 16px; list-style-type: none; padding: 0;">
+      ${itemsListHtml}
+    </ul>
 
-            <p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Total Price: ${formattedTotalAmount}</p>
-            
-            ${
-              promoCode
-                ? `<p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Promo Code: ${promoCode}</p>`
-                : `<p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Promo Code: None</p>`
-            }
-            
+    <h3 style="color: #333; margin-bottom: 10px;">Price Summary</h3>
+    <p style="font-size: 16px;">Total for items (without delivery fee): <strong>${formattedSubtotalAmount}</strong></p>
+    <p style="font-size: 16px;">Delivery Fee: <strong>${formattedDeliveryFee}</strong></p>
+    <p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Total after adding delivery fee: <strong>${formattedFinalTotalAmount}</strong></p>
+    
+    ${
+      promoCode
+        ? `<p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Promo Code: ${promoCode}</p>`
+        : `<p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Promo Code: None</p>`
+    }
 
-            ${giftNoteHtml}
+    ${giftNoteHtml}
 
-            ${shippingAddressHtml}
-            
-          </div>
-        `;
+    ${shippingAddressHtml}
+    
+  </div>
+`;
 
         const mailOptionsCustomer = {
           from: process.env.MAIL_USERNAME,
