@@ -213,12 +213,12 @@ function GiftPackageDetail({ cart, addToCart }) {
         title: "Scotch n' Sweets Board",
         description:
           "4 Flavored creamed honeys, 5 Dairy Belgian chocolates, 700ml Bottle of Glenlivet, wooden honey dipper, wooden honey board.",
-        priceDollar: 160,
-        priceShekel: calculatePriceInShekels(160),
+        priceDollar: shopRegion === "US" ? 180 : 160,
+        priceShekel: calculatePriceInShekels(shopRegion === "US" ? 180 : 160),
         honeyCount: 4,
         imageUrl: "/scoth n sweets-min.png",
         category: "gift packages",
-        availableInRegions: ["Israel"],
+        availableInRegions: ["Israel", "US"],
       },
       theBossBoard: {
         title: "The Boss Board",

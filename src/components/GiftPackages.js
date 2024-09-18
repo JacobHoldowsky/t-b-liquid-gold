@@ -142,9 +142,12 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "scoth n sweets-min.png",
         title: "Scotch n' Sweets Board",
-        priceDollar: 160,
+        priceDollar: shopRegion === "US" ? 180 : 160,
         id: "scotchNSweetsBoard",
-        priceShekel: calculatePriceInShekels(160, exchangeRate),
+        priceShekel: calculatePriceInShekels(
+          shopRegion === "US" ? 180 : 160,
+          exchangeRate
+        ),
       },
       {
         url: "The Boss Board no plastic-min.jpg",
@@ -162,10 +165,11 @@ function GiftPackages({ cart, addToCart }) {
           "honeycombCollectionBoard",
           "boardOfFour",
           "deluxeBoard",
+          "scotchNSweetsBoard",
         ].includes(item.id)
       );
     } else {
-      return allItems
+      return allItems;
     }
   }, [exchangeRate, shopRegion]);
 
