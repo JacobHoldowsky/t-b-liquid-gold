@@ -17,6 +17,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const { shopRegion } = useShopContext(); // Use shop context to get the current region
   const [isGift, setIsGift] = useState(false);
   const [giftNote, setGiftNote] = useState("");
+  const [hasComments, setHasComments] = useState(false);
+  const [comments, setComments] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [shippingDetails, setShippingDetails] = useState({
     fullName: "",
@@ -208,7 +210,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
         body: JSON.stringify({
           items: lineItems,
           gift: isGift,
+          hasComments: hasComments,
           giftNote: isGift ? giftNote : null,
+          comments: hasComments ? comments : null,
           shippingDetails,
           deliveryCharge:
             shopRegion === "US" ? totalDeliveryCharge : deliveryCharge, // Pass the calculated delivery charge
@@ -729,6 +733,25 @@ function Checkout({ cart, setCart, removeFromCart }) {
                   value={giftNote}
                   onChange={(e) => setGiftNote(e.target.value.slice(0, 400))}
                   placeholder="Include a gift note (max 400 characters)"
+                  rows="4"
+                  maxLength="400"
+                />
+              )}
+            </div>
+            <div className="gift-option">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={hasComments}
+                  onChange={(e) => setHasComments(e.target.checked)}
+                />
+                Add comments
+              </label>
+              {hasComments && (
+                <textarea
+                  value={comments}
+                  onChange={(e) => setComments(e.target.value.slice(0, 400))}
+                  placeholder="Include comments (max 400 characters)"
                   rows="4"
                   maxLength="400"
                 />

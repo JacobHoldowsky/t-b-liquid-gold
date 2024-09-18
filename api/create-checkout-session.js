@@ -9,6 +9,7 @@ module.exports = async (req, res) => {
       const {
         items,
         giftNote,
+        comments,
         shippingDetails,
         deliveryCharge,
         selectedDeliveryOption,
@@ -59,6 +60,7 @@ module.exports = async (req, res) => {
                 logoUrl: item.price_data.product_data.metadata?.logoUrl || null,
                 flavors: item.price_data.product_data.metadata?.flavors || "",
                 ...(giftNote && { giftNote: giftNote }),
+                ...(comments && { comments: comments }),
               },
             },
             unit_amount: adjustedUnitAmount, // Adjusted price per unit
@@ -128,6 +130,7 @@ module.exports = async (req, res) => {
         cancel_url: `${req.headers.origin}/canceled`,
         metadata: {
           ...(giftNote && { giftNote: giftNote }),
+          ...(comments && { comments: comments }),
           fullName: shippingDetails.fullName,
           email: shippingDetails.email,
           number: shippingDetails.number,

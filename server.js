@@ -128,6 +128,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
     const {
       items,
       giftNote,
+      comments,
       shippingDetails,
       deliveryCharge,
       selectedDeliveryOption,
@@ -175,6 +176,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
               logoUrl: item.price_data.product_data.metadata?.logoUrl || null,
               flavors: item.price_data.product_data.metadata?.flavors || "",
               ...(giftNote && { giftNote: giftNote }),
+              ...(comments && { comments: comments }),
             },
           },
           unit_amount: adjustedUnitAmount, // Adjusted price per unit
@@ -242,6 +244,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
       cancel_url: `${req.headers.origin}/canceled`,
       metadata: {
         ...(giftNote && { giftNote: giftNote }),
+        ...(comments && { comments: comments }),
         fullName: shippingDetails.fullName,
         email: shippingDetails.email,
         number: shippingDetails.number,
@@ -293,6 +296,7 @@ app.post(
       const session = event.data.object;
       const customerEmail = session.customer_details.email;
       const giftNote = session.metadata.giftNote || "";
+      const comments = session.metadata.comments || "";
       let fullName = session.metadata.fullName;
       let email = session.metadata.email;
       let number = session.metadata.number;
@@ -470,6 +474,11 @@ app.post(
              <p style="font-size: 16px; background-color: #f9f9f9; padding: 15px; border-radius: 5px; color: #333;">${giftNote}</p>`
           : "";
 
+        const commentsHtml = comments
+          ? `<h3 style="color: #333; margin-top: 20px;">Comments</h3>
+             <p style="font-size: 16px; background-color: #f9f9f9; padding: 15px; border-radius: 5px; color: #333;">${comments}</p>`
+          : "";
+
         // Separate product items and delivery fee
         const productItems = lineItems.data.filter(
           (item) => !item.description.toLowerCase().includes("delivery charge")
@@ -528,6 +537,8 @@ app.post(
 
     ${giftNoteHtml}
 
+    ${commentsHtml}
+
     ${shippingAddressHtml}
     
     <footer style="text-align: center; padding-top: 20px; border-top: 1px solid #ddd; margin-top: 20px;">
@@ -563,6 +574,8 @@ app.post(
     }
 
     ${giftNoteHtml}
+
+    ${commentsHtml}
 
     ${shippingAddressHtml}
     
