@@ -358,7 +358,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
     // Calculate shipping for gift packages
     shippingCharge +=
       boardOfFourCount *
-        (currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate)) +
+        (currency === "Dollar" ? 16 : Math.ceil(16 * exchangeRate)) +
       otherGiftPackageCount *
         (currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate));
 
@@ -620,8 +620,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
                       <p className="item-flavors">
                         Delivery:{" "}
                         {currency === "Dollar"
-                          ? `$15 each`
-                          : `₪${Math.ceil(15 * exchangeRate)} each`}{" "}
+                          ? `$16 each`
+                          : `₪${Math.ceil(16 * exchangeRate)} each`}{" "}
                       </p>
                     ) : null}
                     {item.includeLogo && (
