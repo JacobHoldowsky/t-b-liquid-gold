@@ -5,10 +5,13 @@ import { ExchangeRateContext } from "../context/ExchangeRateContext";
 import { FaCheckCircle } from "react-icons/fa";
 import "./CorporateGiftDetail.css";
 import useFlavorSelector from "../hooks/useFlavorSelector"; // Import your custom hook
+import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
 
 function CorporateGiftDetail({ cart, addToCart }) {
   const { corporateId } = useParams();
   const { currency } = useContext(CurrencyContext);
+  const { shopRegion } = useShopContext(); // Use shop context to get the current region
+
   const exchangeRate = useContext(ExchangeRateContext);
 
   const items = {
@@ -262,12 +265,18 @@ function CorporateGiftDetail({ cart, addToCart }) {
         <button
           onClick={handleAddToCart}
           className="add-to-cart-btn"
+          title={
+            shopRegion !== "Israel"
+              ? "This item is only available in Israel."
+              : ""
+          }
           disabled={
             uploading ||
             (includeLogo && !artwork?.previewURL) ||
             quantity < 5 ||
             isNaN(quantity) ||
-            quantity === ""
+            quantity === "" ||
+            shopRegion !== "Israel"
           } // Disable button while uploading or if artwork is required but not available
         >
           Add to Cart

@@ -314,7 +314,7 @@ function GiftPackageDetail({ cart, addToCart }) {
           disabled={!isAvailableInRegion}
           title={
             !isAvailableInRegion
-              ? "This item is only available for Israel shipping"
+              ? "This item is only available in Israel"
               : ""
           }
         >
