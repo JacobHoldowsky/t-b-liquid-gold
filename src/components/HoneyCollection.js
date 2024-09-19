@@ -72,6 +72,7 @@ const HoneyItem = ({
           onClick={() => !isSoldOut && handleAddToCart(item)} // Prevent adding to cart if sold out
           className="add-to-cart-btn"
           disabled={isSoldOut} // Disable button if sold out
+          title={isSoldOut ? "This item is sold out" : ""}
         >
           {isSoldOut ? "Sold Out" : "Add to Cart"}
         </button>
@@ -296,6 +297,7 @@ function HoneyCollection({ cart, addToCart }) {
                   }
                   className="add-to-cart-btn"
                   disabled={selectedItem.isSoldOut} // Disable button if sold out
+                  title={selectedItem.isSoldOut ? "This item is sold out" : ""}
                 >
                   {selectedItem.isSoldOut ? "Sold Out" : "Add to Cart"}
                 </button>
