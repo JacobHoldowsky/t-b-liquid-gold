@@ -45,9 +45,9 @@ function GiftPackageDetail({ cart, addToCart }) {
 
   const exchangeRate = useContext(ExchangeRateContext);
 
-  // Available honey flavors
-  const honeyFlavors = useMemo(
-    () => [
+  // Available honey flavors, excluding Bourbon Creamed Honey if region is US
+  const honeyFlavors = useMemo(() => {
+    const allFlavors = [
       "Chocolate Creamed Honey",
       "Cinnamon Creamed Honey",
       "Pumpkin Creamed Honey",
@@ -55,9 +55,12 @@ function GiftPackageDetail({ cart, addToCart }) {
       "Vanilla Creamed Honey",
       "Bourbon Creamed Honey",
       "Blueberry Creamed Honey",
-    ],
-    []
-  );
+    ];
+    // Exclude Bourbon Creamed Honey if region is US
+    return shopRegion === "US"
+      ? allFlavors.filter((flavor) => flavor !== "Bourbon Creamed Honey")
+      : allFlavors;
+  }, [shopRegion]);
 
   // Helper function to calculate price in Shekels
   const calculatePriceInShekels = (priceDollar) =>

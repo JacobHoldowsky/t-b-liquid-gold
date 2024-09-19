@@ -1,14 +1,12 @@
 import React, { useState, useContext, useMemo } from "react";
 import "./HoneyCollection.css";
-import { CurrencyContext } from "../context/CurrencyContext"; // Import CurrencyContext
-import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
-import { FaCheckCircle } from "react-icons/fa"; // Import a checkmark icon
+import { CurrencyContext } from "../context/CurrencyContext";
+import { useShopContext } from "../context/ShopContext";
+import { FaCheckCircle } from "react-icons/fa";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
 
-// Helper function to round up to the nearest shekel
 const formatPrice = (value) => Math.ceil(value);
 
-// Reusable Quantity Selector Component
 const QuantitySelector = ({ id, value, onChange }) => (
   <select className="select-dropdown" id={id} value={value} onChange={onChange}>
     {[...Array(10).keys()].map((num) => (
@@ -19,7 +17,6 @@ const QuantitySelector = ({ id, value, onChange }) => (
   </select>
 );
 
-// Reusable Honey Item Component
 const HoneyItem = ({
   item,
   currency,
@@ -28,9 +25,10 @@ const HoneyItem = ({
   handleAddToCart,
   addedToCart,
   openModal,
+  isSoldOut, // New prop to indicate if the item is sold out
 }) => {
   const price =
-    currency === "Dollar" ? item.priceDollar : formatPrice(item.priceShekel); // Format price
+    currency === "Dollar" ? item.priceDollar : formatPrice(item.priceShekel);
   const size = currency === "Dollar" ? item.sizeUS : item.sizeIL;
   const notificationClass = addedToCart[item.title];
 
@@ -38,6 +36,7 @@ const HoneyItem = ({
     <div className="honey-div">
       <div className="honey-image">
         <img src={item.url} alt={item.title} onClick={() => openModal(item)} />
+        {/* Sold Out badge */}
       </div>
       <div className="honey-info">
         <h3>{item.title}</h3>
@@ -55,6 +54,7 @@ const HoneyItem = ({
             onChange={(e) =>
               handleQuantityChange(item, parseInt(e.target.value, 10))
             }
+            disabled={isSoldOut} // Disable quantity selector if sold out
           />
         </div>
       </div>
@@ -69,10 +69,11 @@ const HoneyItem = ({
         </div>
       ) : (
         <button
-          onClick={() => handleAddToCart(item)}
+          onClick={() => !isSoldOut && handleAddToCart(item)} // Prevent adding to cart if sold out
           className="add-to-cart-btn"
+          disabled={isSoldOut} // Disable button if sold out
         >
-          Add to Cart
+          {isSoldOut ? "Sold Out" : "Add to Cart"}
         </button>
       )}
     </div>
@@ -82,12 +83,11 @@ const HoneyItem = ({
 function HoneyCollection({ cart, addToCart }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [quantities, setQuantities] = useState({}); // State to track quantities
-  const [addedToCart, setAddedToCart] = useState({}); // Track which items have been added
+  const [quantities, setQuantities] = useState({});
+  const [addedToCart, setAddedToCart] = useState({});
   const exchangeRate = useContext(ExchangeRateContext);
-
-  const { currency } = useContext(CurrencyContext); // Use context here
-  const { shopRegion } = useShopContext(); // Use shop context to get the current region
+  const { currency } = useContext(CurrencyContext);
+  const { shopRegion } = useShopContext();
 
   // Memoize the items list to prevent re-creating on each render
   const items = useMemo(() => {
@@ -141,13 +141,14 @@ function HoneyCollection({ cart, addToCart }) {
         url: "bourbon small jar-min.jpg",
         title: "Bourbon Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: shopRegion === "US" ? "16" : "14", // Price change based on region
+        priceDollar: shopRegion === "US" ? "16" : "14",
         sizeIL: "120ml",
         priceShekel:
           shopRegion === "US"
             ? formatPrice(16 * (exchangeRate ? exchangeRate : 3.7))
             : "55",
-        category: "honey jars", // Added category
+        category: "honey jars",
+        isSoldOut: shopRegion === "US", // Bourbon is sold out in the US
       },
       {
         url: "blueberry screenshot-min.png",
@@ -167,7 +168,7 @@ function HoneyCollection({ cart, addToCart }) {
     if (shopRegion === "US") {
       baseItems.forEach((item) => {
         if (item.priceDollar === "12") {
-          item.priceDollar = "15"; // Change base honey items price
+          item.priceDollar = "15";
           item.priceShekel = formatPrice(
             15 * (exchangeRate ? exchangeRate : 3.7)
           );
@@ -176,7 +177,7 @@ function HoneyCollection({ cart, addToCart }) {
     }
 
     return baseItems;
-  }, [shopRegion, exchangeRate]); // Re-compute when `shopRegion` or `exchangeRate` changes
+  }, [shopRegion, exchangeRate]);
 
   const openModal = (item) => {
     setSelectedItem(item);
@@ -194,9 +195,8 @@ function HoneyCollection({ cart, addToCart }) {
 
   const handleAddToCart = (item, inModal = false) => {
     const quantity = quantities[item.title] || 1;
-    addToCart({ ...item, quantity }); // Add to cart with `category` included
+    addToCart({ ...item, quantity });
     setQuantities((prev) => ({ ...prev, [item.title]: 1 }));
-
     triggerNotification(item, inModal);
   };
 
@@ -209,7 +209,7 @@ function HoneyCollection({ cart, addToCart }) {
       );
       setTimeout(() => {
         setAddedToCart((prev) => ({ ...prev, modal: false }));
-        closeModal(); // Close modal after notification is hidden
+        closeModal();
       }, 2000);
     } else {
       setAddedToCart((prev) => ({
@@ -239,6 +239,7 @@ function HoneyCollection({ cart, addToCart }) {
             handleAddToCart={handleAddToCart}
             addedToCart={addedToCart}
             openModal={openModal}
+            isSoldOut={item.isSoldOut} // Pass the sold out state
           />
         ))}
       </div>
@@ -275,6 +276,7 @@ function HoneyCollection({ cart, addToCart }) {
                       parseInt(e.target.value, 10)
                     )
                   }
+                  disabled={selectedItem.isSoldOut} // Disable quantity selector if sold out
                 />
               </div>
               {addedToCart.modal ? (
@@ -288,10 +290,14 @@ function HoneyCollection({ cart, addToCart }) {
                 </div>
               ) : (
                 <button
-                  onClick={() => handleAddToCart(selectedItem, true)}
+                  onClick={() =>
+                    !selectedItem.isSoldOut &&
+                    handleAddToCart(selectedItem, true)
+                  }
                   className="add-to-cart-btn"
+                  disabled={selectedItem.isSoldOut} // Disable button if sold out
                 >
-                  Add to Cart
+                  {selectedItem.isSoldOut ? "Sold Out" : "Add to Cart"}
                 </button>
               )}
             </div>
