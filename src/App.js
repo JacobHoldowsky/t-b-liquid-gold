@@ -28,6 +28,7 @@ import { ExchangeRateProvider } from "./context/ExchangeRateContext";
 import "./index.css";
 import CorporateGiftDetail from "./components/CorporateGiftDetail";
 import { ShopProvider } from "./context/ShopContext";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -96,9 +97,9 @@ function App() {
     <CurrencyProvider>
       <ShopProvider>
         <ExchangeRateProvider>
-          {/* Wrap with ExchangeRateProvider */}
           <Router>
             <ScrollToTop />
+            <Analytics />
             <div className="App">
               <Header
                 cartItemCount={calculateCartItemCount()}
