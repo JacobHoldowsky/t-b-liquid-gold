@@ -41,6 +41,13 @@ function SponsorAHoneyBoard({ cart, addToCart }) {
   const items = useMemo(() => {
     const allItems = [
       {
+        url: "Mini six collection board with plastic-min.png",
+        title: "Sponsor a Mini Six Collection Board",
+        priceDollar: 50,
+        id: "sponsorAMiniSixCollectionBoard",
+        priceShekel: calculatePriceInShekels(50, exchangeRate),
+      },
+      {
         url: "sponsor-a-sweet-board-min.jpg",
         title: "Sponsor a Sweet Board",
         priceDollar: 50,
@@ -82,6 +89,15 @@ function SponsorAHoneyBoard({ cart, addToCart }) {
             it most.
           </p>
         </div>
+        <p className="availability-note">
+          **These gift options below are only available for distribution to
+          families effected by the war. They will be distributed to recipients
+          on our list.**
+        </p>
+        <p className="availability-note">
+          If you woud like to send it to a particular recipient, please reach
+          out to us via whatsapp.
+        </p>
         <h2 className="sponsor-boards-section-title">
           Choose a Honey Board to Sponsor
         </h2>
