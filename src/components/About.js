@@ -26,7 +26,7 @@ function About() {
         <p>Every jar is made with lots of love.</p>
         <p>We look forward to sharing the goodness with you.</p>
         <p>
-          Thanks, <br />
+          Warmly, <br />
           Batya
         </p>
         <Link to="/honeyCollection" className="cta-btn">
