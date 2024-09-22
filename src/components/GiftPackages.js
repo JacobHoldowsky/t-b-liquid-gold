@@ -185,6 +185,11 @@ function GiftPackages({ cart, addToCart }) {
       <p className="availability-note">
         **Packaging may vary based on availability**
       </p>
+      <p className="availability-note">
+        {shopRegion === "Israel"
+          ? ""
+          : "**If a flavor is out of stock, it will be replaced with a different flavor**"}
+      </p>
       <h2 className="gift-packages-section-title">Gift Packages</h2>
       <div className="gift-packages-images">
         {items.map((item) => (
