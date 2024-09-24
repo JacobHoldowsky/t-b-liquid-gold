@@ -50,15 +50,31 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   const DELIVERY_OPTIONS = [
     {
+      label: "Pick up in Beitar",
+      charge: 0,
+    },
+    {
+      label: "Pick up in Efrat",
+      charge: 0,
+    },
+    {
+      label: "Pick up in Givat Zeev",
+      charge: 0,
+    },
+    {
+      label: "Pick up in Mitzpei Yericho",
+      charge: 0,
+    },
+    {
+      label: "Pick up in Modiin",
+      charge: 0,
+    },
+    {
       label: "Pick up in Ramat Eshkol",
       charge: 0,
     },
     {
       label: "Pick up in RBS D2",
-      charge: 0,
-    },
-    {
-      label: "Pick up in Mitzpei Yericho",
       charge: 0,
     },
     {
@@ -77,7 +93,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
     },
     {
       label:
-        "All other locations in Israel (order deadline for this delivery option is September 22)",
+        "All other locations in Israel (please reach out to us directly and we will try and accomodate you)",
       charge: currency === "Dollar" ? 25 : Math.ceil(25 * exchangeRate),
       deadline: "2024-09-23",
     },

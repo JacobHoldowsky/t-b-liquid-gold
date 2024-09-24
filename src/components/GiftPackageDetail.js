@@ -146,7 +146,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         title: "Honey A' La Connoisseur",
         description:
           "2 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
-        warning: "*Wine may vary based on availability",
+        warning: "*Wine bottle will vary based on availability",
         priceDollar: 85,
         priceShekel: calculatePriceInShekels(85),
         honeyCount: 2,
@@ -191,7 +191,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         title: "Deluxe Box",
         description:
           "5 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
-        warning: "*Wine may vary based on availability",
+        warning: "*Wine bottle will vary based on availability",
         priceDollar: 120,
         priceShekel: calculatePriceInShekels(120),
         honeyCount: 5,
@@ -204,7 +204,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         description: `5 Flavored creamed honeys, ${
           shopRegion === "US" ? "750ml" : "375ml"
         } bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.`,
-        warning: "*Wine may vary based on availability",
+        warning: "*Wine bottle will vary based on availability",
         priceDollar: shopRegion === "US" ? 150 : 136,
         priceShekel: calculatePriceInShekels(shopRegion === "US" ? 150 : 136),
         honeyCount: 5,
@@ -227,7 +227,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         title: "The Boss Board",
         description:
           "6 Flavored creamed honeys, Bottle of wine, 9 Dairy Belgian chocolates, Wooden honey dipper, Wooden serving board.",
-        warning: "*Wine may vary based on availability",
+        warning: "*Wine bottle will vary based on availability",
         priceDollar: 180,
         priceShekel: calculatePriceInShekels(180),
         honeyCount: 6,

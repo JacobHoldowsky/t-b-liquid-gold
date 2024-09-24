@@ -187,7 +187,7 @@ function GiftPackages({ cart, addToCart }) {
       </p>
       <p className="availability-note">
         {shopRegion === "Israel"
-          ? ""
+          ? "**If you choose a flavor that is out of stock, it will be replaced with a different flavor**"
           : "**If a flavor is out of stock, it will be replaced with a different flavor**"}
       </p>
       <h2 className="gift-packages-section-title">Gift Packages</h2>
