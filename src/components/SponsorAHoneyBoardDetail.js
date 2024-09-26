@@ -90,14 +90,14 @@ function SponsorAHoneyBoardDetail({ cart, addToCart }) {
         category: "sponsor a board",
         availableInRegions: ["Israel", "US"],
       },
-      sponsorAMiniSixCollectionBoard: {
-        title: "Sponsor a Mini Six Collection Board",
+      sponsorAMiniFourCollectionBoard: {
+        title: "Sponsor a Mini Four Collection Board",
         description:
-          "6 flavored creamed honeys, wooden honey dipper, wooden serving board",
+          "4 flavored creamed honeys, wooden honey dipper, wooden serving board",
         priceDollar: 50,
         priceShekel: calculatePriceInShekels(50),
         honeyCount: 0,
-        imageUrl: "/Mini six collection board with plastic-min.png",
+        imageUrl: "/Mini four collection board with plastic-min.png",
         category: "sponsor a board",
         availableInRegions: ["Israel", "US"],
       },
