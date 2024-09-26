@@ -43,9 +43,9 @@ function SponsorAHoneyBoard({ cart, addToCart }) {
       {
         url: "Mini four collection board with plastic-min.png",
         title: "Sponsor a Mini Four Collection Board",
-        priceDollar: 50,
+        priceDollar: 35,
         id: "sponsorAMiniFourCollectionBoard",
-        priceShekel: calculatePriceInShekels(50, exchangeRate),
+        priceShekel: calculatePriceInShekels(35, exchangeRate),
       },
       {
         url: "sponsor-a-sweet-board-min.jpg",
