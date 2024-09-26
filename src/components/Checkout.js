@@ -954,6 +954,14 @@ function Checkout({ cart, setCart, removeFromCart }) {
             </h3>
           </div>
         ) : null}
+        {shopRegion === "US" && !specialDeliveryOnly ? (
+          <p className="availability-note">
+            Shipping takes 5-7 days. We are happy to ship out your order but
+            cannot guarantee that it will arrive before Rosh Hashana.
+          </p>
+        ) : (
+          ""
+        )}
         {aggregatedCart.aggregatedCart.length ? (
           <div className="submit-order-btn-wrapper">
             <button
