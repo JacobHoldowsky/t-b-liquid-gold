@@ -40,13 +40,13 @@ function SponsorAHoneyBoard({ cart, addToCart }) {
   // Memoize the items list to prevent unnecessary re-calculations on every render
   const items = useMemo(() => {
     const allItems = [
-      // {
-      //   url: "Mini six collection board with plastic-min.png",
-      //   title: "Sponsor a Mini Six Collection Board",
-      //   priceDollar: 50,
-      //   id: "sponsorAMiniSixCollectionBoard",
-      //   priceShekel: calculatePriceInShekels(50, exchangeRate),
-      // },
+      {
+        url: "Mini six collection board with plastic-min.png",
+        title: "Sponsor a Mini Six Collection Board",
+        priceDollar: 50,
+        id: "sponsorAMiniSixCollectionBoard",
+        priceShekel: calculatePriceInShekels(50, exchangeRate),
+      },
       {
         url: "sponsor-a-sweet-board-min.jpg",
         title: "Sponsor a Sweet Board",
