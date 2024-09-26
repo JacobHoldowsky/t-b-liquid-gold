@@ -48,6 +48,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
       imageUrl: "/Mini six collection board with plastic-min.png",
       warning: "*Minimum orders on this gift is 5 boards",
       hasLogoOption: true,
+      isSoldOut: true,
     },
   };
 
@@ -263,11 +264,13 @@ function CorporateGiftDetail({ cart, addToCart }) {
         </div>
       ) : (
         <button
-          onClick={handleAddToCart}
+          onClick={!selectedItem.isSoldOut && handleAddToCart}
           className="add-to-cart-btn"
           title={
             shopRegion !== "Israel"
               ? "This item is only available in Israel."
+              : selectedItem.isSoldOut
+              ? "This item is sold out."
               : ""
           }
           disabled={
@@ -276,10 +279,11 @@ function CorporateGiftDetail({ cart, addToCart }) {
             quantity < 5 ||
             isNaN(quantity) ||
             quantity === "" ||
-            shopRegion !== "Israel"
+            shopRegion !== "Israel" ||
+            selectedItem.isSoldOut
           } // Disable button while uploading or if artwork is required but not available
         >
-          Add to Cart
+          {selectedItem.isSoldOut ? "Sold Out" : "Add to Cart"}
         </button>
       )}
     </div>
