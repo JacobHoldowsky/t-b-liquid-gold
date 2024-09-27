@@ -59,19 +59,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
       charge: currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate),
     },
     {
-      label: "Anywhere in Jerusalem and Bet Shemesh/RBS",
+      label: "Anywhere in Jerusalem",
       charge: currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate),
-    },
-    {
-      label:
-        "Givat Zev, Modiin, Mevaseret, Beitar, Mitzpei Yericho, Maaleh Adumim",
-      charge: currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate),
-    },
-    {
-      label:
-        "All other locations in Israel (please reach out to us directly and we will try and accomodate you)",
-      charge: currency === "Dollar" ? 25 : Math.ceil(25 * exchangeRate),
-      deadline: "2024-09-23",
     },
   ];
 
