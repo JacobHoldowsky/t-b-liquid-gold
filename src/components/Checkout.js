@@ -54,6 +54,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
       charge: 0,
     },
     {
+      label: "Pick up in Har Nof",
+      charge: 0,
+    },
+    {
       label:
         "Ramat Eshkol, Maalot Dafna, Arzei Habira, French Hill, Sanhedria, Givat Hamivtar",
       charge: currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate),
