@@ -50,31 +50,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   const DELIVERY_OPTIONS = [
     {
-      label: "Pick up in Beitar",
-      charge: 0,
-    },
-    {
-      label: "Pick up in Efrat",
-      charge: 0,
-    },
-    {
-      label: "Pick up in Givat Zeev",
-      charge: 0,
-    },
-    {
-      label: "Pick up in Mitzpei Yericho",
-      charge: 0,
-    },
-    {
-      label: "Pick up in Modiin",
-      charge: 0,
-    },
-    {
       label: "Pick up in Ramat Eshkol",
-      charge: 0,
-    },
-    {
-      label: "Pick up in RBS D2",
       charge: 0,
     },
     {
