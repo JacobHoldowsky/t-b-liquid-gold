@@ -50,7 +50,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   const DELIVERY_OPTIONS = [
     {
-      label: "Pick up in Ramat Eshkol",
+      label: "Pick up in Ramat Eshkol (14 Sderot Eshkol)",
+      charge: 0,
+    },
+    {
+      label: "Pick up in Har Nof",
       charge: 0,
     },
   ];
