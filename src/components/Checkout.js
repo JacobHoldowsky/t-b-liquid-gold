@@ -57,6 +57,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
       label: "Pick up in Har Nof",
       charge: 0,
     },
+    {
+      label: "Deliver to Beit Shemesh ($15)",
+      charge: 15,
+    },
   ];
 
   // Function to open modal
