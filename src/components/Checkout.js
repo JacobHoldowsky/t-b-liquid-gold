@@ -53,19 +53,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
       label: "Pick up in Ramat Eshkol",
       charge: 0,
     },
-    {
-      label: "Pick up in Har Nof",
-      charge: 0,
-    },
-    {
-      label:
-        "Ramat Eshkol, Maalot Dafna, Arzei Habira, French Hill, Sanhedria, Givat Hamivtar",
-      charge: currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate),
-    },
-    {
-      label: "Anywhere in Jerusalem",
-      charge: currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate),
-    },
   ];
 
   // Function to open modal
