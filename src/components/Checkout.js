@@ -58,7 +58,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
       charge: 0,
     },
     {
-      label: "Last minute delivery to Beit Shemesh, RBS and Jerusalem ($20)",
+      label: "Last minute delivery to Beit Shemesh, RBS and Jerusalem",
       charge: 20,
     },
   ];
