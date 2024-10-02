@@ -53,10 +53,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
       label: "Pick up in Ramat Eshkol (Sderot Eshkol 14)",
       charge: 0,
     },
-    {
-      label: "Pick up in Har Nof (Brand 6)",
-      charge: 0,
-    },
+
     {
       label: "Last minute delivery to Beit Shemesh, RBS and Jerusalem",
       charge: currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate),

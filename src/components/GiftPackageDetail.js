@@ -175,6 +175,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         imageUrl: "/Honeycomb collection board no plastic-min.jpg",
         category: "gift packages",
         availableInRegions: ["Israel", "US"],
+        isSoldOut: true,
       },
       belgianBox: {
         title: "Belgian Box",
@@ -309,16 +310,18 @@ function GiftPackageDetail({ cart, addToCart }) {
       <Notification addedToCart={addedToCart} />
       {!addedToCart && (
         <button
-          onClick={handleAddToCart}
+          onClick={!selectedItem.isSoldOut && handleAddToCart}
           className="add-to-cart-btn"
-          disabled={!isAvailableInRegion}
+          disabled={!isAvailableInRegion || selectedItem.isSoldOut}
           title={
             !isAvailableInRegion
               ? "This item is only available in Israel"
+              : selectedItem.isSoldOut
+              ? "This item is sold out."
               : ""
           }
         >
-          Add to Cart
+          {selectedItem.isSoldOut ? "Sold Out" : "Add to Cart"}
         </button>
       )}
     </div>
