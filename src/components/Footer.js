@@ -9,13 +9,13 @@ function Footer() {
         <p className="holdowsky">
           Website created by{" "}
           <a
-            href="https://uxilitypro.com/contact"
+            href="https://uxilitypro.com"
             target="_blank"
             rel="noopener noreferrer"
           >
             <img
               className="logo-img"
-              src="UXilityPROLogo2.png"
+              src="UXilityPROLogoBest.svg"
               alt="UXilityPRO Logo"
             />
           </a>
