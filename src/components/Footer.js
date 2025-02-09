@@ -15,7 +15,7 @@ function Footer() {
           >
             <img
               className="logo-img"
-              src="UXilityPROLogoBest.svg"
+              src={`${process.env.PUBLIC_URL}/UXilityPROLogoBest.svg`}
               alt="UXilityPRO Logo"
             />
           </a>
