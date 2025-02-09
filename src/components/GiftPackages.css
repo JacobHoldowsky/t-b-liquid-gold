@@ -1,4 +1,3 @@
-
 /* General Styles */
 .availability-note {
   font-size: 1rem;
@@ -340,6 +339,10 @@
     .gift-packages-image img {
       height: 400px;
     }
+
+    .gift-packages-images {
+      gap: 30px; /* Increase gap between gift packages */
+    }
   }
   
   @media (max-width: 400px) {
@@ -388,5 +391,8 @@
     .gift-packages-image img {
       height: 350px;
     }
+
+    .gift-packages-images {
+      gap: 30px; /* Increase gap between gift packages */
+    }
   }
-  
