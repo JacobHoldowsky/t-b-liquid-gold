@@ -1,0 +1,248 @@
+
+
+.purim-detail {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .purim-image {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    object-fit: cover;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .purim-title {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .purim-description {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  
+  .purim-kashrus {
+    font-size: 1rem;
+    color: #7c2234;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .purim-warning {
+    font-size: 1rem;
+    color: #e74c3c; /* Red color for warnings */
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  /* GiftPackageDetail.css */
+
+/* Tooltip container */
+.add-to-cart-btn[disabled]:hover::after {
+  content: attr(title); /* Use the title attribute as the tooltip content */
+  position: absolute;   /* Position it absolutely */
+  bottom: 100%;         /* Position it above the button */
+  left: 50%;            /* Center the tooltip */
+  transform: translateX(-50%); /* Adjust to truly center */
+  background-color: #333; /* Background color of the tooltip */
+  color: #fff;          /* Text color */
+  padding: 8px;         /* Padding around the text */
+  border-radius: 4px;   /* Rounded corners */
+  white-space: nowrap;  /* Prevent text from wrapping */
+  font-size: 12px;      /* Font size of the tooltip */
+  z-index: 10;          /* Ensure it is above other elements */
+  opacity: 0;           /* Initially hidden */
+  transition: opacity 0.3s; /* Smooth fade-in transition */
+  pointer-events: none; /* Ensure tooltip does not interfere with mouse events */
+}
+
+/* Show tooltip on hover */
+.add-to-cart-btn[disabled]:hover::after {
+  opacity: 1; /* Make it visible on hover */
+}
+
+/* Optional: Adjust positioning if button is within a container with overflow */
+.purim-detail {
+  position: relative; /* Ensure positioning context */
+}
+
+/* Button disabled state styling */
+.add-to-cart-btn[disabled] {
+  cursor: not-allowed; /* Show not-allowed cursor */
+  background-color: #ccc; /* Gray out the button */
+  color: #666; /* Dim the text color */
+}
+
+  
+  .purim-price {
+    font-size: 1.8rem;
+    color: #7c2234;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  
+  .honey-flavor-selector {
+    margin-bottom: 30px;
+    text-align: left;
+  }
+  
+  .honey-flavor-dropdown {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .honey-flavor-dropdown label {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .honey-flavor-dropdown select {
+    padding: 8px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 60%;
+    background-color: #fff;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    color:#333
+  }
+  
+  .honey-flavor-dropdown select:focus {
+    outline: none;
+    border-color: #7c2234;
+  }
+  
+  .honey-flavor-dropdown select:hover {
+    border-color: #7c2234;
+  }
+  
+  .add-to-cart-btn {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    background-color: #7c2234;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 80%;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #b74058;
+    transform: translateY(-2px);
+  }
+  
+  .notification {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    color: #28a745; /* Green text color */
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    cursor: default;
+    width: 75%;
+    text-align: center;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .notification.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .notification.hide {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  
+  .notification .checkmark {
+    display: inline-block;
+    margin-right: 8px;
+    color: #28a745;
+    font-size: 1.5rem;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .purim-detail {
+      padding: 15px;
+    }
+  
+    .purim-title {
+      font-size: 2rem;
+    }
+  
+    .purim-description {
+      font-size: 1.1rem;
+    }
+  
+    .purim-price {
+      font-size: 1.6rem;
+      margin-bottom: 25px;
+    }
+  
+    .honey-flavor-dropdown {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .honey-flavor-dropdown select {
+      width: 100%;
+      margin-top: 10px;
+    }
+  
+    .add-to-cart-btn {
+      padding: 12px 25px;
+      font-size: 1.1rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .purim-detail {
+      padding: 10px;
+    }
+  
+    .purim-title {
+      font-size: 1.8rem;
+    }
+  
+    .purim-description {
+      font-size: 1rem;
+    }
+  
+    .purim-price {
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+  
+    .add-to-cart-btn {
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+  }
+  

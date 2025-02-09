@@ -160,7 +160,8 @@ function Header({ cart, cartItemCount, clearCart }) {
     if (
       shopRegion === "US" &&
       (location.pathname === "/wholesale" ||
-        location.pathname === "/corporateGifts")
+        location.pathname === "/corporateGifts" ||
+        location.pathname === "/purim")
     ) {
       setShowRedirectModal(true);
     }
@@ -251,6 +252,19 @@ function Header({ cart, cartItemCount, clearCart }) {
           >
             <Link className="top-level-header-item">Shop</Link>
             <ul className="dropdown-menu">
+              {shopRegion !== "US" ? (
+                <li>
+                  <HashLink
+                    className="dropdown-menu-item"
+                    smooth
+                    to="/purim"
+                    scroll={scrollWithOffset}
+                    onClick={closeMenu}
+                  >
+                    Purim
+                  </HashLink>
+                </li>
+              ) : null}
               <li>
                 <HashLink
                   className="dropdown-menu-item"
@@ -299,7 +313,6 @@ function Header({ cart, cartItemCount, clearCart }) {
                   </HashLink>
                 </li>
               ) : null}
-
               <li>
                 <HashLink
                   className="dropdown-menu-item"

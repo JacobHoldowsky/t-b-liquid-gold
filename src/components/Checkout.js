@@ -50,13 +50,25 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   const DELIVERY_OPTIONS = [
     {
-      label: "Pick up in Ramat Eshkol (Sderot Eshkol 14)",
-      charge: 0,
+      label: "Ramat Eshkol, French Hill, Arzei Habira, Sanhedria, Maalot Dafna",
+      charge: currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate),
     },
-
     {
-      label: "Last minute delivery to Beit Shemesh, RBS and Jerusalem",
+      label: "Anywhere in Jerusalem",
+      charge: currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate),
+    },
+    {
+      label: "Beit Shemesh, RBS",
+      charge: currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate),
+    },
+    {
+      label:
+        "Beitar, Efrat, Bat Ayin, Neve Daniel, Mevaseret, Modiin, Givat Zeev",
       charge: currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate),
+    },
+    {
+      label: "Anywhere in Israel",
+      charge: currency === "Dollar" ? 25 : Math.ceil(25 * exchangeRate),
     },
   ];
 

@@ -29,6 +29,8 @@ import "./index.css";
 import CorporateGiftDetail from "./components/CorporateGiftDetail";
 import { ShopProvider } from "./context/ShopContext";
 import { Analytics } from "@vercel/analytics/react";
+import Purim from "./components/Purim"; // Import the new Purim page
+import PurimDetail from "./components/PurimDetail"; // Import the new Purim page
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -122,6 +124,11 @@ function App() {
                   element={
                     <GiftPackageDetail cart={cart} addToCart={addToCart} />
                   }
+                />
+                <Route path="/purim" element={<Purim />} />
+                <Route
+                  path="/purim/:purimId"
+                  element={<PurimDetail cart={cart} addToCart={addToCart} />}
                 />
                 <Route
                   path="/sponsorAHoneyBoard"
