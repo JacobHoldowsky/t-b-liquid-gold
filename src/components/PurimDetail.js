@@ -31,16 +31,6 @@ function PurimDetail({ cart, addToCart }) {
   // Memoize the items object to prevent unnecessary recalculations
   const items = useMemo(() => {
     const allItems = {
-      kidsSpecial: {
-        title: "Kids Special",
-        description: "",
-        priceDollar: 10,
-        priceShekel: calculatePriceInShekels(10),
-        imageUrl: "/Kids Special back $10.jpg",
-        category: "purim",
-        availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
-      },
       teaParty: {
         title: "Tea Party",
         description: "",
@@ -51,32 +41,22 @@ function PurimDetail({ cart, addToCart }) {
         availableInRegions: ["Israel"],
         warning: "Items and packaging may vary based on availability",
       },
-      noshBox: {
-        title: "Nosh Box",
-        description: "",
-        priceDollar: 30,
-        priceShekel: calculatePriceInShekels(30),
-        imageUrl: "/Nosh Box $30.jpg",
-        category: "purim",
-        availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
-      },
-      bochurBox: {
-        title: "Bochur Box",
-        description: "",
-        priceDollar: 45,
-        priceShekel: calculatePriceInShekels(45),
-        imageUrl: "/Bochur Box $45.jpg",
-        category: "purim",
-        availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
-      },
       israelsGold: {
         title: "Israel's Gold",
         description: "",
         priceDollar: 65,
         priceShekel: calculatePriceInShekels(65),
         imageUrl: "/Israel's Gold $65.jpg",
+        category: "purim",
+        availableInRegions: ["Israel"],
+        warning: "Items and packaging may vary based on availability",
+      },
+      lchaim: {
+        title: "Lchaim!",
+        description: "",
+        priceDollar: 120,
+        priceShekel: calculatePriceInShekels(120),
+        imageUrl: "/Lchaim! $120.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
         warning: "Items and packaging may vary based on availability",
@@ -101,16 +81,6 @@ function PurimDetail({ cart, addToCart }) {
         availableInRegions: ["Israel"],
         warning: "Items and packaging may vary based on availability",
       },
-      lchaim: {
-        title: "Lchaim!",
-        description: "",
-        priceDollar: 120,
-        priceShekel: calculatePriceInShekels(120),
-        imageUrl: "/Lchaim! $120.jpg",
-        category: "purim",
-        availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
-      },
       scotchNPop: {
         title: "Scotch n' Pop",
         description: "",
@@ -121,6 +91,38 @@ function PurimDetail({ cart, addToCart }) {
         availableInRegions: ["Israel"],
         warning: "Items and packaging may vary based on availability",
       },
+      kidsSpecial: {
+        title: "Kids Special",
+        description: "",
+        priceDollar: 10,
+        priceShekel: calculatePriceInShekels(10),
+        imageUrl: "/Kids Special back $10.jpg",
+        category: "purim",
+        availableInRegions: ["Israel"],
+        warning: "Items and packaging may vary based on availability",
+      },
+      noshBox: {
+        title: "Nosh Box",
+        description: "",
+        priceDollar: 30,
+        priceShekel: calculatePriceInShekels(30),
+        imageUrl: "/Nosh Box $30.jpg",
+        category: "purim",
+        availableInRegions: ["Israel"],
+        warning: "Items and packaging may vary based on availability",
+      },
+      bochurBox: {
+        title: "Bochur Box",
+        description: "",
+        priceDollar: 45,
+        priceShekel: calculatePriceInShekels(45),
+        imageUrl: "/Bochur Box $45.jpg",
+        category: "purim",
+        availableInRegions: ["Israel"],
+        warning: "Items and packaging may vary based on availability",
+      },
+
+
     };
 
     return allItems; // Return all items if not in the US region
