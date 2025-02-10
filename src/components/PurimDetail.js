@@ -131,6 +131,7 @@ function PurimDetail({ cart, addToCart }) {
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
   const [trendingQuantity, setTrendingQuantity] = useState(1);
+  const [showTrendingPopup, setShowTrendingPopup] = useState(true);
 
   const handleQuantityChange = (e) => {
     setQuantity(parseInt(e.target.value, 10));
@@ -203,9 +204,15 @@ function PurimDetail({ cart, addToCart }) {
       )}
 
       {/* Add trending popup (only show if current item is not kids special) */}
-      {purimId !== 'kidsSpecial' && (
+      {purimId !== 'kidsSpecial' && showTrendingPopup && (
         <div className="trending-popup">
           <div className="trending-content">
+            <button 
+              className="close-trending-btn"
+              onClick={() => setShowTrendingPopup(false)}
+            >
+              ×
+            </button>
             <h4>Trending Now! 🔥</h4>
             <img
               src="/Kids Special back $10.jpg"
