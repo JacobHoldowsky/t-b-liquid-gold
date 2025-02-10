@@ -10,7 +10,16 @@ const PurimItem = ({ item, currency }) => (
   <div className="gift-packages-div">
     <div className="gift-packages-image">
       <Link to={`/purim/${item.id}`}>
-        <img src={item.url} alt={item.title} />
+        <img 
+          src={item.url} 
+          alt={item.title} 
+          style={{
+            width: '100%',
+            height: '600px',
+            objectFit: 'contain',
+            backgroundColor: '#fff'
+          }}
+        />
       </Link>
     </div>
     <div className="gift-packages-info">
