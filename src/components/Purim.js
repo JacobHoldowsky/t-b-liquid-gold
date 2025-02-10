@@ -13,12 +13,6 @@ const PurimItem = ({ item, currency }) => (
         <img
           src={item.url}
           alt={item.title}
-          style={{
-            width: '100%',
-            height: '600px',
-            objectFit: 'contain',
-            backgroundColor: '#fff'
-          }}
         />
       </Link>
     </div>
