@@ -2,10 +2,12 @@ import React from "react";
 import "./Footer.css";
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="footer">
       <div className="footer-content">
-        <p>&copy; 2024 T&B Liquid Gold. All rights reserved.</p>
+        <p>&copy; {currentYear} T&B Liquid Gold. All rights reserved.</p>
         <p className="holdowsky">
           Website created by{" "}
           <a
