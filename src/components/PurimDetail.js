@@ -1,4 +1,4 @@
-import React, { useState, useContext, useMemo } from "react";
+import React, { useState, useContext, useMemo, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
@@ -130,6 +130,7 @@ function PurimDetail({ cart, addToCart }) {
 
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
+  const [trendingQuantity, setTrendingQuantity] = useState(1);
 
   const handleQuantityChange = (e) => {
     setQuantity(parseInt(e.target.value, 10));
@@ -146,6 +147,15 @@ function PurimDetail({ cart, addToCart }) {
     setAddedToCart(true);
     setTimeout(() => setAddedToCart("hide"), 1500);
     setTimeout(() => setAddedToCart(false), 2000);
+  };
+
+  const handleTrendingAdd = () => {
+    const kidsSpecial = items['kidsSpecial'];
+    addToCart({
+      ...kidsSpecial,
+      quantity: trendingQuantity
+    });
+    setTrendingQuantity(1);
   };
 
   // Determine if the item is available in the current region
@@ -184,12 +194,45 @@ function PurimDetail({ cart, addToCart }) {
             !isAvailableInRegion
               ? "This item is only available in Israel"
               : selectedItem.isSoldOut
-              ? "This item is sold out."
-              : ""
+                ? "This item is sold out."
+                : ""
           }
         >
           {selectedItem.isSoldOut ? "Sold Out" : "Add to Cart"}
         </button>
+      )}
+
+      {/* Add trending popup (only show if current item is not kids special) */}
+      {purimId !== 'kidsSpecial' && (
+        <div className="trending-popup">
+          <div className="trending-content">
+            <h4>Trending Now! 🔥</h4>
+            <img
+              src="/Kids Special back $10.jpg"
+              alt="Kids Special Package"
+              className="trending-image"
+            />
+            <h5>Kids Special</h5>
+            <p className="trending-price">
+              {currency === "Dollar" ? "$10" : `₪${calculatePriceInShekels(10)}`}
+            </p>
+            <select
+              value={trendingQuantity}
+              onChange={(e) => setTrendingQuantity(Number(e.target.value))}
+              className="trending-quantity"
+            >
+              {[1, 2, 3, 4, 5].map(num => (
+                <option key={num} value={num}>{num}</option>
+              ))}
+            </select>
+            <button
+              onClick={handleTrendingAdd}
+              className="trending-add-btn"
+            >
+              Add to my order
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );
