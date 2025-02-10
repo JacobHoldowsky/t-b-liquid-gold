@@ -50,13 +50,6 @@ function Purim({ cart, addToCart }) {
   const items = useMemo(() => {
     const allItems = [
       {
-        url: "Kids Special $10.jpg",
-        title: "Kids Special",
-        priceDollar: 10,
-        id: "kidsSpecial",
-        priceShekel: calculatePriceInShekels(10, exchangeRate),
-      },
-      {
         url: "Tea Party $25.jpg",
         title: "Tea Party",
         priceDollar: 25,
@@ -64,25 +57,18 @@ function Purim({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(25, exchangeRate),
       },
       {
-        url: "Nosh Box $30.jpg",
-        title: "Nosh Box",
-        priceDollar: 30,
-        id: "noshBox",
-        priceShekel: calculatePriceInShekels(30, exchangeRate),
-      },
-      {
-        url: "Bochur Box $45.jpg",
-        title: "Bochur Box",
-        priceDollar: 45,
-        id: "bochurBox",
-        priceShekel: calculatePriceInShekels(45, exchangeRate),
-      },
-      {
         url: "Israel's Gold $65.jpg",
         title: "Israel's Gold",
         priceDollar: 65,
         id: "israelsGold",
         priceShekel: calculatePriceInShekels(65, exchangeRate),
+      },
+      {
+        url: "Lchaim! $120.jpg",
+        title: "Lchaim!",
+        priceDollar: 120,
+        id: "lchaim",
+        priceShekel: calculatePriceInShekels(120, exchangeRate),
       },
       {
         url: "Whiskey n' Chocolates $85.jpg",
@@ -99,18 +85,32 @@ function Purim({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(100, exchangeRate),
       },
       {
-        url: "Lchaim! $120.jpg",
-        title: "Lchaim!",
-        priceDollar: 120,
-        id: "lchaim",
-        priceShekel: calculatePriceInShekels(120, exchangeRate),
-      },
-      {
         url: "Scotch n' Pop $130.JPG",
         title: "Scotch n' Pop",
         priceDollar: 130,
         id: "scotchNPop",
         priceShekel: calculatePriceInShekels(130, exchangeRate),
+      },
+      {
+        url: "Kids Special $10.jpg",
+        title: "Kids Special",
+        priceDollar: 10,
+        id: "kidsSpecial",
+        priceShekel: calculatePriceInShekels(10, exchangeRate),
+      },
+      {
+        url: "Nosh Box $30.jpg",
+        title: "Nosh Box",
+        priceDollar: 30,
+        id: "noshBox",
+        priceShekel: calculatePriceInShekels(30, exchangeRate),
+      },
+      {
+        url: "Bochur Box $45.jpg",
+        title: "Bochur Box",
+        priceDollar: 45,
+        id: "bochurBox",
+        priceShekel: calculatePriceInShekels(45, exchangeRate),
       },
     ];
 
