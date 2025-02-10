@@ -163,6 +163,18 @@ function PurimDetail({ cart, addToCart }) {
   const isAvailableInRegion =
     selectedItem?.availableInRegions.includes(shopRegion);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const popup = document.querySelector('.trending-content');
+      if (showTrendingPopup && popup && !popup.contains(event.target)) {
+        setShowTrendingPopup(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showTrendingPopup]);
+
   return (
     <div className="purim-detail">
       <img
@@ -207,7 +219,7 @@ function PurimDetail({ cart, addToCart }) {
       {purimId !== 'kidsSpecial' && showTrendingPopup && (
         <div className="trending-popup">
           <div className="trending-content">
-            <button 
+            <button
               className="close-trending-btn"
               onClick={() => setShowTrendingPopup(false)}
             >
