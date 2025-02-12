@@ -33,16 +33,16 @@ function PurimDetail({ cart, addToCart }) {
     const allItems = {
       teaParty: {
         title: "Tea Party",
-        description: "",
-        priceDollar: 25,
-        priceShekel: calculatePriceInShekels(25),
+        description: "A delightful tea set featuring 1 Flavored creamed honey, 4 lotus cookies, 5 tea packets, and a wooden honey dipper.",
+        priceDollar: 30,
+        priceShekel: calculatePriceInShekels(30),
         imageUrl: "/Tea Party $25.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
       israelsGold: {
         title: "Israel's Gold",
-        description: "",
+        description: "A luxurious gift set with 2 Flavored creamed honeys, 200ml Blue Nun, Schmerling chocolate (Dairy), and a wooden honey dipper.",
         priceDollar: 65,
         priceShekel: calculatePriceInShekels(65),
         imageUrl: "/Israel's Gold $65.jpg",
@@ -51,25 +51,25 @@ function PurimDetail({ cart, addToCart }) {
       },
       lchaim: {
         title: "Lchaim!",
-        description: "",
-        priceDollar: 120,
-        priceShekel: calculatePriceInShekels(120),
+        description: "An elegant combination of a 375ml Bottle of wine and 18 Praline Chocolates (Dairy).",
+        priceDollar: 110,
+        priceShekel: calculatePriceInShekels(110),
         imageUrl: "/Lchaim! $120.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
       whiskeyNChocolates: {
         title: "Whiskey n' Chocolates",
-        description: "",
-        priceDollar: 85,
-        priceShekel: calculatePriceInShekels(85),
+        description: "A sophisticated pairing of 375ml Jack Daniels and 12 Praline chocolates (Dairy).",
+        priceDollar: 105,
+        priceShekel: calculatePriceInShekels(105),
         imageUrl: "/Whiskey n' Chocolates $85.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
       familyFun: {
         title: "Family Fun",
-        description: "",
+        description: "Perfect for the whole family! Includes: 750ml bottle of wine, Box of Gushers, Twizzlers, Mentos, Mike n' Ikes, 5 Praline chocolates (Dairy), Purim chocolates, and Crackers.",
         priceDollar: 100,
         priceShekel: calculatePriceInShekels(100),
         imageUrl: "/Family Fun $100.JPG",
@@ -78,16 +78,16 @@ function PurimDetail({ cart, addToCart }) {
       },
       scotchNPop: {
         title: "Scotch n' Pop",
-        description: "",
-        priceDollar: 130,
-        priceShekel: calculatePriceInShekels(130),
+        description: "A premium gift featuring 750ml Glenlivet, 2 Bags flavored popcorn, and 12 Praline chocolates (Dairy).",
+        priceDollar: 145,
+        priceShekel: calculatePriceInShekels(145),
         imageUrl: "/Scotch n' Pop $130.JPG",
         category: "purim",
         availableInRegions: ["Israel"],
       },
       kidsSpecial: {
         title: "Kids Special",
-        description: "",
+        description: "A fun pack for kids including: chip bag, oodles, fruit nuggets, lolly fizz, candy spinner, and chocolate bar (Dairy).",
         priceDollar: 10,
         priceShekel: calculatePriceInShekels(10),
         imageUrl: "/Kids Special back $10.jpg",
@@ -96,7 +96,7 @@ function PurimDetail({ cart, addToCart }) {
       },
       noshBox: {
         title: "Nosh Box",
-        description: "",
+        description: "A snack lover's dream with 2 Snack bags, Mike N' Ikes, Gushers, chocolate bar (Dairy), Clicks (Dairy), and Mints/gum.",
         priceDollar: 30,
         priceShekel: calculatePriceInShekels(30),
         imageUrl: "/Nosh Box $30.jpg",
@@ -105,15 +105,13 @@ function PurimDetail({ cart, addToCart }) {
       },
       bochurBox: {
         title: "Bochur Box",
-        description: "",
+        description: "The perfect snack box containing Beef Jerky, Oreos, Coke, Pringles, Mike n' Ikes, and a Snacks bag.",
         priceDollar: 45,
         priceShekel: calculatePriceInShekels(45),
         imageUrl: "/Bochur Box $45.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
-
-
     };
 
     return allItems; // Return all items if not in the US region
