@@ -814,18 +814,20 @@ function Checkout({ cart, setCart, removeFromCart }) {
                   <div className="shipping-details">
                     <h3>Delivery Information</h3>
                     {/* Delivery Information Fields */}
+                    <label>First & Last</label>
                     <input
                       type="text"
                       name="recipientName"
-                      placeholder="Recipient name (First & Last) *"
+                      placeholder="Recipient name *"
                       value={shippingDetails.recipientName}
                       onChange={handleInputChange}
                       required
                     />
+                    <label>Street name and number</label>
                     <input
                       type="text"
                       name="address"
-                      placeholder="Address (street name and number) *"
+                      placeholder="Address *"
                       value={shippingDetails.address}
                       onChange={handleInputChange}
                       required
@@ -911,10 +913,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
                       value={shippingDetails.zipCode}
                       onChange={handleInputChange}
                     />
+                    <label>Must be a local Israeli phone number</label>
                     <input
                       type="text"
                       name="contactNumber"
-                      placeholder="Recipient contact number (must be a local Israeli phone number) *"
+                      placeholder="Recipient contact number *"
                       value={shippingDetails.contactNumber}
                       onChange={handleInputChange}
                       required

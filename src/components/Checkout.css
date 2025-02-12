@@ -244,11 +244,18 @@
   color: #333;
 }
 
+.shipping-details label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: #FF0000;  /* Changed from #666 to red */
+}
+
 .shipping-details input,
 .shipping-details select {
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 1rem;
