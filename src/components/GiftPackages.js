@@ -177,9 +177,7 @@ function GiftPackages({ cart, addToCart }) {
     <div className="gift-packages">
       <div className="banner">
         <p>
-          {shopRegion === "Israel"
-            ? "All gift packages will be delivered between September 22 and Erev Rosh Hashana. If you need a specific date outside of these dates please reach out to us."
-            : "All orders will be sent out 1-2 days after receiving your order and will arrive 5-7 business days later."}
+          Gift packages on this page can only be only for Rosh Hashana
         </p>
       </div>
       <p className="availability-note">
