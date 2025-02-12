@@ -46,9 +46,9 @@ function Purim({ cart, addToCart }) {
       {
         url: "Tea Party $25.jpg",
         title: "Tea Party",
-        priceDollar: 25,
+        priceDollar: 30,
         id: "teaParty",
-        priceShekel: calculatePriceInShekels(25, exchangeRate),
+        priceShekel: calculatePriceInShekels(30, exchangeRate),
       },
       {
         url: "Israel's Gold $65.jpg",
@@ -58,19 +58,27 @@ function Purim({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(65, exchangeRate),
       },
       {
+        url: "aLaConnoisseur-min.jpg",
+        title: "Honey A' La Connoisseur",
+        priceDollar: 85,
+        id: "HoneyALaConnoisseur",
+        priceShekel: calculatePriceInShekels(85, exchangeRate),
+      },
+      {
         url: "Lchaim! $120.jpg",
         title: "Lchaim!",
-        priceDollar: 120,
+        priceDollar: 110,
         id: "lchaim",
-        priceShekel: calculatePriceInShekels(120, exchangeRate),
+        priceShekel: calculatePriceInShekels(110, exchangeRate),
       },
       {
         url: "Whiskey n' Chocolates $85.jpg",
         title: "Whiskey n' Chocolates",
-        priceDollar: 85,
+        priceDollar: 105,
         id: "whiskeyNChocolates",
-        priceShekel: calculatePriceInShekels(85, exchangeRate),
+        priceShekel: calculatePriceInShekels(105, exchangeRate),
       },
+
       {
         url: "Family Fun $100.JPG",
         title: "Family Fun",
@@ -81,9 +89,9 @@ function Purim({ cart, addToCart }) {
       {
         url: "Scotch n' Pop $130.JPG",
         title: "Scotch n' Pop",
-        priceDollar: 130,
+        priceDollar: 145,
         id: "scotchNPop",
-        priceShekel: calculatePriceInShekels(130, exchangeRate),
+        priceShekel: calculatePriceInShekels(145, exchangeRate),
       },
       {
         url: "Kids Special $10.jpg",

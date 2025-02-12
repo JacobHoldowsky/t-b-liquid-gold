@@ -33,7 +33,7 @@ function PurimDetail({ cart, addToCart }) {
     const allItems = {
       teaParty: {
         title: "Tea Party",
-        description: "A delightful tea set featuring 1 Flavored creamed honey, 4 lotus cookies, 5 tea packets, and a wooden honey dipper.",
+        description: "1 Flavored creamed honey, 4 lotus cookies, 5 tea packets, and a wooden honey dipper.",
         priceDollar: 30,
         priceShekel: calculatePriceInShekels(30),
         imageUrl: "/Tea Party $25.jpg",
@@ -42,7 +42,7 @@ function PurimDetail({ cart, addToCart }) {
       },
       israelsGold: {
         title: "Israel's Gold",
-        description: "A luxurious gift set with 2 Flavored creamed honeys, 200ml Blue Nun, Schmerling chocolate (Dairy), and a wooden honey dipper.",
+        description: "2 Flavored creamed honeys, 200ml Blue Nun, Schmerling chocolate (Dairy), and a wooden honey dipper.",
         priceDollar: 65,
         priceShekel: calculatePriceInShekels(65),
         imageUrl: "/Israel's Gold $65.jpg",
@@ -51,7 +51,7 @@ function PurimDetail({ cart, addToCart }) {
       },
       lchaim: {
         title: "Lchaim!",
-        description: "An elegant combination of a 375ml Bottle of wine and 18 Praline Chocolates (Dairy).",
+        description: "375ml Bottle of wine and 18 Praline Chocolates (Dairy).",
         priceDollar: 110,
         priceShekel: calculatePriceInShekels(110),
         imageUrl: "/Lchaim! $120.jpg",
@@ -60,16 +60,28 @@ function PurimDetail({ cart, addToCart }) {
       },
       whiskeyNChocolates: {
         title: "Whiskey n' Chocolates",
-        description: "A sophisticated pairing of 375ml Jack Daniels and 12 Praline chocolates (Dairy).",
+        description: "375ml Jack Daniels and 12 Praline chocolates (Dairy).",
         priceDollar: 105,
         priceShekel: calculatePriceInShekels(105),
         imageUrl: "/Whiskey n' Chocolates $85.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
+      HoneyALaConnoisseur: {
+        title: "Honey A' La Connoisseur",
+        description:
+          "2 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
+        warning: "*Wine bottle will vary based on availability",
+        priceDollar: 85,
+        priceShekel: calculatePriceInShekels(85),
+        honeyCount: 2,
+        imageUrl: "/aLaConnoisseur-min.jpg",
+        category: "gift packages",
+        availableInRegions: ["Israel"],
+      },
       familyFun: {
         title: "Family Fun",
-        description: "Perfect for the whole family! Includes: 750ml bottle of wine, Box of Gushers, Twizzlers, Mentos, Mike n' Ikes, 5 Praline chocolates (Dairy), Purim chocolates, and Crackers.",
+        description: "750ml bottle of wine, Box of Gushers, Twizzlers, Mentos, Mike n' Ikes, 5 Praline chocolates (Dairy), Purim chocolates, and Crackers.",
         priceDollar: 100,
         priceShekel: calculatePriceInShekels(100),
         imageUrl: "/Family Fun $100.JPG",
@@ -78,7 +90,7 @@ function PurimDetail({ cart, addToCart }) {
       },
       scotchNPop: {
         title: "Scotch n' Pop",
-        description: "A premium gift featuring 750ml Glenlivet, 2 Bags flavored popcorn, and 12 Praline chocolates (Dairy).",
+        description: "750ml Glenlivet, 2 Bags flavored popcorn, and 12 Praline chocolates (Dairy).",
         priceDollar: 145,
         priceShekel: calculatePriceInShekels(145),
         imageUrl: "/Scotch n' Pop $130.JPG",
@@ -87,7 +99,7 @@ function PurimDetail({ cart, addToCart }) {
       },
       kidsSpecial: {
         title: "Kids Special",
-        description: "A fun pack for kids including: chip bag, oodles, fruit nuggets, lolly fizz, candy spinner, and chocolate bar (Dairy).",
+        description: "chip bag, oodles, fruit nuggets, lolly fizz, candy spinner, and chocolate bar (Dairy).",
         priceDollar: 10,
         priceShekel: calculatePriceInShekels(10),
         imageUrl: "/Kids Special back $10.jpg",
@@ -96,7 +108,7 @@ function PurimDetail({ cart, addToCart }) {
       },
       noshBox: {
         title: "Nosh Box",
-        description: "A snack lover's dream with 2 Snack bags, Mike N' Ikes, Gushers, chocolate bar (Dairy), Clicks (Dairy), and Mints/gum.",
+        description: "2 Snack bags, Mike N' Ikes, Gushers, chocolate bar (Dairy), Clicks (Dairy), and Mints/gum.",
         priceDollar: 30,
         priceShekel: calculatePriceInShekels(30),
         imageUrl: "/Nosh Box $30.jpg",
@@ -105,7 +117,7 @@ function PurimDetail({ cart, addToCart }) {
       },
       bochurBox: {
         title: "Bochur Box",
-        description: "The perfect snack box containing Beef Jerky, Oreos, Coke, Pringles, Mike n' Ikes, and a Snacks bag.",
+        description: "Beef Jerky, Oreos, Coke, Pringles, Mike n' Ikes, and Snacks bag.",
         priceDollar: 45,
         priceShekel: calculatePriceInShekels(45),
         imageUrl: "/Bochur Box $45.jpg",
