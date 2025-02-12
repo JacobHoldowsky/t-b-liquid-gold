@@ -45,8 +45,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const [modalConfig, setModalConfig] = useState({
     title: "",
     message: "",
-    onConfirm: () => {},
+    onConfirm: () => { },
   });
+  const [isInstitution, setIsInstitution] = useState(false);
+  const [institutionName, setInstitutionName] = useState("");
 
   const DELIVERY_OPTIONS = [
     {
@@ -149,11 +151,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
           price_data: {
             currency: currency === "Dollar" ? "usd" : "ils",
             product_data: {
-              name: `${item.title} ${
-                item.selectedFlavors.length > 0
+              name: `${item.title} ${item.selectedFlavors.length > 0
                   ? "(" + item.selectedFlavors.join(", ") + ")"
                   : ""
-              }`,
+                }`,
               metadata: {
                 logoUrl: item.logoUrl ? item.logoUrl : null,
                 flavors: item.selectedFlavors
@@ -218,6 +219,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
           currency,
           exchangeRate,
           specialDeliveryOnly,
+          isInstitution: isInstitution.toString(),
+          institutionName: isInstitution ? institutionName : "",
         }),
       });
 
@@ -312,8 +315,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
           ? 16
           : Math.ceil(16 * exchangeRate) // Round up
         : currency === "Dollar"
-        ? 20
-        : Math.ceil(20 * exchangeRate); // Round up
+          ? 20
+          : Math.ceil(20 * exchangeRate); // Round up
     }
 
     return 0;
@@ -348,16 +351,16 @@ function Checkout({ cart, setCart, removeFromCart }) {
             ? 16
             : Math.ceil(16 * exchangeRate) // Round up
           : currency === "Dollar"
-          ? 20
-          : Math.ceil(20 * exchangeRate); // Round up
+            ? 20
+            : Math.ceil(20 * exchangeRate); // Round up
     }
 
     // Calculate shipping for gift packages
     shippingCharge +=
       boardOfFourCount *
-        (currency === "Dollar" ? 16 : Math.ceil(16 * exchangeRate)) +
+      (currency === "Dollar" ? 16 : Math.ceil(16 * exchangeRate)) +
       otherGiftPackageCount *
-        (currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate));
+      (currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate));
 
     return shippingCharge;
   };
@@ -556,8 +559,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
       const areBuildingFieldsFilled =
         shippingDetails.homeType === "building"
           ? [shippingDetails.apartmentNumber].every(
-              (field) => field.trim() !== ""
-            )
+            (field) => field.trim() !== ""
+          )
           : true;
 
       isFormValid =
@@ -602,10 +605,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
                       </p>
                     ) : null}
                     {shopRegion === "US" &&
-                    item.category === "gift packages" &&
-                    item.title !== "T&Bee Collection Box" &&
-                    item.title !== "Board of Four" &&
-                    item.title !== "Box of Four" ? (
+                      item.category === "gift packages" &&
+                      item.title !== "T&Bee Collection Box" &&
+                      item.title !== "Board of Four" &&
+                      item.title !== "Box of Four" ? (
                       <p className="item-flavors">
                         Delivery:{" "}
                         {currency === "Dollar"
@@ -627,19 +630,19 @@ function Checkout({ cart, setCart, removeFromCart }) {
                         {currency === "Dollar"
                           ? `+ One time fee of $50`
                           : `+ One time fee of ₪${Math.ceil(
-                              50 * exchangeRate
-                            )}`}
+                            50 * exchangeRate
+                          )}`}
                         )
                       </p>
                     )}
                     <p className="item-price">
                       {currency === "Dollar"
                         ? `$${formatNumberWithCommas(
-                            parseFloat(item.priceDollar)
-                          )}`
+                          parseFloat(item.priceDollar)
+                        )}`
                         : `₪${formatNumberWithCommas(
-                            Math.ceil(item.priceShekel)
-                          )}`}
+                          Math.ceil(item.priceShekel)
+                        )}`}
                     </p>
                   </div>
                   <div className="quantity-controls">
@@ -916,6 +919,32 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 ) : null}
               </>
             ) : null}
+            <div className="institution-option">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isInstitution}
+                  onChange={(e) => setIsInstitution(e.target.checked)}
+                />
+                Click here if this is going to a seminary/yeshiva
+              </label>
+
+              {isInstitution && (
+                <div className="institution-details">
+                  <input
+                    type="text"
+                    name="institutionName"
+                    placeholder="Name of seminary/yeshiva *"
+                    value={institutionName}
+                    onChange={(e) => setInstitutionName(e.target.value)}
+                    required
+                  />
+                  <p className="institution-warning">
+                    <strong>Important Note:</strong> If the student is unreachable, packages are delivered to the school's office/reception/guard or given to a fellow student. We do not accept responsibility once the package has been delivered to the institution.
+                  </p>
+                </div>
+              )}
+            </div>
           </>
         ) : null}
 
