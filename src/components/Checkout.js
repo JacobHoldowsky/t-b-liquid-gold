@@ -156,8 +156,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
             currency: currency === "Dollar" ? "usd" : "ils",
             product_data: {
               name: `${item.title} ${item.selectedFlavors.length > 0
-                  ? "(" + item.selectedFlavors.join(", ") + ")"
-                  : ""
+                ? "(" + item.selectedFlavors.join(", ") + ")"
+                : ""
                 }`,
               metadata: {
                 logoUrl: item.logoUrl ? item.logoUrl : null,
@@ -817,7 +817,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     <input
                       type="text"
                       name="recipientName"
-                      placeholder="Recipient name *"
+                      placeholder="Recipient name (First & Last) *"
                       value={shippingDetails.recipientName}
                       onChange={handleInputChange}
                       required
@@ -825,7 +825,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     <input
                       type="text"
                       name="address"
-                      placeholder="Address *"
+                      placeholder="Address (street name and number) *"
                       value={shippingDetails.address}
                       onChange={handleInputChange}
                       required
@@ -914,7 +914,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     <input
                       type="text"
                       name="contactNumber"
-                      placeholder="Recipient contact number *"
+                      placeholder="Recipient contact number (must be a local Israeli phone number) *"
                       value={shippingDetails.contactNumber}
                       onChange={handleInputChange}
                       required
