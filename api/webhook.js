@@ -336,9 +336,7 @@ ${homeType === "building"
     
     ${isInstitution ? `
     <h3 style="color: #333; margin-top: 20px;">Institution Details</h3>
-    <p><strong>Institution Type:</strong> ${institutionName.toLowerCase().includes('yeshiva') ? 'Yeshiva' : 'Seminary'}</p>
     <p><strong>Institution Name:</strong> ${institutionName}</p>
-    <p style="color: #e74c3c;"><strong>Note:</strong> If the student is unreachable, packages are delivered to the school's office/reception/guard or given to a fellow student. We do not accept responsibility once the package has been delivered to the institution.</p>
     ` : ''}
 
   </div>
