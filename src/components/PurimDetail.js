@@ -39,7 +39,6 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/Tea Party $25.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
       },
       israelsGold: {
         title: "Israel's Gold",
@@ -49,7 +48,6 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/Israel's Gold $65.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
       },
       lchaim: {
         title: "Lchaim!",
@@ -59,7 +57,6 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/Lchaim! $120.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
       },
       whiskeyNChocolates: {
         title: "Whiskey n' Chocolates",
@@ -69,7 +66,6 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/Whiskey n' Chocolates $85.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
       },
       familyFun: {
         title: "Family Fun",
@@ -79,7 +75,6 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/Family Fun $100.JPG",
         category: "purim",
         availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
       },
       scotchNPop: {
         title: "Scotch n' Pop",
@@ -89,7 +84,6 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/Scotch n' Pop $130.JPG",
         category: "purim",
         availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
       },
       kidsSpecial: {
         title: "Kids Special",
@@ -99,7 +93,6 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/Kids Special back $10.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
       },
       noshBox: {
         title: "Nosh Box",
@@ -109,7 +102,6 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/Nosh Box $30.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
       },
       bochurBox: {
         title: "Bochur Box",
@@ -119,7 +111,6 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/Bochur Box $45.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
-        warning: "Items and packaging may vary based on availability",
       },
 
 

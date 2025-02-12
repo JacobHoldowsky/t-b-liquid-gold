@@ -116,10 +116,13 @@ function Purim({ cart, addToCart }) {
     <div className="gift-packages">
       <div className="banner">
         <p>
-          Deliveries outside Jerusalem will be done between March 11-14 and in
-          Jerusalem will be done between March 11-16
+          All Jerusalem deliveries will be done between March 11-16. All outside Jerusalem deliveries will be done between March 11-14
         </p>
+
       </div>
+      <p className="availability-note">
+        **Items and packaging may vary based on availability**
+      </p>
 
       <h2 className="gift-packages-section-title">Purim</h2>
       <div className="gift-packages-images">
