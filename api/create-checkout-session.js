@@ -18,6 +18,8 @@ module.exports = async (req, res) => {
         currency,
         exchangeRate,
         specialDeliveryOnly,
+        isInstitution,
+        institutionName,
       } = req.body;
 
       if (!items || !Array.isArray(items) || items.length === 0) {
@@ -150,6 +152,8 @@ module.exports = async (req, res) => {
           promoCode: promoCode || "", // Include promo code in the metadata
           discountInfo:
             "5% discount applied to subtotal only, excluding delivery charge",
+          isInstitution: isInstitution ? "true" : "false",
+          institutionName: institutionName || "",
         },
       });
 

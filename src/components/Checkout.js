@@ -213,7 +213,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
           comments: hasComments ? comments : null,
           shippingDetails,
           deliveryCharge:
-            shopRegion === "US" ? totalDeliveryCharge : deliveryCharge, // Pass the calculated delivery charge
+            shopRegion === "US" ? totalDeliveryCharge : deliveryCharge,
           selectedDeliveryOption:
             shopRegion === "US"
               ? "Total Delivery Charge"
@@ -223,8 +223,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
           currency,
           exchangeRate,
           specialDeliveryOnly,
-          isInstitution: isInstitution.toString(),
-          institutionName: isInstitution ? institutionName : "",
+          isInstitution,
+          institutionName,
         }),
       });
 
