@@ -82,7 +82,7 @@ function GiftPackages({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(59, exchangeRate),
       },
       {
-        url: "tnbCollection-min.jpg",
+        url: "tnbCollectionBox.jpg",
         title: "T&Bee Collection Box",
         priceDollar: shopRegion === "US" ? 85 : 79,
         id: "tnBeeCollection",
@@ -92,7 +92,7 @@ function GiftPackages({ cart, addToCart }) {
         ),
       },
       {
-        url: "aLaConnoisseur-min.jpg",
+        url: "honeyALaConnoisseur.jpg",
         title: "Honey A' La Connoisseur",
         priceDollar: 80,
         id: "HoneyALaConnoisseur",
@@ -106,7 +106,7 @@ function GiftPackages({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(110, exchangeRate),
       },
       {
-        url: "Honeycomb collection board no plastic-min.jpg",
+        url: "honeycombCollectionBoard.jpg",
         title: "Honeycomb Collection Board",
         priceDollar: shopRegion === "US" ? 125 : 99,
         id: "honeycombCollectionBoard",
@@ -150,7 +150,7 @@ function GiftPackages({ cart, addToCart }) {
         ),
       },
       {
-        url: "The Boss Board no plastic-min.jpg",
+        url: "theBossBoard.jpg",
         title: "The Boss Board",
         priceDollar: 180,
         id: "theBossBoard",

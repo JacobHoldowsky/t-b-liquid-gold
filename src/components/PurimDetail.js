@@ -36,7 +36,7 @@ function PurimDetail({ cart, addToCart }) {
         description: "1 Flavored creamed honey, 4 lotus cookies, 5 tea packets, and a wooden honey dipper.",
         priceDollar: 30,
         priceShekel: calculatePriceInShekels(30),
-        imageUrl: "/Tea Party $25.jpg",
+        imageUrl: "/teaParty.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
@@ -45,7 +45,7 @@ function PurimDetail({ cart, addToCart }) {
         description: "2 Flavored creamed honeys, 200ml Blue Nun, Schmerling chocolate (Dairy), and a wooden honey dipper.",
         priceDollar: 70,
         priceShekel: calculatePriceInShekels(70),
-        imageUrl: "/Israel's Gold $65.jpg",
+        imageUrl: "/israelsGold.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
@@ -54,7 +54,7 @@ function PurimDetail({ cart, addToCart }) {
         description: "375ml Bottle of wine and 18 Praline Chocolates (Dairy).",
         priceDollar: 110,
         priceShekel: calculatePriceInShekels(110),
-        imageUrl: "/Lchaim! $120.jpg",
+        imageUrl: "/lchaim.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
@@ -75,7 +75,7 @@ function PurimDetail({ cart, addToCart }) {
         priceDollar: 80,
         priceShekel: calculatePriceInShekels(80),
         honeyCount: 2,
-        imageUrl: "/aLaConnoisseur-min.jpg",
+        imageUrl: "/honeyALaConnoisseur.jpg",
         category: "gift packages",
         availableInRegions: ["Israel"],
       },
@@ -84,7 +84,7 @@ function PurimDetail({ cart, addToCart }) {
         description: "750ml bottle of wine, Box of Gushers, Twizzlers, Mentos, Mike n' Ikes, 5 Praline chocolates (Dairy), Purim chocolates, and Crackers.",
         priceDollar: 100,
         priceShekel: calculatePriceInShekels(100),
-        imageUrl: "/Family Fun $100.JPG",
+        imageUrl: "/familyFun.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
@@ -93,7 +93,7 @@ function PurimDetail({ cart, addToCart }) {
         description: "750ml Glenlivet, 2 Bags flavored popcorn, and 12 Praline chocolates (Dairy).",
         priceDollar: 145,
         priceShekel: calculatePriceInShekels(145),
-        imageUrl: "/Scotch n' Pop $130.JPG",
+        imageUrl: "/scotchAndPop.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
@@ -102,7 +102,7 @@ function PurimDetail({ cart, addToCart }) {
         description: "Chip bag, oodles, fruit nuggets, lolly fizz, candy spinner, and chocolate bar (Dairy).",
         priceDollar: 10,
         priceShekel: calculatePriceInShekels(10),
-        imageUrl: "/Kids Special back $10.jpg",
+        imageUrl: "/kidsSpecialBack.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
@@ -111,7 +111,7 @@ function PurimDetail({ cart, addToCart }) {
         description: "2 Snack bags, Mike N' Ikes, Gushers, chocolate bar (Dairy), Clicks (Dairy), and Mints/gum.",
         priceDollar: 30,
         priceShekel: calculatePriceInShekels(30),
-        imageUrl: "/Nosh Box $30.jpg",
+        imageUrl: "/noshBox.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
@@ -120,7 +120,7 @@ function PurimDetail({ cart, addToCart }) {
         description: "Beef Jerky, Oreos, Coke, Pringles, Mike n' Ikes, and Snacks bag.",
         priceDollar: 45,
         priceShekel: calculatePriceInShekels(45),
-        imageUrl: "/Bochur Box $45.jpg",
+        imageUrl: "/bochurBox.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
       },
@@ -218,7 +218,7 @@ function PurimDetail({ cart, addToCart }) {
             </button>
             <h4>Trending Now! 🔥</h4>
             <img
-              src="/Kids Special back $10.jpg"
+              src="/kidsSpecialBack.jpg"
               alt="Kids Special Package"
               className="trending-image"
             />

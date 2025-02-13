@@ -54,28 +54,28 @@ function Purim({ cart, addToCart }) {
   const items = useMemo(() => {
     const allItems = [
       {
-        url: "Tea Party $25.jpg",
+        url: "teaParty.jpg",
         title: "Tea Party",
         priceDollar: 30,
         id: "teaParty",
         priceShekel: calculatePriceInShekels(30, exchangeRate),
       },
       {
-        url: "Israel's Gold $65.jpg",
+        url: "israelsGold.jpg",
         title: "Israel's Gold",
         priceDollar: 70,
         id: "israelsGold",
         priceShekel: calculatePriceInShekels(70, exchangeRate),
       },
       {
-        url: "Lchaim! $120.jpg",
+        url: "lchaim.jpg",
         title: "Lchaim!",
         priceDollar: 110,
         id: "lchaim",
         priceShekel: calculatePriceInShekels(110, exchangeRate),
       },
       {
-        url: "aLaConnoisseur-min.jpg",
+        url: "honeyALaConnoisseur.jpg",
         title: "Honey A' La Connoisseur",
         priceDollar: 80,
         id: "HoneyALaConnoisseur",
@@ -90,35 +90,35 @@ function Purim({ cart, addToCart }) {
       },
 
       {
-        url: "Family Fun $100.JPG",
+        url: "familyFun.jpg",
         title: "Family Fun",
         priceDollar: 100,
         id: "familyFun",
         priceShekel: calculatePriceInShekels(100, exchangeRate),
       },
       {
-        url: "Scotch n' Pop $130.JPG",
+        url: "scotchAndPop.jpg",
         title: "Scotch n' Pop",
         priceDollar: 145,
         id: "scotchNPop",
         priceShekel: calculatePriceInShekels(145, exchangeRate),
       },
       {
-        url: "Kids Special $10.jpg",
+        url: "kidsSpecialFront.jpg",
         title: "Kids Special",
         priceDollar: 10,
         id: "kidsSpecial",
         priceShekel: calculatePriceInShekels(10, exchangeRate),
       },
       {
-        url: "Nosh Box $30.jpg",
+        url: "noshBox.jpg",
         title: "Nosh Box",
         priceDollar: 30,
         id: "noshBox",
         priceShekel: calculatePriceInShekels(30, exchangeRate),
       },
       {
-        url: "Bochur Box $45.jpg",
+        url: "bochurBox.jpg",
         title: "Bochur Box",
         priceDollar: 45,
         id: "bochurBox",
