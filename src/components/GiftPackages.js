@@ -94,9 +94,9 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "aLaConnoisseur-min.jpg",
         title: "Honey A' La Connoisseur",
-        priceDollar: 85,
+        priceDollar: 80,
         id: "HoneyALaConnoisseur",
-        priceShekel: calculatePriceInShekels(85, exchangeRate),
+        priceShekel: calculatePriceInShekels(80, exchangeRate),
       },
       {
         url: "Collection Plus $95-min.jpg",

@@ -147,8 +147,8 @@ function GiftPackageDetail({ cart, addToCart }) {
         description:
           "2 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
         warning: "*Wine bottle will vary based on availability",
-        priceDollar: 85,
-        priceShekel: calculatePriceInShekels(85),
+        priceDollar: 80,
+        priceShekel: calculatePriceInShekels(80),
         honeyCount: 2,
         imageUrl: "/aLaConnoisseur-min.jpg",
         category: "gift packages",
