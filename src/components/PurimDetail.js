@@ -99,7 +99,7 @@ function PurimDetail({ cart, addToCart }) {
       },
       kidsSpecial: {
         title: "Kids Special",
-        description: "chip bag, oodles, fruit nuggets, lolly fizz, candy spinner, and chocolate bar (Dairy).",
+        description: "Chip bag, oodles, fruit nuggets, lolly fizz, candy spinner, and chocolate bar (Dairy).",
         priceDollar: 10,
         priceShekel: calculatePriceInShekels(10),
         imageUrl: "/Kids Special back $10.jpg",
