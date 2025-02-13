@@ -58,18 +58,18 @@ function Purim({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(70, exchangeRate),
       },
       {
-        url: "aLaConnoisseur-min.jpg",
-        title: "Honey A' La Connoisseur",
-        priceDollar: 80,
-        id: "HoneyALaConnoisseur",
-        priceShekel: calculatePriceInShekels(80, exchangeRate),
-      },
-      {
         url: "Lchaim! $120.jpg",
         title: "Lchaim!",
         priceDollar: 110,
         id: "lchaim",
         priceShekel: calculatePriceInShekels(110, exchangeRate),
+      },
+      {
+        url: "aLaConnoisseur-min.jpg",
+        title: "Honey A' La Connoisseur",
+        priceDollar: 80,
+        id: "HoneyALaConnoisseur",
+        priceShekel: calculatePriceInShekels(80, exchangeRate),
       },
       {
         url: "Whiskey n' Chocolates $85.jpg",
