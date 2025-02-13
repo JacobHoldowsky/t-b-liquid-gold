@@ -53,16 +53,16 @@ function Purim({ cart, addToCart }) {
       {
         url: "Israel's Gold $65.jpg",
         title: "Israel's Gold",
-        priceDollar: 65,
+        priceDollar: 70,
         id: "israelsGold",
-        priceShekel: calculatePriceInShekels(65, exchangeRate),
+        priceShekel: calculatePriceInShekels(70, exchangeRate),
       },
       {
         url: "aLaConnoisseur-min.jpg",
         title: "Honey A' La Connoisseur",
-        priceDollar: 85,
+        priceDollar: 80,
         id: "HoneyALaConnoisseur",
-        priceShekel: calculatePriceInShekels(85, exchangeRate),
+        priceShekel: calculatePriceInShekels(80, exchangeRate),
       },
       {
         url: "Lchaim! $120.jpg",

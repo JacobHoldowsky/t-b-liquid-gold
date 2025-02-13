@@ -43,8 +43,8 @@ function PurimDetail({ cart, addToCart }) {
       israelsGold: {
         title: "Israel's Gold",
         description: "2 Flavored creamed honeys, 200ml Blue Nun, Schmerling chocolate (Dairy), and a wooden honey dipper.",
-        priceDollar: 65,
-        priceShekel: calculatePriceInShekels(65),
+        priceDollar: 70,
+        priceShekel: calculatePriceInShekels(70),
         imageUrl: "/Israel's Gold $65.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
@@ -72,8 +72,8 @@ function PurimDetail({ cart, addToCart }) {
         description:
           "2 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
         warning: "*Wine bottle will vary based on availability",
-        priceDollar: 85,
-        priceShekel: calculatePriceInShekels(85),
+        priceDollar: 80,
+        priceShekel: calculatePriceInShekels(80),
         honeyCount: 2,
         imageUrl: "/aLaConnoisseur-min.jpg",
         category: "gift packages",
