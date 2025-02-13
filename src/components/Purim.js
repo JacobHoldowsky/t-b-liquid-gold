@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import "./Purim.css";
 import { CurrencyContext } from "../context/CurrencyContext";
@@ -33,12 +33,22 @@ const calculatePriceInShekels = (priceDollar, exchangeRate) => {
     ? Math.ceil(priceDollar * exchangeRate)
     : Math.ceil(priceDollar * 3.7);
 };
-
 function Purim({ cart, addToCart }) {
   const { currency } = useContext(CurrencyContext);
-  const { shopRegion } = useShopContext(); // Use shop context to get the current region
-
+  const { shopRegion } = useShopContext();
   const exchangeRate = useContext(ExchangeRateContext);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const width = window.innerWidth;
+      setIsMobile(width <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Memoize the items list to prevent unnecessary re-calculations on every render
   const items = useMemo(() => {
@@ -116,9 +126,11 @@ function Purim({ cart, addToCart }) {
       },
     ];
 
-    // Filter items based on the US region
-    return allItems
-  }, [exchangeRate, shopRegion]);
+    if (isMobile) {
+      return [...allItems].sort((a, b) => a.priceDollar - b.priceDollar);
+    }
+    return allItems;
+  }, [exchangeRate, shopRegion, isMobile]);
 
   return (
     <div className="gift-packages">
