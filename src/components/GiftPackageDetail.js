@@ -38,6 +38,31 @@ const Notification = ({ addedToCart }) =>
     </div>
   );
 
+// Add this new component near the top of the file, after other component imports
+const ImageCarousel = ({ images, title }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextImage = () => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  return (
+    <div className="image-carousel">
+      <img src={images[currentIndex]} alt={`${title} - Image ${currentIndex + 1}`} className="gift-package-image" />
+      {images.length > 1 && (
+        <>
+          <button className="carousel-btn prev" onClick={prevImage}>&larr;</button>
+          <button className="carousel-btn next" onClick={nextImage}>&rarr;</button>
+        </>
+      )}
+    </div>
+  );
+};
+
 function GiftPackageDetail({ cart, addToCart }) {
   const { packageId } = useParams();
   const { currency } = useContext(CurrencyContext);
@@ -209,7 +234,7 @@ function GiftPackageDetail({ cart, addToCart }) {
         priceDollar: shopRegion === "US" ? 150 : 136,
         priceShekel: calculatePriceInShekels(shopRegion === "US" ? 150 : 136),
         honeyCount: 5,
-        imageUrl: "/Deluxe Board no plastic-min.jpg",
+        images: ["/Deluxe Board no plastic-min.jpg", "/deluxeBoard.png"],
         category: "gift packages",
         availableInRegions: ["Israel", "US"],
       },
@@ -281,10 +306,9 @@ function GiftPackageDetail({ cart, addToCart }) {
 
   return (
     <div className="gift-package-detail">
-      <img
-        src={selectedItem?.imageUrl}
-        alt={selectedItem?.title}
-        className="gift-package-image"
+      <ImageCarousel 
+        images={selectedItem?.images || [selectedItem?.imageUrl]} 
+        title={selectedItem?.title}
       />
       <h2 className="gift-package-title">{selectedItem?.title}</h2>
       <p className="gift-package-description">{selectedItem?.description}</p>
@@ -317,8 +341,8 @@ function GiftPackageDetail({ cart, addToCart }) {
             !isAvailableInRegion
               ? "This item is only available in Israel"
               : selectedItem.isSoldOut
-              ? "This item is sold out."
-              : ""
+                ? "This item is sold out."
+                : ""
           }
         >
           {selectedItem.isSoldOut ? "Sold Out" : "Add to Cart"}
