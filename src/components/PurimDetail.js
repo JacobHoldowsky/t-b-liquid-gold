@@ -124,6 +124,15 @@ function PurimDetail({ cart, addToCart }) {
         category: "purim",
         availableInRegions: ["Israel"],
       },
+      signatureBoard: {
+        title: "Signature Board",
+        description: "Olive oil, 1 flavored creamed honey, and 4 tea bags",
+        priceDollar: 55,
+        priceShekel: calculatePriceInShekels(55),
+        imageUrl: "/signatureBoard.jpg",
+        category: "purim",
+        availableInRegions: ["Israel"],
+      },
     };
 
     return allItems; // Return all items if not in the US region

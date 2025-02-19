@@ -124,6 +124,13 @@ function Purim({ cart, addToCart }) {
         id: "bochurBox",
         priceShekel: calculatePriceInShekels(45, exchangeRate),
       },
+      {
+        url: "signatureBoard.jpg",
+        title: "Signature Board",
+        priceDollar: 55,
+        id: "signatureBoard",
+        priceShekel: calculatePriceInShekels(55, exchangeRate),
+      },
     ];
 
     if (isMobile) {
