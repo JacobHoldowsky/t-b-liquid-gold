@@ -247,26 +247,28 @@
 .image-carousel {
   position: relative;
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
 }
 
 .carousel-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
+  background: rgba(255, 255, 255, 0.8);
   border: none;
-  padding: 10px 15px;
-  cursor: pointer;
   border-radius: 50%;
-  font-size: 18px;
-  transition: background-color 0.3s;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .carousel-btn:hover {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
 }
 
 .carousel-btn.prev {
@@ -277,10 +279,10 @@
   right: 10px;
 }
 
-@media (max-width: 768px) {
-  .carousel-btn {
-    padding: 8px 12px;
-    font-size: 16px;
-  }
+.arrow-icon {
+  font-size: 24px;
+  line-height: 1;
+  color: #333;
+  user-select: none;
 }
   

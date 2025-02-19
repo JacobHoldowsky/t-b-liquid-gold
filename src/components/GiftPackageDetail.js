@@ -55,8 +55,12 @@ const ImageCarousel = ({ images, title }) => {
       <img src={images[currentIndex]} alt={`${title} - Image ${currentIndex + 1}`} className="gift-package-image" />
       {images.length > 1 && (
         <>
-          <button className="carousel-btn prev" onClick={prevImage}>&larr;</button>
-          <button className="carousel-btn next" onClick={nextImage}>&rarr;</button>
+          <button className="carousel-btn prev" onClick={prevImage}>
+            <span className="arrow-icon">‹</span>
+          </button>
+          <button className="carousel-btn next" onClick={nextImage}>
+            <span className="arrow-icon">›</span>
+          </button>
         </>
       )}
     </div>
