@@ -16,6 +16,28 @@ const Notification = ({ addedToCart }) =>
     </div>
   );
 
+// Add this new component near the top, after the Notification component
+const HechsherModal = ({ isOpen, onClose, hechsherim }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="hechsher-modal-overlay">
+      <div className="hechsher-modal">
+        <button className="modal-close-btn" onClick={onClose}>×</button>
+        <h3>Hechsherim List</h3>
+        <div className="hechsher-list">
+          {Object.entries(hechsherim).map(([item, hechsher]) => (
+            <div key={item} className="hechsher-item">
+              <span className="item-name">{item}:</span>
+              <span className="hechsher-name">{hechsher}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 function PurimDetail({ cart, addToCart }) {
   const { purimId } = useParams();
   const { currency } = useContext(CurrencyContext);
@@ -39,6 +61,11 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/teaParty.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
+        hechsherim: {
+          "Flavored Creamed Honey": "Vaad Hakashrus Rabbi Weiner",
+          "Wissotzky Tea": "Badatz Rav Rubin",
+          "Lotus Cookies": "Badatz Chasam Sofer Bnei Brak"
+        }
       },
       israelsGold: {
         title: "Israel's Gold",
@@ -105,6 +132,14 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/kidsSpecialBack.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
+        hechsherim: {
+          "Snack Bag": "Badatz Eidah Hachareidus",
+          "Oodles": "Badatz Eidah Hachareidus",
+          "Chocolate": "Badatz Manchester",
+          "Candy Spinner": "Badatz Igud Rabbanim",
+          "Fizz Lolly": "Badatz Manchester",
+          "Fruit Nuggets": "Badatz Igud Rabbanim"
+        }
       },
       noshBox: {
         title: "Nosh Box",
@@ -144,6 +179,7 @@ function PurimDetail({ cart, addToCart }) {
   const [addedToCart, setAddedToCart] = useState(false);
   const [trendingQuantity, setTrendingQuantity] = useState(1);
   const [showTrendingPopup, setShowTrendingPopup] = useState(true);
+  const [isHechsherModalOpen, setIsHechsherModalOpen] = useState(false);
 
   const handleQuantityChange = (e) => {
     setQuantity(parseInt(e.target.value, 10));
@@ -253,6 +289,19 @@ function PurimDetail({ cart, addToCart }) {
           </div>
         </div>
       )}
+
+      <button 
+        className="view-hechsher-btn"
+        onClick={() => setIsHechsherModalOpen(true)}
+      >
+        Click here to view a list of hechsherim
+      </button>
+
+      <HechsherModal 
+        isOpen={isHechsherModalOpen}
+        onClose={() => setIsHechsherModalOpen(false)}
+        hechsherim={selectedItem?.hechsherim || {}}
+      />
     </div>
   );
 }
