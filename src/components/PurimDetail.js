@@ -16,7 +16,6 @@ const Notification = ({ addedToCart }) =>
     </div>
   );
 
-// Add this new component near the top, after the Notification component
 const HechsherModal = ({ isOpen, onClose, hechsherim }) => {
   if (!isOpen) return null;
 
@@ -37,7 +36,6 @@ const HechsherModal = ({ isOpen, onClose, hechsherim }) => {
     </div>
   );
 };
-
 function PurimDetail({ cart, addToCart }) {
   const { purimId } = useParams();
   const { currency } = useContext(CurrencyContext);
@@ -75,6 +73,12 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/israelsGold.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
+        hechsherim: {
+          "Blue Nun": "OU America",
+          "Fruit Jam": "Badatz Chasam Sofer Bnei Bak",
+          "Schmerling chocolate": "Badatz Zurich",
+          "Flavored Cream honey": "Vaad Hakashrus Rabbi Weiner"
+        }
       },
       lchaim: {
         title: "Lchaim!",
@@ -84,6 +88,10 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/lchaim.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
+        hechsherim: {
+          "Wine": "Badatz Eidah Hachareidus",
+          "Praline Chocolates": "Badatz Eidah Hachareidus"
+        }
       },
       whiskeyNChocolates: {
         title: "Whiskey n' Chocolates",
@@ -93,6 +101,10 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/Whiskey n' Chocolates $85.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
+        hechsherim: {
+          "Jack Daniels": "Kosher",
+          "Praline Chocolates": "Badatz Eidah Hachareidus"
+        }
       },
       HoneyALaConnoisseur: {
         title: "Honey A' La Connoisseur",
@@ -105,6 +117,10 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/honeyALaConnoisseur.jpg",
         category: "gift packages",
         availableInRegions: ["Israel"],
+        hechsherim: {
+          "Flavored creamed honey": "Vaad Hakashrus Rabbi Weiner",
+          "Wine": "Badatz Eidah Hachareidus"
+        }
       },
       familyFun: {
         title: "Family Fun",
@@ -114,6 +130,16 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/familyFun.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
+        hechsherim: {
+          "Wine": "Badatz Eidah Hachareidus",
+          "Praline Chocolate": "Badatz Eidah Hachareidus",
+          "Twizzlers": "OU America",
+          "Mentos": "Badatz Chasam Sofer Bnei Brak",
+          "Purim chocolate": "Rav Landau/Rav Westheim",
+          "Mike n' Ikes": "OU America",
+          "Gushers": "OU America",
+          "Yummy Earth Lollipops": "Kof-K"
+        }
       },
       scotchNPop: {
         title: "Scotch n' Pop",
@@ -123,6 +149,11 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/scotchAndPop.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
+        hechsherim: {
+          "Glenlivet": "Kosher",
+          "Praline Chocolates": "Badatz Eidah Hachareidus",
+          "Popcorn": "OU America"
+        }
       },
       kidsSpecial: {
         title: "Kids Special",
@@ -149,6 +180,13 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/noshBox.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
+        hechsherim: {
+          "2 Snack Bags": "Badatz Eidah Hachareidus",
+          "Clicks chocolates": "Badatz Eidah Hachareidus",
+          "Mike N' Ikes": "OU America",
+          "Gushers": "OU America",
+          "Bazooka": "Badatz Igud Rabbanim"
+        }
       },
       bochurBox: {
         title: "Bochur Box",
@@ -158,6 +196,13 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/bochurBox.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
+        hechsherim: {
+          "Oreo Cookies": "Badatz Igud Rabbanim",
+          "Coke": "Badatz Rav Rubin",
+          "Mike n' Ikes": "OU America",
+          "Pringles": "OU America",
+          "Snacks": "Badatz Eidah Hachareidus"
+        }
       },
       signatureBoard: {
         title: "Signature Board",
@@ -167,6 +212,11 @@ function PurimDetail({ cart, addToCart }) {
         imageUrl: "/signatureBoard.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
+        hechsherim: {
+          "Olive Oil": "OK",
+          "Flavored Creamed Honey": "Vaad Hakashrus Rabbi Weiner",
+          "Wissotzky Tea": "Badatz Rav Rubin"
+        }
       },
     };
 
@@ -180,6 +230,7 @@ function PurimDetail({ cart, addToCart }) {
   const [trendingQuantity, setTrendingQuantity] = useState(1);
   const [showTrendingPopup, setShowTrendingPopup] = useState(true);
   const [isHechsherModalOpen, setIsHechsherModalOpen] = useState(false);
+
 
   const handleQuantityChange = (e) => {
     setQuantity(parseInt(e.target.value, 10));
@@ -290,14 +341,14 @@ function PurimDetail({ cart, addToCart }) {
         </div>
       )}
 
-      <button 
+      <button
         className="view-hechsher-btn"
         onClick={() => setIsHechsherModalOpen(true)}
       >
         Click here to view a list of hechsherim
       </button>
 
-      <HechsherModal 
+      <HechsherModal
         isOpen={isHechsherModalOpen}
         onClose={() => setIsHechsherModalOpen(false)}
         hechsherim={selectedItem?.hechsherim || {}}
