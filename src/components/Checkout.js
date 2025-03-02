@@ -56,25 +56,29 @@ function Checkout({ cart, setCart, removeFromCart }) {
       charge: currency === "Dollar" ? 0 : Math.ceil(0 * exchangeRate),
     },
     {
-      label: "Ramat Eshkol, French Hill, Arzei Habira, Sanhedria, Maalot Dafna",
+      label: "Ramat Eshkol",
       charge: currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate),
     },
     {
-      label: "Anywhere in Jerusalem",
+      label: "Jerusalem, Beit Shemesh, RBS",
       charge: currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate),
     },
     {
-      label: "Beit Shemesh, RBS",
-      charge: currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate),
-    },
-    {
-      label:
-        "Beitar, Efrat, Bat Ayin, Neve Daniel, Mevaseret, Modiin, Givat Zeev",
+      label: "Givat Zeev, Modiin, Maaleh Adumim, Mitzpe Yericho",
       charge: currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate),
     },
     {
-      label: "Anywhere in Israel",
-      charge: currency === "Dollar" ? 25 : Math.ceil(25 * exchangeRate),
+      label: "Bnei Brak, Tel Aviv, Rechovot, Hertzliyah, Netanya, Rishon L'tzion",
+      charge: currency === "Dollar" ? 30 : Math.ceil(30 * exchangeRate),
+    },
+    {
+      label: "Anywhere in the Gush",
+      charge: currency === "Dollar" ? 35 : Math.ceil(35 * exchangeRate),
+    },
+    {
+      label: "Other locations - Contact us via WhatsApp",
+      charge: 0,
+      isWhatsApp: true
     },
   ];
 
@@ -265,10 +269,15 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   const handleDeliveryOptionChange = (e) => {
     const selectedOption = DELIVERY_OPTIONS[e.target.value];
-    if (
-      selectedOption.deadline &&
-      new Date() > new Date(selectedOption.deadline)
-    ) {
+    if (selectedOption.isWhatsApp) {
+      // Replace with your actual WhatsApp number and message
+      window.open("https://wa.me/+972534309254", '_blank');
+      setSelectedDeliveryOption(null);
+      setDeliveryCharge(0);
+      return;
+    }
+
+    if (selectedOption.deadline && new Date() > new Date(selectedOption.deadline)) {
       alert("This delivery option is no longer available due to the deadline.");
       setSelectedDeliveryOption(null);
       setDeliveryCharge(0);
@@ -941,36 +950,36 @@ function Checkout({ cart, setCart, removeFromCart }) {
               )
             )}
             {/* Institution checkbox - only show if not all items are soldier packages */}
-            {!aggregatedCart.aggregatedCart.every(item => 
+            {!aggregatedCart.aggregatedCart.every(item =>
               item.title === "Send a Mishloach Manos to a Soldier Family"
             ) && (
-              <div className="institution-option">
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={isInstitution}
-                    onChange={(e) => setIsInstitution(e.target.checked)}
-                  />
-                  Click here if this is going to a seminary/yeshiva
-                </label>
-
-                {isInstitution && (
-                  <div className="institution-details">
+                <div className="institution-option">
+                  <label>
                     <input
-                      type="text"
-                      name="institutionName"
-                      placeholder="Name of seminary/yeshiva *"
-                      value={institutionName}
-                      onChange={(e) => setInstitutionName(e.target.value)}
-                      required
+                      type="checkbox"
+                      checked={isInstitution}
+                      onChange={(e) => setIsInstitution(e.target.checked)}
                     />
-                    <p className="institution-warning">
-                      <strong>Important Note:</strong> If the student is unreachable, packages are delivered to the school's office/reception/guard or given to a fellow student. We do not accept responsibility once the package has been delivered to the institution.
-                    </p>
-                  </div>
-                )}
-              </div>
-            )}
+                    Click here if this is going to a seminary/yeshiva
+                  </label>
+
+                  {isInstitution && (
+                    <div className="institution-details">
+                      <input
+                        type="text"
+                        name="institutionName"
+                        placeholder="Name of seminary/yeshiva *"
+                        value={institutionName}
+                        onChange={(e) => setInstitutionName(e.target.value)}
+                        required
+                      />
+                      <p className="institution-warning">
+                        <strong>Important Note:</strong> If the student is unreachable, packages are delivered to the school's office/reception/guard or given to a fellow student. We do not accept responsibility once the package has been delivered to the institution.
+                      </p>
+                    </div>
+                  )}
+                </div>
+              )}
           </>
         ) : null}
 
