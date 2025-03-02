@@ -364,7 +364,27 @@ function PurimDetail({ cart, addToCart }) {
         </button>
       )}
 
-      {/* Only show popups if current item is not kids special or soldier special */}
+      {/* Change popup logic to show opposite popups */}
+      {purimId === 'kidsSpecial' && (
+        <TrendingPopup
+          side="right"
+          item={items.soldierFamilySpecial}
+          currency={currency}
+          calculatePriceInShekels={calculatePriceInShekels}
+          onClose={() => setShowSoldierPopup(false)}
+          onAdd={(qty) => handleTrendingAdd('soldierFamilySpecial', qty)}
+        />
+      )}
+      {purimId === 'soldierFamilySpecial' && (
+        <TrendingPopup
+          side="left"
+          item={items.kidsSpecial}
+          currency={currency}
+          calculatePriceInShekels={calculatePriceInShekels}
+          onClose={() => setShowKidsPopup(false)}
+          onAdd={(qty) => handleTrendingAdd('kidsSpecial', qty)}
+        />
+      )}
       {purimId !== 'kidsSpecial' && purimId !== 'soldierFamilySpecial' && (
         <>
           {showKidsPopup && (
