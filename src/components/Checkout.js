@@ -76,7 +76,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
       charge: currency === "Dollar" ? 35 : Math.ceil(35 * exchangeRate),
     },
     {
-      label: "Other locations - Contact us via WhatsApp",
+      label: "Other locations - Click here to contact us via WhatsApp",
       charge: 0,
       isWhatsApp: true
     },
