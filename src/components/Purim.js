@@ -131,6 +131,13 @@ function Purim({ cart, addToCart }) {
         id: "signatureBoard",
         priceShekel: calculatePriceInShekels(55, exchangeRate),
       },
+      {
+        url: "soldierFamilySpecial.png",
+        title: "Soldier Family Special",
+        priceDollar: 25,
+        id: "soldierFamilySpecial",
+        priceShekel: calculatePriceInShekels(25, exchangeRate),
+      },
     ];
 
     if (isMobile) {

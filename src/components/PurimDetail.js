@@ -218,6 +218,18 @@ function PurimDetail({ cart, addToCart }) {
           "Wissotzky Tea": "Badatz Rav Rubin"
         }
       },
+      soldierFamilySpecial: {
+        title: "Soldier Family Special",
+        description: "Since October 7, 2023 we have been through very challenging times in Israel. Many women are alone for many months while their husbands are fighting the war. We invite you to partner with us and send love and support to our milluim families in Israel. We created a special mishloach manos for these families so that you can bring them joy and happiness. Please consider sponsoring a mishloach manos, and we will distribute it to the families on your behalf. Thank you for helping us spread happiness and love to the ones who need it most.",
+        priceDollar: 25,
+        priceShekel: calculatePriceInShekels(25),
+        imageUrl: "/soldierFamilySpecial.png",
+        category: "purim",
+        availableInRegions: ["Israel"],
+        hechsherim: {
+          "Assorted Items": "Various Kosher Certifications"
+        }
+      },
     };
 
     return allItems; // Return all items if not in the US region
