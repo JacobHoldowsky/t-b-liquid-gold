@@ -51,10 +51,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const [institutionName, setInstitutionName] = useState("");
 
   const DELIVERY_OPTIONS = [
-    {
-      label: "Pick up in Ramat Eshkol",
-      charge: currency === "Dollar" ? 0 : Math.ceil(0 * exchangeRate),
-    },
+ 
     {
       label: "Ramat Eshkol",
       charge: currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate),
