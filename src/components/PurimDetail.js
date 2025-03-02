@@ -219,11 +219,12 @@ function PurimDetail({ cart, addToCart }) {
         }
       },
       soldierFamilySpecial: {
-        title: "Soldier Family Special",
+        title: "Send a Mishloach Manos to a Soldier Family",
         description: "Since October 7, 2023 we have been through very challenging times in Israel. Many women are alone for many months while their husbands are fighting the war. We invite you to partner with us and send love and support to our milluim families in Israel. We created a special mishloach manos for these families so that you can bring them joy and happiness. Please consider sponsoring a mishloach manos, and we will distribute it to the families on your behalf. Thank you for helping us spread happiness and love to the ones who need it most.",
         priceDollar: 25,
         priceShekel: calculatePriceInShekels(25),
         imageUrl: "/soldierFamilySpecial.png",
+        flagImageUrl: "/israeliFlag.webp",
         category: "purim",
         availableInRegions: ["Israel"],
         hechsherim: {
@@ -276,6 +277,13 @@ function PurimDetail({ cart, addToCart }) {
 
   return (
     <div className="purim-detail">
+      {selectedItem?.flagImageUrl && (
+        <img
+          src={selectedItem.flagImageUrl}
+          alt="Israeli Flag"
+          className="israel-flag"
+        />
+      )}
       <img
         src={selectedItem?.imageUrl}
         alt={selectedItem?.title}
