@@ -940,32 +940,37 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 </div>
               )
             )}
-            <div className="institution-option">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={isInstitution}
-                  onChange={(e) => setIsInstitution(e.target.checked)}
-                />
-                Click here if this is going to a seminary/yeshiva
-              </label>
-
-              {isInstitution && (
-                <div className="institution-details">
+            {/* Institution checkbox - only show if not all items are soldier packages */}
+            {!aggregatedCart.aggregatedCart.every(item => 
+              item.title === "Send a Mishloach Manos to a Soldier Family"
+            ) && (
+              <div className="institution-option">
+                <label>
                   <input
-                    type="text"
-                    name="institutionName"
-                    placeholder="Name of seminary/yeshiva *"
-                    value={institutionName}
-                    onChange={(e) => setInstitutionName(e.target.value)}
-                    required
+                    type="checkbox"
+                    checked={isInstitution}
+                    onChange={(e) => setIsInstitution(e.target.checked)}
                   />
-                  <p className="institution-warning">
-                    <strong>Important Note:</strong> If the student is unreachable, packages are delivered to the school's office/reception/guard or given to a fellow student. We do not accept responsibility once the package has been delivered to the institution.
-                  </p>
-                </div>
-              )}
-            </div>
+                  Click here if this is going to a seminary/yeshiva
+                </label>
+
+                {isInstitution && (
+                  <div className="institution-details">
+                    <input
+                      type="text"
+                      name="institutionName"
+                      placeholder="Name of seminary/yeshiva *"
+                      value={institutionName}
+                      onChange={(e) => setInstitutionName(e.target.value)}
+                      required
+                    />
+                    <p className="institution-warning">
+                      <strong>Important Note:</strong> If the student is unreachable, packages are delivered to the school's office/reception/guard or given to a fellow student. We do not accept responsibility once the package has been delivered to the institution.
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
           </>
         ) : null}
 
