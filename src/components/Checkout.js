@@ -128,7 +128,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
   }, [cart]);
 
   let specialDeliveryOnly = aggregatedCart.aggregatedCart.every(
-    (item) => item.category === "sponsor a board"
+    (item) => item.category === "sponsor a board" || item.title === "Send a Mishloach Manos to a Soldier Family"
   );
 
   const apiUrl =
@@ -925,7 +925,13 @@ function Checkout({ cart, setCart, removeFromCart }) {
                   </div>
                 ) : null}
               </>
-            ) : null}
+            ) : (
+              aggregatedCart.aggregatedCart.some(item => item.title === "Send a Mishloach Manos to a Soldier Family") && (
+                <div className="delivery-message">
+                  <p>No need for delivery details, we will deliver it to the soldier family on your behalf.</p>
+                </div>
+              )
+            )}
             <div className="institution-option">
               <label>
                 <input
