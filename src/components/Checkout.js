@@ -53,7 +53,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const DELIVERY_OPTIONS = [
  
     {
-      label: "Ramat Eshkol",
+      label: "Ramat Eshkol, French Hill, Arzei Habira, Sanhedria, Maalot Dafna",
       charge: currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate),
     },
     {
