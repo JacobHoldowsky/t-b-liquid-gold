@@ -49,8 +49,8 @@ const TrendingPopup = ({ side, item, currency, calculatePriceInShekels, onClose,
         >
           ×
         </button>
-        <h4>{item.title === "Send a Mishloach Manos to a Soldier Family" 
-          ? "Send love to our soldier families" 
+        <h4>{item.title === "Send a Mishloach Manos to a Soldier Family"
+          ? "Send love to our soldier families"
           : "Trending Now! 🔥"}</h4>
         <img
           src={item.imageUrl}
@@ -96,6 +96,32 @@ function PurimDetail({ cart, addToCart }) {
   // Memoize the items object to prevent unnecessary recalculations
   const items = useMemo(() => {
     const allItems = {
+      forHim: {
+        title: "For Him",
+        description: "2 flavored creamed honeys, moscato, wooden honey dipper.",
+        priceDollar: 49,
+        priceShekel: calculatePriceInShekels(49),
+        imageUrl: "/For Him $55-min.jpg",
+        category: "purim",
+        availableInRegions: ["Israel"],
+        hechsherim: {
+          "Flavored Creamed Honey": "Vaad Hakashrus Rabbi Weiner",
+          "Moscato": "Badatz Eidah Hachareidus"
+        }
+      },
+      forHer: {
+        title: "For Her",
+        description: "2 flavored creamed honeys, Rosato, wooden honey dipper",
+        priceDollar: 49,
+        priceShekel: calculatePriceInShekels(49),
+        imageUrl: "/For Her $55-min.jpg",
+        category: "purim",
+        availableInRegions: ["Israel"],
+        hechsherim: {
+          "Flavored Creamed Honey": "Vaad Hakashrus Rabbi Weiner",
+          "Rosato": "Badatz Eidah Hachareidus"
+        }
+      },
       teaParty: {
         title: "Tea Party",
         description: "1 Flavored creamed honey, 4 lotus cookies, 5 tea packets, and a wooden honey dipper.",

@@ -54,6 +54,20 @@ function Purim({ cart, addToCart }) {
   const items = useMemo(() => {
     const allItems = [
       {
+        url: "For Him $55-min.jpg",
+        title: "For Him",
+        priceDollar: 49,
+        id: "forHim",
+        priceShekel: calculatePriceInShekels(49, exchangeRate),
+      },
+      {
+        url: "For Her $55-min.jpg",
+        title: "For Her",
+        priceDollar: 49,
+        id: "forHer",
+        priceShekel: calculatePriceInShekels(49, exchangeRate),
+      },
+      {
         url: "teaParty.jpg",
         title: "Tea Party",
         priceDollar: 30,
