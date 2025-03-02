@@ -36,6 +36,49 @@ const HechsherModal = ({ isOpen, onClose, hechsherim }) => {
     </div>
   );
 };
+
+const TrendingPopup = ({ side, item, currency, calculatePriceInShekels, onClose, onAdd }) => {
+  const [quantity, setQuantity] = useState(1);
+
+  return (
+    <div className={`trending-popup ${side}`}>
+      <div className="trending-content">
+        <button
+          className="close-trending-btn"
+          onClick={onClose}
+        >
+          ×
+        </button>
+        <h4>Trending Now! 🔥</h4>
+        <img
+          src={item.imageUrl}
+          alt={item.title}
+          className="trending-image"
+        />
+        <h5>{item.title}</h5>
+        <p className="trending-price">
+          {currency === "Dollar" ? `$${item.priceDollar}` : `₪${calculatePriceInShekels(item.priceDollar)}`}
+        </p>
+        <select
+          value={quantity}
+          onChange={(e) => setQuantity(Number(e.target.value))}
+          className="trending-quantity"
+        >
+          {[1, 2, 3, 4, 5].map(num => (
+            <option key={num} value={num}>{num}</option>
+          ))}
+        </select>
+        <button
+          onClick={() => onAdd(quantity)}
+          className="trending-add-btn"
+        >
+          Add to my order
+        </button>
+      </div>
+    </div>
+  );
+};
+
 function PurimDetail({ cart, addToCart }) {
   const { purimId } = useParams();
   const { currency } = useContext(CurrencyContext);
@@ -240,10 +283,9 @@ function PurimDetail({ cart, addToCart }) {
 
   const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
-  const [trendingQuantity, setTrendingQuantity] = useState(1);
-  const [showTrendingPopup, setShowTrendingPopup] = useState(true);
+  const [showKidsPopup, setShowKidsPopup] = useState(true);
+  const [showSoldierPopup, setShowSoldierPopup] = useState(true);
   const [isHechsherModalOpen, setIsHechsherModalOpen] = useState(false);
-
 
   const handleQuantityChange = (e) => {
     setQuantity(parseInt(e.target.value, 10));
@@ -262,13 +304,13 @@ function PurimDetail({ cart, addToCart }) {
     setTimeout(() => setAddedToCart(false), 2000);
   };
 
-  const handleTrendingAdd = () => {
-    const kidsSpecial = items['kidsSpecial'];
+  const handleTrendingAdd = (itemId, quantity) => {
+    const itemToAdd = items[itemId];
     addToCart({
-      ...kidsSpecial,
-      quantity: trendingQuantity
+      ...itemToAdd,
+      quantity
     });
-    setTrendingQuantity(1);
+    setQuantity(1);
   };
 
   // Determine if the item is available in the current region
@@ -322,43 +364,30 @@ function PurimDetail({ cart, addToCart }) {
         </button>
       )}
 
-      {/* Add trending popup (only show if current item is not kids special) */}
-      {purimId !== 'kidsSpecial' && showTrendingPopup && (
-        <div className="trending-popup">
-          <div className="trending-content">
-            <button
-              className="close-trending-btn"
-              onClick={() => setShowTrendingPopup(false)}
-            >
-              ×
-            </button>
-            <h4>Trending Now! 🔥</h4>
-            <img
-              src="/kidsSpecialBack.jpg"
-              alt="Kids Special Package"
-              className="trending-image"
+      {/* Only show popups if current item is not kids special or soldier special */}
+      {purimId !== 'kidsSpecial' && purimId !== 'soldierFamilySpecial' && (
+        <>
+          {showKidsPopup && (
+            <TrendingPopup
+              side="left"
+              item={items.kidsSpecial}
+              currency={currency}
+              calculatePriceInShekels={calculatePriceInShekels}
+              onClose={() => setShowKidsPopup(false)}
+              onAdd={(qty) => handleTrendingAdd('kidsSpecial', qty)}
             />
-            <h5>Kids Special</h5>
-            <p className="trending-price">
-              {currency === "Dollar" ? "$10" : `₪${calculatePriceInShekels(10)}`}
-            </p>
-            <select
-              value={trendingQuantity}
-              onChange={(e) => setTrendingQuantity(Number(e.target.value))}
-              className="trending-quantity"
-            >
-              {[1, 2, 3, 4, 5].map(num => (
-                <option key={num} value={num}>{num}</option>
-              ))}
-            </select>
-            <button
-              onClick={handleTrendingAdd}
-              className="trending-add-btn"
-            >
-              Add to my order
-            </button>
-          </div>
-        </div>
+          )}
+          {showSoldierPopup && (
+            <TrendingPopup
+              side="right"
+              item={items.soldierFamilySpecial}
+              currency={currency}
+              calculatePriceInShekels={calculatePriceInShekels}
+              onClose={() => setShowSoldierPopup(false)}
+              onAdd={(qty) => handleTrendingAdd('soldierFamilySpecial', qty)}
+            />
+          )}
+        </>
       )}
 
       <button

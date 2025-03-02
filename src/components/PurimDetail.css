@@ -246,21 +246,40 @@
   
 .trending-popup {
   position: fixed;
-  left: 20px;  /* Changed to left side */
-  top: 50%;    /* Center vertically */
+  top: 50%;
   transform: translateY(-50%);
   width: 200px;
   background: white;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   padding: 15px;
-  z-index: 100;
+  z-index: 100000;
+}
+
+.trending-popup.left {
+  left: 20px;
   animation: slideInLeft 0.5s ease-out;
+}
+
+.trending-popup.right {
+  right: 20px;
+  animation: slideInRight 0.5s ease-out;
 }
 
 @keyframes slideInLeft {
   from {
     transform: translate(-100%, -50%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0, -50%);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translate(100%, -50%);
     opacity: 0;
   }
   to {
@@ -324,10 +343,17 @@
 @media (max-width: 768px) {
   .trending-popup {
     width: 80px;
-    left: 5px;
     padding: 5px;
-    top: 70%; /* Move it lower on the screen */
   }
+
+  .trending-popup.left {
+    left: 5px;
+    top: 70%;
+  }
+
+  .trending-popup.right {
+    right: 15px;
+        top: 25%; }
   
   .trending-image {
     height: 45px;
@@ -377,9 +403,15 @@
   .trending-popup {
     width: 70px;
     padding: 4px;
-    top: 75%; /* Move it even lower on smaller screens */
   }
 
+  .trending-popup.left {
+    top: 75%;
+  }
+
+  .trending-popup.right {
+    top: 25%;  }
+  
   .trending-image {
     height: 40px;
   }
