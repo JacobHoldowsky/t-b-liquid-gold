@@ -98,7 +98,7 @@ function PurimDetail({ cart, addToCart }) {
         description: "375ml Jack Daniels and 12 Praline chocolates (Dairy).",
         priceDollar: 105,
         priceShekel: calculatePriceInShekels(105),
-        imageUrl: "/Whiskey n' Chocolates $85.jpg",
+        imageUrl: "/whiskeyNChocolates.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
         hechsherim: {

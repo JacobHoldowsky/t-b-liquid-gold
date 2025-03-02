@@ -82,7 +82,7 @@ function Purim({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(80, exchangeRate),
       },
       {
-        url: "Whiskey n' Chocolates $85.jpg",
+        url: "whiskeyNChocolates.jpg",
         title: "Whiskey n' Chocolates",
         priceDollar: 105,
         id: "whiskeyNChocolates",
