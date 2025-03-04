@@ -83,7 +83,7 @@ function Purim({ cart, addToCart }) {
       },
       {
         url: "lchaim.jpg",
-        title: "Lchaim!",
+        title: "Lchaim Board",
         priceDollar: 110,
         id: "lchaim",
         priceShekel: calculatePriceInShekels(110, exchangeRate),

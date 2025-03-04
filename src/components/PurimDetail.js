@@ -152,7 +152,7 @@ function PurimDetail({ cart, addToCart }) {
         }
       },
       lchaim: {
-        title: "Lchaim!",
+        title: "Lchaim Board",
         description: "375ml Bottle of wine and 18 Praline Chocolates (Dairy).",
         priceDollar: 110,
         priceShekel: calculatePriceInShekels(110),
