@@ -154,10 +154,8 @@ function Purim({ cart, addToCart }) {
       },
     ];
 
-    if (isMobile) {
-      return [...allItems].sort((a, b) => a.priceDollar - b.priceDollar);
-    }
-    return allItems;
+    // Sort items from most expensive to least expensive, regardless of screen size
+    return [...allItems].sort((a, b) => b.priceDollar - a.priceDollar);
   }, [exchangeRate, shopRegion, isMobile]);
 
   return (
