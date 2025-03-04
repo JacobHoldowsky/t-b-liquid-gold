@@ -12,13 +12,7 @@ function LandingPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const lastSeenAd = localStorage.getItem('hasSeenPurimAd');
-    const ONE_HOUR = 60 * 60 * 1000; // 10 minutes in milliseconds
-
-    if (!lastSeenAd || (Date.now() - parseInt(lastSeenAd)) > ONE_HOUR) {
-      setShowModal(true);
-      localStorage.setItem('hasSeenPurimAd', Date.now().toString());
-    }
+    setShowModal(true);
   }, []);
 
   return (
