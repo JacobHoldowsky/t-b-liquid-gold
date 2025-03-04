@@ -59,7 +59,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
       charge: currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate),
     },
     {
-      label: "Jerusalem",
+      label: "Anywhere in Jerusalem",
       charge: currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate),
     },
     {
