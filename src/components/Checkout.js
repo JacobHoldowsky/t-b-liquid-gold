@@ -53,7 +53,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const [locationModalContent, setLocationModalContent] = useState({ title: '', locations: [] });
 
   const DELIVERY_OPTIONS = [
- 
+
     {
       label: "Ramat Eshkol, Maalot Dafna, French Hill, Sanhedria, Arzei Habira",
       charge: currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate),
@@ -292,13 +292,17 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const handleLocationClick = (type) => {
     if (type === 'central') {
       setLocationModalContent({
-        title: 'Central Israel Locations',
-        locations: CENTRAL_ISRAEL_LOCATIONS
+        title: 'Is your location in Central Israel?',
+        locations: CENTRAL_ISRAEL_LOCATIONS,
+        type: type,
+        charge: DELIVERY_OPTIONS.find(opt => opt.label.includes("Central Israel")).charge
       });
     } else if (type === 'gush') {
       setLocationModalContent({
-        title: 'Gush Locations',
-        locations: GUSH_LOCATIONS
+        title: 'Is your location in the Gush?',
+        locations: GUSH_LOCATIONS,
+        type: type,
+        charge: DELIVERY_OPTIONS.find(opt => opt.label.includes("Gush")).charge
       });
     }
     setIsLocationModalOpen(true);
@@ -306,7 +310,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   const handleDeliveryOptionChange = (e) => {
     const selectedOption = DELIVERY_OPTIONS[e.target.value];
-    
+
     // Handle location information buttons
     if (selectedOption.label.includes("Central Israel")) {
       handleLocationClick('central');
@@ -1079,14 +1083,32 @@ function Checkout({ cart, setCart, removeFromCart }) {
           isOpen={isLocationModalOpen}
           title={locationModalContent.title}
           message={
-            <ul className="location-list">
-              {locationModalContent.locations.map((location, index) => (
-                <li key={index}>{location}</li>
-              ))}
-            </ul>
+            <div>
+              <p>Please check if your location is in this list:</p>
+              <ul className="location-list">
+                {locationModalContent.locations.map((location, index) => (
+                  <li key={index}>{location}</li>
+                ))}
+              </ul>
+              <p>Is your location listed above?</p>
+            </div>
           }
-          onConfirm={() => setIsLocationModalOpen(false)}
-          onCancel={() => setIsLocationModalOpen(false)}
+          onConfirm={() => {
+            // If user confirms their location is in the list, set the delivery option
+            const label = locationModalContent.type === 'central' 
+              ? "Central Israel (Click here for Central Israel Locations)"
+              : "Gush (Click here for Gush Locations)";
+            setSelectedDeliveryOption(label);
+            setDeliveryCharge(locationModalContent.charge);
+            setIsLocationModalOpen(false);
+          }}
+          onCancel={() => {
+            setSelectedDeliveryOption(null);
+            setDeliveryCharge(0);
+            setIsLocationModalOpen(false);
+          }}
+          confirmText="Yes, my location is listed"
+          cancelText="No, my location is not listed"
         />
       </div>
     </div>
