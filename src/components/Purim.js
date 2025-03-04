@@ -117,13 +117,13 @@ function Purim({ cart, addToCart }) {
         id: "scotchNPop",
         priceShekel: calculatePriceInShekels(145, exchangeRate),
       },
-      {
-        url: "kidsSpecialFront.jpg",
-        title: "Kids Special",
-        priceDollar: 10,
-        id: "kidsSpecial",
-        priceShekel: calculatePriceInShekels(10, exchangeRate),
-      },
+      // {
+      //   url: "kidsSpecialFront.jpg",
+      //   title: "Kids Special",
+      //   priceDollar: 10,
+      //   id: "kidsSpecial",
+      //   priceShekel: calculatePriceInShekels(10, exchangeRate),
+      // },
       {
         url: "noshBox.jpg",
         title: "Nosh Box",
