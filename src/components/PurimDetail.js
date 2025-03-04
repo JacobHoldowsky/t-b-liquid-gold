@@ -259,8 +259,8 @@ function PurimDetail({ cart, addToCart }) {
           "Bazooka": "Badatz Igud Rabbanim"
         }
       },
-      bochurBox: {
-        title: "Bochur Box",
+      jerkyBox: {
+        title: "Jerky Box",
         description: "Beef Jerky, Oreos, Coke, Pringles, Mike n' Ikes, and Snacks bag.",
         priceDollar: 45,
         priceShekel: calculatePriceInShekels(45),
