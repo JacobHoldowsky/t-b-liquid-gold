@@ -15,6 +15,7 @@ const https = require("https");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto"); // Import crypto for generating random strings
+const { Resend } = require('resend'); // Add this import at the top
 
 dotenv.config();
 const app = express();
@@ -46,6 +47,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-11-15",
 });
 
+// Initialize Resend
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 function emptyUploadsDirectory() {
   const uploadsDir = path.join(__dirname, "uploads");
 
@@ -67,17 +71,6 @@ function emptyUploadsDirectory() {
     });
   });
 }
-
-// Nodemailer configuration
-const transporter = nodemailer.createTransport({
-  host: process.env.MAIL_SERVER,
-  port: process.env.MAIL_PORT,
-  secure: process.env.MAIL_USE_TLS === "true",
-  auth: {
-    user: process.env.MAIL_USERNAME,
-    pass: process.env.MAIL_PASSWORD,
-  },
-});
 
 // Define routes
 app.get("/hello", (req, res) => {
@@ -582,11 +575,7 @@ app.post(
           attachments: validAttachments,
         };
 
-        transporter.sendMail(mailOptionsCustomer, (error, info) => {
-          if (error) {
-            console.error("Error sending email to customer:", error);
-          }
-        });
+        await resend.emails.send(mailOptionsCustomer);
 
         const mailOptionsAdmin = {
           from: process.env.MAIL_USERNAME,
@@ -596,17 +585,7 @@ app.post(
           attachments: validAttachments,
         };
 
-        transporter.sendMail(mailOptionsAdmin, (error, info) => {
-          if (error) {
-            console.error("Error sending email to admin:", error);
-          }
-
-          validAttachments.forEach((attachment) => {
-            fs.unlink(attachment.path, (err) => {
-              if (err) console.error("Error deleting file:", err);
-            });
-          });
-        });
+        await resend.emails.send(mailOptionsAdmin);
 
         const s3KeysToDelete = lineItems.data
           .map((item) => {
@@ -647,50 +626,42 @@ app.post(
 app.post("/send-email", async (req, res) => {
   const { name, email, number, message } = req.body;
 
-  // Email to admin
-  const mailOptionsAdmin = {
-    from: process.env.MAIL_USERNAME,
-    to: process.env.PERSONAL_EMAIL,
-    subject: "New Contact Form Submission",
-    html: `
-      <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-        <h2 style="color: #7c2234; border-bottom: 2px solid #ddd; padding-bottom: 10px;">New Contact Form Submission</h2>
-        <p style="font-size: 16px;">You have received a new message from your website's contact form.</p>
-        <p style="font-size: 16px;"><strong>Name:</strong> ${name}</p>
-        <p style="font-size: 16px;"><strong>Email:</strong> ${email}</p>
-        <p style="font-size: 16px;"><strong>Phone Number:</strong> ${number}</p>
-        <p style="font-size: 16px;"><strong>Message:</strong></p>
-        <p style="font-size: 16px; background-color: #f9f9f9; padding: 15px; border-radius: 5px;">${message}</p>
-        <p style="font-size: 14px; color: #777; margin-top: 20px; text-align: center;">This email was sent from your website's contact form.</p>
-      </div>
-    `,
-  };
-
-  // Confirmation email to the sender
-  const mailOptionsSender = {
-    from: process.env.MAIL_USERNAME,
-    to: email,
-    subject: "Thank you for contacting us",
-    html: `
-      <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-        <h2 style="color: #7c2234; border-bottom: 2px solid #ddd; padding-bottom: 10px;">Thank You for Reaching Out</h2>
-        <p style="font-size: 16px;">Dear ${name},</p>
-        <p style="font-size: 16px;">Thank you for reaching out to us. We will respond to your inquiry shortly.</p>
-        <p style="font-size: 14px; color: #777; margin-top: 20px; text-align: center;">This is an automated response to confirm we have received your message.</p>
-      </div>
-    `,
-  };
-
   try {
     // Send email to admin
-    await transporter.sendMail(mailOptionsAdmin);
+    await resend.emails.send({
+      from: 'contact@uxilitypro.com', // Update this with your verified domain
+      to: process.env.PERSONAL_EMAIL,
+      subject: 'New Contact Form Submission',
+      html: `
+        <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+          <h2 style="color: #7c2234; border-bottom: 2px solid #ddd; padding-bottom: 10px;">New Contact Form Submission</h2>
+          <p style="font-size: 16px;">You have received a new message from your website's contact form.</p>
+          <p style="font-size: 16px;"><strong>Name:</strong> ${name}</p>
+          <p style="font-size: 16px;"><strong>Email:</strong> ${email}</p>
+          <p style="font-size: 16px;"><strong>Phone Number:</strong> ${number}</p>
+          <p style="font-size: 16px;"><strong>Message:</strong></p>
+          <p style="font-size: 16px; background-color: #f9f9f9; padding: 15px; border-radius: 5px;">${message}</p>
+          <p style="font-size: 14px; color: #777; margin-top: 20px; text-align: center;">This email was sent from your website's contact form.</p>
+        </div>
+      `
+    });
 
     // Send confirmation email to sender
-    await transporter.sendMail(mailOptionsSender);
+    await resend.emails.send({
+      from: 'contact@uxilitypro.com', // Update this with your verified domain
+      to: email,
+      subject: 'Thank you for contacting us',
+      html: `
+        <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
+          <h2 style="color: #7c2234; border-bottom: 2px solid #ddd; padding-bottom: 10px;">Thank You for Reaching Out</h2>
+          <p style="font-size: 16px;">Dear ${name},</p>
+          <p style="font-size: 16px;">Thank you for reaching out to us. We will respond to your inquiry shortly.</p>
+          <p style="font-size: 14px; color: #777; margin-top: 20px; text-align: center;">This is an automated response to confirm we have received your message.</p>
+        </div>
+      `
+    });
 
-    res
-      .status(200)
-      .json({ success: true, message: "Emails sent successfully" });
+    res.status(200).json({ success: true, message: "Emails sent successfully" });
   } catch (error) {
     console.error("Failed to send email:", error);
     res.status(500).json({ success: false, message: "Failed to send emails" });
