@@ -49,34 +49,59 @@ function Checkout({ cart, setCart, removeFromCart }) {
   });
   const [isInstitution, setIsInstitution] = useState(false);
   const [institutionName, setInstitutionName] = useState("");
+  const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
+  const [locationModalContent, setLocationModalContent] = useState({ title: '', locations: [] });
 
   const DELIVERY_OPTIONS = [
  
     {
-      label: "Ramat Eshkol, French Hill, Arzei Habira, Sanhedria, Maalot Dafna",
+      label: "Ramat Eshkol, Maalot Dafna, French Hill, Sanhedria, Arzei Habira",
       charge: currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate),
     },
     {
-      label: "Jerusalem, Beit Shemesh, RBS",
+      label: "Jerusalem",
       charge: currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate),
     },
     {
-      label: "Givat Zeev, Modiin, Maaleh Adumim, Mitzpe Yericho",
+      label: "Beit Shemesh, Ramat Beit Shemesh",
+      charge: currency === "Dollar" ? 17 : Math.ceil(17 * exchangeRate),
+    },
+    {
+      label: "Mevaseret Tzion, Telzstone",
+      charge: currency === "Dollar" ? 19 : Math.ceil(19 * exchangeRate),
+    },
+    {
+      label: "Maaleh Adumim, Mitzpeh Yericho",
       charge: currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate),
     },
     {
-      label: "Bnei Brak, Tel Aviv, Rechovot, Hertzliyah, Netanya, Rishon L'tzion",
+      label: "Modiin, Kiryat Sefer, Moshav Matityahu, Chashmonaim",
+      charge: currency === "Dollar" ? 22 : Math.ceil(22 * exchangeRate),
+    },
+    {
+      label: "Central Israel (Click here for Central Israel Locations)",
+      charge: currency === "Dollar" ? 25 : Math.ceil(25 * exchangeRate),
+    },
+    {
+      label: "Gush (Click here for Gush Locations)",
       charge: currency === "Dollar" ? 30 : Math.ceil(30 * exchangeRate),
     },
     {
-      label: "Anywhere in the Gush",
-      charge: currency === "Dollar" ? 35 : Math.ceil(35 * exchangeRate),
-    },
-    {
-      label: "Other locations - Click here to contact us via WhatsApp",
+      label: "Other locations not listed - Click here to contact us",
       charge: 0,
       isWhatsApp: true
     },
+  ];
+
+  const CENTRAL_ISRAEL_LOCATIONS = [
+    "Tel Aviv", "Hertzliyah", "Netanya", "Rishon L'tzion", "Bnei Brak",
+    "Petach Tikva", "Kfar Saba", "Ranaana", "Givat Shmuel", "Ramat Gan",
+    "Rechovot", "Givatayim", "Ramat Hasharon"
+  ];
+
+  const GUSH_LOCATIONS = [
+    "Beitar", "Efrat", "Neve Daniel", "Elazar", "Kfar Etzion",
+    "Tekoa", "Alon Shvut", "Bat Ayin"
   ];
 
   // Function to open modal
@@ -264,10 +289,34 @@ function Checkout({ cart, setCart, removeFromCart }) {
     setShippingDetails((prevDetails) => ({ ...prevDetails, [name]: value }));
   };
 
+  const handleLocationClick = (type) => {
+    if (type === 'central') {
+      setLocationModalContent({
+        title: 'Central Israel Locations',
+        locations: CENTRAL_ISRAEL_LOCATIONS
+      });
+    } else if (type === 'gush') {
+      setLocationModalContent({
+        title: 'Gush Locations',
+        locations: GUSH_LOCATIONS
+      });
+    }
+    setIsLocationModalOpen(true);
+  };
+
   const handleDeliveryOptionChange = (e) => {
     const selectedOption = DELIVERY_OPTIONS[e.target.value];
+    
+    // Handle location information buttons
+    if (selectedOption.label.includes("Central Israel")) {
+      handleLocationClick('central');
+      return;
+    } else if (selectedOption.label.includes("Gush")) {
+      handleLocationClick('gush');
+      return;
+    }
+
     if (selectedOption.isWhatsApp) {
-      // Replace with your actual WhatsApp number and message
       window.open("https://wa.me/+972534309254", '_blank');
       setSelectedDeliveryOption(null);
       setDeliveryCharge(0);
@@ -1024,6 +1073,20 @@ function Checkout({ cart, setCart, removeFromCart }) {
           message={modalConfig.message}
           onConfirm={modalConfig.onConfirm}
           onCancel={closeModal}
+        />
+
+        <Modal
+          isOpen={isLocationModalOpen}
+          title={locationModalContent.title}
+          message={
+            <ul className="location-list">
+              {locationModalContent.locations.map((location, index) => (
+                <li key={index}>{location}</li>
+              ))}
+            </ul>
+          }
+          onConfirm={() => setIsLocationModalOpen(false)}
+          onCancel={() => setIsLocationModalOpen(false)}
         />
       </div>
     </div>

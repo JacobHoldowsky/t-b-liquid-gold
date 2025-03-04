@@ -636,3 +636,19 @@
   margin-top: 10px;
   line-height: 1.4;
 }
+
+.location-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.location-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.location-list li:last-child {
+  border-bottom: none;
+}
