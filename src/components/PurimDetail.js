@@ -51,7 +51,7 @@ const TrendingPopup = ({ side, item, currency, calculatePriceInShekels, onClose,
         </button>
         <h4>{item.title === "Send a Mishloach Manos to a Soldier Family"
           ? "Send love to our soldier families"
-          : "Trending Now! 🔥"}</h4>
+          : "For the kids"}</h4>
         <img
           src={item.imageUrl}
           alt={item.title}
