@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     try {
       // Send email to admin
       await resend.emails.send({
-        from: 'onboarding@resend.dev', // Update this with your verified domain
+        from: 'contact@uxilitypro.com', // Update this with your verified domain
         to: process.env.PERSONAL_EMAIL,
         subject: 'New Contact Form Submission',
         html: `
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
 
       // Send confirmation email to sender
       await resend.emails.send({
-        from: 'onboarding@resend.dev', // Update this with your verified domain
+        from: 'contact@uxilitypro.com', // Update this with your verified domain
         to: email,
         subject: 'Thank you for contacting us',
         html: `
