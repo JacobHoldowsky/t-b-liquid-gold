@@ -1,5 +1,5 @@
 const Stripe = require("stripe");
-const nodemailer = require("nodemailer");
+const { Resend } = require('resend');
 const https = require("https");
 const fs = require("fs");
 const path = require("path");
@@ -20,16 +20,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-11-15",
 });
 
-// Nodemailer configuration
-const transporter = nodemailer.createTransport({
-  host: process.env.MAIL_SERVER,
-  port: process.env.MAIL_PORT,
-  secure: process.env.MAIL_USE_TLS === "true",
-  auth: {
-    user: process.env.MAIL_USERNAME,
-    pass: process.env.MAIL_PASSWORD,
-  },
-});
+// Initialize Resend
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 module.exports = async (req, res) => {
   if (req.method === "POST") {
@@ -341,39 +333,39 @@ ${homeType === "building"
 
   </div>
 `;
-        // Mail Options for Customer
-        const mailOptionsCustomer = {
-          from: process.env.MAIL_USERNAME,
-          to: customerEmail,
-          subject: `Order Confirmation - ${orderNumber}`,
-          html: customerEmailHtml,
-          attachments: validAttachments,
-        };
 
-        // Send email to customer
-        await transporter.sendMail(mailOptionsCustomer);
-
-        // Mail Options for Admin
-        const mailOptionsAdmin = {
-          from: process.env.MAIL_USERNAME,
-          to: process.env.PERSONAL_EMAIL,
-          subject: `New Order from ${customerEmail} - ${orderNumber}`,
-          html: adminEmailHtml,
-          attachments: validAttachments,
-        };
-
-        // Send email to admin
-        await transporter.sendMail(mailOptionsAdmin);
-
-        // Delete downloaded images from /tmp
-        validAttachments.forEach((attachment) => {
-          fs.unlink(attachment.path, (err) => {
-            if (err) console.error("Error deleting file:", err);
+        try {
+          // Send email to customer using Resend
+          await resend.emails.send({
+            from: 'contact@uxilitypro.com', // Update this with your verified domain
+            to: customerEmail,
+            subject: `Order Confirmation - ${orderNumber}`,
+            html: customerEmailHtml,
+            attachments: validAttachments,
           });
-        });
+
+          // Send email to admin using Resend
+          await resend.emails.send({
+            from: 'contact@uxilitypro.com', // Update this with your verified domain
+            to: process.env.PERSONAL_EMAIL,
+            subject: `New Order from ${customerEmail} - ${orderNumber}`,
+            html: adminEmailHtml,
+            attachments: validAttachments,
+          });
+
+          // Delete downloaded images from /tmp
+          validAttachments.forEach((attachment) => {
+            fs.unlink(attachment.path, (err) => {
+              if (err) console.error("Error deleting file:", err);
+            });
+          });
+        } catch (emailError) {
+          console.error("Error sending emails via Resend:", emailError);
+          // Don't return here, as we still want to acknowledge the webhook
+        }
       } catch (err) {
-        console.error("Error retrieving line items or sending email:", err);
-        return res.status(500).send(`Server Error: ${err.message}`);
+        console.error("Error retrieving line items:", err);
+        // Don't return here, as we still want to acknowledge the webhook
       }
     }
 
