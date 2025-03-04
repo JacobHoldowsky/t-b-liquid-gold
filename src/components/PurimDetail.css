@@ -351,9 +351,10 @@
     top: 70%;
   }
 
+  /* Hide the right popup (soldier families) on mobile */
   .trending-popup.right {
-    right: 15px;
-        top: 25%; }
+    display: none;
+  }
   
   .trending-image {
     height: 45px;
