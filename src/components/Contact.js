@@ -21,10 +21,7 @@ function Contact() {
     });
   };
 
-  const apiUrl =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3001/send-email"
-      : "/api/send-email";
+  const apiUrl = '/api/send-email';  // This will work in both development and production
 
   const handleSubmit = async (e) => {
     e.preventDefault();
