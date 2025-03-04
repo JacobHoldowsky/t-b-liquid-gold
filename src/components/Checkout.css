@@ -640,15 +640,82 @@
 .location-list {
   list-style: none;
   padding: 0;
-  margin: 0;
-  text-align: center;
+  margin: 10px 0;
+  text-align: left;
+  max-height: 60vh; /* Limit height on mobile */
+  overflow-y: auto; /* Enable scrolling if content is too long */
 }
 
 .location-list li {
-  padding: 8px 0;
+  padding: 12px 15px;
   border-bottom: 1px solid #eee;
+  font-size: 16px;
+  line-height: 1.4;
 }
 
 .location-list li:last-child {
   border-bottom: none;
+}
+
+/* Modal Responsive Adjustments */
+@media (max-width: 768px) {
+  .location-list {
+    max-height: 50vh; /* Slightly smaller on mobile */
+  }
+
+  .location-list li {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* Ensure modal content is readable on mobile */
+  .modal-content {
+    width: 90%;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  /* Style modal title */
+  .modal-content h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  /* Style modal text */
+  .modal-content p {
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 10px 0;
+  }
+
+  /* Style modal buttons */
+  .modal-content button {
+    width: 100%;
+    margin: 5px 0;
+    padding: 12px;
+    font-size: 14px;
+  }
+}
+
+/* Add smooth scrolling for the location list */
+.location-list {
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #7c2234 #f0f0f0; /* Firefox */
+}
+
+/* Customize scrollbar for webkit browsers */
+.location-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.location-list::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 3px;
+}
+
+.location-list::-webkit-scrollbar-thumb {
+  background: #7c2234;
+  border-radius: 3px;
 }

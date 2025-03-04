@@ -1095,7 +1095,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
           }
           onConfirm={() => {
             // If user confirms their location is in the list, set the delivery option
-            const label = locationModalContent.type === 'central' 
+            const label = locationModalContent.type === 'central'
               ? "Central Israel (Click here for Central Israel Locations)"
               : "Gush (Click here for Gush Locations)";
             setSelectedDeliveryOption(label);
