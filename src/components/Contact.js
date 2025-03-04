@@ -23,7 +23,7 @@ function Contact() {
 
   const apiUrl =
     process.env.NODE_ENV === "development"
-      ? "http://localhost:5000/send-email"
+      ? "http://localhost:3001/send-email"
       : "/api/send-email";
 
   const handleSubmit = async (e) => {
