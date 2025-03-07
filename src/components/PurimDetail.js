@@ -268,6 +268,7 @@ function PurimDetail({ cart, addToCart }) {
         category: "purim",
         availableInRegions: ["Israel"],
         hechsherim: {
+          "Beef Jerky": "Rabbi Akiva Dershowitz",
           "Oreo Cookies": "Badatz Igud Rabbanim",
           "Coke": "Badatz Rav Rubin",
           "Mike n' Ikes": "OU America",
