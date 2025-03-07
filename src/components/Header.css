@@ -112,6 +112,7 @@
   display: none;
   flex-direction: column;
   cursor: pointer;
+  margin-left: auto;
 }
 
 .hamburger div {
@@ -312,6 +313,7 @@ input:checked + .slider:before {
 @media (max-width: 576px) {
   .header {
     padding: 10px 15px;
+    justify-content: space-between;
   }
 
   .switch {
@@ -349,6 +351,7 @@ input:checked + .slider:before {
 
   .hamburger {
     display: flex;
+    margin-left: auto;
   }
 
   .header nav ul.active {
