@@ -236,7 +236,8 @@ function Header({ cart, cartItemCount, clearCart }) {
         <div></div>
         <div></div>
         <div></div>
-        {cartItemCount > 0 && ( // Cart indicator for small screens
+        {/* Remove cart indicator from hamburger menu on mobile */}
+        {/* {cartItemCount > 0 && (
           <span
             className={`cart-indicator ${
               cartIndicatorAnimated ? "animate" : ""
@@ -244,7 +245,7 @@ function Header({ cart, cartItemCount, clearCart }) {
           >
             {cartItemCount}
           </span>
-        )}
+        )} */}
       </div>
 
       <nav>
