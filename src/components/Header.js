@@ -196,7 +196,10 @@ function Header({ cart, cartItemCount, clearCart }) {
           />
         </div>
         {/* Enhanced Toggle Slider for Shop Region */}
-        <div className="shop-toggle-slider" ref={sliderRef}>
+
+        {/* comment back in to get toggle bar */}
+        
+        {/* <div className="shop-toggle-slider" ref={sliderRef}>
           <span
             className="slider-label"
             onClick={() => handleShopRegionSelect("Israel")}
@@ -227,7 +230,7 @@ function Header({ cart, cartItemCount, clearCart }) {
           >
             Shop USA
           </span>
-        </div>
+        </div> */}
       </div>
       <div className="hamburger" onClick={toggleMenu}>
         <div></div>
