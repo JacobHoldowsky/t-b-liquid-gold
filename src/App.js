@@ -31,6 +31,7 @@ import { ShopProvider } from "./context/ShopContext";
 import { Analytics } from "@vercel/analytics/react";
 import Purim from "./components/Purim"; // Import the new Purim page
 import PurimDetail from "./components/PurimDetail"; // Import the new Purim page
+import FloatingCartButton from "./components/FloatingCartButton";
 
 function App() {
   const [cart, setCart] = useState([]);
@@ -196,6 +197,7 @@ function App() {
               </Routes>
               <Footer />
               <FloatingWhatsAppButton />
+              <FloatingCartButton cartItemCount={calculateCartItemCount()} />
             </div>
           </Router>
         </ExchangeRateProvider>
