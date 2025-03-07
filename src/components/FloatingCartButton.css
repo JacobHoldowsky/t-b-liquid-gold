@@ -7,7 +7,7 @@
   border-radius: 50%;
   width: 50px;
   height: 50px;
-  display: flex;
+  display: none; /* Hide by default */
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
@@ -20,7 +20,15 @@
   top: -5px;
   right: -5px;
   color: #fff; /* Keep this white for contrast */
+  background-color: #7c2234; /* Added background color for visibility */
   border-radius: 50%;
   padding: 2px 6px;
   font-size: 12px;
+}
+
+/* Only show on mobile screens */
+@media (max-width: 768px) {
+  .floating-cart-button {
+    display: flex; /* Show only on mobile */
+  }
 } 
