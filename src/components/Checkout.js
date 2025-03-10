@@ -1103,9 +1103,28 @@ function Checkout({ cart, setCart, removeFromCart }) {
             setIsLocationModalOpen(false);
           }}
           onCancel={() => {
-            setSelectedDeliveryOption(null);
-            setDeliveryCharge(0);
+            // Show WhatsApp message and button when user clicks "No"
+            setModalConfig({
+              title: "Location Not Listed",
+              message: (
+                <div>
+                  <p>Please reach out to us via WhatsApp to complete your order.</p>
+                  <button 
+                    onClick={() => window.open("https://wa.me/+972534309254", '_blank')}
+                    className="whatsapp-button"
+                  >
+                    Contact via WhatsApp
+                  </button>
+                </div>
+              ),
+              onConfirm: () => {
+                closeModal();
+                setSelectedDeliveryOption(null);
+                setDeliveryCharge(0);
+              }
+            });
             setIsLocationModalOpen(false);
+            setIsModalOpen(true);
           }}
           confirmText="Yes, my location is listed"
           cancelText="No, my location is not listed"

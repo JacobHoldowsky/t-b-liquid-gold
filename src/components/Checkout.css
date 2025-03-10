@@ -719,3 +719,24 @@
   background: #7c2234;
   border-radius: 3px;
 }
+
+/* WhatsApp Button */
+.whatsapp-button {
+  display: block;
+  width: 100%;
+  padding: 12px 15px;
+  margin: 15px 0;
+  background-color: #25D366; /* WhatsApp green */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+.whatsapp-button:hover {
+  background-color: #128C7E; /* Darker WhatsApp green */
+}
