@@ -125,8 +125,8 @@ function PurimDetail({ cart, addToCart }) {
       teaParty: {
         title: "Tea Party",
         description: "1 Flavored creamed honey, 4 lotus cookies, 5 tea packets, and a wooden honey dipper.",
-        priceDollar: 30,
-        priceShekel: calculatePriceInShekels(30),
+        priceDollar: 35,
+        priceShekel: calculatePriceInShekels(35),
         imageUrl: "/teaParty.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
@@ -262,8 +262,8 @@ function PurimDetail({ cart, addToCart }) {
       jerkyBox: {
         title: "Jerky Box",
         description: "Beef Jerky, Oreos, Coke, Pringles, Mike n' Ikes, and Snacks bag.",
-        priceDollar: 45,
-        priceShekel: calculatePriceInShekels(45),
+        priceDollar: 55,
+        priceShekel: calculatePriceInShekels(55),
         imageUrl: "/bochurBox.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
@@ -279,8 +279,8 @@ function PurimDetail({ cart, addToCart }) {
       signatureBoard: {
         title: "Signature Board",
         description: "Olive oil, 1 flavored creamed honey, and 4 tea bags",
-        priceDollar: 55,
-        priceShekel: calculatePriceInShekels(55),
+        priceDollar: 60,
+        priceShekel: calculatePriceInShekels(60),
         imageUrl: "/signatureBoard.jpg",
         category: "purim",
         availableInRegions: ["Israel"],

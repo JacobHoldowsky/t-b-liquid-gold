@@ -70,9 +70,9 @@ function Purim({ cart, addToCart }) {
       {
         url: "teaParty.jpg",
         title: "Tea Party",
-        priceDollar: 30,
+        priceDollar: 35,
         id: "teaParty",
-        priceShekel: calculatePriceInShekels(30, exchangeRate),
+        priceShekel: calculatePriceInShekels(35, exchangeRate),
       },
       {
         url: "israelsGold.jpg",
@@ -134,16 +134,16 @@ function Purim({ cart, addToCart }) {
       {
         url: "bochurBox.jpg",
         title: "Jerky Box",
-        priceDollar: 45,
+        priceDollar: 55,
         id: "jerkyBox",
-        priceShekel: calculatePriceInShekels(45, exchangeRate),
+        priceShekel: calculatePriceInShekels(55, exchangeRate),
       },
       {
         url: "signatureBoard.jpg",
         title: "Signature Board",
-        priceDollar: 55,
+        priceDollar: 60,
         id: "signatureBoard",
-        priceShekel: calculatePriceInShekels(55, exchangeRate),
+        priceShekel: calculatePriceInShekels(60, exchangeRate),
       },
       {
         url: "soldierFamilySpecial.png",
