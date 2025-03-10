@@ -10,7 +10,16 @@ function Modal({ isOpen, title, message, onConfirm, onCancel, noOptions }) {
       <div className="confirmation-modal">
         <h2 className="confirmation-modal-title">{title}</h2>
         <p className="confirmation-modal-message">{message}</p>
-        {!noOptions ? (
+        {title === "Location Not Listed" ? (
+          <div className="confirmation-modal-buttons">
+            <button
+              className="confirmation-modal-button cancel"
+              onClick={onCancel}
+            >
+              Cancel
+            </button>
+          </div>
+        ) : !noOptions ? (
           <div className="confirmation-modal-buttons">
             <button
               className="confirmation-modal-button confirm"
