@@ -62,16 +62,13 @@ function Checkout({ cart, setCart, removeFromCart }) {
       label: "Anywhere in Jerusalem",
       charge: currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate),
     },
-    {
-      label: "Beit Shemesh, Ramat Beit Shemesh",
-      charge: currency === "Dollar" ? 17 : Math.ceil(17 * exchangeRate),
-    },
+
     {
       label: "Mevaseret Tzion, Telzstone",
       charge: currency === "Dollar" ? 19 : Math.ceil(19 * exchangeRate),
     },
     {
-      label: "Maaleh Adumim, Mitzpeh Yericho",
+      label: "Beit Shemesh, Ramat Beit Shemesh, Maaleh Adumim, Mitzpeh Yericho",
       charge: currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate),
     },
     {
