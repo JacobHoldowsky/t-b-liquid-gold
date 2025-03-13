@@ -365,6 +365,12 @@ function PurimDetail({ cart, addToCart }) {
       {selectedItem?.warning && (
         <p className="purim-warning">{selectedItem?.warning}</p>
       )}
+      <button
+        className="view-hechsher-btn"
+        onClick={() => setIsHechsherModalOpen(true)}
+      >
+        Click here to view a list of hechsherim
+      </button>
       <div className="purim-price">
         {currency === "Dollar"
           ? `$${selectedItem?.priceDollar}`
@@ -438,13 +444,6 @@ function PurimDetail({ cart, addToCart }) {
           )}
         </>
       )}
-
-      <button
-        className="view-hechsher-btn"
-        onClick={() => setIsHechsherModalOpen(true)}
-      >
-        Click here to view a list of hechsherim
-      </button>
 
       <HechsherModal
         isOpen={isHechsherModalOpen}
