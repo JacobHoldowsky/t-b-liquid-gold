@@ -54,40 +54,13 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   const DELIVERY_OPTIONS = [
 
-    {
-      label: "Ramat Eshkol, Maalot Dafna, French Hill, Sanhedria, Arzei Habira",
-      charge: currency === "Dollar" ? 10 : Math.ceil(10 * exchangeRate),
-    },
-    {
-      label: "Anywhere in Jerusalem",
-      charge: currency === "Dollar" ? 15 : Math.ceil(15 * exchangeRate),
-    },
 
     {
-      label: "Mevaseret Tzion, Telzstone",
-      charge: currency === "Dollar" ? 19 : Math.ceil(19 * exchangeRate),
-    },
-    {
-      label: "Beit Shemesh, Ramat Beit Shemesh, Maaleh Adumim, Mitzpeh Yericho",
+      label: "Anywhere in Jerusalem",
       charge: currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate),
     },
-    {
-      label: "Modiin, Kiryat Sefer, Moshav Matityahu, Chashmonaim",
-      charge: currency === "Dollar" ? 22 : Math.ceil(22 * exchangeRate),
-    },
-    {
-      label: "Central Israel (Click here for Central Israel Locations)",
-      charge: currency === "Dollar" ? 25 : Math.ceil(25 * exchangeRate),
-    },
-    {
-      label: "Gush (Click here for Gush Locations)",
-      charge: currency === "Dollar" ? 30 : Math.ceil(30 * exchangeRate),
-    },
-    {
-      label: "Other locations not listed - Click here to contact us",
-      charge: 0,
-      isWhatsApp: true
-    },
+
+
   ];
 
   const CENTRAL_ISRAEL_LOCATIONS = [
@@ -1106,7 +1079,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
               message: (
                 <div>
                   <p>Please reach out to us via WhatsApp to complete your order.</p>
-                  <button 
+                  <button
                     onClick={() => window.open("https://wa.me/+972534309254", '_blank')}
                     className="whatsapp-button"
                   >
