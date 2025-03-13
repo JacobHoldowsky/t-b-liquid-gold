@@ -199,9 +199,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
         },
         body: JSON.stringify({
           items: lineItems,
-          gift: isGift,
           hasComments: hasComments,
-          giftNote: isGift ? giftNote : null,
+          giftNote: giftNote || null,
           comments: hasComments ? comments : null,
           shippingDetails,
           deliveryCharge:
@@ -744,30 +743,22 @@ function Checkout({ cart, setCart, removeFromCart }) {
         ) : null}
         {aggregatedCart.aggregatedCart.length ? (
           <>
-            {/* Only show gift option if cart has non-soldier family items */}
+            {/* Only show gift note box if cart has non-soldier family items */}
             {!aggregatedCart.aggregatedCart.every(item =>
               item.title === "Send a Mishloach Manos to a Soldier Family"
             ) && (
-                <div className="gift-option">
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={isGift}
-                      onChange={(e) => setIsGift(e.target.checked)}
-                    />
-                    This is a gift
-                  </label>
-                  {isGift && (
-                    <textarea
-                      value={giftNote}
-                      onChange={(e) => setGiftNote(e.target.value.slice(0, 400))}
-                      placeholder="Include a gift note (max 400 characters)"
-                      rows="4"
-                      maxLength="400"
-                    />
-                  )}
-                </div>
-              )}
+              <div className="gift-option">
+                <h3>Gift Note</h3>
+                <p>Add a personal message to include with your order (optional)</p>
+                <textarea
+                  value={giftNote}
+                  onChange={(e) => setGiftNote(e.target.value.slice(0, 400))}
+                  placeholder="Enter your gift message here (max 400 characters)"
+                  rows="4"
+                  maxLength="400"
+                />
+              </div>
+            )}
 
             {/* Comments section remains available for all orders */}
             <div className="gift-option">
