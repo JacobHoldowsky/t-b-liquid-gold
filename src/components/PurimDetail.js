@@ -246,8 +246,8 @@ function PurimDetail({ cart, addToCart }) {
       noshBox: {
         title: "Nosh Box",
         description: "2 Snack bags, Mike N' Ikes, Gushers, chocolate bar (Dairy), Clicks (Dairy), and Mints/gum.",
-        priceDollar: 30,
-        priceShekel: calculatePriceInShekels(30),
+        priceDollar: 35,
+        priceShekel: calculatePriceInShekels(35),
         imageUrl: "/noshBox.jpg",
         category: "purim",
         availableInRegions: ["Israel"],

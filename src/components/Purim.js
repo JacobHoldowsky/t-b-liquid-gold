@@ -127,9 +127,9 @@ function Purim({ cart, addToCart }) {
       {
         url: "noshBox.jpg",
         title: "Nosh Box",
-        priceDollar: 30,
+        priceDollar: 35,
         id: "noshBox",
-        priceShekel: calculatePriceInShekels(30, exchangeRate),
+        priceShekel: calculatePriceInShekels(35, exchangeRate),
       },
       {
         url: "bochurBox.jpg",
