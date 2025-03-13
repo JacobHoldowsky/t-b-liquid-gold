@@ -53,14 +53,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const [locationModalContent, setLocationModalContent] = useState({ title: '', locations: [] });
 
   const DELIVERY_OPTIONS = [
-
-
     {
       label: "Anywhere in Jerusalem",
       charge: currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate),
     },
-
-
   ];
 
   const CENTRAL_ISRAEL_LOCATIONS = [
