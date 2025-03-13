@@ -154,8 +154,8 @@ function PurimDetail({ cart, addToCart }) {
       lchaim: {
         title: "Lchaim Board",
         description: "375ml Bottle of wine and 18 Praline Chocolates (Dairy).",
-        priceDollar: 110,
-        priceShekel: calculatePriceInShekels(110),
+        priceDollar: 130,
+        priceShekel: calculatePriceInShekels(130),
         imageUrl: "/lchaim.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
@@ -215,8 +215,8 @@ function PurimDetail({ cart, addToCart }) {
       scotchNPop: {
         title: "Scotch n' Pop",
         description: "750ml Glenlivet, 2 Bags flavored popcorn, and 12 Praline chocolates (Dairy).",
-        priceDollar: 145,
-        priceShekel: calculatePriceInShekels(145),
+        priceDollar: 165,
+        priceShekel: calculatePriceInShekels(165),
         imageUrl: "/scotchAndPop.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
