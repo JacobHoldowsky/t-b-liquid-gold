@@ -970,13 +970,17 @@ function Checkout({ cart, setCart, removeFromCart }) {
                       header.
                     </p>
 
-                    <input
-                      type="text"
-                      name="zipCode"
-                      placeholder={`Zip code ${shopRegion === "US" ? "*" : ""}`}
-                      value={shippingDetails.zipCode}
-                      onChange={handleInputChange}
-                    />
+                    {/* Only show zip code field for US orders */}
+                    {shopRegion === "US" && (
+                      <input
+                        type="text"
+                        name="zipCode"
+                        placeholder="Zip code *"
+                        value={shippingDetails.zipCode}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    )}
                     <label>Must be a local Israeli phone number</label>
                     <input
                       type="text"
