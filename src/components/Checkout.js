@@ -573,19 +573,25 @@ function Checkout({ cart, setCart, removeFromCart }) {
       isFormValid = areMandatoryFieldsFilled;
     } else {
       // When specialDeliveryOnly is false, perform full validation
-      const areMandatoryFieldsFilled = [
+      const mandatoryFields = [
         shippingDetails.fullName,
         shippingDetails.email,
         shippingDetails.number,
         shippingDetails.recipientName,
         shippingDetails.address,
-        shippingDetails.homeType,
         shippingDetails.city,
         shippingDetails.contactNumber,
-      ].every((field) => field.trim() !== "");
+      ];
+
+      // Only include homeType in validation if not an institution
+      if (!isInstitution) {
+        mandatoryFields.push(shippingDetails.homeType);
+      }
+
+      const areMandatoryFieldsFilled = mandatoryFields.every((field) => field.trim() !== "");
 
       const areBuildingFieldsFilled =
-        shippingDetails.homeType === "building"
+        shippingDetails.homeType === "building" && !isInstitution
           ? [shippingDetails.apartmentNumber].every(
             (field) => field.trim() !== ""
           )
@@ -598,7 +604,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
     }
 
     setIsFormValid(isFormValid);
-  }, [shippingDetails, selectedDeliveryOption, specialDeliveryOnly]);
+  }, [shippingDetails, selectedDeliveryOption, specialDeliveryOnly, isInstitution]);
 
   return (
     <div className="checkout-container">
@@ -809,9 +815,42 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 required
               />
             </div>
+            
             {/* Conditionally render delivery information based on specialDeliveryOnly */}
             {!specialDeliveryOnly ? (
               <>
+                {/* Institution checkbox - moved here, above Delivery Options */}
+                {!aggregatedCart.aggregatedCart.every(item =>
+                  item.title === "Send a Mishloach Manos to a Soldier Family"
+                ) && (
+                  <div className="institution-option">
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={isInstitution}
+                        onChange={(e) => setIsInstitution(e.target.checked)}
+                      />
+                      Click here if this is going to a seminary/yeshiva
+                    </label>
+
+                    {isInstitution && (
+                      <div className="institution-details">
+                        <input
+                          type="text"
+                          name="institutionName"
+                          placeholder="Name of seminary/yeshiva *"
+                          value={institutionName}
+                          onChange={(e) => setInstitutionName(e.target.value)}
+                          required
+                        />
+                        <p className="institution-warning">
+                          <strong>Important Note:</strong> If the student is unreachable, packages are delivered to the school's office/reception/guard or given to a fellow student. We do not accept responsibility once the package has been delivered to the institution.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
+                
                 {/* Delivery Options */}
                 {shopRegion !== "US" ? (
                   <div className="delivery-options">
@@ -833,6 +872,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     </select>
                   </div>
                 ) : null}
+                
                 {/* Delivery Information */}
                 {shopRegion === "US" || deliveryCharge > 0 ? (
                   <div className="shipping-details">
@@ -856,7 +896,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                       onChange={handleInputChange}
                       required
                     />
-                    {shopRegion !== "US" ? (
+                    {shopRegion !== "US" && !isInstitution ? (
                       <select
                         name="homeType"
                         value={shippingDetails.homeType}
@@ -872,7 +912,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     ) : null}
                     {/* Additional Fields for Buildings */}
                     {shippingDetails.homeType === "building" &&
-                      shopRegion !== "US" && (
+                      shopRegion !== "US" && !isInstitution && (
                         <>
                           <input
                             type="text"
@@ -956,37 +996,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 </div>
               )
             )}
-            {/* Institution checkbox - only show if not all items are soldier packages */}
-            {!aggregatedCart.aggregatedCart.every(item =>
-              item.title === "Send a Mishloach Manos to a Soldier Family"
-            ) && (
-                <div className="institution-option">
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={isInstitution}
-                      onChange={(e) => setIsInstitution(e.target.checked)}
-                    />
-                    Click here if this is going to a seminary/yeshiva
-                  </label>
-
-                  {isInstitution && (
-                    <div className="institution-details">
-                      <input
-                        type="text"
-                        name="institutionName"
-                        placeholder="Name of seminary/yeshiva *"
-                        value={institutionName}
-                        onChange={(e) => setInstitutionName(e.target.value)}
-                        required
-                      />
-                      <p className="institution-warning">
-                        <strong>Important Note:</strong> If the student is unreachable, packages are delivered to the school's office/reception/guard or given to a fellow student. We do not accept responsibility once the package has been delivered to the institution.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              )}
           </>
         ) : null}
 
