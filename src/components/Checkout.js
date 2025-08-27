@@ -270,12 +270,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
           giftNote: giftNote || null,
           comments: hasComments ? comments : null,
           shippingDetails,
-          deliveryCharge:
-            shopRegion === "US" ? totalDeliveryCharge : deliveryCharge,
-          selectedDeliveryOption:
-            shopRegion === "US"
-              ? "Total Delivery Charge"
-              : selectedDeliveryOption,
           deliveryCharge: totalDeliveryCharge,
           selectedDeliveryOption,
           isSponsorHoneyBoardInCart,
