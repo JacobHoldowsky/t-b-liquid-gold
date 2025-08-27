@@ -49,21 +49,6 @@ function FeaturedProducts() {
             Shop Corporate Gifts
           </HashLink>
         </div>
-        <div className="product-card">
-          <img
-            src="Sponsor a honey board with plastic-min.png"
-            alt="Sponsor a Family Board"
-          />
-
-          <HashLink
-            smooth
-            to="/sponsorAHoneyBoard"
-            scroll={scrollWithOffset}
-            className="cta-btn"
-          >
-            Sponsor a Honey Board
-          </HashLink>
-        </div>
       </div>
     </section>
   );

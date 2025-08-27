@@ -40,11 +40,66 @@
     font-weight: bold;
   }
   
-  .banner p {
-    margin: 0;
-    font-size: 1rem;
+  .banner--marquee {
+    overflow: hidden;
   }
-  
+
+  .marquee {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .marquee__track {
+    display: inline-flex;
+    white-space: nowrap;
+    will-change: transform;
+    animation: marquee-scroll 22s linear infinite;
+  }
+
+  .marquee__content {
+    display: inline-block;
+    padding-right: 0.2rem;
+  }
+
+  .banner--marquee:hover .marquee__track {
+    animation-play-state: paused;
+  }
+
+  .banner a,
+  .banner .banner-link {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  /* Hover/keyboard focus states */
+  .banner a:hover,
+  .banner a:focus-visible {
+    text-decoration-thickness: 2px;
+  }
+
+  .banner a:focus-visible {
+    outline: 2px dashed #fff;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee__track {
+      animation: none;
+    }
+  }
+
+  @keyframes marquee-scroll {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
 
   .notification {
     display: inline-flex;
@@ -174,6 +229,11 @@
     max-width: 500px;
     text-align: center;
     position: relative;
+
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
   }
   
   .modal img {
@@ -213,6 +273,26 @@
   /* Disable Scroll When Modal is Open */
   .modal-open {
     overflow: hidden;
+  }
+
+  .modal-content {
+    overflow-y: auto;
+    /* key: scroll here */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    padding: 0 4px 4px;
+    /* tiny inner padding so scrollbars don’t hug the edge */
+  }
+
+  /* keep big images from stretching the modal too tall */
+  .modal-content img {
+    max-width: 100%;
+    height: auto;
+    max-height: 50vh;
+    /* adjust to taste */
+    object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 20px;
   }
   
   /* Responsive Adjustments */

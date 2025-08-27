@@ -97,7 +97,7 @@ function HoneyCollection({ cart, addToCart }) {
         url: "chocolate small jar-min.jpg",
         title: "Chocolate Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: "12",
+        priceDollar: "13",
         sizeIL: "120ml",
         priceShekel: "45",
         category: "honey jars", // Added category
@@ -106,7 +106,7 @@ function HoneyCollection({ cart, addToCart }) {
         url: "cinnamon small jar-min.jpg",
         title: "Cinnamon Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: "12",
+        priceDollar: "13",
         sizeIL: "120ml",
         priceShekel: "45",
         category: "honey jars", // Added category
@@ -115,7 +115,7 @@ function HoneyCollection({ cart, addToCart }) {
         url: "pumpkin small jar-min.JPG",
         title: "Pumpkin Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: "12",
+        priceDollar: "13",
         sizeIL: "120ml",
         priceShekel: "45",
         category: "honey jars", // Added category
@@ -124,7 +124,7 @@ function HoneyCollection({ cart, addToCart }) {
         url: "sea salt small jar-min.jpg",
         title: "Sea Salt Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: "12",
+        priceDollar: "13",
         sizeIL: "120ml",
         priceShekel: "45",
         category: "honey jars", // Added category
@@ -133,7 +133,7 @@ function HoneyCollection({ cart, addToCart }) {
         url: "vanilla small jar-min.jpg",
         title: "Vanilla Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: "12",
+        priceDollar: "13",
         sizeIL: "120ml",
         priceShekel: "45",
         category: "honey jars", // Added category
@@ -142,12 +142,12 @@ function HoneyCollection({ cart, addToCart }) {
         url: "bourbon small jar-min.jpg",
         title: "Bourbon Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: shopRegion === "US" ? "16" : "14",
+        priceDollar: shopRegion === "US" ? "16" : "15",
         sizeIL: "120ml",
         priceShekel:
           shopRegion === "US"
             ? formatPrice(16 * (exchangeRate ? exchangeRate : 3.7))
-            : "55",
+            : "50",
         category: "honey jars",
         isSoldOut: shopRegion === "US", // Bourbon is sold out in the US
       },
@@ -155,12 +155,24 @@ function HoneyCollection({ cart, addToCart }) {
         url: "blueberry screenshot-min.png",
         title: "Blueberry Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: shopRegion === "US" ? "16" : "14", // Price change based on region
+        priceDollar: shopRegion === "US" ? "16" : "15", // Price change based on region
         sizeIL: "120ml",
         priceShekel:
           shopRegion === "US"
             ? formatPrice(16 * (exchangeRate ? exchangeRate : 3.7))
-            : "55",
+            : "50",
+        category: "honey jars", // Added category
+      },
+      {
+        url: "strawberry small jar-min.jpg",
+        title: "Strawberry Creamed Honey",
+        sizeUS: "4oz",
+        priceDollar: shopRegion === "US" ? "16" : "15", // Price change based on region
+        sizeIL: "120ml",
+        priceShekel:
+          shopRegion === "US"
+            ? formatPrice(16 * (exchangeRate ? exchangeRate : 3.7))
+            : "50",
         category: "honey jars", // Added category
       },
     ];
@@ -168,7 +180,7 @@ function HoneyCollection({ cart, addToCart }) {
     // Update other honey items prices if "Shop US" is selected
     if (shopRegion === "US") {
       baseItems.forEach((item) => {
-        if (item.priceDollar === "12") {
+        if (item.priceDollar === "13") {
           item.priceDollar = "15";
           item.priceShekel = formatPrice(
             15 * (exchangeRate ? exchangeRate : 3.7)
@@ -228,7 +240,7 @@ function HoneyCollection({ cart, addToCart }) {
 
   return (
     <div className="honey">
-      <h2 className="honey-section-title">Honey Collection</h2>
+      <h2 className="honey-section-title">Honey Jar Collection</h2>
       <div className="honey-images">
         {items.map((item) => (
           <HoneyItem

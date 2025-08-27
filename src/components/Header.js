@@ -256,19 +256,6 @@ function Header({ cart, cartItemCount, clearCart }) {
           >
             <Link className="top-level-header-item">Shop</Link>
             <ul className="dropdown-menu">
-              {shopRegion !== "US" ? (
-                <li>
-                  <HashLink
-                    className="dropdown-menu-item"
-                    smooth
-                    to="/purim"
-                    scroll={scrollWithOffset}
-                    onClick={closeMenu}
-                  >
-                    Purim
-                  </HashLink>
-                </li>
-              ) : null}
               <li>
                 <HashLink
                   className="dropdown-menu-item"
@@ -277,7 +264,7 @@ function Header({ cart, cartItemCount, clearCart }) {
                   scroll={scrollWithOffset}
                   onClick={closeMenu}
                 >
-                  Honey Collection
+                  Honey Jar Collection
                 </HashLink>
               </li>
               <li>
@@ -317,17 +304,6 @@ function Header({ cart, cartItemCount, clearCart }) {
                   </HashLink>
                 </li>
               ) : null}
-              <li>
-                <HashLink
-                  className="dropdown-menu-item"
-                  smooth
-                  to="/sponsorAHoneyBoard"
-                  scroll={scrollWithOffset}
-                  onClick={closeMenu}
-                >
-                  Sponsor a Honey Board
-                </HashLink>
-              </li>
             </ul>
           </li>
           <li>
