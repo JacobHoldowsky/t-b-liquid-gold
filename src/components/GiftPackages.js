@@ -83,7 +83,7 @@ function GiftPackages({ cart, addToCart }) {
       "Sea Salt Creamed Honey",
       "Vanilla Creamed Honey",
       "Bourbon Creamed Honey",
-      "Blueberry Creamed Honey",
+      // "Blueberry Creamed Honey",
       "Strawberry Creamed Honey",
     ];
     return shopRegion === "US"
@@ -128,112 +128,151 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "For Him $55-min.jpg",
         title: "For Him",
+        description: "2 flavored creamed honeys, moscato, wooden honey dipper.",
         priceDollar: 55,
         id: "forHim",
         priceShekel: 190,
+        woodenBoard: true,
       },
       {
         url: "For Her $55-min.jpg",
         title: "For Her",
+        description: "2 flavored creamed honeys, Rosato, wooden honey dipper",
         priceDollar: 55,
         id: "forHer",
         priceShekel: 190,
+        woodenBoard: true,
       },
       // {
       //   url: "boxOfFour-min.jpg",
       //   title: "Box of Four",
+      //   description:
+      //     "4 flavored creamed honeys wrapped in a beautiful gift box with a wooden honey dipper",
+      //   description: "4 flavored creamed honeys wrapped in a beautiful gift box with a wooden honey dipper",
       //   priceDollar: shopRegion === "US" ? 65 : 55,
       //   id: "boxOfFour",
       //   priceShekel: calculatePriceInShekels(
       //     shopRegion === "US" ? 65 : 55,
       //     exchangeRate
       //   ),
+      //   woodenBoard: false,
       // },
       {
         url: "Board of Four no plastic-min.jpg",
         title: "Board of Four",
-        priceDollar: shopRegion === "US" ? 75 : 70,
+        description: "4 flavored creamed honeys on a wooden serving board",
+        priceDollar: 70,
         id: "boardOfFour",
         priceShekel: 242,
+        woodenBoard: false,
       },
       {
         url: "chocolateDelight-min.png",
         title: "Chocolate Delight",
+        description:
+          "2 Flavored creamed honeys, 4 Dairy belgian chocolates, wooden honey dipper.",
         priceDollar: 65,
         id: "chocolateDelight",
         priceShekel: 224,
+        woodenBoard: true,
       },
       {
         url: "tnbCollectionBox.jpg",
         title: "T&Bee Collection",
-        priceDollar: shopRegion === "US" ? 85 : 85,
+        description:
+          "6 flavored creamed honeys wrapped in a beautiful gift box with a wooden honey dipper.",
+        priceDollar: 85,
         id: "tnBeeCollection",
         priceShekel: 294,
+        woodenBoard: true,
       },
       {
         url: "honeyALaConnoisseur.jpg",
         title: "Honey A' La Connoisseur",
+        description:
+          "2 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
+        warning: "*Wine bottle will vary based on availability",
         priceDollar: 90,
         id: "HoneyALaConnoisseur",
         priceShekel: 310,
+        woodenBoard: true,
       },
       {
         url: "Collection Plus $95-min.jpg",
         title: "Collection Plus",
+        description:
+          "6 Flavored creamed honeys, 5 Dairy Belgian chocolates, wooden honey dipper.",
         priceDollar: 125,
         id: "collectionPlusBox",
         priceShekel: 432,
+        woodenBoard: true,
       },
       {
-        url: "honeycombCollectionBoard.jpg",
+        url: "Honeycomb collection board no plastic-min.jpg",
         title: "Honeycomb Collection Board",
-        priceDollar: shopRegion === "US" ? 125 : 99,
+        description:
+          "7 delicious flavored creamed honeys on a wooden serving board.",
+        priceDollar: 120,
         id: "honeycombCollectionBoard",
-        priceShekel: calculatePriceInShekels(
-          shopRegion === "US" ? 125 : 99,
-          exchangeRate
-        ),
+        priceShekel: 415,
+        woodenBoard: false,
       },
       {
         url: "Belgian Box $100-min.jpg",
-        title: "Belgian Box",
-        priceDollar: 105,
+        title: "Premium Plus",
+        description:
+          "4 Flavored creamed honeys, 12 Dairy Belgian chocolates, wooden honey dipper.",
+        priceDollar: 115,
         id: "belgianBox",
-        priceShekel: calculatePriceInShekels(105, exchangeRate),
+        priceShekel: 397,
+        woodenBoard: true,
       },
       {
         url: "Deluxe Box $120-min.jpg",
-        title: "Deluxe Box",
-        priceDollar: 120,
+        title: "Golden Sweets",
+        description:
+          "5 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
+        warning: "*Wine bottle will vary based on availability",
+        priceDollar: 140,
         id: "deluxeBox",
-        priceShekel: calculatePriceInShekels(120, exchangeRate),
+        priceShekel: 485,
+        woodenBoard: true,
       },
-      {
-        url: "Deluxe Board no plastic-min.jpg",
-        title: "Deluxe Board",
-        priceDollar: shopRegion === "US" ? 150 : 136,
-        id: "deluxeBoard",
-        priceShekel: calculatePriceInShekels(
-          shopRegion === "US" ? 150 : 136,
-          exchangeRate
-        ),
-      },
+      // {
+      //   url: "Deluxe Board no plastic-min.jpg",
+      //   title: "Deluxe Board",
+      //   description: `5 Flavored creamed honeys, ${
+      //       shopRegion === "US" ? "750ml" : "375ml"
+      //     } bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.`,
+      //   warning: "*Wine bottle will vary based on availability",
+      //   priceDollar: shopRegion === "US" ? 150 : 136,
+      //   id: "deluxeBoard",
+      //   priceShekel: calculatePriceInShekels(
+      //     shopRegion === "US" ? 150 : 136,
+      //     exchangeRate
+      //   ),
+      //   woodenBoard: false,
+      // },
       {
         url: "scoth n sweets-min.png",
         title: "Scotch n' Sweets Board",
-        priceDollar: shopRegion === "US" ? 180 : 160,
+        description:
+          "4 Flavored creamed honeys, 5 Dairy Belgian chocolates, 700ml Bottle of Glenlivet, wooden honey dipper, wooden honey board.",
+        priceDollar: 180,
         id: "scotchNSweetsBoard",
-        priceShekel: calculatePriceInShekels(
-          shopRegion === "US" ? 180 : 160,
-          exchangeRate
-        ),
+        priceShekel: 622,
+        woodenBoard: false,
       },
       {
         url: "theBossBoard.jpg",
         title: "The Boss Board",
-        priceDollar: 180,
+        description:
+          "6 Flavored creamed honeys, Bottle of wine, 9 Dairy Belgian chocolates, Wooden honey dipper, Wooden serving board.",
+        warning: "*Wine bottle will vary based on availability",
+        priceDollar: 195,
         id: "theBossBoard",
-        priceShekel: calculatePriceInShekels(180, exchangeRate),
+        priceShekel: 675,
+        woodenBoard: false,
       },
     ];
 
@@ -385,6 +424,19 @@ function GiftPackages({ cart, addToCart }) {
                     : `₪${selectedItem.priceShekel}`}
                 </span>
               </div>
+
+              {selectedItem.description && (
+                <p className="gift-package-description">
+                  {selectedItem.description}
+                </p>
+              )}
+              {selectedItem.warning && selectedItem.warning.trim() !== "" && (
+                <p className="gift-package-warning">{selectedItem.warning}</p>
+              )}
+
+              {selectedItem.woodenBoard && (
+                <p>This gift may be displayed on a wooden board.</p>
+              )}
 
               <div className="quantity-selector">
                 <label htmlFor="modal-quantity">Quantity:</label>
