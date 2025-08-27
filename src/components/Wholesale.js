@@ -38,8 +38,7 @@ function Wholesale({ cart, addToCart }) {
       <h2 className="wholesale-section-title">Wholesale</h2>
       <div className="wholesale-message">
         <p>
-          We are now offering wholesale orders! Minimum orders for 4oz jars
-          start at 50+ jars, and 2oz jars at 100+ jars.
+          We are now offering wholesale orders! Minimum orders for 4oz jars and 2oz jars start at 50+ jars.
           <br />
           For inquiries, please contact us via{" "}
           <a
