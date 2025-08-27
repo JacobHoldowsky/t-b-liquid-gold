@@ -212,9 +212,9 @@ function GiftPackages({ cart, addToCart }) {
         title: "Honeycomb Collection Board",
         description:
           "7 delicious flavored creamed honeys on a wooden serving board.",
-        priceDollar: 120,
+        priceDollar: shopRegion === "US" ? 125 : 120,
         id: "honeycombCollectionBoard",
-        priceShekel: 415,
+        priceShekel: shopRegion === "US" ? 432 : 415,
         woodenBoard: false,
       },
       {
@@ -283,8 +283,6 @@ function GiftPackages({ cart, addToCart }) {
             [
               "honeycombCollectionBoard",
               "boardOfFour",
-              "deluxeBoard",
-              "scotchNSweetsBoard",
             ].includes(item.id)
           )
         : allItems
