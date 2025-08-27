@@ -32,6 +32,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
         "Sea Salt Creamed Honey",
         "Bourbon Creamed Honey",
         "Pumpkin Creamed Honey",
+        "Strawberry Creamed Honey",
       ],
     },
     miniSixCollectionBoard: {
