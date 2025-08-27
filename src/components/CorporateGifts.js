@@ -12,20 +12,16 @@ function CorporateGifts({ cart, addToCart }) {
     {
       url: "Mini four collection board with plastic-min.png",
       title: "Mini Four Collection Board",
-      priceDollar: "35",
+      priceDollar: 40,
       id: "miniFourCollectionBoard",
-      priceShekel: exchangeRate
-        ? Math.ceil(35 * exchangeRate)
-        : Math.ceil(35 * 3.7),
+      priceShekel: 138,
     },
     {
       url: "Mini six collection board with plastic-min.png",
       title: "Mini Six Collection Board",
-      priceDollar: "50",
+      priceDollar: 55,
       id: "miniSixCollectionBoard",
-      priceShekel: exchangeRate
-        ? Math.ceil(50 * exchangeRate)
-        : Math.ceil(50 * 3.7),
+      priceShekel: 190,
     },
   ];
 

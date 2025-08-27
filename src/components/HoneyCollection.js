@@ -162,6 +162,7 @@ function HoneyCollection({ cart, addToCart }) {
             ? formatPrice(16 * (exchangeRate ? exchangeRate : 3.7))
             : "50",
         category: "honey jars", // Added category
+        isSoldOut: true,
       },
       {
         url: "strawberry small jar-min.jpg",

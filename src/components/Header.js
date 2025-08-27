@@ -324,7 +324,7 @@ function Header({ cart, cartItemCount, clearCart }) {
               Contact
             </Link>
           </li>
-          <li
+          {/* <li
             className={`dropdown ${
               activeDropdown === "distributors" ? "active" : ""
             }`}
@@ -351,7 +351,7 @@ function Header({ cart, cartItemCount, clearCart }) {
                 </Link>
               </li>
             </ul>
-          </li>
+          </li> */}
           <li className="cart-link">
             <Link
               className="top-level-header-item"

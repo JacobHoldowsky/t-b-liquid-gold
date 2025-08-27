@@ -52,10 +52,44 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [locationModalContent, setLocationModalContent] = useState({ title: '', locations: [] });
 
+  const CHOSEN_EXCHANGE_RATE = 3.46
+
   const DELIVERY_OPTIONS = [
     {
-      label: "Anywhere in Jerusalem",
-      charge: currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate),
+      label: "Pickup in Ramat Eshkol (Sderot Eshkol 14)",
+      charge: 0,
+    },
+    {
+      label: "Jerusalem",
+      charge: currency === "Dollar" ? 15 : Math.ceil(15 * CHOSEN_EXCHANGE_RATE),
+    },
+    {
+      label: "RBS",
+      charge: currency === "Dollar" ? 17 : Math.ceil(17 * CHOSEN_EXCHANGE_RATE),
+    },
+    {
+      label: "Givat Zeev, Modiin, Mevaseret Tzion",
+      charge: currency === "Dollar" ? 20 : Math.ceil(20 * CHOSEN_EXCHANGE_RATE),
+    },
+    {
+      label: "Mitzpe Yericho, Maaleh Adumim",
+      charge: currency === "Dollar" ? 25 : Math.ceil(25 * CHOSEN_EXCHANGE_RATE),
+    },
+    {
+      label: "Gush: Efrat, Beital, Alon Shvut, Bat Ayin, Kfar Etzion",
+      charge: currency === "Dollar" ? 25 : Math.ceil(25 * CHOSEN_EXCHANGE_RATE),
+    },
+    {
+      label:
+        "Central Israel: Tel Aviv, Petach Tikva, Rishon Letzion, Ramat Gan, Ramat Hasharon, Hertzliyah, Raanana, Kfar Saba",
+      charge: currency === "Dollar" ? 30 : Math.ceil(30 * CHOSEN_EXCHANGE_RATE),
+    },
+    {
+      label:
+        "All other locations that are not listed here, please contact us to inquire on delivery price",
+      charge: 0,
+      dontShowPrice: true,
+      isWhatsApp: true,
     },
   ];
 
@@ -286,9 +320,28 @@ function Checkout({ cart, setCart, removeFromCart }) {
     }
 
     if (selectedOption.isWhatsApp) {
-      window.open("https://wa.me/+972534309254", '_blank');
-      setSelectedDeliveryOption(null);
-      setDeliveryCharge(0);
+      setModalConfig({
+        title: "Location Not Listed",
+        message: (
+          <div>
+            <p>Please reach out to us via WhatsApp to complete your order.</p>
+            <button
+              onClick={() =>
+                window.open("https://wa.me/+972534309254", "_blank")
+              }
+              className="whatsapp-button"
+            >
+              Contact via WhatsApp
+            </button>
+          </div>
+        ),
+        onConfirm: () => {
+          closeModal();
+          setSelectedDeliveryOption(null);
+          setDeliveryCharge(0);
+        },
+      });
+      setIsModalOpen(true);
       return;
     }
 
@@ -639,10 +692,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
                       </p>
                     ) : null}
                     {shopRegion === "US" &&
-                      item.category === "gift packages" &&
-                      item.title !== "T&Bee Collection Box" &&
-                      item.title !== "Board of Four" &&
-                      item.title !== "Box of Four" ? (
+                    item.category === "gift packages" &&
+                    item.title !== "T&Bee Collection Box" &&
+                    item.title !== "Board of Four" &&
+                    item.title !== "Box of Four" ? (
                       <p className="item-flavors">
                         Delivery:{" "}
                         {currency === "Dollar"
@@ -664,19 +717,19 @@ function Checkout({ cart, setCart, removeFromCart }) {
                         {currency === "Dollar"
                           ? `+ One time fee of $50`
                           : `+ One time fee of ₪${Math.ceil(
-                            50 * exchangeRate
-                          )}`}
+                              50 * exchangeRate
+                            )}`}
                         )
                       </p>
                     )}
                     <p className="item-price">
                       {currency === "Dollar"
                         ? `$${formatNumberWithCommas(
-                          parseFloat(item.priceDollar)
-                        )}`
+                            parseFloat(item.priceDollar)
+                          )}`
                         : `₪${formatNumberWithCommas(
-                          Math.ceil(item.priceShekel)
-                        )}`}
+                            Math.ceil(item.priceShekel)
+                          )}`}
                     </p>
                   </div>
                   <div className="quantity-controls">
@@ -727,7 +780,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             {calculateTotalPrice()}
           </h3>
         </div>
-        {aggregatedCart.aggregatedCart.length ? (
+        {/* {aggregatedCart.aggregatedCart.length ? (
           <div className="promo-code">
             <label htmlFor="promoCode">Promo Code:</label>
             <input
@@ -746,16 +799,19 @@ function Checkout({ cart, setCart, removeFromCart }) {
               </div>
             )}
           </div>
-        ) : null}
+        ) : null} */}
         {aggregatedCart.aggregatedCart.length ? (
           <>
             {/* Only show gift note box if cart has non-soldier family items */}
-            {!aggregatedCart.aggregatedCart.every(item =>
-              item.title === "Send a Mishloach Manos to a Soldier Family"
+            {!aggregatedCart.aggregatedCart.every(
+              (item) =>
+                item.title === "Send a Mishloach Manos to a Soldier Family"
             ) && (
               <div className="gift-option">
                 <h3>Gift Note</h3>
-                <p>Add a personal message to include with your order (optional)</p>
+                <p>
+                  Add a personal message to include with your order (optional)
+                </p>
                 <textarea
                   value={giftNote}
                   onChange={(e) => setGiftNote(e.target.value.slice(0, 400))}
@@ -815,13 +871,14 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 required
               />
             </div>
-            
+
             {/* Conditionally render delivery information based on specialDeliveryOnly */}
             {!specialDeliveryOnly ? (
               <>
                 {/* Institution checkbox - moved here, above Delivery Options */}
-                {!aggregatedCart.aggregatedCart.every(item =>
-                  item.title === "Send a Mishloach Manos to a Soldier Family"
+                {!aggregatedCart.aggregatedCart.every(
+                  (item) =>
+                    item.title === "Send a Mishloach Manos to a Soldier Family"
                 ) && (
                   <div className="institution-option">
                     <label>
@@ -844,13 +901,17 @@ function Checkout({ cart, setCart, removeFromCart }) {
                           required
                         />
                         <p className="institution-warning">
-                          <strong>Important Note:</strong> If the student is unreachable, packages are delivered to the school's office/reception/guard or given to a fellow student. We do not accept responsibility once the package has been delivered to the institution.
+                          <strong>Important Note:</strong> If the student is
+                          unreachable, packages are delivered to the school's
+                          office/reception/guard or given to a fellow student.
+                          We do not accept responsibility once the package has
+                          been delivered to the institution.
                         </p>
                       </div>
                     )}
                   </div>
                 )}
-                
+
                 {/* Delivery Options */}
                 {shopRegion !== "US" ? (
                   <div className="delivery-options">
@@ -865,14 +926,20 @@ function Checkout({ cart, setCart, removeFromCart }) {
                       </option>
                       {DELIVERY_OPTIONS.map((option, index) => (
                         <option key={index} value={index}>
-                          {option.label} - {currency === "Dollar" ? "$" : "₪"}
-                          {option.charge}
+                          {option.label}
+                          {!option.dontShowPrice && (
+                            <>
+                              {" - "}
+                              {currency === "Dollar" ? "$" : "₪"}
+                              {option.charge}
+                            </>
+                          )}
                         </option>
                       ))}
                     </select>
                   </div>
                 ) : null}
-                
+
                 {/* Delivery Information */}
                 {shopRegion === "US" || deliveryCharge > 0 ? (
                   <div className="shipping-details">
@@ -912,7 +979,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     ) : null}
                     {/* Additional Fields for Buildings */}
                     {shippingDetails.homeType === "building" &&
-                      shopRegion !== "US" && !isInstitution && (
+                      shopRegion !== "US" &&
+                      !isInstitution && (
                         <>
                           <input
                             type="text"
@@ -994,9 +1062,15 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 ) : null}
               </>
             ) : (
-              aggregatedCart.aggregatedCart.some(item => item.title === "Send a Mishloach Manos to a Soldier Family") && (
+              aggregatedCart.aggregatedCart.some(
+                (item) =>
+                  item.title === "Send a Mishloach Manos to a Soldier Family"
+              ) && (
                 <div className="delivery-message">
-                  <p>No need for delivery details, we will deliver it to the soldier family on your behalf.</p>
+                  <p>
+                    No need for delivery details, we will deliver it to the
+                    soldier family on your behalf.
+                  </p>
                 </div>
               )
             )}
@@ -1065,9 +1139,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
           }
           onConfirm={() => {
             // If user confirms their location is in the list, set the delivery option
-            const label = locationModalContent.type === 'central'
-              ? "Central Israel (Click here for Central Israel Locations)"
-              : "Gush (Click here for Gush Locations)";
+            const label =
+              locationModalContent.type === "central"
+                ? "Central Israel (Click here for Central Israel Locations)"
+                : "Gush (Click here for Gush Locations)";
             setSelectedDeliveryOption(label);
             setDeliveryCharge(locationModalContent.charge);
             setIsLocationModalOpen(false);
@@ -1078,9 +1153,13 @@ function Checkout({ cart, setCart, removeFromCart }) {
               title: "Location Not Listed",
               message: (
                 <div>
-                  <p>Please reach out to us via WhatsApp to complete your order.</p>
+                  <p>
+                    Please reach out to us via WhatsApp to complete your order.
+                  </p>
                   <button
-                    onClick={() => window.open("https://wa.me/+972534309254", '_blank')}
+                    onClick={() =>
+                      window.open("https://wa.me/+972534309254", "_blank")
+                    }
                     className="whatsapp-button"
                   >
                     Contact via WhatsApp
@@ -1091,7 +1170,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 closeModal();
                 setSelectedDeliveryOption(null);
                 setDeliveryCharge(0);
-              }
+              },
             });
             setIsLocationModalOpen(false);
             setIsModalOpen(true);
