@@ -9,7 +9,7 @@ function Footer() {
       <div className="footer-content">
         <p>&copy; {currentYear} T&B Liquid Gold. All rights reserved.</p>
         <p className="holdowsky">
-          Website created and maintained by:{" "}
+          Website created and maintained by{" "}
           <a
             href="https://uxilitypro.com"
             target="_blank"
