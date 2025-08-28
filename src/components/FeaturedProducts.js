@@ -12,6 +12,11 @@ function FeaturedProducts() {
     window.scrollTo({ top: yCoordinate + yOffset, behavior: "smooth" });
   };
 
+  const giftPackagesPhoto =
+    shopRegion === "US"
+      ? "Board of Four no plastic-min.jpg"
+      : "gift packages-min.jpg";
+
   return (
     <section className="featured-products">
       <h2>Our Featured Products</h2>
@@ -30,7 +35,7 @@ function FeaturedProducts() {
         </div>
         {/* Corporate Gifts */}
         <div className="product-card">
-          <img src="Board of Four no plastic-min.jpg" alt="For Her" />
+          <img src={giftPackagesPhoto} alt="For Her" />
           <HashLink
             smooth
             to="/giftPackages"
@@ -42,7 +47,7 @@ function FeaturedProducts() {
         </div>
         {shopRegion !== "US" && (
           <div className="product-card">
-            <img src="Corporate Gifts-min.png" alt="Collection Plus" />
+            <img src="Board of Four no plastic-min.jpg" alt="Collection Plus" />
 
             <HashLink
               smooth

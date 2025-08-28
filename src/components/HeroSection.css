@@ -33,7 +33,7 @@
 }
 
 .kashrut-box {
-  width: 100%;
+  width: 100vw;
   text-align: center;
   align-items: center;
   display: flex;
@@ -41,16 +41,18 @@
   flex-direction: column;
   margin-top: 1em;
   margin-bottom: 1em;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .us-kashrut-disclaimer {
-  font-size: 1rem;
+  font-size: 1em;
   color: #e74c3c;
   text-align: center;
   font-weight: bold;
   margin-bottom: 0px;
   margin-top: 0px;
-  width: 90vh;
+  width: 90vw;
 }
 
 /* Fade-in animation */

@@ -166,7 +166,7 @@ function HoneyCollection({ cart, addToCart }) {
         sizeIL: "120ml",
         priceShekel: 50,
         category: "honey jars", // Added category
-        isSoldOut: shopRegion === "US",
+        isSoldOut: false,
       },
     ];
 
@@ -182,7 +182,21 @@ function HoneyCollection({ cart, addToCart }) {
     //   });
     // }
 
-    return [...baseItems].sort((a, b) => a.title.localeCompare(b.title));
+    // Sort everything by title
+    const sorted = [...baseItems].sort((a, b) =>
+      a.title.localeCompare(b.title)
+    );
+
+    // Move Blueberry to the end
+    const blueberryIndex = sorted.findIndex(
+      (item) => item.title === "Blueberry Creamed Honey"
+    );
+    if (blueberryIndex !== -1) {
+      const [blueberryItem] = sorted.splice(blueberryIndex, 1);
+      sorted.push(blueberryItem);
+    }
+
+    return sorted;
   }, [shopRegion]);
 
   const openModal = (item) => {
