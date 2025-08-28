@@ -20,10 +20,8 @@ function CorporateGiftDetail({ cart, addToCart }) {
       description:
         "4 flavored creamed honeys, wooden honey dipper, wooden serving board.",
       size: "Jar size 2oz",
-      priceDollar: 35,
-      priceShekel: exchangeRate
-        ? Math.ceil(35 * exchangeRate)
-        : Math.ceil(35 * 3.7),
+      priceDollar: 40,
+      priceShekel: 138,
       imageUrl: "/Mini four collection board with plastic-min.png",
       warning: "*Minimum orders on this gift is 5 boards",
       hasLogoOption: true,
@@ -34,6 +32,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
         "Sea Salt Creamed Honey",
         "Bourbon Creamed Honey",
         "Pumpkin Creamed Honey",
+        "Strawberry Creamed Honey",
       ],
     },
     miniSixCollectionBoard: {
@@ -41,14 +40,12 @@ function CorporateGiftDetail({ cart, addToCart }) {
       description:
         "6 flavored creamed honeys, wooden honey dipper, wooden serving board",
       size: "Jar size 2oz",
-      priceDollar: 50,
-      priceShekel: exchangeRate
-        ? Math.ceil(50 * exchangeRate)
-        : Math.ceil(50 * 3.7),
+      priceDollar: 55,
+      priceShekel: 190,
       imageUrl: "/Mini six collection board with plastic-min.png",
       warning: "*Minimum orders on this gift is 5 boards",
       hasLogoOption: true,
-      isSoldOut: true,
+      isSoldOut: false,
     },
   };
 
@@ -172,6 +169,9 @@ function CorporateGiftDetail({ cart, addToCart }) {
       <h2 className="corporate-gift-title">{selectedItem.title}</h2>
       <p className="corporate-gift-description">{selectedItem.description}</p>
       <p className="corporate-gift-size">{selectedItem.size}</p>
+      <p className="availability-note">
+        Wooden board may vary based on availability
+      </p>
       {selectedItem?.warning && (
         <p className="gift-package-warning">{selectedItem?.warning}</p>
       )}
@@ -218,14 +218,14 @@ function CorporateGiftDetail({ cart, addToCart }) {
       )}
       {selectedItem.hasLogoOption && (
         <div className="logo-option">
-          <label>
+          {/* <label>
             <input
               type="checkbox"
               checked={includeLogo}
               onChange={handleLogoChange}
             />
             Add Personalized Logo (+$50)
-          </label>
+          </label> */}
           {includeLogo && (
             <div className="upload-artwork">
               <label htmlFor="artwork">Upload Artwork:</label>

@@ -45,29 +45,94 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const [modalConfig, setModalConfig] = useState({
     title: "",
     message: "",
-    onConfirm: () => { },
+    onConfirm: () => {},
   });
   const [isInstitution, setIsInstitution] = useState(false);
   const [institutionName, setInstitutionName] = useState("");
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
-  const [locationModalContent, setLocationModalContent] = useState({ title: '', locations: [] });
+  const [locationModalContent, setLocationModalContent] = useState({
+    title: "",
+    locations: [],
+  });
+
+  const CHOSEN_EXCHANGE_RATE = 3.46;
 
   const DELIVERY_OPTIONS = [
     {
-      label: "Anywhere in Jerusalem",
-      charge: currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate),
+      label: "Pickup in Ramat Eshkol (Sderot Eshkol 14)",
+      charge: 0,
+    },
+    {
+      label: "Jerusalem",
+      charge: currency === "Dollar" ? 15 : Math.ceil(15 * CHOSEN_EXCHANGE_RATE),
+    },
+    {
+      label: "RBS",
+      charge: currency === "Dollar" ? 17 : Math.ceil(17 * CHOSEN_EXCHANGE_RATE),
+    },
+    {
+      label: "Givat Zeev, Modiin, Mevaseret Tzion",
+      charge: currency === "Dollar" ? 20 : Math.ceil(20 * CHOSEN_EXCHANGE_RATE),
+    },
+    {
+      label: "Mitzpe Yericho, Maaleh Adumim",
+      charge: currency === "Dollar" ? 25 : Math.ceil(25 * CHOSEN_EXCHANGE_RATE),
+    },
+    {
+      label:
+        "Gush: Beitar, Efrat, Neve Daniel, Elazar, Kfar Etzion, Tekoa, Alon Shvut, Bat Ayin",
+      charge: currency === "Dollar" ? 30 : Math.ceil(30 * CHOSEN_EXCHANGE_RATE),
+    },
+    {
+      label:
+        "Central Israel: Tel Aviv, Hertzliyah, Netanya, Rishon L'tzion, Bnei Brak, Petach Tikva, Kfar Saba, Ranaana, Givat Shmuel, Ramat Gan, Rechovot, Givatayim, Ramat Hasharon",
+      charge: currency === "Dollar" ? 30 : Math.ceil(30 * CHOSEN_EXCHANGE_RATE),
+    },
+    {
+      label:
+        "All other locations that are not listed here, please contact us to inquire on delivery price",
+      charge: 0,
+      dontShowPrice: true,
+      isWhatsApp: true,
+    },
+  ];
+
+  const US_DELIVERY_OPTIONS = [
+    {
+      label: "Anywhere in the Five Towns",
+      charge: 15,
+    },
+    {
+      label: "Anywhere in the USA",
+      charge: 20,
     },
   ];
 
   const CENTRAL_ISRAEL_LOCATIONS = [
-    "Tel Aviv", "Hertzliyah", "Netanya", "Rishon L'tzion", "Bnei Brak",
-    "Petach Tikva", "Kfar Saba", "Ranaana", "Givat Shmuel", "Ramat Gan",
-    "Rechovot", "Givatayim", "Ramat Hasharon"
+    "Tel Aviv",
+    "Hertzliyah",
+    "Netanya",
+    "Rishon L'tzion",
+    "Bnei Brak",
+    "Petach Tikva",
+    "Kfar Saba",
+    "Ranaana",
+    "Givat Shmuel",
+    "Ramat Gan",
+    "Rechovot",
+    "Givatayim",
+    "Ramat Hasharon",
   ];
 
   const GUSH_LOCATIONS = [
-    "Beitar", "Efrat", "Neve Daniel", "Elazar", "Kfar Etzion",
-    "Tekoa", "Alon Shvut", "Bat Ayin"
+    "Beitar",
+    "Efrat",
+    "Neve Daniel",
+    "Elazar",
+    "Kfar Etzion",
+    "Tekoa",
+    "Alon Shvut",
+    "Bat Ayin",
   ];
 
   // Function to open modal
@@ -120,7 +185,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
   }, [cart]);
 
   let specialDeliveryOnly = aggregatedCart.aggregatedCart.every(
-    (item) => item.category === "sponsor a board" || item.title === "Send a Mishloach Manos to a Soldier Family"
+    (item) =>
+      item.category === "sponsor a board" ||
+      item.title === "Send a Mishloach Manos to a Soldier Family"
   );
 
   const apiUrl =
@@ -147,10 +214,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
           price_data: {
             currency: currency === "Dollar" ? "usd" : "ils",
             product_data: {
-              name: `${item.title} ${item.selectedFlavors.length > 0
-                ? "(" + item.selectedFlavors.join(", ") + ")"
-                : ""
-                }`,
+              name: `${item.title} ${
+                item.selectedFlavors.length > 0
+                  ? "(" + item.selectedFlavors.join(", ") + ")"
+                  : ""
+              }`,
               metadata: {
                 logoUrl: item.logoUrl ? item.logoUrl : null,
                 flavors: item.selectedFlavors
@@ -178,7 +246,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
       }
 
       // Add delivery charge as a separate line item (not discounted)
-      const totalDeliveryCharge = calculateShippingCharge(); // Calculate delivery charge
+      const totalDeliveryCharge = shopRegion === "US" ? deliveryCharge : 0; // Calculate delivery charge
       // if (totalDeliveryCharge > 0) {
       //   lineItems.push({
       //     price_data: {
@@ -203,12 +271,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
           giftNote: giftNote || null,
           comments: hasComments ? comments : null,
           shippingDetails,
-          deliveryCharge:
-            shopRegion === "US" ? totalDeliveryCharge : deliveryCharge,
-          selectedDeliveryOption:
-            shopRegion === "US"
-              ? "Total Delivery Charge"
-              : selectedDeliveryOption,
+          deliveryCharge: totalDeliveryCharge,
+          selectedDeliveryOption,
           isSponsorHoneyBoardInCart,
           promoCode: promoCode,
           currency,
@@ -255,22 +319,32 @@ function Checkout({ cart, setCart, removeFromCart }) {
   };
 
   const handleLocationClick = (type) => {
-    if (type === 'central') {
+    if (type === "central") {
       setLocationModalContent({
-        title: 'Is your location in Central Israel?',
+        title: "Is your location in Central Israel?",
         locations: CENTRAL_ISRAEL_LOCATIONS,
         type: type,
-        charge: DELIVERY_OPTIONS.find(opt => opt.label.includes("Central Israel")).charge
+        charge: DELIVERY_OPTIONS.find((opt) =>
+          opt.label.includes("Central Israel")
+        ).charge,
       });
-    } else if (type === 'gush') {
+    } else if (type === "gush") {
       setLocationModalContent({
-        title: 'Is your location in the Gush?',
+        title: "Is your location in the Gush?",
         locations: GUSH_LOCATIONS,
         type: type,
-        charge: DELIVERY_OPTIONS.find(opt => opt.label.includes("Gush")).charge
+        charge: DELIVERY_OPTIONS.find((opt) => opt.label.includes("Gush"))
+          .charge,
       });
     }
     setIsLocationModalOpen(true);
+  };
+
+  const handleUSDeliveryOptionChange = (e) => {
+    const opt = US_DELIVERY_OPTIONS[e.target.value];
+    if (!opt) return;
+    setSelectedDeliveryOption(opt.label);
+    setDeliveryCharge(opt.charge);
   };
 
   const handleDeliveryOptionChange = (e) => {
@@ -278,21 +352,46 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
     // Handle location information buttons
     if (selectedOption.label.includes("Central Israel")) {
-      handleLocationClick('central');
+      handleLocationClick("central");
       return;
     } else if (selectedOption.label.includes("Gush")) {
-      handleLocationClick('gush');
+      handleLocationClick("gush");
       return;
     }
+
+    const whatsappUrl =
+      shopRegion === "US"
+        ? "https://wa.me/message/AUHFRK2KKV27O1"
+        : "https://wa.me/+972534309254";
 
     if (selectedOption.isWhatsApp) {
-      window.open("https://wa.me/+972534309254", '_blank');
-      setSelectedDeliveryOption(null);
-      setDeliveryCharge(0);
+      setModalConfig({
+        title: "Location Not Listed",
+        message: (
+          <div>
+            <p>Please reach out to us via WhatsApp to complete your order.</p>
+            <button
+              onClick={() => window.open(whatsappUrl, "_blank")}
+              className="whatsapp-button"
+            >
+              Contact via WhatsApp
+            </button>
+          </div>
+        ),
+        onConfirm: () => {
+          closeModal();
+          setSelectedDeliveryOption(null);
+          setDeliveryCharge(0);
+        },
+      });
+      setIsModalOpen(true);
       return;
     }
 
-    if (selectedOption.deadline && new Date() > new Date(selectedOption.deadline)) {
+    if (
+      selectedOption.deadline &&
+      new Date() > new Date(selectedOption.deadline)
+    ) {
       alert("This delivery option is no longer available due to the deadline.");
       setSelectedDeliveryOption(null);
       setDeliveryCharge(0);
@@ -326,73 +425,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
     return number.toLocaleString();
   };
 
-  const calculateHoneyJarShippingFee = () => {
-    if (shopRegion !== "US") return 0; // Only calculate if shopRegion is "US"
-
-    let honeyJarCount = 0;
-
-    aggregatedCart.aggregatedCart.forEach((item) => {
-      if (item.category === "honey jars") {
-        honeyJarCount += item.quantity;
-      }
-    });
-
-    if (honeyJarCount > 0) {
-      return honeyJarCount <= 4
-        ? currency === "Dollar"
-          ? 16
-          : Math.ceil(16 * exchangeRate) // Round up
-        : currency === "Dollar"
-          ? 20
-          : Math.ceil(20 * exchangeRate); // Round up
-    }
-
-    return 0;
-  };
-
-  const calculateShippingCharge = () => {
-    if (shopRegion !== "US") return 0; // Only calculate if shopRegion is "US"
-
-    let honeyJarCount = 0;
-    let boardOfFourCount = 0;
-    let otherGiftPackageCount = 0;
-
-    aggregatedCart.aggregatedCart.forEach((item) => {
-      if (item.category === "honey jars") {
-        honeyJarCount += item.quantity;
-      } else if (item.category === "gift packages") {
-        if (item.title.includes("Board of Four")) {
-          boardOfFourCount += item.quantity;
-        } else {
-          otherGiftPackageCount += item.quantity;
-        }
-      }
-    });
-
-    let shippingCharge = 0;
-
-    // Calculate shipping for all honey jars together
-    if (honeyJarCount > 0) {
-      shippingCharge +=
-        honeyJarCount <= 4
-          ? currency === "Dollar"
-            ? 16
-            : Math.ceil(16 * exchangeRate) // Round up
-          : currency === "Dollar"
-            ? 20
-            : Math.ceil(20 * exchangeRate); // Round up
-    }
-
-    // Calculate shipping for gift packages
-    shippingCharge +=
-      boardOfFourCount *
-      (currency === "Dollar" ? 16 : Math.ceil(16 * exchangeRate)) +
-      otherGiftPackageCount *
-      (currency === "Dollar" ? 20 : Math.ceil(20 * exchangeRate));
-
-    return shippingCharge;
-  };
-
   const honeyJarExists = aggregatedCart.aggregatedCart.some(
     (item) => item.category === "honey jars"
   );
@@ -409,15 +441,17 @@ function Checkout({ cart, setCart, removeFromCart }) {
     const totalLogoCharge = aggregatedCart.uniqueLogoCount * logoChargePerType;
 
     // Use new shipping calculation function
-    let totalDeliveryCharge = calculateShippingCharge();
-
-    if (
+    // Shipping: US = only the selected option; IL = selected option if applicable
+    let totalDeliveryCharge = 0;
+    if (shopRegion === "US") {
+      totalDeliveryCharge = deliveryCharge; // just $15 or $20
+    } else if (
       !specialDeliveryOnly &&
       aggregatedCart.aggregatedCart.some(
         (item) => item.category !== "sponsor a board"
       )
     ) {
-      totalDeliveryCharge += deliveryCharge; // Add normal delivery charge for other items
+      totalDeliveryCharge = deliveryCharge; // Israel list charge
     }
 
     // Calculate the subtotal for items and additional charges only (excluding delivery charge)
@@ -526,15 +560,14 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   // New effect to recalculate delivery charge on currency change
   useEffect(() => {
-    if (selectedDeliveryOption) {
-      const selectedOption = DELIVERY_OPTIONS.find(
-        (option) => option.label === selectedDeliveryOption
-      );
-      if (selectedOption) {
-        setDeliveryCharge(selectedOption.charge);
-      }
+    if (!selectedDeliveryOption) return;
+
+    const source = shopRegion === "US" ? US_DELIVERY_OPTIONS : DELIVERY_OPTIONS;
+    const selected = source.find((o) => o.label === selectedDeliveryOption);
+    if (selected) {
+      setDeliveryCharge(selected.charge);
     }
-  }, [currency, exchangeRate, selectedDeliveryOption]);
+  }, [currency, exchangeRate, selectedDeliveryOption, shopRegion]);
 
   useEffect(() => {
     if (cart.length === 0) {
@@ -588,13 +621,15 @@ function Checkout({ cart, setCart, removeFromCart }) {
         mandatoryFields.push(shippingDetails.homeType);
       }
 
-      const areMandatoryFieldsFilled = mandatoryFields.every((field) => field.trim() !== "");
+      const areMandatoryFieldsFilled = mandatoryFields.every(
+        (field) => field.trim() !== ""
+      );
 
       const areBuildingFieldsFilled =
         shippingDetails.homeType === "building" && !isInstitution
           ? [shippingDetails.apartmentNumber].every(
-            (field) => field.trim() !== ""
-          )
+              (field) => field.trim() !== ""
+            )
           : true;
 
       isFormValid =
@@ -604,7 +639,12 @@ function Checkout({ cart, setCart, removeFromCart }) {
     }
 
     setIsFormValid(isFormValid);
-  }, [shippingDetails, selectedDeliveryOption, specialDeliveryOnly, isInstitution]);
+  }, [
+    shippingDetails,
+    selectedDeliveryOption,
+    specialDeliveryOnly,
+    isInstitution,
+  ]);
 
   return (
     <div className="checkout-container">
@@ -638,45 +678,25 @@ function Checkout({ cart, setCart, removeFromCart }) {
                         Flavors: {item.selectedFlavors.join(", ")}
                       </p>
                     ) : null}
-                    {shopRegion === "US" &&
-                      item.category === "gift packages" &&
-                      item.title !== "T&Bee Collection Box" &&
-                      item.title !== "Board of Four" &&
-                      item.title !== "Box of Four" ? (
-                      <p className="item-flavors">
-                        Delivery:{" "}
-                        {currency === "Dollar"
-                          ? `$20 each`
-                          : `₪${Math.ceil(20 * exchangeRate)} each`}{" "}
-                      </p>
-                    ) : null}
-                    {shopRegion === "US" && item.title === "Board of Four" ? (
-                      <p className="item-flavors">
-                        Delivery:{" "}
-                        {currency === "Dollar"
-                          ? `$16 each`
-                          : `₪${Math.ceil(16 * exchangeRate)} each`}{" "}
-                      </p>
-                    ) : null}
                     {item.includeLogo && (
                       <p className="item-logo">
                         Personalized Logo (
                         {currency === "Dollar"
                           ? `+ One time fee of $50`
                           : `+ One time fee of ₪${Math.ceil(
-                            50 * exchangeRate
-                          )}`}
+                              50 * exchangeRate
+                            )}`}
                         )
                       </p>
                     )}
                     <p className="item-price">
                       {currency === "Dollar"
                         ? `$${formatNumberWithCommas(
-                          parseFloat(item.priceDollar)
-                        )}`
+                            parseFloat(item.priceDollar)
+                          )}`
                         : `₪${formatNumberWithCommas(
-                          Math.ceil(item.priceShekel)
-                        )}`}
+                            Math.ceil(item.priceShekel)
+                          )}`}
                     </p>
                   </div>
                   <div className="quantity-controls">
@@ -710,14 +730,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
                   </div>
                 </li>
               ))}
-              {honeyJarExists && shopRegion === "US" && (
-                <p className="item-flavors">
-                  Delivery Fee for Honey Jars:{" "}
-                  {currency === "Dollar"
-                    ? `$${calculateHoneyJarShippingFee()}`
-                    : `₪${calculateHoneyJarShippingFee()}`}
-                </p>
-              )}
             </ul>
           )}
         </div>
@@ -727,7 +739,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             {calculateTotalPrice()}
           </h3>
         </div>
-        {aggregatedCart.aggregatedCart.length ? (
+        {/* {aggregatedCart.aggregatedCart.length ? (
           <div className="promo-code">
             <label htmlFor="promoCode">Promo Code:</label>
             <input
@@ -746,16 +758,19 @@ function Checkout({ cart, setCart, removeFromCart }) {
               </div>
             )}
           </div>
-        ) : null}
+        ) : null} */}
         {aggregatedCart.aggregatedCart.length ? (
           <>
             {/* Only show gift note box if cart has non-soldier family items */}
-            {!aggregatedCart.aggregatedCart.every(item =>
-              item.title === "Send a Mishloach Manos to a Soldier Family"
+            {!aggregatedCart.aggregatedCart.every(
+              (item) =>
+                item.title === "Send a Mishloach Manos to a Soldier Family"
             ) && (
               <div className="gift-option">
                 <h3>Gift Note</h3>
-                <p>Add a personal message to include with your order (optional)</p>
+                <p>
+                  Add a personal message to include with your order (optional)
+                </p>
                 <textarea
                   value={giftNote}
                   onChange={(e) => setGiftNote(e.target.value.slice(0, 400))}
@@ -815,13 +830,14 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 required
               />
             </div>
-            
+
             {/* Conditionally render delivery information based on specialDeliveryOnly */}
             {!specialDeliveryOnly ? (
               <>
                 {/* Institution checkbox - moved here, above Delivery Options */}
-                {!aggregatedCart.aggregatedCart.every(item =>
-                  item.title === "Send a Mishloach Manos to a Soldier Family"
+                {!aggregatedCart.aggregatedCart.every(
+                  (item) =>
+                    item.title === "Send a Mishloach Manos to a Soldier Family"
                 ) && (
                   <div className="institution-option">
                     <label>
@@ -844,13 +860,17 @@ function Checkout({ cart, setCart, removeFromCart }) {
                           required
                         />
                         <p className="institution-warning">
-                          <strong>Important Note:</strong> If the student is unreachable, packages are delivered to the school's office/reception/guard or given to a fellow student. We do not accept responsibility once the package has been delivered to the institution.
+                          <strong>Important Note:</strong> If the student is
+                          unreachable, packages are delivered to the school's
+                          office/reception/guard or given to a fellow student.
+                          We do not accept responsibility once the package has
+                          been delivered to the institution.
                         </p>
                       </div>
                     )}
                   </div>
                 )}
-                
+
                 {/* Delivery Options */}
                 {shopRegion !== "US" ? (
                   <div className="delivery-options">
@@ -865,14 +885,45 @@ function Checkout({ cart, setCart, removeFromCart }) {
                       </option>
                       {DELIVERY_OPTIONS.map((option, index) => (
                         <option key={index} value={index}>
-                          {option.label} - {currency === "Dollar" ? "$" : "₪"}
-                          {option.charge}
+                          {option.label}
+                          {!option.dontShowPrice && (
+                            <>
+                              {" - "}
+                              {currency === "Dollar" ? "$" : "₪"}
+                              {option.charge}
+                            </>
+                          )}
                         </option>
                       ))}
                     </select>
                   </div>
-                ) : null}
-                
+                ) : (
+                  <div className="delivery-options">
+                    <h3>Delivery Options</h3>
+                    <select
+                      onChange={handleUSDeliveryOptionChange}
+                      defaultValue=""
+                      required
+                    >
+                      <option value="" disabled hidden>
+                        Select a delivery option *
+                      </option>
+                      {US_DELIVERY_OPTIONS.map((option, index) => (
+                        <option key={index} value={index}>
+                          {option.label}
+                          {!option.dontShowPrice && (
+                            <>
+                              {" - "}
+                              {currency === "Dollar" ? "$" : "₪"}
+                              {option.charge}
+                            </>
+                          )}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+
                 {/* Delivery Information */}
                 {shopRegion === "US" || deliveryCharge > 0 ? (
                   <div className="shipping-details">
@@ -912,7 +963,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     ) : null}
                     {/* Additional Fields for Buildings */}
                     {shippingDetails.homeType === "building" &&
-                      shopRegion !== "US" && !isInstitution && (
+                      shopRegion !== "US" &&
+                      !isInstitution && (
                         <>
                           <input
                             type="text"
@@ -981,7 +1033,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
                         required
                       />
                     )}
-                    <label>Must be a local Israeli phone number</label>
+                    <label>
+                      Must be a local
+                      {shopRegion === "US" ? " American" : " Israeli"} phone
+                      number
+                    </label>
                     <input
                       type="text"
                       name="contactNumber"
@@ -994,9 +1050,15 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 ) : null}
               </>
             ) : (
-              aggregatedCart.aggregatedCart.some(item => item.title === "Send a Mishloach Manos to a Soldier Family") && (
+              aggregatedCart.aggregatedCart.some(
+                (item) =>
+                  item.title === "Send a Mishloach Manos to a Soldier Family"
+              ) && (
                 <div className="delivery-message">
-                  <p>No need for delivery details, we will deliver it to the soldier family on your behalf.</p>
+                  <p>
+                    No need for delivery details, we will deliver it to the
+                    soldier family on your behalf.
+                  </p>
                 </div>
               )
             )}
@@ -1011,14 +1073,16 @@ function Checkout({ cart, setCart, removeFromCart }) {
             </h3>
           </div>
         ) : null}
-        {shopRegion === "US" && !specialDeliveryOnly ? (
-          <p className="availability-note">
-            Shipping takes 5-7 days. We are happy to ship out your order but
-            cannot guarantee that it will arrive before Rosh Hashana.
-          </p>
-        ) : (
-          ""
-        )}
+        <p className="availability-note">Shipping takes 5-7 business days.</p>
+        {shopRegion === "US" && <p className="availability-note">Deliver in the Five Towns takes 1-2 business days.</p>}
+        <p className="availability-note">
+          If you order after September 16th, we are happy to ship out your order
+          but cannot guarantee that it will arrive before Rosh Hashana. If you
+          order after this date, please reach out to us.
+        </p>
+        <p className="availability-note">
+          If recipient is not home, the package will be left by the door.
+        </p>
         {aggregatedCart.aggregatedCart.length ? (
           <div className="submit-order-btn-wrapper">
             <button
@@ -1065,22 +1129,29 @@ function Checkout({ cart, setCart, removeFromCart }) {
           }
           onConfirm={() => {
             // If user confirms their location is in the list, set the delivery option
-            const label = locationModalContent.type === 'central'
-              ? "Central Israel (Click here for Central Israel Locations)"
-              : "Gush (Click here for Gush Locations)";
+            const label =
+              locationModalContent.type === "central"
+                ? "Central Israel (Click here for Central Israel Locations)"
+                : "Gush (Click here for Gush Locations)";
             setSelectedDeliveryOption(label);
             setDeliveryCharge(locationModalContent.charge);
             setIsLocationModalOpen(false);
           }}
           onCancel={() => {
+            const whatsappUrl =
+              shopRegion === "US"
+                ? "https://wa.me/message/AUHFRK2KKV27O1"
+                : "https://wa.me/+972534309254";
             // Show WhatsApp message and button when user clicks "No"
             setModalConfig({
               title: "Location Not Listed",
               message: (
                 <div>
-                  <p>Please reach out to us via WhatsApp to complete your order.</p>
+                  <p>
+                    Please reach out to us via WhatsApp to complete your order.
+                  </p>
                   <button
-                    onClick={() => window.open("https://wa.me/+972534309254", '_blank')}
+                    onClick={() => window.open(whatsappUrl, "_blank")}
                     className="whatsapp-button"
                   >
                     Contact via WhatsApp
@@ -1091,7 +1162,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 closeModal();
                 setSelectedDeliveryOption(null);
                 setDeliveryCharge(0);
-              }
+              },
             });
             setIsLocationModalOpen(false);
             setIsModalOpen(true);

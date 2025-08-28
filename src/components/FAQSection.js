@@ -9,7 +9,9 @@ function FAQSection() {
         <div className="faq-item">
           <h3>What's the Hechsher?</h3>
           <p>
-            We are under the strict supervision of Rabbi Weiner of ZNT Kosher.
+            Our honey jars are under the strict supervision of Rabbi Weiner of
+            ZNT Kosher. Other food items included in gift packages are under
+            various hashgachos - please refer to each gift for reference.
           </p>
           <img className="hechsher" src="hechsher 5-min.png" alt="hechsher" />
         </div>
