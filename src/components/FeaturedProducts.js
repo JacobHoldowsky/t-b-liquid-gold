@@ -48,7 +48,7 @@ function FeaturedProducts() {
         {shopRegion !== "US" && (
           <div className="product-card">
             <img
-              src="Mini four collection board with plastic-min.jpg"
+              src="Mini four collection board with plastic-min.png"
               alt="Collection Plus"
             />
 
