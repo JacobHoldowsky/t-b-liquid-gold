@@ -84,11 +84,9 @@ function GiftPackages({ cart, addToCart }) {
       "Vanilla Creamed Honey",
       "Bourbon Creamed Honey",
       // "Blueberry Creamed Honey",
-      "Strawberry Creamed Honey",
+      ...(shopRegion !== "US" ? ["Strawberry Creamed Honey"] : []),
     ];
-    return shopRegion === "US"
-      ? all.filter((f) => f !== "Bourbon Creamed Honey")
-      : all;
+    return all;
   }, [shopRegion]);
 
   // How many honey choices each package needs (matches GiftPackageDetail)
@@ -161,6 +159,7 @@ function GiftPackages({ cart, addToCart }) {
         url: "Board of Four no plastic-min.jpg",
         title: "Board of Four",
         description: "4 flavored creamed honeys on a wooden serving board",
+        warning: "*Board may vary based on availability",
         priceDollar: 70,
         id: "boardOfFour",
         priceShekel: 242,
@@ -191,7 +190,7 @@ function GiftPackages({ cart, addToCart }) {
         title: "Honey A' La Connoisseur",
         description:
           "2 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
-        warning: "*Wine bottle will vary based on availability",
+        warning: "*Wine bottle may vary based on availability",
         priceDollar: 90,
         id: "HoneyALaConnoisseur",
         priceShekel: 310,
@@ -202,6 +201,7 @@ function GiftPackages({ cart, addToCart }) {
         title: "Collection Plus",
         description:
           "6 Flavored creamed honeys, 5 Dairy Belgian chocolates, wooden honey dipper.",
+        warning: "*Wine bottle, board may vary based on availability",
         priceDollar: 125,
         id: "collectionPlusBox",
         priceShekel: 432,
@@ -212,6 +212,7 @@ function GiftPackages({ cart, addToCart }) {
         title: "Honeycomb Collection Board",
         description:
           "7 delicious flavored creamed honeys on a wooden serving board.",
+        warning: "*Board may vary based on availability",
         priceDollar: shopRegion === "US" ? 125 : 120,
         id: "honeycombCollectionBoard",
         priceShekel: shopRegion === "US" ? 432 : 415,
@@ -232,7 +233,7 @@ function GiftPackages({ cart, addToCart }) {
         title: "Golden Sweets",
         description:
           "5 Flavored creamed honeys, 375ml bottle of wine, 5 Dairy Belgian chocolates, wooden honey dipper.",
-        warning: "*Wine bottle will vary based on availability",
+        warning: "*Wine bottle may vary based on availability",
         priceDollar: 140,
         id: "deluxeBox",
         priceShekel: 485,
@@ -258,6 +259,7 @@ function GiftPackages({ cart, addToCart }) {
         title: "Scotch n' Sweets Board",
         description:
           "4 Flavored creamed honeys, 5 Dairy Belgian chocolates, 700ml Bottle of Glenlivet, wooden honey dipper, wooden honey board.",
+        warning: "*Board may vary based on availability",
         priceDollar: 180,
         id: "scotchNSweetsBoard",
         priceShekel: 622,
@@ -268,7 +270,7 @@ function GiftPackages({ cart, addToCart }) {
         title: "The Boss Board",
         description:
           "6 Flavored creamed honeys, Bottle of wine, 9 Dairy Belgian chocolates, Wooden honey dipper, Wooden serving board.",
-        warning: "*Wine bottle will vary based on availability",
+        warning: "*Wine bottle, board may vary based on availability",
         priceDollar: 195,
         id: "theBossBoard",
         priceShekel: 675,
@@ -349,41 +351,6 @@ function GiftPackages({ cart, addToCart }) {
 
   return (
     <div className="gift-packages">
-      <div className="banner banner--marquee">
-        <div className="marquee">
-          <div className="marquee__track">
-            <span className="marquee__content">
-              Order deadline September 16. Orders placed after this date may
-              arrive after Rosh Hashana. If you would like to place an order
-              after this date, please contact us via{" "}
-              <a
-                className="banner-link"
-                href="https://wa.me/message/W7IN5L774FZJJ1"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                WhatsApp
-              </a>{" "}
-              before placing your order. &nbsp;&nbsp;•&nbsp;&nbsp;
-            </span>
-
-            <span className="marquee__content" aria-hidden="true">
-              Order deadline September 16. Orders placed after this date may
-              arrive after Rosh Hashana. If you would like to place an order
-              after this date, please contact us via{" "}
-              <a
-                className="banner-link"
-                href="https://wa.me/message/W7IN5L774FZJJ1"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                WhatsApp
-              </a>{" "}
-              before placing your order. &nbsp;&nbsp;•&nbsp;&nbsp;
-            </span>
-          </div>
-        </div>
-      </div>
       <p className="availability-note">
         **Items may vary based on availability**
       </p>

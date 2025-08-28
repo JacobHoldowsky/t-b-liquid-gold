@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
 import "./Wholesale.css";
 
 function Wholesale({ cart, addToCart }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+
+  const { shopRegion } = useShopContext(); // Use shop context to get the current region
 
   const items = [
     {
@@ -33,19 +36,21 @@ function Wholesale({ cart, addToCart }) {
     e.stopPropagation();
   };
 
+  const whatsappUrl =
+    shopRegion === "US"
+      ? "https://wa.me/message/AUHFRK2KKV27O1"
+      : "https://wa.me/+972534309254";
+
   return (
     <div className="wholesale">
       <h2 className="wholesale-section-title">Wholesale</h2>
       <div className="wholesale-message">
         <p>
-          We are now offering wholesale orders! Minimum orders for 4oz jars and 2oz jars start at 50+ jars.
+          We are now offering wholesale orders! Minimum orders for 4oz jars and
+          2oz jars start at 50+ jars.
           <br />
           For inquiries, please contact us via{" "}
-          <a
-            href="https://wa.me/+972534309254"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
             WhatsApp
           </a>
           .

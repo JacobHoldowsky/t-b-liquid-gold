@@ -183,61 +183,62 @@ function Header({ cart, cartItemCount, clearCart }) {
   };
 
   return (
-    <header className="header" ref={headerRef}>
-      <div className="logo-currency-wrapper">
-        <div className="logo">
-          <Link to="/" onClick={closeMenu}>
-            <img src="/tnbLiquidGoldLogo-min.png" alt="TnB Liquid Gold" />
-          </Link>
-        </div>
-        <div className="currency-toggle" onClick={handleCurrencyToggle}>
-          <FontAwesomeIcon
-            icon={currency === "Dollar" ? faDollarSign : faShekelSign}
-          />
-        </div>
-        {/* Enhanced Toggle Slider for Shop Region */}
-
-        {/* comment back in to get toggle bar */}
-        
-        <div className="shop-toggle-slider" ref={sliderRef}>
-          <span
-            className="slider-label"
-            onClick={() => handleShopRegionSelect("Israel")}
-          >
-            Shop Israel
-          </span>
-          <label
-            className="switch"
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseOut={handleMouseOut}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            // onTouch={handleTouchEnd}
-          >
-            <input
-              type="checkbox"
-              checked={shopRegion === "US"}
-              onChange={handleShopRegionChange}
+    <>
+      <header className="header" ref={headerRef}>
+        <div className="logo-currency-wrapper">
+          <div className="logo">
+            <Link to="/" onClick={closeMenu}>
+              <img src="/tnbLiquidGoldLogo-min.png" alt="TnB Liquid Gold" />
+            </Link>
+          </div>
+          <div className="currency-toggle" onClick={handleCurrencyToggle}>
+            <FontAwesomeIcon
+              icon={currency === "Dollar" ? faDollarSign : faShekelSign}
             />
-            <span className="slider round"></span>
-          </label>
-          <span
-            className="slider-label"
-            onClick={() => handleShopRegionSelect("US")}
-          >
-            Shop USA
-          </span>
+          </div>
+          {/* Enhanced Toggle Slider for Shop Region */}
+
+          {/* comment back in to get toggle bar */}
+
+          <div className="shop-toggle-slider" ref={sliderRef}>
+            <span
+              className="slider-label"
+              onClick={() => handleShopRegionSelect("Israel")}
+            >
+              Shop Israel
+            </span>
+            <label
+              className="switch"
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseOut={handleMouseOut}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              // onTouch={handleTouchEnd}
+            >
+              <input
+                type="checkbox"
+                checked={shopRegion === "US"}
+                onChange={handleShopRegionChange}
+              />
+              <span className="slider round"></span>
+            </label>
+            <span
+              className="slider-label"
+              onClick={() => handleShopRegionSelect("US")}
+            >
+              Shop USA
+            </span>
+          </div>
         </div>
-      </div>
-      <div className="hamburger" onClick={toggleMenu}>
-        <div></div>
-        <div></div>
-        <div></div>
-        {/* Remove cart indicator from hamburger menu on mobile */}
-        {/* {cartItemCount > 0 && (
+        <div className="hamburger" onClick={toggleMenu}>
+          <div></div>
+          <div></div>
+          <div></div>
+          {/* Remove cart indicator from hamburger menu on mobile */}
+          {/* {cartItemCount > 0 && (
           <span
             className={`cart-indicator ${
               cartIndicatorAnimated ? "animate" : ""
@@ -246,85 +247,87 @@ function Header({ cart, cartItemCount, clearCart }) {
             {cartItemCount}
           </span>
         )} */}
-      </div>
+        </div>
 
-      <nav>
-        <ul className={isOpen ? "active" : ""}>
-          <li
-            className={`dropdown ${activeDropdown === "shop" ? "active" : ""}`}
-            onClick={() => toggleDropdown("shop")}
-          >
-            <Link className="top-level-header-item">Shop</Link>
-            <ul className="dropdown-menu">
-              <li>
-                <HashLink
-                  className="dropdown-menu-item"
-                  smooth
-                  to="/honeyCollection"
-                  scroll={scrollWithOffset}
-                  onClick={closeMenu}
-                >
-                  Honey Jar Collection
-                </HashLink>
-              </li>
-              <li>
-                <HashLink
-                  className="dropdown-menu-item"
-                  smooth
-                  to="/giftPackages"
-                  scroll={scrollWithOffset}
-                  onClick={closeMenu}
-                >
-                  Gift Packages
-                </HashLink>
-              </li>
-              {shopRegion !== "US" ? (
+        <nav>
+          <ul className={isOpen ? "active" : ""}>
+            <li
+              className={`dropdown ${
+                activeDropdown === "shop" ? "active" : ""
+              }`}
+              onClick={() => toggleDropdown("shop")}
+            >
+              <Link className="top-level-header-item">Shop</Link>
+              <ul className="dropdown-menu">
                 <li>
                   <HashLink
                     className="dropdown-menu-item"
                     smooth
-                    to="/corporateGifts"
+                    to="/honeyCollection"
                     scroll={scrollWithOffset}
                     onClick={closeMenu}
                   >
-                    Corporate Gifts
+                    Honey Jar Collection
                   </HashLink>
                 </li>
-              ) : null}
-              {shopRegion !== "US" ? (
                 <li>
                   <HashLink
                     className="dropdown-menu-item"
                     smooth
-                    to="/wholesale"
+                    to="/giftPackages"
                     scroll={scrollWithOffset}
                     onClick={closeMenu}
                   >
-                    Wholesale
+                    Gift Packages
                   </HashLink>
                 </li>
-              ) : null}
-            </ul>
-          </li>
-          <li>
-            <Link
-              className="top-level-header-item"
-              to="/about"
-              onClick={closeMenu}
-            >
-              About
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="top-level-header-item"
-              to="/contact"
-              onClick={closeMenu}
-            >
-              Contact
-            </Link>
-          </li>
-          {/* <li
+                {shopRegion !== "US" ? (
+                  <li>
+                    <HashLink
+                      className="dropdown-menu-item"
+                      smooth
+                      to="/corporateGifts"
+                      scroll={scrollWithOffset}
+                      onClick={closeMenu}
+                    >
+                      Corporate Gifts
+                    </HashLink>
+                  </li>
+                ) : null}
+                {shopRegion !== "US" ? (
+                  <li>
+                    <HashLink
+                      className="dropdown-menu-item"
+                      smooth
+                      to="/wholesale"
+                      scroll={scrollWithOffset}
+                      onClick={closeMenu}
+                    >
+                      Wholesale
+                    </HashLink>
+                  </li>
+                ) : null}
+              </ul>
+            </li>
+            <li>
+              <Link
+                className="top-level-header-item"
+                to="/about"
+                onClick={closeMenu}
+              >
+                About
+              </Link>
+            </li>
+            <li>
+              <Link
+                className="top-level-header-item"
+                to="/contact"
+                onClick={closeMenu}
+              >
+                Contact
+              </Link>
+            </li>
+            {/* <li
             className={`dropdown ${
               activeDropdown === "distributors" ? "active" : ""
             }`}
@@ -352,39 +355,75 @@ function Header({ cart, cartItemCount, clearCart }) {
               </li>
             </ul>
           </li> */}
-          <li className="cart-link">
-            <Link
-              className="top-level-header-item"
-              to="/checkout"
-              onClick={closeMenu}
-            >
-              <FontAwesomeIcon icon={faShoppingCart} />
-              {cartItemCount > 0 && (
-                <span className="cart-count">{cartItemCount}</span>
-              )}
-            </Link>
-          </li>
-        </ul>
-      </nav>
+            <li className="cart-link">
+              <Link
+                className="top-level-header-item"
+                to="/checkout"
+                onClick={closeMenu}
+              >
+                <FontAwesomeIcon icon={faShoppingCart} />
+                {cartItemCount > 0 && (
+                  <span className="cart-count">{cartItemCount}</span>
+                )}
+              </Link>
+            </li>
+          </ul>
+        </nav>
 
-      {/* Modal for confirming region change */}
-      <Modal
-        isOpen={showWarning}
-        title="Change Shop Region"
-        message="Changing the shop region will empty your cart. Do you want to proceed?"
-        onConfirm={confirmRegionChange}
-        onCancel={cancelRegionChange}
-      />
+        {/* Modal for confirming region change */}
+        <Modal
+          isOpen={showWarning}
+          title="Change Shop Region"
+          message="Changing the shop region will empty your cart. Do you want to proceed?"
+          onConfirm={confirmRegionChange}
+          onCancel={cancelRegionChange}
+        />
 
-      {/* Modal for redirecting to home page */}
-      <Modal
-        isOpen={showRedirectModal}
-        title="Page Not Available"
-        message="This page is not available for US shipping. You will be redirected to the homepage."
-        onConfirm={handleRedirectConfirm} // Redirect when the user clicks OK
-        noOptions={true}
-      />
-    </header>
+        {/* Modal for redirecting to home page */}
+        <Modal
+          isOpen={showRedirectModal}
+          title="Page Not Available"
+          message="This page is not available for US shipping. You will be redirected to the homepage."
+          onConfirm={handleRedirectConfirm} // Redirect when the user clicks OK
+          noOptions={true}
+        />
+      </header>
+      <div className="banner banner--marquee">
+        <div className="marquee">
+          <div className="marquee__track">
+            <span className="marquee__content">
+              Order deadline September 16. Orders placed after this date may
+              arrive after Rosh Hashana. If you would like to place an order
+              after this date, please contact us via{" "}
+              <a
+                className="banner-link"
+                href="https://wa.me/message/W7IN5L774FZJJ1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp
+              </a>{" "}
+              before placing your order. &nbsp;&nbsp;•&nbsp;&nbsp;
+            </span>
+
+            <span className="marquee__content" aria-hidden="true">
+              Order deadline September 16. Orders placed after this date may
+              arrive after Rosh Hashana. If you would like to place an order
+              after this date, please contact us via{" "}
+              <a
+                className="banner-link"
+                href="https://wa.me/message/W7IN5L774FZJJ1"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                WhatsApp
+              </a>{" "}
+              before placing your order. &nbsp;&nbsp;•&nbsp;&nbsp;
+            </span>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 

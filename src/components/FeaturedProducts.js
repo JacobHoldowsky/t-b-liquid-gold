@@ -1,8 +1,11 @@
 import React from "react";
 import { HashLink } from "react-router-hash-link"; // Import HashLink
+import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
 import "./FeaturedProducts.css";
 
 function FeaturedProducts() {
+  const { shopRegion } = useShopContext(); // Use shop context to get the current region
+
   const scrollWithOffset = (el) => {
     const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
     const yOffset = -100; // Adjust this value to match the height of your sticky header
@@ -27,7 +30,7 @@ function FeaturedProducts() {
         </div>
         {/* Corporate Gifts */}
         <div className="product-card">
-          <img src="gift packages-min.jpg" alt="For Her" />
+          <img src="Board of Four no plastic-min.jpg" alt="For Her" />
           <HashLink
             smooth
             to="/giftPackages"
@@ -37,18 +40,20 @@ function FeaturedProducts() {
             Shop Gift Packages
           </HashLink>
         </div>
-        <div className="product-card">
-          <img src="Corporate Gifts-min.png" alt="Collection Plus" />
+        {shopRegion === "US" && (
+          <div className="product-card">
+            <img src="Corporate Gifts-min.png" alt="Collection Plus" />
 
-          <HashLink
-            smooth
-            to="/corporateGifts"
-            scroll={scrollWithOffset}
-            className="cta-btn"
-          >
-            Shop Corporate Gifts
-          </HashLink>
-        </div>
+            <HashLink
+              smooth
+              to="/corporateGifts"
+              scroll={scrollWithOffset}
+              className="cta-btn"
+            >
+              Shop Corporate Gifts
+            </HashLink>
+          </div>
+        )}
       </div>
     </section>
   );

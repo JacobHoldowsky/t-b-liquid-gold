@@ -3,7 +3,7 @@
 .hero-section {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: url('../../public/2108-min.jpg') no-repeat center center/cover;
   display: flex;
   justify-content: center;
@@ -30,6 +30,27 @@
   border-radius: 20px;
   opacity: 0; /* Initially hidden */
   animation: fadeIn 1s ease-in-out 0.4s forwards; /* Fade in with a delay */
+}
+
+.kashrut-box {
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.us-kashrut-disclaimer {
+  font-size: 1rem;
+  color: #e74c3c;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  width: 90vh;
 }
 
 /* Fade-in animation */

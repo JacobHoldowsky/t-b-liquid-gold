@@ -97,7 +97,7 @@ function HoneyCollection({ cart, addToCart }) {
         url: "chocolate small jar-min.jpg",
         title: "Chocolate Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: 13,
+        priceDollar: shopRegion === "US" ? 15 : 13,
         sizeIL: "120ml",
         priceShekel: 45,
         category: "honey jars", // Added category
@@ -106,7 +106,7 @@ function HoneyCollection({ cart, addToCart }) {
         url: "cinnamon small jar-min.jpg",
         title: "Cinnamon Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: 13,
+        priceDollar: shopRegion === "US" ? 15 : 13,
         sizeIL: "120ml",
         priceShekel: 45,
         category: "honey jars", // Added category
@@ -115,7 +115,7 @@ function HoneyCollection({ cart, addToCart }) {
         url: "pumpkin small jar-min.JPG",
         title: "Pumpkin Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: 13,
+        priceDollar: shopRegion === "US" ? 15 : 13,
         sizeIL: "120ml",
         priceShekel: 45,
         category: "honey jars", // Added category
@@ -124,7 +124,7 @@ function HoneyCollection({ cart, addToCart }) {
         url: "sea salt small jar-min.jpg",
         title: "Sea Salt Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: 13,
+        priceDollar: shopRegion === "US" ? 15 : 13,
         sizeIL: "120ml",
         priceShekel: 45,
         category: "honey jars", // Added category
@@ -133,7 +133,7 @@ function HoneyCollection({ cart, addToCart }) {
         url: "vanilla small jar-min.jpg",
         title: "Vanilla Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: 13,
+        priceDollar: shopRegion === "US" ? 15 : 13,
         sizeIL: "120ml",
         priceShekel: 45,
         category: "honey jars", // Added category
@@ -142,17 +142,17 @@ function HoneyCollection({ cart, addToCart }) {
         url: "bourbon small jar-min.jpg",
         title: "Bourbon Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: 15,
+        priceDollar: shopRegion === "US" ? 16 : 15,
         sizeIL: "120ml",
         priceShekel: 50,
         category: "honey jars",
-        isSoldOut: shopRegion === "US", // Bourbon is sold out in the US
+        isSoldOut: false,
       },
       {
         url: "blueberry screenshot-min.png",
         title: "Blueberry Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: 15, // Price change based on region
+        priceDollar: shopRegion === "US" ? 16 : 15, // Price change based on region
         sizeIL: "120ml",
         priceShekel: 50,
         category: "honey jars", // Added category
@@ -162,7 +162,7 @@ function HoneyCollection({ cart, addToCart }) {
         url: "strawberry small jar-min.jpg",
         title: "Strawberry Creamed Honey",
         sizeUS: "4oz",
-        priceDollar: 15, // Price change based on region
+        priceDollar: shopRegion === "US" ? 16 : 15, // Price change based on region
         sizeIL: "120ml",
         priceShekel: 50,
         category: "honey jars", // Added category
@@ -170,20 +170,20 @@ function HoneyCollection({ cart, addToCart }) {
       },
     ];
 
-    // Update other honey items prices if "Shop US" is selected
-    if (shopRegion === "US") {
-      baseItems.forEach((item) => {
-        if (item.priceDollar === "13") {
-          item.priceDollar = "15";
-          item.priceShekel = formatPrice(
-            15 * (exchangeRate ? exchangeRate : 3.7)
-          );
-        }
-      });
-    }
+    // // Update other honey items prices if "Shop US" is selected
+    // if (shopRegion === "US") {
+    //   baseItems.forEach((item) => {
+    //     if (item.priceDollar === "13") {
+    //       item.priceDollar = "15";
+    //       item.priceShekel = formatPrice(
+    //         15 * (exchangeRate ? exchangeRate : 3.7)
+    //       );
+    //     }
+    //   });
+    // }
 
-    return baseItems;
-  }, [shopRegion, exchangeRate]);
+    return [...baseItems].sort((a, b) => a.title.localeCompare(b.title));
+  }, [shopRegion]);
 
   const openModal = (item) => {
     setSelectedItem(item);

@@ -79,12 +79,13 @@ function Checkout({ cart, setCart, removeFromCart }) {
       charge: currency === "Dollar" ? 25 : Math.ceil(25 * CHOSEN_EXCHANGE_RATE),
     },
     {
-      label: "Gush: Efrat, Beital, Alon Shvut, Bat Ayin, Kfar Etzion",
-      charge: currency === "Dollar" ? 25 : Math.ceil(25 * CHOSEN_EXCHANGE_RATE),
+      label:
+        "Gush: Beitar, Efrat, Neve Daniel, Elazar, Kfar Etzion, Tekoa, Alon Shvut, Bat Ayin",
+      charge: currency === "Dollar" ? 30 : Math.ceil(30 * CHOSEN_EXCHANGE_RATE),
     },
     {
       label:
-        "Central Israel: Tel Aviv, Petach Tikva, Rishon Letzion, Ramat Gan, Ramat Hasharon, Hertzliyah, Raanana, Kfar Saba",
+        "Central Israel: Tel Aviv, Hertzliyah, Netanya, Rishon L'tzion, Bnei Brak, Petach Tikva, Kfar Saba, Ranaana, Givat Shmuel, Ramat Gan, Rechovot, Givatayim, Ramat Hasharon",
       charge: currency === "Dollar" ? 30 : Math.ceil(30 * CHOSEN_EXCHANGE_RATE),
     },
     {
@@ -358,6 +359,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
       return;
     }
 
+    const whatsappUrl =
+      shopRegion === "US"
+        ? "https://wa.me/message/AUHFRK2KKV27O1"
+        : "https://wa.me/+972534309254";
+
     if (selectedOption.isWhatsApp) {
       setModalConfig({
         title: "Location Not Listed",
@@ -365,9 +371,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
           <div>
             <p>Please reach out to us via WhatsApp to complete your order.</p>
             <button
-              onClick={() =>
-                window.open("https://wa.me/+972534309254", "_blank")
-              }
+              onClick={() => window.open(whatsappUrl, "_blank")}
               className="whatsapp-button"
             >
               Contact via WhatsApp
@@ -443,7 +447,9 @@ function Checkout({ cart, setCart, removeFromCart }) {
       totalDeliveryCharge = deliveryCharge; // just $15 or $20
     } else if (
       !specialDeliveryOnly &&
-      aggregatedCart.aggregatedCart.some((item) => item.category !== "sponsor a board")
+      aggregatedCart.aggregatedCart.some(
+        (item) => item.category !== "sponsor a board"
+      )
     ) {
       totalDeliveryCharge = deliveryCharge; // Israel list charge
     }
@@ -644,20 +650,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
     <div className="checkout-container">
       <div className="checkout">
         <h2>Checkout</h2>
-        {shopRegion === "US" && (
-          <>
-            <p className="us-kashrut-disclaimer">** Note for US Customers **</p>
-            <p className="us-kashrut-disclaimer">
-              All honey jars on the US site are imported from Israel and are
-              under the same hashgacha as the Israel site (Vaad Hakashrus Rabbi
-              Shmuel Weiner). The gift packages that are listed on the US site
-              are not included under this hashgacha. Each gift package on the US
-              site lists the hashgacha of the items included in the package.
-              Please review this carefully before ordering to make sure it meets
-              your standards of kashrus.
-            </p>
-          </>
-        )}
         <div className="continue-shopping-wrapper">
           <Link to="/" className="continue-shopping-btn">
             <FontAwesomeIcon
@@ -1041,7 +1033,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
                         required
                       />
                     )}
-                    <label>Must be a local Israeli phone number</label>
+                    <label>
+                      Must be a local
+                      {shopRegion === "US" ? " American" : " Israeli"} phone
+                      number
+                    </label>
                     <input
                       type="text"
                       name="contactNumber"
@@ -1077,14 +1073,17 @@ function Checkout({ cart, setCart, removeFromCart }) {
             </h3>
           </div>
         ) : null}
-        {shopRegion === "US" && !specialDeliveryOnly ? (
-          <p className="availability-note">
-            Shipping takes 5-7 days. We are happy to ship out your order but
-            cannot guarantee that it will arrive before Rosh Hashana.
-          </p>
-        ) : (
-          ""
-        )}
+        <p className="availability-note">
+          Shipping takes 5-7 days. We are happy to ship out your order but
+          cannot guarantee that it will arrive before Rosh Hashana.
+        </p>
+        <p className="availability-note">
+          If you are ordering past the order deadline September 16th, please
+          reach out to us before placing your order.
+        </p>
+        <p className="availability-note">
+          If recipient is not home, the package will be left by the door.
+        </p>
         {aggregatedCart.aggregatedCart.length ? (
           <div className="submit-order-btn-wrapper">
             <button
@@ -1140,6 +1139,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
             setIsLocationModalOpen(false);
           }}
           onCancel={() => {
+            const whatsappUrl =
+              shopRegion === "US"
+                ? "https://wa.me/message/AUHFRK2KKV27O1"
+                : "https://wa.me/+972534309254";
             // Show WhatsApp message and button when user clicks "No"
             setModalConfig({
               title: "Location Not Listed",
@@ -1149,9 +1152,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
                     Please reach out to us via WhatsApp to complete your order.
                   </p>
                   <button
-                    onClick={() =>
-                      window.open("https://wa.me/+972534309254", "_blank")
-                    }
+                    onClick={() => window.open(whatsappUrl, "_blank")}
                     className="whatsapp-button"
                   >
                     Contact via WhatsApp
