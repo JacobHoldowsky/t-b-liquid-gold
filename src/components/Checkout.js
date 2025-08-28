@@ -1073,13 +1073,12 @@ function Checkout({ cart, setCart, removeFromCart }) {
             </h3>
           </div>
         ) : null}
+        <p className="availability-note">Shipping takes 5-7 business days.</p>
+        {shopRegion === "US" && <p className="availability-note">Deliver in the Five Towns takes 1-2 business days.</p>}
         <p className="availability-note">
-          Shipping takes 5-7 days. We are happy to ship out your order but
-          cannot guarantee that it will arrive before Rosh Hashana.
-        </p>
-        <p className="availability-note">
-          If you are ordering past the order deadline September 16th, please
-          reach out to us before placing your order.
+          If you order after September 16th, we are happy to ship out your order
+          but cannot guarantee that it will arrive before Rosh Hashana. If you
+          order after this date, please reach out to us.
         </p>
         <p className="availability-note">
           If recipient is not home, the package will be left by the door.

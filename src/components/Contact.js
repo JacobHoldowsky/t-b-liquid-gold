@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Contact.css";
+import { useShopContext } from "../context/ShopContext";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -12,6 +13,13 @@ function Contact() {
   });
   const [isLoading, setIsLoading] = useState(false); // Loading state
 
+  const { shopRegion } = useShopContext();
+
+  const whatsappUrl =
+    shopRegion === "US"
+      ? "https://wa.me/message/AUHFRK2KKV27O1"
+      : "https://wa.me/+972534309254";
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -21,7 +29,7 @@ function Contact() {
     });
   };
 
-  const apiUrl = '/api/send-email';  // This will work in both development and production
+  const apiUrl = "/api/send-email"; // This will work in both development and production
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,7 +71,7 @@ function Contact() {
           <p>
             We would love to hear from you. Reach out to us on{" "}
             <a
-              href="https://wa.me/message/W7IN5L774FZJJ1"
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
             >

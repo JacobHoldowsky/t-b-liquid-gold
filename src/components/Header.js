@@ -182,6 +182,11 @@ function Header({ cart, cartItemCount, clearCart }) {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
   };
 
+  const whatsappUrl =
+    shopRegion === "US"
+      ? "https://wa.me/message/AUHFRK2KKV27O1"
+      : "https://wa.me/+972534309254";
+
   return (
     <>
       <header className="header" ref={headerRef}>
@@ -397,7 +402,7 @@ function Header({ cart, cartItemCount, clearCart }) {
               after this date, please contact us via{" "}
               <a
                 className="banner-link"
-                href="https://wa.me/message/W7IN5L774FZJJ1"
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -412,7 +417,7 @@ function Header({ cart, cartItemCount, clearCart }) {
               after this date, please contact us via{" "}
               <a
                 className="banner-link"
-                href="https://wa.me/message/W7IN5L774FZJJ1"
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
