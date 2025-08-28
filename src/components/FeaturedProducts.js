@@ -40,7 +40,7 @@ function FeaturedProducts() {
             Shop Gift Packages
           </HashLink>
         </div>
-        {shopRegion === "US" && (
+        {shopRegion !== "US" && (
           <div className="product-card">
             <img src="Corporate Gifts-min.png" alt="Collection Plus" />
 
