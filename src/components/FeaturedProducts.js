@@ -47,7 +47,10 @@ function FeaturedProducts() {
         </div>
         {shopRegion !== "US" && (
           <div className="product-card">
-            <img src="Board of Four no plastic-min.jpg" alt="Collection Plus" />
+            <img
+              src="Mini four collection board with plastic-min.jpg"
+              alt="Collection Plus"
+            />
 
             <HashLink
               smooth

@@ -260,7 +260,7 @@ function GiftPackages({ cart, addToCart }) {
         description:
           "4 Flavored creamed honeys, 5 Dairy Belgian chocolates, 700ml Bottle of Glenlivet, wooden honey dipper, wooden honey board.",
         warning: "*Board may vary based on availability",
-        priceDollar: 180,
+        priceDollar: shopRegion === "US" ? 175 : 180,
         id: "scotchNSweetsBoard",
         priceShekel: 622,
         woodenBoard: false,
@@ -285,6 +285,7 @@ function GiftPackages({ cart, addToCart }) {
             [
               "honeycombCollectionBoard",
               "boardOfFour",
+              "scotchNSweetsBoard",
             ].includes(item.id)
           )
         : allItems
