@@ -246,19 +246,38 @@ function Checkout({ cart, setCart, removeFromCart }) {
       }
 
       // Add delivery charge as a separate line item (not discounted)
-      const totalDeliveryCharge = shopRegion === "US" ? deliveryCharge : 0; // Calculate delivery charge
-      // if (totalDeliveryCharge > 0) {
-      //   lineItems.push({
-      //     price_data: {
-      //       currency: currency === "Dollar" ? "usd" : "ils",
-      //       product_data: {
-      //         name: "Delivery Charge",
-      //       },
-      //       unit_amount: totalDeliveryCharge * 100, // Convert to cents
-      //     },
-      //     quantity: 1,
-      //   });
-      // }
+    const totalDeliveryCharge = (() => {
+      if (specialDeliveryOnly) return 0;
+
+      // If US shop: always use selected US delivery charge (15 or 20)
+      if (shopRegion === "US") return deliveryCharge || 0;
+
+      // If Israel: charge only when there's at least one non-sponsor item
+      const hasChargeableItems = aggregatedCart.aggregatedCart.some(
+        (i) => i.category !== "sponsor a board"
+      );
+
+      // Only include delivery if user actually selected an option
+      if (hasChargeableItems && selectedDeliveryOption) {
+        return deliveryCharge || 0;
+      }
+
+      return 0;
+    })();
+
+if (totalDeliveryCharge > 0) {
+  lineItems.push({
+    price_data: {
+      currency: currency === "Dollar" ? "usd" : "ils",
+      product_data: {
+        name: `Delivery${selectedDeliveryOption ? ` — ${selectedDeliveryOption}` : ""}`,
+      },
+      unit_amount: Math.round(totalDeliveryCharge * 100), // cents/agorot
+    },
+    quantity: 1,
+  });
+}
+
 
       const response = await fetch(apiUrl, {
         method: "POST",
