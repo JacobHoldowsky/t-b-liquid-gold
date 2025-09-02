@@ -265,18 +265,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
       return 0;
     })();
 
-if (totalDeliveryCharge > 0) {
-  lineItems.push({
-    price_data: {
-      currency: currency === "Dollar" ? "usd" : "ils",
-      product_data: {
-        name: `Delivery${selectedDeliveryOption ? ` — ${selectedDeliveryOption}` : ""}`,
-      },
-      unit_amount: Math.round(totalDeliveryCharge * 100), // cents/agorot
-    },
-    quantity: 1,
-  });
-}
+// Do NOT push a delivery line item here; the server adds it based on deliveryCharge.
+
 
 
       const response = await fetch(apiUrl, {
