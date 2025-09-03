@@ -32,29 +32,6 @@
   animation: fadeIn 1s ease-in-out 0.4s forwards; /* Fade in with a delay */
 }
 
-.kashrut-box {
-  width: 100vw;
-  text-align: center;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.us-kashrut-disclaimer {
-  font-size: 1em;
-  color: #e74c3c;
-  text-align: center;
-  font-weight: bold;
-  margin-bottom: 0px;
-  margin-top: 0px;
-  width: 90vw;
-}
-
 /* Fade-in animation */
 @keyframes fadeIn {
   0% {

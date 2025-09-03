@@ -1,51 +1,73 @@
 .call-to-action {
-    padding: 60px 20px;
-    background-color: #f7f7f7;
-    text-align: center;
-    color: black;
-  }
-  
+  padding: 60px 20px;
+  background-color: #f7f7f7;
+  text-align: center;
+  color: black;
+}
+
+.call-to-action h2 {
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 15px 30px;
+  background-color: #7c2234;
+  color: white;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-btn:hover {
+  background-color: #b74058 !important;
+  transform: translateY(-3px);
+}
+
+.kashrut-box {
+  width: 100vw;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.us-kashrut-disclaimer {
+  font-size: 1em;
+  color: #e74c3c;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  width: 90vw;
+}
+
+@media (max-width: 768px) {
   .call-to-action h2 {
-    font-size: 2.5rem;
-    margin-bottom: 30px;
+    font-size: 2rem;
   }
-  
+
   .cta-btn {
-    display: inline-block;
-    padding: 15px 30px;
-    background-color: #7c2234;
-    color: white;
-    text-transform: uppercase;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    padding: 12px 25px;
+    font-size: 1rem;
   }
-  
-  .cta-btn:hover {
-    background-color: #b74058 !important;
-    transform: translateY(-3px);
+}
+
+@media (max-width: 576px) {
+  .call-to-action h2 {
+    font-size: 1.8rem;
   }
-  
-  @media (max-width: 768px) {
-    .call-to-action h2 {
-      font-size: 2rem;
-    }
-  
-    .cta-btn {
-      padding: 12px 25px;
-      font-size: 1rem;
-    }
+
+  .cta-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
   }
-  
-  @media (max-width: 576px) {
-    .call-to-action h2 {
-      font-size: 1.8rem;
-    }
-  
-    .cta-btn {
-      padding: 10px 20px;
-      font-size: 0.9rem;
-    }
-  }
-  
+}

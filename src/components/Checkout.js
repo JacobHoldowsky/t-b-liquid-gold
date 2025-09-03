@@ -100,11 +100,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
   const US_DELIVERY_OPTIONS = [
     {
       label: "Anywhere in the Five Towns",
-      charge: 15,
+      charge: currency === "Dollar" ? 15 : Math.ceil(15 * CHOSEN_EXCHANGE_RATE),
     },
     {
       label: "Anywhere in the USA",
-      charge: 20,
+      charge: currency === "Dollar" ? 20 : Math.ceil(20 * CHOSEN_EXCHANGE_RATE),
     },
   ];
 
@@ -659,6 +659,24 @@ function Checkout({ cart, setCart, removeFromCart }) {
             Continue Shopping
           </Link>
         </div>
+        <div className="kashrut-box">
+          {shopRegion === "US" && (
+            <>
+              <p className="us-kashrut-disclaimer">
+                ** Note for US Customers **
+              </p>
+              <p className="us-kashrut-disclaimer">
+                All honey jars on the US site are imported from Israel and are
+                under the same hashgacha as the Israel site (Vaad Hakashrus
+                Rabbi Shmuel Weiner). The gift packages that are listed on the
+                US site are not included under this hashgacha. Each gift package
+                on the US site lists the hashgacha of the items included in the
+                package. Please review this carefully before ordering to make
+                sure it meets your standards of kashrus.
+              </p>
+            </>
+          )}
+        </div>
         <div className="cart-items">
           {aggregatedCart.aggregatedCart.length === 0 ? (
             <p>Your cart is empty.</p>
@@ -1073,8 +1091,20 @@ function Checkout({ cart, setCart, removeFromCart }) {
             </h3>
           </div>
         ) : null}
-        <p className="availability-note">Shipping takes 5-7 business days.</p>
-        {shopRegion === "US" && <p className="availability-note">Deliver in the Five Towns takes 1-2 business days.</p>}
+        {shopRegion === "US" && (
+          <p className="availability-note">Shipping takes 5-7 business days.</p>
+        )}
+        {shopRegion === "US" && (
+          <p className="availability-note">
+            Deliver in the Five Towns takes 1-2 business days.
+          </p>
+        )}
+        {shopRegion !== "US" && (
+          <p className="availability-note">
+            All deliveries will be done between September 14th and Rosh Hashana.
+            If you need an earlier delivery please reach out to us on WhatsApp.
+          </p>
+        )}
         <p className="availability-note">
           If you order after September 16th, we are happy to ship out your order
           but cannot guarantee that it will arrive before Rosh Hashana. If you
