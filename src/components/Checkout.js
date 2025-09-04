@@ -246,28 +246,26 @@ function Checkout({ cart, setCart, removeFromCart }) {
       }
 
       // Add delivery charge as a separate line item (not discounted)
-    const totalDeliveryCharge = (() => {
-      if (specialDeliveryOnly) return 0;
+      const totalDeliveryCharge = (() => {
+        if (specialDeliveryOnly) return 0;
 
-      // If US shop: always use selected US delivery charge (15 or 20)
-      if (shopRegion === "US") return deliveryCharge || 0;
+        // If US shop: always use selected US delivery charge (15 or 20)
+        if (shopRegion === "US") return deliveryCharge || 0;
 
-      // If Israel: charge only when there's at least one non-sponsor item
-      const hasChargeableItems = aggregatedCart.aggregatedCart.some(
-        (i) => i.category !== "sponsor a board"
-      );
+        // If Israel: charge only when there's at least one non-sponsor item
+        const hasChargeableItems = aggregatedCart.aggregatedCart.some(
+          (i) => i.category !== "sponsor a board"
+        );
 
-      // Only include delivery if user actually selected an option
-      if (hasChargeableItems && selectedDeliveryOption) {
-        return deliveryCharge || 0;
-      }
+        // Only include delivery if user actually selected an option
+        if (hasChargeableItems && selectedDeliveryOption) {
+          return deliveryCharge || 0;
+        }
 
-      return 0;
-    })();
+        return 0;
+      })();
 
-// Do NOT push a delivery line item here; the server adds it based on deliveryCharge.
-
-
+      // Do NOT push a delivery line item here; the server adds it based on deliveryCharge.
 
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -1114,10 +1112,23 @@ function Checkout({ cart, setCart, removeFromCart }) {
             If you need an earlier delivery please reach out to us on WhatsApp.
           </p>
         )}
+        {shopRegion === "US" && (
+          <p className="availability-note">
+            If you order after September 16th, we are happy to ship out your
+            order but cannot guarantee that it will arrive before Rosh Hashana.
+            If you order after this date, please reach out to us.
+          </p>
+        )}
+        {shopRegion !== "US" && (
+          <p className="availability-note">
+            If you would like to place an order after the September 16 deadline
+            please reach out to us prior to placing your order to ensure that
+            your order will arrive in time for Rosh Hashana.
+          </p>
+        )}
         <p className="availability-note">
-          If you order after September 16th, we are happy to ship out your order
-          but cannot guarantee that it will arrive before Rosh Hashana. If you
-          order after this date, please reach out to us.
+          Invoices are not available but email confirmations are sent of your
+          order.
         </p>
         <p className="availability-note">
           If recipient is not home, the package will be left by the door.
