@@ -1133,7 +1133,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
         <p className="availability-note">
           If recipient is not home, the package will be left by the door.
         </p>
-        {aggregatedCart.aggregatedCart.length ? (
+        {/* {aggregatedCart.aggregatedCart.length ? (
           <div className="submit-order-btn-wrapper">
             <button
               type="button"
@@ -1151,7 +1151,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
               </div>
             ) : null}
           </div>
-        ) : null}
+        ) : null} */}
+
+        <p className="availability-notee">
+          The website is down for maintenance
+        </p>
 
         {isLoading && <Loading />}
 
