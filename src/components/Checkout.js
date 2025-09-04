@@ -764,7 +764,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
             {calculateTotalPrice()}
           </h3>
         </div>
-        {aggregatedCart.aggregatedCart.length ? (
+        {/* {aggregatedCart.aggregatedCart.length ? (
           <div className="promo-code">
             <label htmlFor="promoCode">Promo Code:</label>
             <input
@@ -783,7 +783,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
               </div>
             )}
           </div>
-        ) : null}
+        ) : null} */}
         {aggregatedCart.aggregatedCart.length ? (
           <>
             {/* Only show gift note box if cart has non-soldier family items */}
