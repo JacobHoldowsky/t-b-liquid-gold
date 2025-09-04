@@ -337,7 +337,7 @@ ${homeType === "building"
         try {
           // Send email to customer using Resend
           await resend.emails.send({
-            from: 'contact@uxilitypro.com', // Update this with your verified domain
+            from: process.env.JJ_EMAIL, // Update this with your verified domain
             to: customerEmail,
             subject: `Order Confirmation - ${orderNumber}`,
             html: customerEmailHtml,
@@ -346,7 +346,7 @@ ${homeType === "building"
 
           // Send email to admin using Resend
           await resend.emails.send({
-            from: 'contact@uxilitypro.com', // Update this with your verified domain
+            from: process.env.JJ_EMAIL, // Update this with your verified domain
             to: process.env.PERSONAL_EMAIL,
             subject: `New Order from ${customerEmail} - ${orderNumber}`,
             html: adminEmailHtml,
