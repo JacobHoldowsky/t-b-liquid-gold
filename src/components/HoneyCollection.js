@@ -156,7 +156,7 @@ function HoneyCollection({ cart, addToCart }) {
         sizeIL: "120ml",
         priceShekel: 50,
         category: "honey jars", // Added category
-        isSoldOut: false,
+        isSoldOut: true,
       },
       {
         url: "strawberry small jar-min.jpg",
