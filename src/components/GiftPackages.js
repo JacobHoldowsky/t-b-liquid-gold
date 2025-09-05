@@ -330,7 +330,22 @@ function GiftPackages({ cart, addToCart }) {
               "deluxeBoard",
             ].includes(item.id)
           )
-        : allItems
+        : allItems.filter((item) =>
+            [
+              "forHim",
+              "forHer",
+              "boardOfFour",
+              "chocolateDelight",
+              "tnBeeCollection",
+              "HoneyALaConnoisseur",
+              "collectionPlusBox",
+              "honeycombCollectionBoard",
+              "belgianBox",
+              "deluxeBox",
+              "scotchNSweetsBoard",
+              "theBossBoard",
+            ].includes(item.id)
+          )
     )
       .slice()
       .sort((a, b) => a.priceDollar - b.priceDollar);
