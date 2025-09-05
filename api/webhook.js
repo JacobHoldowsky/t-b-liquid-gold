@@ -333,6 +333,9 @@ ${homeType === "building"
 
   </div>
 `;
+  
+        console.log("email: ", email);
+        console.log("customerEmail: ", customerEmail);
 
         try {
           // Send email to customer using Resend
