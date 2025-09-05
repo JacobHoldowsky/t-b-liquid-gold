@@ -99,11 +99,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
   const US_DELIVERY_OPTIONS = [
     {
-      label: "Anywhere in the Five Towns",
+      label: "Anywhere in the Five Towns OR Small Order (1-4 Regular Jars)",
       charge: currency === "Dollar" ? 15 : Math.ceil(15 * CHOSEN_EXCHANGE_RATE),
     },
     {
-      label: "Anywhere in the USA",
+      label: "Default Standard Shipping",
       charge: currency === "Dollar" ? 20 : Math.ceil(20 * CHOSEN_EXCHANGE_RATE),
     },
   ];

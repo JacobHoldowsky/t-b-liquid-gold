@@ -84,7 +84,7 @@ function GiftPackages({ cart, addToCart }) {
       "Vanilla Creamed Honey",
       "Bourbon Creamed Honey",
       // "Blueberry Creamed Honey",
-      "Strawberry Creamed Honey",
+      // "Strawberry Creamed Honey",
     ];
     return all;
   }, [shopRegion]);
@@ -102,9 +102,12 @@ function GiftPackages({ cart, addToCart }) {
     honeycombCollectionBoard: 7, // special: auto-select all flavors, no dropdowns
     belgianBox: 4,
     deluxeBox: 5,
-    deluxeBoard: 5,
+    // deluxeBoard: 5,
     scotchNSweetsBoard: 4,
     theBossBoard: 6,
+    beeCaring: 4,
+    beeKind: 4,
+    deluxeBoard: 5,
   };
 
   /* NEW: modal + cart notification state (mirrors HoneyCollection) */
@@ -276,6 +279,42 @@ function GiftPackages({ cart, addToCart }) {
         priceShekel: 675,
         woodenBoard: false,
       },
+      {
+        url: "BeeCaring.jpg",
+        title: "Bee Caring",
+        description:
+          "4 Flavored creamed honeys, 7 Dairy Belgian chocolates in heart shaped box, Wooden honey dipper, Wooden serving board.",
+        warning:
+          "*Board may vary based on availability. Hashgacha of chocolate: Badatz Eida Hachareidis Yerushalyim",
+        priceDollar: 110,
+        id: "beeCaring",
+        priceShekel: 380,
+        woodenBoard: true,
+      },
+      {
+        url: "BeeKind.jpg",
+        title: "Bee Kind",
+        description:
+          "4 Flavored creamed honeys, bottle of Tura wine, 5 Dairy Belgian chocolates, Wooden honey dipper, Wooden serving board.",
+        warning:
+          "*Wine board may vary based on availability. Hashgacha of chocolate: Badatz Eida Hachareidis Yerushalyim. Hashgacha of wine: OU of America",
+        priceDollar: 130,
+        id: "beeKind",
+        priceShekel: 450,
+        woodenBoard: true,
+      },
+      {
+        url: "DeluxeBoard.jpg",
+        title: "Deluxe Board",
+        description:
+          "5 Flavored creamed honeys, Bottle of Isaac Ram wine, 5 Dairy Belgian chocolates, Wooden honey dipper, Wooden serving board.",
+        warning:
+          "*Wine board may vary based on availability. Hashgacha of chocolate: Badatz Eida Hachareidis Yerushalyim. Hashgacha of wine: OU of America",
+        priceDollar: 180,
+        id: "deluxeBoard",
+        priceShekel: 620,
+        woodenBoard: true,
+      },
     ];
 
     // Filter items based on the US region
@@ -286,6 +325,9 @@ function GiftPackages({ cart, addToCart }) {
               "honeycombCollectionBoard",
               "boardOfFour",
               "scotchNSweetsBoard",
+              "beeCaring",
+              "beeKind",
+              "deluxeBoard",
             ].includes(item.id)
           )
         : allItems
