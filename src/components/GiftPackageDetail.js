@@ -138,7 +138,7 @@ function GiftPackageDetail({ cart, addToCart }) {
       },
       boardOfFour: {
         title: "Board of Four",
-        description: "4 flavored creamed honeys on a wooden serving board",
+        description: "4 flavored creamed honeys on a serving board",
         priceDollar: shopRegion === "US" ? 75 : 60,
         priceShekel: calculatePriceInShekels(shopRegion === "US" ? 75 : 60),
         honeyCount: 4,
@@ -198,7 +198,7 @@ function GiftPackageDetail({ cart, addToCart }) {
       honeycombCollectionBoard: {
         title: "Honeycomb Collection Board",
         description:
-          "All of our 7 delicious flavored creamed honeys on a wooden serving board.",
+          "All of our 7 delicious flavored creamed honeys on a serving board.",
         priceDollar: shopRegion === "US" ? 125 : 99,
         priceShekel: calculatePriceInShekels(shopRegion === "US" ? 125 : 99),
         honeyCount: 7,
@@ -246,7 +246,7 @@ function GiftPackageDetail({ cart, addToCart }) {
       scotchNSweetsBoard: {
         title: "Scotch n' Sweets Board",
         description:
-          "4 Flavored creamed honeys, 5 Dairy Belgian chocolates, 700ml Bottle of Glenlivet, wooden honey dipper, wooden honey board.",
+          "4 Flavored creamed honeys, 5 Dairy Belgian chocolates, 700ml Bottle of Glenlivet, wooden honey dipper, honey board.",
         priceDollar: shopRegion === "US" ? 180 : 160,
         priceShekel: calculatePriceInShekels(shopRegion === "US" ? 180 : 160),
         honeyCount: 4,
@@ -257,7 +257,7 @@ function GiftPackageDetail({ cart, addToCart }) {
       theBossBoard: {
         title: "The Boss Board",
         description:
-          "6 Flavored creamed honeys, Bottle of wine, 9 Dairy Belgian chocolates, Wooden honey dipper, Wooden serving board.",
+          "6 Flavored creamed honeys, Bottle of wine, 9 Dairy Belgian chocolates, Wooden honey dipper, serving board.",
         warning: "*Wine bottle will vary based on availability",
         priceDollar: 180,
         priceShekel: calculatePriceInShekels(180),

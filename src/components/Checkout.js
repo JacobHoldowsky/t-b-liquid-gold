@@ -1103,7 +1103,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
         )}
         {shopRegion === "US" && (
           <p className="availability-note">
-            Deliver in the Five Towns takes 1-2 business days.
+            Delivery in the Five Towns takes 1-2 business days.
           </p>
         )}
         {shopRegion !== "US" && (

@@ -18,7 +18,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
     miniFourCollectionBoard: {
       title: "Mini Four Collection Board",
       description:
-        "4 flavored creamed honeys, wooden honey dipper, wooden serving board.",
+        "4 flavored creamed honeys, wooden honey dipper, serving board.",
       size: "Jar size 2oz",
       priceDollar: 40,
       priceShekel: 138,
@@ -38,7 +38,7 @@ function CorporateGiftDetail({ cart, addToCart }) {
     miniSixCollectionBoard: {
       title: "Mini Six Collection Board",
       description:
-        "6 flavored creamed honeys, wooden honey dipper, wooden serving board",
+        "6 flavored creamed honeys, wooden honey dipper, serving board",
       size: "Jar size 2oz",
       priceDollar: 55,
       priceShekel: 190,

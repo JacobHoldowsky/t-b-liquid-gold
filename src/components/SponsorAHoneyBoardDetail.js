@@ -93,7 +93,7 @@ function SponsorAHoneyBoardDetail({ cart, addToCart }) {
       sponsorAMiniFourCollectionBoard: {
         title: "Sponsor a Mini Four Collection Board",
         description:
-          "4 flavored creamed honeys, wooden honey dipper, wooden serving board",
+          "4 flavored creamed honeys, wooden honey dipper, serving board",
         priceDollar: 35,
         priceShekel: calculatePriceInShekels(35),
         honeyCount: 0,

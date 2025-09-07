@@ -161,7 +161,7 @@ function GiftPackages({ cart, addToCart }) {
       {
         url: "Board of Four no plastic-min.jpg",
         title: "Board of Four",
-        description: "4 flavored creamed honeys on a wooden serving board",
+        description: "4 flavored creamed honeys on a serving board",
         warning: "*Board may vary based on availability",
         priceDollar: 70,
         id: "boardOfFour",
@@ -214,7 +214,7 @@ function GiftPackages({ cart, addToCart }) {
         url: "Honeycomb collection board no plastic-min.jpg",
         title: "Honeycomb Collection Board",
         description:
-          "7 delicious flavored creamed honeys on a wooden serving board.",
+          "7 delicious flavored creamed honeys on a serving board.",
         warning: "*Board may vary based on availability",
         priceDollar: shopRegion === "US" ? 125 : 120,
         id: "honeycombCollectionBoard",
@@ -261,7 +261,7 @@ function GiftPackages({ cart, addToCart }) {
         url: "scoth n sweets-min.png",
         title: "Scotch n' Sweets Board",
         description:
-          "4 Flavored creamed honeys, 5 Dairy Belgian chocolates, 700ml Bottle of Glenlivet, wooden honey dipper, wooden honey board.",
+          "4 Flavored creamed honeys, 5 Dairy Belgian chocolates, 700ml Bottle of Glenlivet, wooden honey dipper, honey board.",
         warning: "*Board may vary based on availability",
         priceDollar: shopRegion === "US" ? 175 : 180,
         id: "scotchNSweetsBoard",
@@ -272,7 +272,7 @@ function GiftPackages({ cart, addToCart }) {
         url: "theBossBoard.jpg",
         title: "The Boss Board",
         description:
-          "6 Flavored creamed honeys, Bottle of wine, 9 Dairy Belgian chocolates, Wooden honey dipper, Wooden serving board.",
+          "6 Flavored creamed honeys, Bottle of wine, 9 Dairy Belgian chocolates, Wooden honey dipper, serving board.",
         warning: "*Wine bottle, board may vary based on availability",
         priceDollar: 195,
         id: "theBossBoard",
@@ -283,7 +283,7 @@ function GiftPackages({ cart, addToCart }) {
         url: "BeeCaring.jpg",
         title: "Bee Caring",
         description:
-          "4 Flavored creamed honeys, 7 Dairy Belgian chocolates in heart shaped box, Wooden honey dipper, Wooden serving board.",
+          "4 Flavored creamed honeys, 7 Dairy Belgian chocolates in heart shaped box, Wooden honey dipper, serving board.",
         warning:
           "*Board may vary based on availability. Hashgacha of chocolate: Badatz Eida Hachareidis Yerushalyim",
         priceDollar: 110,
@@ -295,7 +295,7 @@ function GiftPackages({ cart, addToCart }) {
         url: "BeeKind.jpg",
         title: "Bee Kind",
         description:
-          "4 Flavored creamed honeys, bottle of Tura wine, 5 Dairy Belgian chocolates, Wooden honey dipper, Wooden serving board.",
+          "4 Flavored creamed honeys, bottle of Tura wine, 5 Dairy Belgian chocolates, Wooden honey dipper, serving board.",
         warning:
           "*Wine board may vary based on availability. Hashgacha of chocolate: Badatz Eida Hachareidis Yerushalyim. Hashgacha of wine: OU of America",
         priceDollar: 130,
@@ -307,7 +307,7 @@ function GiftPackages({ cart, addToCart }) {
         url: "DeluxeBoard.jpg",
         title: "Deluxe Board",
         description:
-          "5 Flavored creamed honeys, Bottle of Isaac Ram wine, 5 Dairy Belgian chocolates, Wooden honey dipper, Wooden serving board.",
+          "5 Flavored creamed honeys, Bottle of Isaac Ram wine, 5 Dairy Belgian chocolates, Wooden honey dipper, serving board.",
         warning:
           "*Wine board may vary based on availability. Hashgacha of chocolate: Badatz Eida Hachareidis Yerushalyim. Hashgacha of wine: OU of America",
         priceDollar: 180,
@@ -458,7 +458,7 @@ function GiftPackages({ cart, addToCart }) {
               )}
 
               {selectedItem.woodenBoard && (
-                <p>This gift may be displayed on a wooden board.</p>
+                <p>This gift may be displayed on a board.</p>
               )}
 
               <div className="quantity-selector">
