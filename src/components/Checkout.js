@@ -512,12 +512,13 @@ function Checkout({ cart, setCart, removeFromCart }) {
     ) {
       openModal(
         "Remove Item?",
-        "The minimum quantity for Mini Four Collection Board is 5. Would you like to remove them all from your cart?",
+        "The minimum quantity for Mini Collection Board is 5. Would you like to remove them all from your cart?",
         () => {
           const updatedCart = cart.filter(
             (item) =>
               !(
-                item.title === "Mini Four Collection Board" &&
+                (item.title === "Mini Four Collection Board" ||
+                  item.title === "Mini Six Collection Board") &&
                 (item.selectedFlavors?.length
                   ? `${item.title}-${item.selectedFlavors.join(",")}`
                   : item.title) === itemUniqueKey
