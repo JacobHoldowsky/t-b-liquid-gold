@@ -506,7 +506,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
     // Handling for "Mini Four Collection Board" with a minimum quantity check
     if (
-      itemToUpdate.title === "Mini Four Collection Board" &&
+      (itemToUpdate.title === "Mini Four Collection Board" ||
+        itemToUpdate.title === "Mini Six Collection Board") &&
       newQuantity < 5
     ) {
       openModal(
