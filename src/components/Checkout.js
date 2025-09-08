@@ -921,6 +921,14 @@ function Checkout({ cart, setCart, removeFromCart }) {
                         </option>
                       ))}
                     </select>
+
+                    {/* Show note when pickup is selected */}
+                    {selectedDeliveryOption ===
+                      "Pickup in Ramat Eshkol (Sderot Eshkol 14)" && (
+                      <p className="availability-note">
+                        Open daily in the morning until 3pm and in the evenings.
+                      </p>
+                    )}
                   </div>
                 ) : (
                   <div className="delivery-options">
