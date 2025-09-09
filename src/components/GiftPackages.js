@@ -183,7 +183,7 @@ function GiftPackages({ cart, addToCart }) {
         title: "T&Bee Collection",
         description:
           "6 flavored creamed honeys wrapped in a beautiful gift box with a wooden honey dipper.",
-        priceDollar: 85,
+        priceDollar: 95,
         id: "tnBeeCollection",
         priceShekel: 294,
         woodenBoard: true,
