@@ -123,6 +123,8 @@ function GiftPackages({ cart, addToCart }) {
     setSelectedFlavors(arr);
   };
 
+  const CHOSEN_EXCHANGE_RATE = 3.5;
+
   // Memoize the items list to prevent unnecessary re-calculations on every render
   const items = useMemo(() => {
     const allItems = [
@@ -132,7 +134,7 @@ function GiftPackages({ cart, addToCart }) {
         description: "2 flavored creamed honeys, moscato, wooden honey dipper.",
         priceDollar: 55,
         id: "forHim",
-        priceShekel: 190,
+        priceShekel: shopRegion === "US" ? 190 : Math.ceil(55 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: true,
       },
       {
@@ -141,7 +143,7 @@ function GiftPackages({ cart, addToCart }) {
         description: "2 flavored creamed honeys, Rosato, wooden honey dipper",
         priceDollar: 55,
         id: "forHer",
-        priceShekel: 190,
+        priceShekel: shopRegion === "US" ? 190 : Math.ceil(55 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: true,
       },
       // {
@@ -165,7 +167,7 @@ function GiftPackages({ cart, addToCart }) {
         warning: "*Board may vary based on availability",
         priceDollar: 70,
         id: "boardOfFour",
-        priceShekel: 242,
+        priceShekel: shopRegion === "US" ? 242 : Math.ceil(70 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: false,
       },
       {
@@ -175,7 +177,7 @@ function GiftPackages({ cart, addToCart }) {
           "2 Flavored creamed honeys, 4 Dairy belgian chocolates, wooden honey dipper.",
         priceDollar: 65,
         id: "chocolateDelight",
-        priceShekel: 224,
+        priceShekel: shopRegion === "US" ? 224 : Math.ceil(65 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: true,
       },
       {
@@ -185,7 +187,7 @@ function GiftPackages({ cart, addToCart }) {
           "6 flavored creamed honeys wrapped in a beautiful gift box with a wooden honey dipper.",
         priceDollar: 95,
         id: "tnBeeCollection",
-        priceShekel: 294,
+        priceShekel: shopRegion === "US" ? 294 : Math.ceil(95 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: true,
       },
       {
@@ -196,7 +198,7 @@ function GiftPackages({ cart, addToCart }) {
         warning: "*Wine bottle may vary based on availability",
         priceDollar: 90,
         id: "HoneyALaConnoisseur",
-        priceShekel: 310,
+        priceShekel: shopRegion === "US" ? 310 : Math.ceil(90 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: true,
       },
       {
@@ -207,7 +209,7 @@ function GiftPackages({ cart, addToCart }) {
         warning: "*Wine bottle, board may vary based on availability",
         priceDollar: 125,
         id: "collectionPlusBox",
-        priceShekel: 432,
+        priceShekel: shopRegion === "US" ? 432 : Math.ceil(125 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: true,
       },
       {
@@ -218,7 +220,7 @@ function GiftPackages({ cart, addToCart }) {
         warning: "*Board may vary based on availability",
         priceDollar: shopRegion === "US" ? 125 : 120,
         id: "honeycombCollectionBoard",
-        priceShekel: shopRegion === "US" ? 432 : 415,
+        priceShekel: shopRegion === "US" ? 432 : Math.ceil(120 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: false,
       },
       {
@@ -228,7 +230,7 @@ function GiftPackages({ cart, addToCart }) {
           "4 Flavored creamed honeys, 12 Dairy Belgian chocolates, wooden honey dipper.",
         priceDollar: 115,
         id: "belgianBox",
-        priceShekel: 397,
+        priceShekel: shopRegion === "US" ? 397 : Math.ceil(115 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: true,
       },
       {
@@ -239,7 +241,7 @@ function GiftPackages({ cart, addToCart }) {
         warning: "*Wine bottle may vary based on availability",
         priceDollar: 140,
         id: "deluxeBox",
-        priceShekel: 485,
+        priceShekel: shopRegion === "US" ? 485 : Math.ceil(140 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: true,
       },
       // {
@@ -265,7 +267,7 @@ function GiftPackages({ cart, addToCart }) {
         warning: "*Board may vary based on availability",
         priceDollar: shopRegion === "US" ? 175 : 180,
         id: "scotchNSweetsBoard",
-        priceShekel: 622,
+        priceShekel: shopRegion === "US" ? 622 : Math.ceil(180 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: false,
       },
       {
@@ -276,7 +278,7 @@ function GiftPackages({ cart, addToCart }) {
         warning: "*Wine bottle, board may vary based on availability",
         priceDollar: 195,
         id: "theBossBoard",
-        priceShekel: 675,
+        priceShekel: shopRegion === "US" ? 675 : Math.ceil(195 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: false,
       },
       {
@@ -288,7 +290,7 @@ function GiftPackages({ cart, addToCart }) {
           "*Board may vary based on availability. Hashgacha of chocolate: Badatz Eida Hachareidis Yerushalyim",
         priceDollar: 110,
         id: "beeCaring",
-        priceShekel: 380,
+        priceShekel: shopRegion === "US" ? 380 : Math.ceil(110 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: true,
       },
       {
@@ -300,7 +302,7 @@ function GiftPackages({ cart, addToCart }) {
           "*Wine board may vary based on availability. Hashgacha of chocolate: Badatz Eida Hachareidis Yerushalyim. Hashgacha of wine: OU of America",
         priceDollar: 130,
         id: "beeKind",
-        priceShekel: 450,
+        priceShekel: shopRegion === "US" ? 450 : Math.ceil(130 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: true,
       },
       {
@@ -312,7 +314,7 @@ function GiftPackages({ cart, addToCart }) {
           "*Wine board may vary based on availability. Hashgacha of chocolate: Badatz Eida Hachareidis Yerushalyim. Hashgacha of wine: OU of America",
         priceDollar: 180,
         id: "deluxeBoard",
-        priceShekel: 620,
+        priceShekel: shopRegion === "US" ? 620 : Math.ceil(180 * CHOSEN_EXCHANGE_RATE),
         woodenBoard: true,
       },
     ];
