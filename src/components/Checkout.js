@@ -63,6 +63,22 @@ function Checkout({ cart, setCart, removeFromCart }) {
       charge: 0,
     },
     {
+      label: "Pickup in Rechavia (Diskin 3)",
+      charge: 0,
+    },
+    {
+      label: "Pickup in Karnei Shomron",
+      charge: 0,
+    },
+    {
+      label: "Pickup in RBS D2",
+      charge: 0,
+    },
+    {
+      label: "Pickup in Chashmonaim",
+      charge: 0,
+    },
+    {
       label: "Jerusalem",
       charge: currency === "Dollar" ? 15 : Math.ceil(15 * CHOSEN_EXCHANGE_RATE),
     },
