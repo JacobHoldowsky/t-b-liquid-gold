@@ -144,7 +144,7 @@ function HoneyCollection({ cart, addToCart }) {
         sizeUS: "4oz",
         priceDollar: shopRegion === "US" ? 16 : 15,
         sizeIL: "120ml",
-        priceShekel: 50,
+        priceShekel: 54,
         category: "honey jars",
         isSoldOut: false,
       },
@@ -164,7 +164,7 @@ function HoneyCollection({ cart, addToCart }) {
         sizeUS: "4oz",
         priceDollar: shopRegion === "US" ? 16 : 15, // Price change based on region
         sizeIL: "120ml",
-        priceShekel: 50,
+        priceShekel: 54,
         category: "honey jars", // Added category
         isSoldOut: false,
       },
