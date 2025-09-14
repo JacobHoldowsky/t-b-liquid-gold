@@ -148,16 +148,16 @@ function HoneyCollection({ cart, addToCart }) {
         category: "honey jars",
         isSoldOut: false,
       },
-      // {
-      //   url: "blueberry screenshot-min.png",
-      //   title: "Blueberry Creamed Honey",
-      //   sizeUS: "4oz",
-      //   priceDollar: shopRegion === "US" ? 16 : 15, // Price change based on region
-      //   sizeIL: "120ml",
-      //   priceShekel: 50,
-      //   category: "honey jars", // Added category
-      //   isSoldOut: true,
-      // },
+      {
+        url: "blueberry screenshot-min.png",
+        title: "Blueberry Creamed Honey",
+        sizeUS: "4oz",
+        priceDollar: shopRegion === "US" ? 16 : 15, // Price change based on region
+        sizeIL: "120ml",
+        priceShekel: 54,
+        category: "honey jars", // Added category
+        isSoldOut: shopRegion === "US" ? true : false,
+      },
       {
         url: "strawberry small jar-min.jpg",
         title: "Strawberry Creamed Honey",
