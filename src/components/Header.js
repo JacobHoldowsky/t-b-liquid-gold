@@ -428,6 +428,27 @@ function Header({ cart, cartItemCount, clearCart }) {
           </div>
         </div>
       </div>
+      {shopRegion !== "US" && (
+        <div className="banner banner--marquee">
+          <div className="marquee">
+            <div className="marquee__track">
+              <span className="marquee__content">
+                Our honey jars are under the strict supervision of Rabbi Weiner
+                of ZNT Kosher. Other food items included in gift packages are
+                under various hashgachos - please refer to each gift for
+                reference.{" "}
+              </span>
+
+              <span className="marquee__content" aria-hidden="true">
+                Our honey jars are under the strict supervision of Rabbi Weiner
+                of ZNT Kosher. Other food items included in gift packages are
+                under various hashgachos - please refer to each gift for
+                reference.{" "}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
