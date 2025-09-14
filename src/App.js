@@ -21,6 +21,7 @@ import CorporateGifts from "./components/CorporateGifts";
 import USDistributors from "./components/USDistributors";
 import IsraelDistributors from "./components/IsraelDistributors";
 import Wholesale from "./components/Wholesale";
+import FloatingHechsher from "./components/FloatingHechsher";
 import FloatingWhatsAppButton from "./components/FloatingWhatsAppButton";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { CurrencyProvider } from "./context/CurrencyContext";
@@ -196,6 +197,7 @@ function App() {
                 <Route path="/canceled" element={<Canceled />} />
               </Routes>
               <Footer />
+              <FloatingHechsher />
               <FloatingWhatsAppButton />
               <FloatingCartButton cartItemCount={calculateCartItemCount()} />
             </div>

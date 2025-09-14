@@ -1,0 +1,62 @@
+/* Positions this badge just above the WhatsApp FAB, matching its look/feel */
+.floating-hechsher {
+  position: fixed;
+  /* WhatsApp button sits at bottom:20px; make this one float above it */
+  bottom: 80px; /* ~20px base margin + ~50-60px for the WhatsApp pill + small gap */
+  right: 20px;
+  z-index: 1000; /* same layer as WhatsApp button */
+}
+
+.hechsher-img {
+  display: block;
+  /* Size tuned to visually match the WhatsApp pill height */
+  height: 48px;
+  width: auto;
+
+  /* Mimic the pill container feel */
+  background: #ffffff;
+  border-radius: 50px;
+  padding: 8px 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+
+  /* Prevent accidental selection/drag */
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Small devices (phones) */
+@media (max-width: 576px) {
+  .floating-hechsher {
+    bottom: 65px !important; /* aligns with the reduced WhatsApp size/margins */
+    right: 15px !important;
+  }
+
+  .hechsher-img {
+    height: 120px;
+    padding: 6px 10px;
+  }
+}
+
+/* Medium devices (tablets) */
+@media (max-width: 768px) {
+  .floating-hechsher {
+    bottom: 72px;
+    right: 18px;
+  }
+
+  .hechsher-img {
+    height: 120px;
+  }
+}
+
+/* Large devices (desktops) */
+@media (min-width: 992px) {
+  .floating-hechsher {
+    bottom: 92px; /* give a touch more separation on large screens */
+  }
+
+  .hechsher-img {
+    height: 150px;
+    padding: 10px 14px;
+  }
+}
