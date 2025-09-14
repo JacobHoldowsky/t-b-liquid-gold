@@ -428,7 +428,7 @@ function Header({ cart, cartItemCount, clearCart }) {
           </div>
         </div>
       </div>
-      {shopRegion !== "US" && (
+      {/* {shopRegion !== "US" && (
         <div className="banner banner--marquee">
           <div className="marquee">
             <div className="marquee__track">
@@ -448,7 +448,7 @@ function Header({ cart, cartItemCount, clearCart }) {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 }
