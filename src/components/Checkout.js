@@ -34,6 +34,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
     state: "",
     zipCode: "",
     contactNumber: "",
+    region: "",
   });
   const [selectedDeliveryOption, setSelectedDeliveryOption] = useState(null);
   const [deliveryCharge, setDeliveryCharge] = useState(0);
@@ -604,6 +605,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
   useEffect(() => {
     let isFormValid = false; // Default to false
 
+    shippingDetails.region = shopRegion;
+
     if (
       specialDeliveryOnly ||
       (deliveryCharge === 0 && selectedDeliveryOption)
@@ -626,6 +629,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
         shippingDetails.city,
         shippingDetails.state,
         shippingDetails.contactNumber,
+        shippingDetails.region,
       ].every((field) => field.trim() !== "");
 
       isFormValid = areMandatoryFieldsFilled;
@@ -639,6 +643,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
         shippingDetails.address,
         shippingDetails.city,
         shippingDetails.contactNumber,
+        shippingDetails.region,
       ];
 
       // Only include homeType in validation if not an institution

@@ -254,6 +254,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
         zipCode: shippingDetails.zipCode,
         specialDeliveryOnly: specialDeliveryOnly,
         contactNumber: shippingDetails.contactNumber,
+        shopRegion: shippingDetails.region,
         promoCode: promoCode || "", // Include promo code in the metadata
         discountInfo:
           "5% discount applied to subtotal only, excluding delivery charge",
@@ -299,6 +300,7 @@ app.post(
       let apartmentNumber = "";
       let floor = "";
       let code = "";
+      let shopRegion = session.metadata.region;
 
       if (homeType === "building") {
         apartmentNumber = session.metadata.apartmentNumber;
@@ -372,7 +374,7 @@ app.post(
                       }
                     })
                     .on("error", (err) => {
-                      fs.unlink(filePath, () => { });
+                      fs.unlink(filePath, () => {});
                       reject(`Download error: ${err.message}`);
                     });
                 });
@@ -393,10 +395,12 @@ app.post(
             const isCustomLogoCharge = item.description.includes("Custom Logo");
             return `
               <li style="padding: 10px 0; border-bottom: 1px solid #ddd;">
-                <strong>${item.quantity}x ${item.description}${isCustomLogoCharge ? " (see attachment)" : ""
-              }</strong><br>
-                <span style="color: #777;">Price: ${item.currency.toUpperCase() === "USD" ? "$" : "₪"
-              }${(item.amount_total / 100).toFixed(2)}</span>
+                <strong>${item.quantity}x ${item.description}${
+              isCustomLogoCharge ? " (see attachment)" : ""
+            }</strong><br>
+                <span style="color: #777;">Price: ${
+                  item.currency.toUpperCase() === "USD" ? "$" : "₪"
+                }${(item.amount_total / 100).toFixed(2)}</span>
               </li>
             `;
           })
@@ -418,39 +422,44 @@ app.post(
   <p><strong>Full Name:</strong> ${fullName}</p>
   <p><strong>Email:</strong> ${email}</p>
   <p><strong>Number:</strong> ${number}</p>
-  ${recipientName
-              ? `<h3 style="color: #333; margin-top: 20px;">Delivery Information</h3>`
-              : ""
-            }
-  ${recipientName
-              ? `<p><strong>Recipient Name:</strong> ${recipientName}</p>`
-              : ""
-            }
+  ${
+    recipientName
+      ? `<h3 style="color: #333; margin-top: 20px;">Delivery Information</h3>`
+      : ""
+  }
+  ${
+    recipientName
+      ? `<p><strong>Recipient Name:</strong> ${recipientName}</p>`
+      : ""
+  }
   ${address ? `<p><strong>Address:</strong> ${address}</p>` : ""}
   
 
   ${homeType ? `<p><strong>Home Type:</strong> ${capitalizedHomeType}</p>` : ""}
-  ${homeType === "building"
-              ? `<p><strong>Apartment Number:</strong> ${apartmentNumber}</p>
+  ${
+    homeType === "building"
+      ? `<p><strong>Apartment Number:</strong> ${apartmentNumber}</p>
     <p><strong>Floor:</strong> ${floor}</p>
     <p><strong>Building Code:</strong> ${code}</p>`
-              : ""
-            }
+      : ""
+  }
   ${city ? `<p><strong>City:</strong> ${city}</p>` : ""}
   
-  ${state
-              ? `<p>
+  ${
+    state
+      ? `<p>
     <strong>State:</strong> ${state}
     </p>`
-              : ""
-            }
+      : ""
+  }
 
   ${zipCode ? `<p><strong>Zip Code:</strong> ${zipCode}</p>` : ""}
 
-  ${contactNumber
-              ? `<p><strong>Recipient Contact Number:</strong> ${contactNumber}</p>`
-              : ""
-            }
+  ${
+    contactNumber
+      ? `<p><strong>Recipient Contact Number:</strong> ${contactNumber}</p>`
+      : ""
+  }
   
   
 `;
@@ -553,10 +562,11 @@ app.post(
     <p style="font-size: 16px;">Delivery Fee: <strong>${formattedDeliveryFee}</strong></p>
     <p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Total after adding delivery fee: <strong>${formattedFinalTotalAmount}</strong></p>
     
-    ${promoCode
-            ? `<p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Promo Code: ${promoCode}</p>`
-            : `<p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Promo Code: None</p>`
-          }
+    ${
+      promoCode
+        ? `<p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Promo Code: ${promoCode}</p>`
+        : `<p style="font-size: 16px; font-weight: bold; color: #333; margin-top: 10px;">Promo Code: None</p>`
+    }
 
     ${giftNoteHtml}
 
@@ -584,6 +594,17 @@ app.post(
           html: adminEmailHtml,
           attachments: validAttachments,
         };
+
+        // Send email to chana resnick as well if US
+        if (shopRegion === "US") {
+          await resend.emails.send({
+            from: "contact@uxilitypro.com", // Update this with your verified domain
+            to: process.env.US_PERSONAL_EMAIL,
+            subject: `New Order from ${customerEmail} - ${orderNumber}`,
+            html: adminEmailHtml,
+            attachments: validAttachments,
+          });
+        }
 
         await resend.emails.send(mailOptionsAdmin);
 
