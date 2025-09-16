@@ -856,6 +856,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
                 onChange={handleInputChange}
                 required
               />
+              <label>
+                Emails can sometimes go to 'Spam' if you don't see the
+                confirmation in your inbox
+              </label>
               <input
                 type="email"
                 name="email"
@@ -1032,6 +1036,10 @@ function Checkout({ cart, setCart, removeFromCart }) {
                             value={shippingDetails.floor}
                             onChange={handleInputChange}
                           />
+                          <label>
+                            If code is not provided and we cannot enter the
+                            building we are not responsible
+                          </label>
                           <input
                             type="text"
                             name="code"
