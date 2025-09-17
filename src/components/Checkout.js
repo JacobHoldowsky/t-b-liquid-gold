@@ -84,7 +84,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
       charge: currency === "Dollar" ? 20 : Math.ceil(15 * CHOSEN_EXCHANGE_RATE),
     },
     {
-      label: "RBS",
+      label: "RBS / Beit Shemesh",
       charge: currency === "Dollar" ? 25 : Math.ceil(17 * CHOSEN_EXCHANGE_RATE),
     },
     {
