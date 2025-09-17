@@ -81,11 +81,11 @@ function Checkout({ cart, setCart, removeFromCart }) {
     // },
     {
       label: "Jerusalem",
-      charge: currency === "Dollar" ? 20 : Math.ceil(20 * CHOSEN_EXCHANGE_RATE),
+      charge: currency === "Dollar" ? 15 : Math.ceil(15 * CHOSEN_EXCHANGE_RATE),
     },
     {
       label: "RBS / Beit Shemesh",
-      charge: currency === "Dollar" ? 25 : Math.ceil(25 * CHOSEN_EXCHANGE_RATE),
+      charge: currency === "Dollar" ? 20 : Math.ceil(20 * CHOSEN_EXCHANGE_RATE),
     },
     {
       label: "Givat Zeev, Modiin, Mevaseret Tzion",
