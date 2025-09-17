@@ -81,15 +81,15 @@ function Checkout({ cart, setCart, removeFromCart }) {
     // },
     {
       label: "Jerusalem",
-      charge: currency === "Dollar" ? 20 : Math.ceil(15 * CHOSEN_EXCHANGE_RATE),
+      charge: currency === "Dollar" ? 20 : Math.ceil(20 * CHOSEN_EXCHANGE_RATE),
     },
     {
       label: "RBS / Beit Shemesh",
-      charge: currency === "Dollar" ? 25 : Math.ceil(17 * CHOSEN_EXCHANGE_RATE),
+      charge: currency === "Dollar" ? 25 : Math.ceil(25 * CHOSEN_EXCHANGE_RATE),
     },
     {
       label: "Givat Zeev, Modiin, Mevaseret Tzion",
-      charge: currency === "Dollar" ? 30 : Math.ceil(20 * CHOSEN_EXCHANGE_RATE),
+      charge: currency === "Dollar" ? 30 : Math.ceil(30 * CHOSEN_EXCHANGE_RATE),
     },
     // {
     //   label: "Mitzpe Yericho, Maaleh Adumim",
@@ -98,12 +98,12 @@ function Checkout({ cart, setCart, removeFromCart }) {
     {
       label:
         "Gush: Beitar, Efrat, Neve Daniel, Elazar, Kfar Etzion, Tekoa, Alon Shvut, Bat Ayin",
-      charge: currency === "Dollar" ? 50 : Math.ceil(30 * CHOSEN_EXCHANGE_RATE),
+      charge: currency === "Dollar" ? 50 : Math.ceil(50 * CHOSEN_EXCHANGE_RATE),
     },
     {
       label:
         "Central Israel: Tel Aviv, Hertzliyah, Netanya, Rishon L'tzion, Bnei Brak, Petach Tikva, Kfar Saba, Ranaana, Givat Shmuel, Ramat Gan, Rechovot, Givatayim, Ramat Hasharon",
-      charge: currency === "Dollar" ? 50 : Math.ceil(30 * CHOSEN_EXCHANGE_RATE),
+      charge: currency === "Dollar" ? 50 : Math.ceil(50 * CHOSEN_EXCHANGE_RATE),
     },
     {
       label:
