@@ -56,7 +56,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
     locations: [],
   });
 
-  const CHOSEN_EXCHANGE_RATE = 3.46;
+  const CHOSEN_EXCHANGE_RATE = 3.5;
 
   const DELIVERY_OPTIONS = [
     {
