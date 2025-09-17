@@ -1158,13 +1158,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
             If you order after this date, please reach out to us.
           </p>
         )}
-        {shopRegion !== "US" && (
-          <p className="availability-note">
-            If you would like to place an order after the September 16 deadline
-            please reach out to us prior to placing your order to ensure that
-            your order will arrive in time for Rosh Hashana.
-          </p>
-        )}
         <p className="availability-note">
           Invoices are not available but email confirmations are sent of your
           order.

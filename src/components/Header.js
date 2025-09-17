@@ -397,9 +397,8 @@ function Header({ cart, cartItemCount, clearCart }) {
         <div className="marquee">
           <div className="marquee__track">
             <span className="marquee__content">
-              Order deadline September 16. Orders placed after this date may
-              arrive after Rosh Hashana. If you would like to place an order
-              after this date, please contact us via{" "}
+              We are currently accepting orders for pickup and limited delivery
+              options available at this time. Please{" "}
               <a
                 className="banner-link"
                 href={whatsappUrl}
@@ -408,13 +407,11 @@ function Header({ cart, cartItemCount, clearCart }) {
               >
                 WhatsApp
               </a>{" "}
-              before placing your order. &nbsp;&nbsp;•&nbsp;&nbsp;
+              for further inquiries. &nbsp;&nbsp;•&nbsp;&nbsp;
             </span>
-
-            <span className="marquee__content" aria-hidden="true">
-              Order deadline September 16. Orders placed after this date may
-              arrive after Rosh Hashana. If you would like to place an order
-              after this date, please contact us via{" "}
+            <span className="marquee__content">
+              We are currently accepting orders for pickup and limited delivery
+              options available at this time. Please{" "}
               <a
                 className="banner-link"
                 href={whatsappUrl}
@@ -423,7 +420,7 @@ function Header({ cart, cartItemCount, clearCart }) {
               >
                 WhatsApp
               </a>{" "}
-              before placing your order. &nbsp;&nbsp;•&nbsp;&nbsp;
+              for further inquiries. &nbsp;&nbsp;•&nbsp;&nbsp;
             </span>
           </div>
         </div>
