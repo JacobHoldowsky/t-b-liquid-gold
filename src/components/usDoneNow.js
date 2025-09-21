@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
+import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
 import "./usDoneNow.css";
 
 export default function UsDoneNow() {
-  const MESSAGE = "We are out of stock for U.S. deliveries.";
+  const MESSAGE =
+    "We are sold out for this season of 2025. Thank you to all our loyal customers. We look forward to servicing you again next year. Sweet wishes for a happy new year, T&Bee US";
   const [open, setOpen] = useState(true); // show every time
+  const { shopRegion } = useShopContext(); // Use shop context to get the current region
 
   const dialogRef = useRef(null);
   const closeBtnRef = useRef(null);
@@ -57,7 +60,7 @@ export default function UsDoneNow() {
     }
   };
 
-  if (!open) return null;
+  if (!open || shopRegion !== "US") return null;
 
   return (
     <div
