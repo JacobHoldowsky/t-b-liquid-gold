@@ -1165,7 +1165,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
         <p className="availability-note">
           If recipient is not home, the package will be left by the door.
         </p>
-        {aggregatedCart.aggregatedCart.length ? (
+        {shopRegion !== "US" && aggregatedCart.aggregatedCart.length ? (
           <div className="submit-order-btn-wrapper">
             <button
               type="button"
