@@ -80,7 +80,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
     //   charge: 0,
     // },
     {
-      label: "Jerusalem (Ramat Eshkol, Maalot Dafna, Sanhedria, French Hill, Arzei)",
+      label:
+        "Jerusalem (Ramat Eshkol, Maalot Dafna, Sanhedria, French Hill, Arzei)",
       charge: currency === "Dollar" ? 15 : Math.ceil(15 * CHOSEN_EXCHANGE_RATE),
     },
     {
