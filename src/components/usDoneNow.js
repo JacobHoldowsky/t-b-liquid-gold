@@ -14,7 +14,7 @@ export default function UsDoneNow() {
 
   // Lock scroll & key handling when open
   useEffect(() => {
-    if (!open) return;
+    if (!open || shopRegion !== "US") return;
 
     // Lock background scroll
     const prevOverflow = document.body.style.overflow;
@@ -51,7 +51,7 @@ export default function UsDoneNow() {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
     };
-  }, [open]);
+  }, [open, shopRegion]);
 
   const handleClose = () => {
     setOpen(false);
