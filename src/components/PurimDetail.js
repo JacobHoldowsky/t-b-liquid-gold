@@ -22,7 +22,9 @@ const HechsherModal = ({ isOpen, onClose, hechsherim }) => {
   return (
     <div className="hechsher-modal-overlay">
       <div className="hechsher-modal">
-        <button className="modal-close-btn" onClick={onClose}>×</button>
+        <button className="modal-close-btn" onClick={onClose}>
+          ×
+        </button>
         <h3>Hechsherim List</h3>
         <div className="hechsher-list">
           {Object.entries(hechsherim).map(([item, hechsher]) => (
@@ -37,43 +39,46 @@ const HechsherModal = ({ isOpen, onClose, hechsherim }) => {
   );
 };
 
-const TrendingPopup = ({ side, item, currency, calculatePriceInShekels, onClose, onAdd }) => {
+const TrendingPopup = ({
+  side,
+  item,
+  currency,
+  calculatePriceInShekels,
+  onClose,
+  onAdd,
+}) => {
   const [quantity, setQuantity] = useState(1);
 
   return (
     <div className={`trending-popup ${side}`}>
       <div className="trending-content">
-        <button
-          className="close-trending-btn"
-          onClick={onClose}
-        >
+        <button className="close-trending-btn" onClick={onClose}>
           ×
         </button>
-        <h4>{item.title === "Send a Mishloach Manos to a Soldier Family"
-          ? "Send love to our soldier families"
-          : "For the kids"}</h4>
-        <img
-          src={item.imageUrl}
-          alt={item.title}
-          className="trending-image"
-        />
+        <h4>
+          {item.title === "Send a Mishloach Manos to a Soldier Family"
+            ? "Send love to our soldier families"
+            : "For the kids"}
+        </h4>
+        <img src={item.imageUrl} alt={item.title} className="trending-image" />
         <h5>{item.title}</h5>
         <p className="trending-price">
-          {currency === "Dollar" ? `$${item.priceDollar}` : `₪${calculatePriceInShekels(item.priceDollar)}`}
+          {currency === "Dollar"
+            ? `$${item.priceDollar}`
+            : `₪${calculatePriceInShekels(item.priceDollar)}`}
         </p>
         <select
           value={quantity}
           onChange={(e) => setQuantity(Number(e.target.value))}
           className="trending-quantity"
         >
-          {[1, 2, 3, 4, 5].map(num => (
-            <option key={num} value={num}>{num}</option>
+          {[1, 2, 3, 4, 5].map((num) => (
+            <option key={num} value={num}>
+              {num}
+            </option>
           ))}
         </select>
-        <button
-          onClick={() => onAdd(quantity)}
-          className="trending-add-btn"
-        >
+        <button onClick={() => onAdd(quantity)} className="trending-add-btn">
           Add to my order
         </button>
       </div>
@@ -106,8 +111,8 @@ function PurimDetail({ cart, addToCart }) {
         availableInRegions: ["Israel"],
         hechsherim: {
           "Flavored Creamed Honey": "Vaad Hakashrus Rabbi Weiner",
-          "Moscato": "Badatz Eidah Hachareidus"
-        }
+          Moscato: "Badatz Eidah Hachareidus",
+        },
       },
       forHer: {
         title: "For Her",
@@ -119,12 +124,13 @@ function PurimDetail({ cart, addToCart }) {
         availableInRegions: ["Israel"],
         hechsherim: {
           "Flavored Creamed Honey": "Vaad Hakashrus Rabbi Weiner",
-          "Rosato": "Badatz Eidah Hachareidus"
-        }
+          Rosato: "Badatz Eidah Hachareidus",
+        },
       },
       teaParty: {
         title: "Tea Party",
-        description: "1 Flavored creamed honey, 4 lotus cookies, 5 tea packets, and a wooden honey dipper.",
+        description:
+          "1 Flavored creamed honey, 4 lotus cookies, 5 tea packets, and a wooden honey dipper.",
         priceDollar: 35,
         priceShekel: calculatePriceInShekels(35),
         imageUrl: "/teaParty.jpg",
@@ -133,12 +139,13 @@ function PurimDetail({ cart, addToCart }) {
         hechsherim: {
           "Flavored Creamed Honey": "Vaad Hakashrus Rabbi Weiner",
           "Wissotzky Tea": "Badatz Rav Rubin",
-          "Lotus Cookies": "Badatz Chasam Sofer Bnei Brak"
-        }
+          "Lotus Cookies": "Badatz Chasam Sofer Bnei Brak",
+        },
       },
       israelsGold: {
         title: "Israel's Gold",
-        description: "2 Flavored creamed honeys, 200ml Blue Nun, Schmerling chocolate (Dairy), and a wooden honey dipper.",
+        description:
+          "2 Flavored creamed honeys, 200ml Blue Nun, Schmerling chocolate (Dairy), and a wooden honey dipper.",
         priceDollar: 70,
         priceShekel: calculatePriceInShekels(70),
         imageUrl: "/israelsGold.jpg",
@@ -148,8 +155,8 @@ function PurimDetail({ cart, addToCart }) {
           "Blue Nun": "OU America",
           "Fruit Jam": "Badatz Chasam Sofer Bnei Bak",
           "Schmerling chocolate": "Badatz Zurich",
-          "Flavored Cream honey": "Vaad Hakashrus Rabbi Weiner"
-        }
+          "Flavored Cream honey": "Vaad Hakashrus Rabbi Weiner",
+        },
       },
       lchaim: {
         title: "Lchaim Board",
@@ -160,9 +167,9 @@ function PurimDetail({ cart, addToCart }) {
         category: "purim",
         availableInRegions: ["Israel"],
         hechsherim: {
-          "Wine": "Badatz Eidah Hachareidus",
-          "Praline Chocolates": "Badatz Eidah Hachareidus"
-        }
+          Wine: "Badatz Eidah Hachareidus",
+          "Praline Chocolates": "Badatz Eidah Hachareidus",
+        },
       },
       whiskeyNChocolates: {
         title: "Whiskey n' Chocolates",
@@ -174,8 +181,8 @@ function PurimDetail({ cart, addToCart }) {
         availableInRegions: ["Israel"],
         hechsherim: {
           "Jack Daniels": "Kosher",
-          "Praline Chocolates": "Badatz Eidah Hachareidus"
-        }
+          "Praline Chocolates": "Badatz Eidah Hachareidus",
+        },
       },
       HoneyALaConnoisseur: {
         title: "Honey A' La Connoisseur",
@@ -190,45 +197,48 @@ function PurimDetail({ cart, addToCart }) {
         availableInRegions: ["Israel"],
         hechsherim: {
           "Flavored creamed honey": "Vaad Hakashrus Rabbi Weiner",
-          "Wine": "Badatz Eidah Hachareidus"
-        }
+          Wine: "Badatz Eidah Hachareidus",
+        },
       },
       familyFun: {
         title: "Family Fun",
-        description: "750ml bottle of wine, Box of Gushers, Twizzlers, Mentos, Mike n' Ikes, 5 Praline chocolates (Dairy), Purim chocolates, and Crackers.",
+        description:
+          "750ml bottle of wine, Box of Gushers, Twizzlers, Mentos, Mike n' Ikes, 5 Praline chocolates (Dairy), Purim chocolates, and Crackers.",
         priceDollar: 100,
         priceShekel: calculatePriceInShekels(100),
         imageUrl: "/familyFun.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
         hechsherim: {
-          "Wine": "Badatz Eidah Hachareidus",
+          Wine: "Badatz Eidah Hachareidus",
           "Praline Chocolate": "Badatz Eidah Hachareidus",
-          "Twizzlers": "OU America",
-          "Mentos": "Badatz Chasam Sofer Bnei Brak",
+          Twizzlers: "OU America",
+          Mentos: "Badatz Chasam Sofer Bnei Brak",
           "Purim chocolate": "Rav Landau/Rav Westheim",
           "Mike n' Ikes": "OU America",
-          "Gushers": "OU America",
-          "Yummy Earth Lollipops": "Kof-K"
-        }
+          Gushers: "OU America",
+          "Yummy Earth Lollipops": "Kof-K",
+        },
       },
       scotchNPop: {
         title: "Scotch n' Pop",
-        description: "750ml Glenlivet, 2 Bags flavored popcorn, and 12 Praline chocolates (Dairy).",
+        description:
+          "750ml Glenlivet, 2 Bags flavored popcorn, and 12 Praline chocolates (Dairy).",
         priceDollar: 165,
         priceShekel: calculatePriceInShekels(165),
         imageUrl: "/scotchAndPop.jpg",
         category: "purim",
         availableInRegions: ["Israel"],
         hechsherim: {
-          "Glenlivet": "Kosher",
+          Glenlivet: "Kosher",
           "Praline Chocolates": "Badatz Eidah Hachareidus",
-          "Popcorn": "OU America"
-        }
+          Popcorn: "OU America",
+        },
       },
       kidsSpecial: {
         title: "Kids Special",
-        description: "Chip bag, oodles, fruit nuggets, lolly fizz, candy spinner, and chocolate bar (Dairy).",
+        description:
+          "Chip bag, oodles, fruit nuggets, lolly fizz, candy spinner, and chocolate bar (Dairy).",
         priceDollar: 10,
         priceShekel: calculatePriceInShekels(10),
         imageUrl: "/kidsSpecialBack.jpg",
@@ -236,16 +246,17 @@ function PurimDetail({ cart, addToCart }) {
         availableInRegions: ["Israel"],
         hechsherim: {
           "Snack Bag": "Badatz Eidah Hachareidus",
-          "Oodles": "Badatz Eidah Hachareidus",
-          "Chocolate": "Badatz Manchester",
+          Oodles: "Badatz Eidah Hachareidus",
+          Chocolate: "Badatz Manchester",
           "Candy Spinner": "Badatz Igud Rabbanim",
           "Fizz Lolly": "Badatz Manchester",
-          "Fruit Nuggets": "Badatz Igud Rabbanim"
-        }
+          "Fruit Nuggets": "Badatz Igud Rabbanim",
+        },
       },
       noshBox: {
         title: "Nosh Box",
-        description: "2 Snack bags, Mike N' Ikes, Gushers, chocolate bar (Dairy), Clicks (Dairy), and Mints/gum.",
+        description:
+          "2 Snack bags, Mike N' Ikes, Gushers, chocolate bar (Dairy), Clicks (Dairy), and Mints/gum.",
         priceDollar: 35,
         priceShekel: calculatePriceInShekels(35),
         imageUrl: "/noshBox.jpg",
@@ -255,13 +266,14 @@ function PurimDetail({ cart, addToCart }) {
           "2 Snack Bags": "Badatz Eidah Hachareidus",
           "Clicks chocolates": "Badatz Eidah Hachareidus",
           "Mike N' Ikes": "OU America",
-          "Gushers": "OU America",
-          "Bazooka": "Badatz Igud Rabbanim"
-        }
+          Gushers: "OU America",
+          Bazooka: "Badatz Igud Rabbanim",
+        },
       },
       jerkyBox: {
         title: "Jerky Box",
-        description: "Beef Jerky, Oreos, Coke, Pringles, Mike n' Ikes, and Snacks bag.",
+        description:
+          "Beef Jerky, Oreos, Coke, Pringles, Mike n' Ikes, and Snacks bag.",
         priceDollar: 55,
         priceShekel: calculatePriceInShekels(55),
         imageUrl: "/bochurBox.jpg",
@@ -270,11 +282,11 @@ function PurimDetail({ cart, addToCart }) {
         hechsherim: {
           "Beef Jerky": "Rabbi Akiva Dershowitz",
           "Oreo Cookies": "Badatz Igud Rabbanim",
-          "Coke": "Badatz Rav Rubin",
+          Coke: "Badatz Rav Rubin",
           "Mike n' Ikes": "OU America",
-          "Pringles": "OU America",
-          "Snacks": "Badatz Eidah Hachareidus"
-        }
+          Pringles: "OU America",
+          Snacks: "Badatz Eidah Hachareidus",
+        },
       },
       signatureBoard: {
         title: "Signature Board",
@@ -287,12 +299,13 @@ function PurimDetail({ cart, addToCart }) {
         hechsherim: {
           "Olive Oil": "OK",
           "Flavored Creamed Honey": "Vaad Hakashrus Rabbi Weiner",
-          "Wissotzky Tea": "Badatz Rav Rubin"
-        }
+          "Wissotzky Tea": "Badatz Rav Rubin",
+        },
       },
       soldierFamilySpecial: {
         title: "Send a Mishloach Manos to a Soldier Family",
-        description: "Since October 7, 2023 we have been through very challenging times in Israel. Many women are alone for many months while their husbands are fighting the war. We invite you to partner with us and send love and support to our milluim families in Israel. We created a special mishloach manos for these families so that you can bring them joy and happiness. Please consider sponsoring a mishloach manos, and we will distribute it to the families on your behalf. Thank you for helping us spread happiness and love to the ones who need it most.",
+        description:
+          "Since October 7, 2023 we have been through very challenging times in Israel. Many women are alone for many months while their husbands are fighting the war. We invite you to partner with us and send love and support to our milluim families in Israel. We created a special mishloach manos for these families so that you can bring them joy and happiness. Please consider sponsoring a mishloach manos, and we will distribute it to the families on your behalf. Thank you for helping us spread happiness and love to the ones who need it most.",
         priceDollar: 25,
         priceShekel: calculatePriceInShekels(25),
         imageUrl: "/soldierFamilySpecial.png",
@@ -300,8 +313,8 @@ function PurimDetail({ cart, addToCart }) {
         category: "purim",
         availableInRegions: ["Israel"],
         hechsherim: {
-          "Assorted Items": "Various Kosher Certifications"
-        }
+          "Assorted Items": "Various Kosher Certifications",
+        },
       },
     };
 
@@ -337,7 +350,7 @@ function PurimDetail({ cart, addToCart }) {
     const itemToAdd = items[itemId];
     addToCart({
       ...itemToAdd,
-      quantity
+      quantity,
     });
     setQuantity(1);
   };
@@ -400,17 +413,17 @@ function PurimDetail({ cart, addToCart }) {
       )}
 
       {/* Change popup logic to show opposite popups */}
-      {purimId === 'kidsSpecial' && (
+      {purimId === "kidsSpecial" && (
         <TrendingPopup
           side="right"
           item={items.soldierFamilySpecial}
           currency={currency}
           calculatePriceInShekels={calculatePriceInShekels}
           onClose={() => setShowSoldierPopup(false)}
-          onAdd={(qty) => handleTrendingAdd('soldierFamilySpecial', qty)}
+          onAdd={(qty) => handleTrendingAdd("soldierFamilySpecial", qty)}
         />
       )}
-      {purimId === 'soldierFamilySpecial' && (
+      {/* {purimId === 'soldierFamilySpecial' && (
         <TrendingPopup
           side="left"
           item={items.kidsSpecial}
@@ -419,8 +432,8 @@ function PurimDetail({ cart, addToCart }) {
           onClose={() => setShowKidsPopup(false)}
           onAdd={(qty) => handleTrendingAdd('kidsSpecial', qty)}
         />
-      )}
-      {purimId !== 'kidsSpecial' && purimId !== 'soldierFamilySpecial' && (
+      )} */}
+      {purimId !== "kidsSpecial" && purimId !== "soldierFamilySpecial" && (
         <>
           {showKidsPopup && (
             <TrendingPopup
@@ -429,10 +442,10 @@ function PurimDetail({ cart, addToCart }) {
               currency={currency}
               calculatePriceInShekels={calculatePriceInShekels}
               onClose={() => setShowKidsPopup(false)}
-              onAdd={(qty) => handleTrendingAdd('kidsSpecial', qty)}
+              onAdd={(qty) => handleTrendingAdd("kidsSpecial", qty)}
             />
           )}
-          {showSoldierPopup && (
+          {/* {showSoldierPopup && (
             <TrendingPopup
               side="right"
               item={items.soldierFamilySpecial}
@@ -441,7 +454,7 @@ function PurimDetail({ cart, addToCart }) {
               onClose={() => setShowSoldierPopup(false)}
               onAdd={(qty) => handleTrendingAdd('soldierFamilySpecial', qty)}
             />
-          )}
+          )} */}
         </>
       )}
 

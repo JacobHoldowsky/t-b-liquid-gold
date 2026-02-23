@@ -10,10 +10,7 @@ const PurimItem = ({ item, currency }) => (
   <div className="gift-packages-div">
     <div className="gift-packages-image">
       <Link to={`/purim/${item.id}`}>
-        <img
-          src={item.url}
-          alt={item.title}
-        />
+        <img src={item.url} alt={item.title} />
       </Link>
     </div>
     <div className="gift-packages-info">
@@ -46,8 +43,8 @@ function Purim({ cart, addToCart }) {
     };
 
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Memoize the items list to prevent unnecessary re-calculations on every render
@@ -138,20 +135,20 @@ function Purim({ cart, addToCart }) {
         id: "jerkyBox",
         priceShekel: calculatePriceInShekels(55, exchangeRate),
       },
-      {
-        url: "signatureBoard.jpg",
-        title: "Signature Board",
-        priceDollar: 60,
-        id: "signatureBoard",
-        priceShekel: calculatePriceInShekels(60, exchangeRate),
-      },
-      {
-        url: "soldierFamilySpecial.png",
-        title: "Soldier Family Special",
-        priceDollar: 25,
-        id: "soldierFamilySpecial",
-        priceShekel: calculatePriceInShekels(25, exchangeRate),
-      },
+      // {
+      //   url: "signatureBoard.jpg",
+      //   title: "Signature Board",
+      //   priceDollar: 60,
+      //   id: "signatureBoard",
+      //   priceShekel: calculatePriceInShekels(60, exchangeRate),
+      // },
+      // {
+      //   url: "soldierFamilySpecial.png",
+      //   title: "Soldier Family Special",
+      //   priceDollar: 25,
+      //   id: "soldierFamilySpecial",
+      //   priceShekel: calculatePriceInShekels(25, exchangeRate),
+      // },
     ];
 
     // Sort items from most expensive to least expensive, regardless of screen size
@@ -162,9 +159,9 @@ function Purim({ cart, addToCart }) {
     <div className="gift-packages">
       <div className="banner">
         <p>
-          All Jerusalem deliveries will be done between March 11-16. All outside Jerusalem deliveries will be done between March 11-14
+          All Jerusalem deliveries will be done between March 11-16. All outside
+          Jerusalem deliveries will be done between March 11-14
         </p>
-
       </div>
       <p className="availability-note">
         **Items and packaging may vary based on availability**
