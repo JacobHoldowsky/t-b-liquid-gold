@@ -406,7 +406,7 @@ function Header({ cart, cartItemCount, clearCart }) {
           noOptions={true}
         />
       </header>
-      <div className="banner banner--marquee">
+      {/* <div className="banner banner--marquee">
         <div className="marquee">
           <div className="marquee__track">
             <span className="marquee__content">
@@ -437,7 +437,7 @@ function Header({ cart, cartItemCount, clearCart }) {
             </span>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
