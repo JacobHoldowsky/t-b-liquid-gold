@@ -235,24 +235,24 @@ function PurimDetail({ cart, addToCart }) {
           Popcorn: "OU America",
         },
       },
-      kidsSpecial: {
-        title: "Kids Special",
-        description:
-          "Chip bag, oodles, fruit nuggets, lolly fizz, candy spinner, and chocolate bar (Dairy).",
-        priceDollar: 10,
-        priceShekel: calculatePriceInShekels(10),
-        imageUrl: "/kidsSpecialBack.jpg",
-        category: "purim",
-        availableInRegions: ["Israel"],
-        hechsherim: {
-          "Snack Bag": "Badatz Eidah Hachareidus",
-          Oodles: "Badatz Eidah Hachareidus",
-          Chocolate: "Badatz Manchester",
-          "Candy Spinner": "Badatz Igud Rabbanim",
-          "Fizz Lolly": "Badatz Manchester",
-          "Fruit Nuggets": "Badatz Igud Rabbanim",
-        },
-      },
+      // kidsSpecial: {
+      //   title: "Kids Special",
+      //   description:
+      //     "Chip bag, oodles, fruit nuggets, lolly fizz, candy spinner, and chocolate bar (Dairy).",
+      //   priceDollar: 10,
+      //   priceShekel: calculatePriceInShekels(10),
+      //   imageUrl: "/kidsSpecialBack.jpg",
+      //   category: "purim",
+      //   availableInRegions: ["Israel"],
+      //   hechsherim: {
+      //     "Snack Bag": "Badatz Eidah Hachareidus",
+      //     Oodles: "Badatz Eidah Hachareidus",
+      //     Chocolate: "Badatz Manchester",
+      //     "Candy Spinner": "Badatz Igud Rabbanim",
+      //     "Fizz Lolly": "Badatz Manchester",
+      //     "Fruit Nuggets": "Badatz Igud Rabbanim",
+      //   },
+      // },
       noshBox: {
         title: "Nosh Box",
         description:
@@ -413,7 +413,7 @@ function PurimDetail({ cart, addToCart }) {
       )}
 
       {/* Change popup logic to show opposite popups */}
-      {purimId === "kidsSpecial" && (
+      {/* {purimId === "kidsSpecial" && (
         <TrendingPopup
           side="right"
           item={items.soldierFamilySpecial}
@@ -423,7 +423,7 @@ function PurimDetail({ cart, addToCart }) {
           onAdd={(qty) => handleTrendingAdd("soldierFamilySpecial", qty)}
         />
       )}
-      {/* {purimId === 'soldierFamilySpecial' && (
+      {purimId === 'soldierFamilySpecial' && (
         <TrendingPopup
           side="left"
           item={items.kidsSpecial}
@@ -432,7 +432,7 @@ function PurimDetail({ cart, addToCart }) {
           onClose={() => setShowKidsPopup(false)}
           onAdd={(qty) => handleTrendingAdd('kidsSpecial', qty)}
         />
-      )} */}
+      )}
       {purimId !== "kidsSpecial" && purimId !== "soldierFamilySpecial" && (
         <>
           {showKidsPopup && (
@@ -445,7 +445,7 @@ function PurimDetail({ cart, addToCart }) {
               onAdd={(qty) => handleTrendingAdd("kidsSpecial", qty)}
             />
           )}
-          {/* {showSoldierPopup && (
+          {showSoldierPopup && (
             <TrendingPopup
               side="right"
               item={items.soldierFamilySpecial}
@@ -454,9 +454,9 @@ function PurimDetail({ cart, addToCart }) {
               onClose={() => setShowSoldierPopup(false)}
               onAdd={(qty) => handleTrendingAdd('soldierFamilySpecial', qty)}
             />
-          )} */}
+          )}
         </>
-      )}
+      )} */}
 
       <HechsherModal
         isOpen={isHechsherModalOpen}

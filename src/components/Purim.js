@@ -53,14 +53,14 @@ function Purim({ cart, addToCart }) {
       {
         url: "For Him $55-min.jpg",
         title: "For Him",
-        priceDollar: 49,
+        priceDollar: 55,
         id: "forHim",
         priceShekel: calculatePriceInShekels(49, exchangeRate),
       },
       {
         url: "For Her $55-min.jpg",
         title: "For Her",
-        priceDollar: 49,
+        priceDollar: 55,
         id: "forHer",
         priceShekel: calculatePriceInShekels(49, exchangeRate),
       },
@@ -88,14 +88,14 @@ function Purim({ cart, addToCart }) {
       {
         url: "honeyALaConnoisseur.jpg",
         title: "Honey A' La Connoisseur",
-        priceDollar: 80,
+        priceDollar: 90,
         id: "HoneyALaConnoisseur",
         priceShekel: calculatePriceInShekels(80, exchangeRate),
       },
       {
         url: "whiskeyNChocolates.jpg",
         title: "Whiskey n' Chocolates",
-        priceDollar: 105,
+        priceDollar: 115,
         id: "whiskeyNChocolates",
         priceShekel: calculatePriceInShekels(105, exchangeRate),
       },
@@ -131,7 +131,7 @@ function Purim({ cart, addToCart }) {
       {
         url: "bochurBox.jpg",
         title: "Jerky Box",
-        priceDollar: 55,
+        priceDollar: 65,
         id: "jerkyBox",
         priceShekel: calculatePriceInShekels(55, exchangeRate),
       },
@@ -157,12 +157,12 @@ function Purim({ cart, addToCart }) {
 
   return (
     <div className="gift-packages">
-      <div className="banner">
+      {/* <div className="banner">
         <p>
           All Jerusalem deliveries will be done between March 11-16. All outside
           Jerusalem deliveries will be done between March 11-14
         </p>
-      </div>
+      </div> */}
       <p className="availability-note">
         **Items and packaging may vary based on availability**
       </p>

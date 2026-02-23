@@ -197,7 +197,7 @@ function App() {
                 <Route path="/canceled" element={<Canceled />} />
               </Routes>
               <Footer />
-              <FloatingHechsher />
+              {/* <FloatingHechsher /> */}
               <FloatingWhatsAppButton />
               <FloatingCartButton cartItemCount={calculateCartItemCount()} />
             </div>

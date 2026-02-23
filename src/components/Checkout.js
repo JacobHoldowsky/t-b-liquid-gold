@@ -1146,19 +1146,19 @@ function Checkout({ cart, setCart, removeFromCart }) {
             Delivery in the Five Towns takes 1-2 business days.
           </p>
         )}
-        {shopRegion !== "US" && (
+        {/* {shopRegion !== "US" && (
           <p className="availability-note">
             All deliveries will be done between September 14th and Rosh Hashana.
             If you need an earlier delivery please reach out to us on WhatsApp.
           </p>
-        )}
-        {shopRegion === "US" && (
+        )} */}
+        {/* {shopRegion === "US" && (
           <p className="availability-note">
             If you order after September 16th, we are happy to ship out your
             order but cannot guarantee that it will arrive before Rosh Hashana.
             If you order after this date, please reach out to us.
           </p>
-        )}
+        )} */}
         <p className="availability-note">
           Invoices are not available but email confirmations are sent of your
           order.
