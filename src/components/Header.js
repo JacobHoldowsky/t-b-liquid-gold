@@ -264,6 +264,19 @@ function Header({ cart, cartItemCount, clearCart }) {
             >
               <Link className="top-level-header-item">Shop</Link>
               <ul className="dropdown-menu">
+                {shopRegion !== "US" ? (
+                  <li>
+                    <HashLink
+                      className="dropdown-menu-item"
+                      smooth
+                      to="/purim"
+                      scroll={scrollWithOffset}
+                      onClick={closeMenu}
+                    >
+                      Purim
+                    </HashLink>
+                  </li>
+                ) : null}
                 <li>
                   <HashLink
                     className="dropdown-menu-item"
