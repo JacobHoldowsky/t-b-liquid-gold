@@ -108,6 +108,7 @@ function PurimDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(49),
         imageUrl: "/For Him $55-min.jpg",
         category: "purim",
+        woodenBoard: true,
         availableInRegions: ["Israel"],
         hechsherim: {
           "Flavored Creamed Honey": "Vaad Hakashrus Rabbi Weiner",
@@ -121,6 +122,7 @@ function PurimDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(49),
         imageUrl: "/For Her $55-min.jpg",
         category: "purim",
+        woodenBoard: true,
         availableInRegions: ["Israel"],
         hechsherim: {
           "Flavored Creamed Honey": "Vaad Hakashrus Rabbi Weiner",
@@ -135,6 +137,7 @@ function PurimDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(35),
         imageUrl: "/teaParty.jpg",
         category: "purim",
+        woodenBoard: true,
         availableInRegions: ["Israel"],
         hechsherim: {
           "Flavored Creamed Honey": "Vaad Hakashrus Rabbi Weiner",
@@ -150,6 +153,7 @@ function PurimDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(70),
         imageUrl: "/israelsGold.jpg",
         category: "purim",
+        woodenBoard: true,
         availableInRegions: ["Israel"],
         hechsherim: {
           "Blue Nun": "OU America",
@@ -178,6 +182,7 @@ function PurimDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(105),
         imageUrl: "/whiskeyNChocolates.jpg",
         category: "purim",
+        woodenBoard: true,
         availableInRegions: ["Israel"],
         hechsherim: {
           "Jack Daniels": "Kosher",
@@ -194,6 +199,7 @@ function PurimDetail({ cart, addToCart }) {
         honeyCount: 2,
         imageUrl: "/honeyALaConnoisseur.jpg",
         category: "gift packages",
+        woodenBoard: true,
         availableInRegions: ["Israel"],
         hechsherim: {
           "Flavored creamed honey": "Vaad Hakashrus Rabbi Weiner",
@@ -208,6 +214,7 @@ function PurimDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(100),
         imageUrl: "/familyFun.jpg",
         category: "purim",
+        woodenBoard: true,
         availableInRegions: ["Israel"],
         hechsherim: {
           Wine: "Badatz Eidah Hachareidus",
@@ -228,6 +235,7 @@ function PurimDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(165),
         imageUrl: "/scotchAndPop.jpg",
         category: "purim",
+        woodenBoard: true,
         availableInRegions: ["Israel"],
         hechsherim: {
           Glenlivet: "Kosher",
@@ -261,6 +269,7 @@ function PurimDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(35),
         imageUrl: "/noshBox.jpg",
         category: "purim",
+        woodenBoard: true,
         availableInRegions: ["Israel"],
         hechsherim: {
           "2 Snack Bags": "Badatz Eidah Hachareidus",
@@ -278,6 +287,7 @@ function PurimDetail({ cart, addToCart }) {
         priceShekel: calculatePriceInShekels(55),
         imageUrl: "/bochurBox.jpg",
         category: "purim",
+        woodenBoard: true,
         availableInRegions: ["Israel"],
         hechsherim: {
           "Beef Jerky": "Rabbi Akiva Dershowitz",
@@ -377,6 +387,9 @@ function PurimDetail({ cart, addToCart }) {
       <p className="purim-description">{selectedItem?.description}</p>
       {selectedItem?.warning && (
         <p className="purim-warning">{selectedItem?.warning}</p>
+      )}
+      {selectedItem?.woodenBoard && (
+        <p>This gift may be displayed on a board.</p>
       )}
       <button
         className="view-hechsher-btn"
