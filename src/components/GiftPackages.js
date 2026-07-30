@@ -96,6 +96,8 @@ function GiftPackages({ cart, addToCart }) {
     boxOfFour: 4,
     boardOfFour: 4,
     chocolateDelight: 2,
+    chocoholic: 2,
+    waterdaleCollection: 2,
     tnBeeCollection: 6,
     HoneyALaConnoisseur: 2,
     collectionPlusBox: 6,
@@ -171,14 +173,45 @@ function GiftPackages({ cart, addToCart }) {
         woodenBoard: false,
       },
       {
-        url: "chocolateDelight-min.png",
+        url:
+          shopRegion === "US"
+            ? "chocolateDelightUS.jpg"
+            : "chocolateDelight-min.png",
         title: "Chocolate Delight",
         description:
-          "2 Flavored creamed honeys, 4 Dairy belgian chocolates, wooden honey dipper.",
+          shopRegion === "US"
+            ? "2 Flavored creamed honeys, 5 Dairy Belgian chocolates, Wooden honey dipper, Wooden serving board."
+            : "2 Flavored creamed honeys, 4 Dairy belgian chocolates, wooden honey dipper.",
+        warning:
+          shopRegion === "US"
+            ? "*Hashgacha of chocolate: Badatz Eida Hachareidis Yerushalyim"
+            : "",
         priceDollar: 65,
         id: "chocolateDelight",
         priceShekel: shopRegion === "US" ? 224 : Math.ceil(65 * CHOSEN_EXCHANGE_RATE),
-        woodenBoard: true,
+        woodenBoard: shopRegion !== "US",
+      },
+      {
+        url: "waterdaleCollection.jpg",
+        title: "Waterdale Collection",
+        description:
+          "2 Flavored creamed honeys, Lucite Simanim board with stand, honey stick, Wooden serving board.",
+        priceDollar: 70,
+        id: "waterdaleCollection",
+        priceShekel: Math.ceil(70 * CHOSEN_EXCHANGE_RATE),
+        woodenBoard: false,
+      },
+      {
+        url: "chocoholic.jpg",
+        title: "Chocoholic",
+        description:
+          "2 Flavored creamed honeys, 9 Dairy Belgian chocolates, Wooden serving board.",
+        warning:
+          "*Hashgacha of chocolate: Badatz Eida Hachareidis Yerushalyim",
+        priceDollar: 75,
+        id: "chocoholic",
+        priceShekel: Math.ceil(75 * CHOSEN_EXCHANGE_RATE),
+        woodenBoard: false,
       },
       {
         url: "tnbCollectionBox.jpg",
@@ -326,6 +359,9 @@ function GiftPackages({ cart, addToCart }) {
             [
               "honeycombCollectionBoard",
               "boardOfFour",
+              "chocolateDelight",
+              "waterdaleCollection",
+              "chocoholic",
               "scotchNSweetsBoard",
               "beeCaring",
               "beeKind",
