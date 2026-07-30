@@ -264,6 +264,7 @@ function Header({ cart, cartItemCount, clearCart }) {
             >
               <Link className="top-level-header-item">Shop</Link>
               <ul className="dropdown-menu">
+                {/* Purim shop link — uncomment for next Purim.
                 {shopRegion !== "US" ? (
                   <li>
                     <HashLink
@@ -277,6 +278,7 @@ function Header({ cart, cartItemCount, clearCart }) {
                     </HashLink>
                   </li>
                 ) : null}
+                */}
                 <li>
                   <HashLink
                     className="dropdown-menu-item"

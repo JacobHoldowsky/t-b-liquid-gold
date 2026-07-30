@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useShopContext } from "../context/ShopContext";
+import React from "react";
+// Purim popup dependencies — uncomment for next Purim.
+// import React, { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { useShopContext } from "../context/ShopContext";
 
 import HeroSection from "./HeroSection";
 import FeaturedProducts from "./FeaturedProducts";
@@ -11,15 +13,17 @@ import FAQSection from "./FAQSection";
 import UsDoneNow from "./usDoneNow";
 
 function LandingPage() {
-  const { shopRegion, toggleShopRegion } = useShopContext();
-  const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
+  // Purim popup setup — uncomment for next Purim.
+  // const { shopRegion } = useShopContext();
+  // const [showModal, setShowModal] = useState(false);
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    setShowModal(true);
-  }, []);
+  // useEffect(() => {
+  //   setShowModal(true);
+  // }, []);
   return (
     <>
+      {/* Purim popup — uncomment for next Purim.
       {shopRegion !== "US"
         ? showModal && (
             <div
@@ -69,6 +73,7 @@ function LandingPage() {
             </div>
           )
         : null}
+      */}
       <HeroSection />
       <UsDoneNow />
       <FeaturedProducts />
