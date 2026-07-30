@@ -10,7 +10,7 @@ import BenefitsSection from "./BenefitsSection";
 import TestimonialsSection from "./TestimonialsSection";
 import CallToAction from "./CallToAction";
 import FAQSection from "./FAQSection";
-import UsDoneNow from "./usDoneNow";
+// import UsDoneNow from "./usDoneNow";
 
 function LandingPage() {
   // Purim popup setup — uncomment for next Purim.
@@ -75,7 +75,7 @@ function LandingPage() {
         : null}
       */}
       <HeroSection />
-      <UsDoneNow />
+      {/* <UsDoneNow /> */}
       <FeaturedProducts />
       <BenefitsSection />
       <TestimonialsSection />
