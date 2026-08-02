@@ -29,6 +29,7 @@ import { ExchangeRateProvider } from "./context/ExchangeRateContext";
 import "./index.css";
 import CorporateGiftDetail from "./components/CorporateGiftDetail";
 import { ShopProvider } from "./context/ShopContext";
+import { ProductCatalogProvider } from "./context/ProductCatalogContext";
 import { Analytics } from "@vercel/analytics/react";
 import Purim from "./components/Purim"; // Import the new Purim page
 import PurimDetail from "./components/PurimDetail"; // Import the new Purim page
@@ -101,7 +102,8 @@ function App() {
     <ShopProvider>
       <CurrencyProvider>
         <ExchangeRateProvider>
-          <Router>
+          <ProductCatalogProvider>
+            <Router>
             <ScrollToTop />
             <Analytics />
             <div className="App">
@@ -201,7 +203,8 @@ function App() {
               <FloatingWhatsAppButton />
               <FloatingCartButton cartItemCount={calculateCartItemCount()} />
             </div>
-          </Router>
+            </Router>
+          </ProductCatalogProvider>
         </ExchangeRateProvider>
       </CurrencyProvider>
     </ShopProvider>

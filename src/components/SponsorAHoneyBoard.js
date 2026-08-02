@@ -4,6 +4,10 @@ import "./SponsorAHoneyBoard.css";
 import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
 import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
+import {
+  applyCatalogOverrides,
+  useProductCatalog,
+} from "../context/ProductCatalogContext";
 
 // Reusable Component for Each Gift Package Item
 const SponsorAHoneyBoardItem = ({ item, currency }) => (
@@ -36,6 +40,7 @@ function SponsorAHoneyBoard({ cart, addToCart }) {
   const { shopRegion } = useShopContext(); // Use shop context to get the current region
 
   const exchangeRate = useContext(ExchangeRateContext);
+  const { overrides } = useProductCatalog();
 
   // Memoize the items list to prevent unnecessary re-calculations on every render
   const items = useMemo(() => {
@@ -64,8 +69,8 @@ function SponsorAHoneyBoard({ cart, addToCart }) {
     ];
 
     // Filter items based on the US region
-    return allItems;
-  }, [exchangeRate, shopRegion]);
+    return applyCatalogOverrides(allItems, overrides, shopRegion);
+  }, [exchangeRate, overrides, shopRegion]);
 
   return (
     <div className="sponsor-honey-board-page">

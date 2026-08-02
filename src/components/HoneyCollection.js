@@ -4,6 +4,10 @@ import { CurrencyContext } from "../context/CurrencyContext";
 import { useShopContext } from "../context/ShopContext";
 import { FaCheckCircle } from "react-icons/fa";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
+import {
+  applyCatalogOverrides,
+  useProductCatalog,
+} from "../context/ProductCatalogContext";
 
 const formatPrice = (value) => Math.ceil(value);
 
@@ -89,11 +93,13 @@ function HoneyCollection({ cart, addToCart }) {
   const exchangeRate = useContext(ExchangeRateContext);
   const { currency } = useContext(CurrencyContext);
   const { shopRegion } = useShopContext();
+  const { overrides } = useProductCatalog();
 
   // Memoize the items list to prevent re-creating on each render
   const items = useMemo(() => {
     const baseItems = [
       {
+        id: "chocolateCreamedHoney",
         url: "chocolate small jar-min.jpg",
         title: "Chocolate Creamed Honey",
         sizeUS: "4oz",
@@ -103,6 +109,7 @@ function HoneyCollection({ cart, addToCart }) {
         category: "honey jars", // Added category
       },
       {
+        id: "cinnamonCreamedHoney",
         url: "cinnamon small jar-min.jpg",
         title: "Cinnamon Creamed Honey",
         sizeUS: "4oz",
@@ -112,6 +119,7 @@ function HoneyCollection({ cart, addToCart }) {
         category: "honey jars", // Added category
       },
       {
+        id: "pumpkinCreamedHoney",
         url: "pumpkin small jar-min.JPG",
         title: "Pumpkin Creamed Honey",
         sizeUS: "4oz",
@@ -121,6 +129,7 @@ function HoneyCollection({ cart, addToCart }) {
         category: "honey jars", // Added category
       },
       {
+        id: "seaSaltCreamedHoney",
         url: "sea salt small jar-min.jpg",
         title: "Sea Salt Creamed Honey",
         sizeUS: "4oz",
@@ -130,6 +139,7 @@ function HoneyCollection({ cart, addToCart }) {
         category: "honey jars", // Added category
       },
       {
+        id: "vanillaCreamedHoney",
         url: "vanilla small jar-min.jpg",
         title: "Vanilla Creamed Honey",
         sizeUS: "4oz",
@@ -139,6 +149,7 @@ function HoneyCollection({ cart, addToCart }) {
         category: "honey jars", // Added category
       },
       {
+        id: "bourbonCreamedHoney",
         url: "bourbon small jar-min.jpg",
         title: "Bourbon Creamed Honey",
         sizeUS: "4oz",
@@ -149,6 +160,7 @@ function HoneyCollection({ cart, addToCart }) {
         isSoldOut: false,
       },
       {
+        id: "blueberryCreamedHoney",
         url: "blueberry screenshot-min.png",
         title: "Blueberry Creamed Honey",
         sizeUS: "4oz",
@@ -159,6 +171,7 @@ function HoneyCollection({ cart, addToCart }) {
         isSoldOut: shopRegion === "US" ? true : false,
       },
       {
+        id: "strawberryCreamedHoney",
         url: "strawberry small jar-min.jpg",
         title: "Strawberry Creamed Honey",
         sizeUS: "4oz",
@@ -196,8 +209,8 @@ function HoneyCollection({ cart, addToCart }) {
       sorted.push(blueberryItem);
     }
 
-    return sorted;
-  }, [shopRegion]);
+    return applyCatalogOverrides(sorted, overrides, shopRegion);
+  }, [overrides, shopRegion]);
 
   const openModal = (item) => {
     setSelectedItem(item);

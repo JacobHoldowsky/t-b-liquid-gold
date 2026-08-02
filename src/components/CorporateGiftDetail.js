@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
@@ -6,15 +6,21 @@ import { FaCheckCircle } from "react-icons/fa";
 import "./CorporateGiftDetail.css";
 import useFlavorSelector from "../hooks/useFlavorSelector"; // Import your custom hook
 import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
+import {
+  applyCatalogOverride,
+  useProductCatalog,
+} from "../context/ProductCatalogContext";
 
 function CorporateGiftDetail({ cart, addToCart }) {
   const { corporateId } = useParams();
   const { currency } = useContext(CurrencyContext);
   const { shopRegion } = useShopContext(); // Use shop context to get the current region
+  const { overrides } = useProductCatalog();
 
   const exchangeRate = useContext(ExchangeRateContext);
 
-  const items = {
+  const items = useMemo(() => {
+    const allItems = {
     miniFourCollectionBoard: {
       title: "Mini Four Collection Board",
       description:
@@ -47,7 +53,15 @@ function CorporateGiftDetail({ cart, addToCart }) {
       hasLogoOption: true,
       isSoldOut: false,
     },
-  };
+    };
+
+    return Object.fromEntries(
+      Object.entries(allItems).map(([id, item]) => [
+        id,
+        applyCatalogOverride(item, id, overrides, shopRegion),
+      ])
+    );
+  }, [overrides, shopRegion]);
 
   const selectedItem = items[corporateId];
   const [quantity, setQuantity] = useState(5);

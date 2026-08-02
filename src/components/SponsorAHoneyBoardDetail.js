@@ -6,6 +6,10 @@ import { FaCheckCircle } from "react-icons/fa";
 import "./SponsorAHoneyBoardDetail.css";
 import QuantitySelector from "./QuantitySelector";
 import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
+import {
+  applyCatalogOverride,
+  useProductCatalog,
+} from "../context/ProductCatalogContext";
 
 // Reusable Flavor Selector Component
 const FlavorSelector = ({ flavors, selectedFlavors, handleFlavorChange }) => (
@@ -42,6 +46,7 @@ function SponsorAHoneyBoardDetail({ cart, addToCart }) {
   const { sponsorAHoneyBoardId } = useParams();
   const { currency } = useContext(CurrencyContext);
   const { shopRegion } = useShopContext(); // Use shop context to get the current region
+  const { overrides } = useProductCatalog();
 
   const exchangeRate = useContext(ExchangeRateContext);
 
@@ -103,8 +108,13 @@ function SponsorAHoneyBoardDetail({ cart, addToCart }) {
       },
     };
 
-    return allItems;
-  }, [exchangeRate, shopRegion]);
+    return Object.fromEntries(
+      Object.entries(allItems).map(([id, item]) => [
+        id,
+        applyCatalogOverride(item, id, overrides, shopRegion),
+      ])
+    );
+  }, [exchangeRate, overrides, shopRegion]);
 
   const selectedItem = items[sponsorAHoneyBoardId];
   const [selectedFlavors, setSelectedFlavors] = useState(
@@ -178,14 +188,16 @@ function SponsorAHoneyBoardDetail({ cart, addToCart }) {
         <button
           onClick={handleAddToCart}
           className="add-to-cart-btn"
-          disabled={!isAvailableInRegion}
+          disabled={!isAvailableInRegion || selectedItem?.isSoldOut}
           title={
             !isAvailableInRegion
               ? "This item is only available for Israel shipping"
+              : selectedItem?.isSoldOut
+              ? "This item is sold out"
               : ""
           }
         >
-          Add to Cart
+          {selectedItem?.isSoldOut ? "Sold Out" : "Add to Cart"}
         </button>
       )}
     </div>

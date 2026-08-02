@@ -5,10 +5,20 @@ import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
 import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
 import { FaCheckCircle } from "react-icons/fa";
+import {
+  applyCatalogOverrides,
+  useProductCatalog,
+} from "../context/ProductCatalogContext";
 
 /* Reuse the same quantity UI pattern as HoneyCollection */
-const QuantitySelector = ({ id, value, onChange }) => (
-  <select className="select-dropdown" id={id} value={value} onChange={onChange}>
+const QuantitySelector = ({ id, value, onChange, disabled }) => (
+  <select
+    className="select-dropdown"
+    id={id}
+    value={value}
+    onChange={onChange}
+    disabled={disabled}
+  >
     {[...Array(10).keys()].map((num) => (
       <option key={num + 1} value={num + 1}>
         {num + 1}
@@ -71,6 +81,7 @@ const calculatePriceInShekels = (priceDollar, exchangeRate) => {
 function GiftPackages({ cart, addToCart }) {
   const { currency } = useContext(CurrencyContext);
   const { shopRegion } = useShopContext(); // Use shop context to get the current region
+  const { overrides } = useProductCatalog();
 
   const exchangeRate = useContext(ExchangeRateContext);
 
@@ -353,9 +364,11 @@ function GiftPackages({ cart, addToCart }) {
     ];
 
     // Filter items based on the US region
+    const catalogItems = applyCatalogOverrides(allItems, overrides, shopRegion);
+
     return (
       shopRegion === "US"
-        ? allItems.filter((item) =>
+        ? catalogItems.filter((item) =>
             [
               "honeycombCollectionBoard",
               "boardOfFour",
@@ -368,7 +381,7 @@ function GiftPackages({ cart, addToCart }) {
               "deluxeBoard",
             ].includes(item.id)
           )
-        : allItems.filter((item) =>
+        : catalogItems.filter((item) =>
             [
               "forHim",
               "forHer",
@@ -387,7 +400,7 @@ function GiftPackages({ cart, addToCart }) {
     )
       .slice()
       .sort((a, b) => a.priceDollar - b.priceDollar);
-  }, [exchangeRate, shopRegion]);
+  }, [exchangeRate, overrides, shopRegion]);
 
   /* NEW: modal helpers (mirrors HoneyCollection) */
   const openModal = (item) => {
@@ -510,6 +523,7 @@ function GiftPackages({ cart, addToCart }) {
                       parseInt(e.target.value, 10)
                     )
                   }
+                  disabled={selectedItem.isSoldOut}
                 />
               </div>
 
@@ -533,11 +547,18 @@ function GiftPackages({ cart, addToCart }) {
                 </div>
               ) : (
                 <button
-                  onClick={() => handleAddToCart(selectedItem, true)}
+                  onClick={() =>
+                    !selectedItem.isSoldOut && handleAddToCart(selectedItem, true)
+                  }
                   className="add-to-cart-btn"
-                  title="Add this package to your cart"
+                  disabled={selectedItem.isSoldOut}
+                  title={
+                    selectedItem.isSoldOut
+                      ? "This package is sold out"
+                      : "Add this package to your cart"
+                  }
                 >
-                  Add to Cart
+                  {selectedItem.isSoldOut ? "Sold Out" : "Add to Cart"}
                 </button>
               )}
             </div>

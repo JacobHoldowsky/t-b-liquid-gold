@@ -6,6 +6,10 @@ import { FaCheckCircle } from "react-icons/fa";
 import "./PurimDetail.css";
 import QuantitySelector from "./QuantitySelector";
 import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
+import {
+  applyCatalogOverride,
+  useProductCatalog,
+} from "../context/ProductCatalogContext";
 
 // Reusable Notification Component
 const Notification = ({ addedToCart }) =>
@@ -90,6 +94,7 @@ function PurimDetail({ cart, addToCart }) {
   const { purimId } = useParams();
   const { currency } = useContext(CurrencyContext);
   const { shopRegion } = useShopContext(); // Use shop context to get the current region
+  const { overrides } = useProductCatalog();
 
   const exchangeRate = useContext(ExchangeRateContext);
 
@@ -328,8 +333,19 @@ function PurimDetail({ cart, addToCart }) {
       },
     };
 
-    return allItems; // Return all items if not in the US region
-  }, [exchangeRate, shopRegion]);
+    const productIds = {
+      forHim: "purimForHim",
+      forHer: "purimForHer",
+      HoneyALaConnoisseur: "purimHoneyALaConnoisseur",
+    };
+
+    return Object.fromEntries(
+      Object.entries(allItems).map(([id, item]) => [
+        id,
+        applyCatalogOverride(item, productIds[id] || id, overrides, shopRegion),
+      ])
+    );
+  }, [exchangeRate, overrides, shopRegion]);
 
   const selectedItem = items[purimId];
 

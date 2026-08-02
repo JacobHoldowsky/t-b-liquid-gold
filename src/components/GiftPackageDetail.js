@@ -6,6 +6,10 @@ import { FaCheckCircle } from "react-icons/fa";
 import "./GiftPackageDetail.css";
 import QuantitySelector from "./QuantitySelector";
 import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
+import {
+  applyCatalogOverride,
+  useProductCatalog,
+} from "../context/ProductCatalogContext";
 
 // Reusable Flavor Selector Component
 const FlavorSelector = ({ flavors, selectedFlavors, handleFlavorChange }) => (
@@ -71,6 +75,7 @@ function GiftPackageDetail({ cart, addToCart }) {
   const { packageId } = useParams();
   const { currency } = useContext(CurrencyContext);
   const { shopRegion } = useShopContext(); // Use shop context to get the current region
+  const { overrides } = useProductCatalog();
 
   const exchangeRate = useContext(ExchangeRateContext);
 
@@ -268,8 +273,13 @@ function GiftPackageDetail({ cart, addToCart }) {
       },
     };
 
-    return allItems; // Return all items if not in the US region
-  }, [exchangeRate, shopRegion]);
+    return Object.fromEntries(
+      Object.entries(allItems).map(([id, item]) => [
+        id,
+        applyCatalogOverride(item, id, overrides, shopRegion),
+      ])
+    );
+  }, [exchangeRate, overrides, shopRegion]);
 
   const selectedItem = items[packageId];
   const [selectedFlavors, setSelectedFlavors] = useState(

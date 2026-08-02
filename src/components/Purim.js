@@ -4,6 +4,10 @@ import "./Purim.css";
 import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
 import { useShopContext } from "../context/ShopContext"; // Import ShopContext for region check
+import {
+  applyCatalogOverrides,
+  useProductCatalog,
+} from "../context/ProductCatalogContext";
 
 // Reusable Component for Each Gift Package Item
 const PurimItem = ({ item, currency }) => (
@@ -34,6 +38,7 @@ function Purim({ cart, addToCart }) {
   const { currency } = useContext(CurrencyContext);
   const { shopRegion } = useShopContext();
   const exchangeRate = useContext(ExchangeRateContext);
+  const { overrides } = useProductCatalog();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -55,6 +60,7 @@ function Purim({ cart, addToCart }) {
         title: "For Him",
         priceDollar: 55,
         id: "forHim",
+        productId: "purimForHim",
         priceShekel: calculatePriceInShekels(49, exchangeRate),
       },
       {
@@ -62,6 +68,7 @@ function Purim({ cart, addToCart }) {
         title: "For Her",
         priceDollar: 55,
         id: "forHer",
+        productId: "purimForHer",
         priceShekel: calculatePriceInShekels(49, exchangeRate),
       },
       {
@@ -90,6 +97,7 @@ function Purim({ cart, addToCart }) {
         title: "Honey A' La Connoisseur",
         priceDollar: 90,
         id: "HoneyALaConnoisseur",
+        productId: "purimHoneyALaConnoisseur",
         priceShekel: calculatePriceInShekels(80, exchangeRate),
       },
       {
@@ -152,8 +160,10 @@ function Purim({ cart, addToCart }) {
     ];
 
     // Sort items from most expensive to least expensive, regardless of screen size
-    return [...allItems].sort((a, b) => b.priceDollar - a.priceDollar);
-  }, [exchangeRate, shopRegion, isMobile]);
+    return applyCatalogOverrides(allItems, overrides, shopRegion).sort(
+      (a, b) => b.priceDollar - a.priceDollar
+    );
+  }, [exchangeRate, isMobile, overrides, shopRegion]);
 
   return (
     <div className="gift-packages">

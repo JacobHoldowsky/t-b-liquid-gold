@@ -3,27 +3,42 @@ import { Link } from "react-router-dom";
 import "./CorporateGifts.css";
 import { CurrencyContext } from "../context/CurrencyContext";
 import { ExchangeRateContext } from "../context/ExchangeRateContext";
+import { useShopContext } from "../context/ShopContext";
+import {
+  applyCatalogOverrides,
+  useProductCatalog,
+} from "../context/ProductCatalogContext";
 
 function CorporateGifts({ cart, addToCart }) {
   const { currency } = React.useContext(CurrencyContext);
   const exchangeRate = React.useContext(ExchangeRateContext);
+  const { shopRegion } = useShopContext();
+  const { overrides } = useProductCatalog();
 
-  const items = [
-    {
-      url: "Mini four collection board with plastic-min.png",
-      title: "Mini Four Collection Board",
-      priceDollar: 40,
-      id: "miniFourCollectionBoard",
-      priceShekel: 138,
-    },
-    {
-      url: "Mini six collection board with plastic-min.png",
-      title: "Mini Six Collection Board",
-      priceDollar: 55,
-      id: "miniSixCollectionBoard",
-      priceShekel: 190,
-    },
-  ];
+  const items = React.useMemo(
+    () =>
+      applyCatalogOverrides(
+        [
+          {
+            url: "Mini four collection board with plastic-min.png",
+            title: "Mini Four Collection Board",
+            priceDollar: 40,
+            id: "miniFourCollectionBoard",
+            priceShekel: 138,
+          },
+          {
+            url: "Mini six collection board with plastic-min.png",
+            title: "Mini Six Collection Board",
+            priceDollar: 55,
+            id: "miniSixCollectionBoard",
+            priceShekel: 190,
+          },
+        ],
+        overrides,
+        shopRegion
+      ),
+    [overrides, shopRegion]
+  );
 
   return (
     <div className="corporate-gifts">
