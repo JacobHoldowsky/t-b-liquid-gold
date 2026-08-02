@@ -33,9 +33,9 @@ module.exports = async (req, res) => {
 
       // Check if a valid promo code is entered and calculate the discount
       let discountRate = 0;
-      if (promoCode.includes("5")) {
-        discountRate = 0.05; // 5% discount
-      }
+      // if (promoCode.includes("5")) {
+      //   discountRate = 0.05; // 5% discount
+      // }
 
       // Disabled: this code applied an unintended 99.8% discount.
       // if (promoCode === "9173") {
