@@ -16,6 +16,7 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto"); // Import crypto for generating random strings
 const { Resend } = require('resend'); // Add this import at the top
+const createCheckoutSession = require("./api/create-checkout-session");
 
 dotenv.config();
 const app = express();
@@ -116,7 +117,15 @@ app.get("/api/exchange-rate", async (req, res) => {
   }
 });
 
-app.post("/api/create-checkout-session", async (req, res) => {
+app.post("/api/create-checkout-session", createCheckoutSession);
+
+/* Legacy browser-priced checkout implementation retained below for history only.
+   It is intentionally unreachable. */
+/* app.post("/api/create-checkout-session", async (req, res) => {
+  // Keep the standalone Express server on the same Sheet-authoritative
+  // checkout implementation as the Vercel function and CRA proxy.
+  return createCheckoutSession(req, res);
+
   try {
     const {
       items,
@@ -266,7 +275,7 @@ app.post("/api/create-checkout-session", async (req, res) => {
     console.error("Error creating checkout session:", err.message);
     res.status(500).json({ error: err.message });
   }
-});
+}); */
 
 // Webhook endpoint to handle events from Stripe
 app.post(

@@ -1,9 +1,25 @@
 const Stripe = require("stripe");
-const { getProducts } = require("../lib/productCatalog");
+const {
+  getProducts,
+  getDeliveries,
+  getPromos,
+} = require("../lib/productCatalog");
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2022-11-15",
-});
+let stripe;
+
+function getStripe() {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error("Stripe is not configured on this server");
+  }
+
+  if (!stripe) {
+    stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: "2022-11-15",
+    });
+  }
+
+  return stripe;
+}
 
 const CUSTOM_LOGO_PRODUCT_ID = "__custom_logo__";
 const CUSTOM_LOGO_US_CENTS = 5000;
@@ -12,6 +28,7 @@ const CUSTOM_LOGO_IL_CENTS = 17500;
 module.exports = async (req, res) => {
   if (req.method === "POST") {
     try {
+      const stripeClient = getStripe();
       const {
         items,
         giftNote,
@@ -33,8 +50,13 @@ module.exports = async (req, res) => {
       }
 
       const currencyCode = currency === "Dollar" ? "usd" : "ils";
+      const [products, deliveries, promos] = await Promise.all([
+        getProducts(),
+        getDeliveries(),
+        getPromos(),
+      ]);
       const productsById = new Map(
-        (await getProducts()).map((product) => [product.productId, product])
+        products.map((product) => [product.productId, product])
       );
 
       // Rebuild product line items from the Google Sheet. The browser may send
@@ -101,16 +123,23 @@ module.exports = async (req, res) => {
         return total + item.price_data.unit_amount * item.quantity;
       }, 0);
 
-      // Check if a valid promo code is entered and calculate the discount
-      let discountRate = 0;
-      // if (promoCode.includes("5")) {
-      //   discountRate = 0.05; // 5% discount
-      // }
+      const activePromo = promoCode
+        ? promos.find(
+            (promo) =>
+              promo.active &&
+              promo.code.toLowerCase() === String(promoCode).trim().toLowerCase()
+          )
+        : null;
 
-      // Disabled: this code applied an unintended 99.8% discount.
-      // if (promoCode === "9173") {
-      //   discountRate = 0.998;
-      // }
+      if (promoCode && !activePromo) {
+        throw new Error("That promo code is not active");
+      }
+
+      const discountPercent = activePromo?.discountPercent || 0;
+      if (discountPercent < 0 || discountPercent > 100) {
+        throw new Error("Promo configuration is invalid");
+      }
+      const discountRate = discountPercent / 100;
 
       // Calculate the total discount amount
       const discountAmount = Math.round(subtotal * discountRate);
@@ -145,22 +174,44 @@ module.exports = async (req, res) => {
       // Create line items for Stripe
       const lineItems = adjustedItems;
 
-      // Add delivery charge as a separate line item (not discounted)
+      // Rebuild delivery from the live sheet. The browser's deliveryCharge and
+      // label are display-only and are intentionally ignored here.
       if (
         selectedDeliveryOption &&
-        selectedDeliveryOption !== "Sponsor a Honey Board Flat Rate" &&
         !(isSponsorHoneyBoardInCart && items.length === 1)
       ) {
+        const expectedRegion = currency === "Dollar" ? "US" : "Israel";
+        const delivery = deliveries.find(
+          (option) =>
+            option.active &&
+            option.deliveryId === selectedDeliveryOption &&
+            String(option.region).toLowerCase() === expectedRegion.toLowerCase()
+        );
+
+        if (!delivery) {
+          throw new Error("That delivery option is no longer available");
+        }
+        if (delivery.whatsappOnly) {
+          throw new Error("Please contact us on WhatsApp for this delivery location");
+        }
+
+        const deliveryPrice =
+          currency === "Dollar" ? delivery.priceUS : delivery.priceIL;
+        if (!Number.isFinite(deliveryPrice) || deliveryPrice < 0) {
+          throw new Error("That delivery option has no valid price");
+        }
+
         lineItems.push({
           price_data: {
-            currency: currency === "Dollar" ? "usd" : "ils", // Set currency as needed, assuming USD here
+            currency: currencyCode,
             product_data: {
-              name: `Delivery Charge - ${selectedDeliveryOption}`,
+              name: `Delivery Charge - ${delivery.label}`,
               metadata: {
-                note: "Delivery charge is not discounted", // Add a note in the metadata
+                note: "Delivery charge is not discounted",
+                deliveryId: delivery.deliveryId,
               },
             },
-            unit_amount: deliveryCharge * 100, // Convert to cents
+            unit_amount: Math.round(deliveryPrice * 100),
           },
           quantity: 1,
         });
@@ -195,7 +246,7 @@ module.exports = async (req, res) => {
       //   });
       // }
 
-      const session = await stripe.checkout.sessions.create({
+      const session = await stripeClient.checkout.sessions.create({
         payment_method_types: ["card"],
         line_items: lineItems,
         mode: "payment",
@@ -220,9 +271,10 @@ module.exports = async (req, res) => {
           zipCode: shippingDetails.zipCode,
           specialDeliveryOnly: specialDeliveryOnly,
           contactNumber: shippingDetails.contactNumber,
-          promoCode: promoCode || "", // Include promo code in the metadata
-          discountInfo:
-            "5% discount applied to subtotal only, excluding delivery charge",
+          promoCode: activePromo?.code || "",
+          discountInfo: activePromo
+            ? `${discountPercent}% discount applied to subtotal only, excluding delivery charge`
+            : "No promo discount applied",
           isInstitution: isInstitution ? "true" : "false",
           institutionName: institutionName || "",
         },
