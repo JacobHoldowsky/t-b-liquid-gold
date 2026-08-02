@@ -273,7 +273,7 @@ module.exports = async (req, res) => {
           contactNumber: shippingDetails.contactNumber,
           promoCode: activePromo?.code || "",
           discountInfo: activePromo
-            ? `${discountPercent}% discount applied to subtotal only, excluding delivery charge`
+            ? `${discountPercent}% discount applied; delivery excluded`
             : "No promo discount applied",
           isInstitution: isInstitution ? "true" : "false",
           institutionName: institutionName || "",
