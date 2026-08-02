@@ -219,32 +219,16 @@ function Checkout({ cart, setCart, removeFromCart }) {
     try {
       const stripe = await stripePromise;
 
-      const logoChargePerType =
-        currency === "Dollar" ? 5000 : Math.ceil(50 * exchangeRate * 100);
-
       const lineItems = aggregatedCart.aggregatedCart.map((item) => {
-        const basePrice =
-          currency === "Dollar"
-            ? item.priceDollar
-            : Math.ceil(item.priceShekel);
-
         return {
-          price_data: {
-            currency: currency === "Dollar" ? "usd" : "ils",
-            product_data: {
-              name: `${item.title} ${
-                item.selectedFlavors.length > 0
-                  ? "(" + item.selectedFlavors.join(", ") + ")"
-                  : ""
-              }`,
-              metadata: {
-                logoUrl: item.logoUrl ? item.logoUrl : null,
-                flavors: item.selectedFlavors
-                  ? item.selectedFlavors.join(", ")
-                  : "",
-              },
+          productId: item.productId,
+          product_data: {
+            metadata: {
+              logoUrl: item.logoUrl ? item.logoUrl : null,
+              flavors: item.selectedFlavors
+                ? item.selectedFlavors.join(", ")
+                : "",
             },
-            unit_amount: basePrice * 100,
           },
           quantity: item.quantity,
         };
@@ -252,13 +236,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
 
       if (aggregatedCart.uniqueLogoCount > 0) {
         lineItems.push({
-          price_data: {
-            currency: currency === "Dollar" ? "usd" : "ils",
-            product_data: {
-              name: "Custom Logo Charge",
-            },
-            unit_amount: logoChargePerType,
-          },
+          productId: "__custom_logo__",
           quantity: aggregatedCart.uniqueLogoCount,
         });
       }
@@ -1166,7 +1144,7 @@ function Checkout({ cart, setCart, removeFromCart }) {
         <p className="availability-note">
           If recipient is not home, the package will be left by the door.
         </p>
-        {shopRegion !== "US" && aggregatedCart.aggregatedCart.length ? (
+        {aggregatedCart.aggregatedCart.length ? (
           <div className="submit-order-btn-wrapper">
             <button
               type="button"

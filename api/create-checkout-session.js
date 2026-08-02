@@ -1,7 +1,13 @@
 const Stripe = require("stripe");
+const { getProducts } = require("../lib/productCatalog");
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2022-11-15",
 });
+
+const CUSTOM_LOGO_PRODUCT_ID = "__custom_logo__";
+const CUSTOM_LOGO_US_CENTS = 5000;
+const CUSTOM_LOGO_IL_CENTS = 17500;
 
 module.exports = async (req, res) => {
   if (req.method === "POST") {
@@ -26,8 +32,72 @@ module.exports = async (req, res) => {
         throw new Error("No items found in the request");
       }
 
-      // Calculate subtotal for items only, excluding delivery charge
-      const subtotal = items.reduce((total, item) => {
+      const currencyCode = currency === "Dollar" ? "usd" : "ils";
+      const productsById = new Map(
+        (await getProducts()).map((product) => [product.productId, product])
+      );
+
+      // Rebuild product line items from the Google Sheet. The browser may send
+      // product IDs and quantities, but its prices are intentionally ignored.
+      const catalogLineItems = items.map((item) => {
+        const quantity = Number(item.quantity);
+        if (!Number.isInteger(quantity) || quantity < 1) {
+          throw new Error("Invalid item quantity");
+        }
+
+        if (item.productId === CUSTOM_LOGO_PRODUCT_ID) {
+          return {
+            price_data: {
+              currency: currencyCode,
+              product_data: { name: "Custom Logo Charge" },
+              unit_amount:
+                currencyCode === "usd"
+                  ? CUSTOM_LOGO_US_CENTS
+                  : CUSTOM_LOGO_IL_CENTS,
+            },
+            quantity,
+          };
+        }
+
+        const product = productsById.get(item.productId);
+        if (!product) {
+          throw new Error("Product is unavailable");
+        }
+
+        const isAvailable =
+          currencyCode === "usd" ? product.stockUS : product.stockIL;
+        if (isAvailable === false) {
+          throw new Error(`${product.itemName} is sold out`);
+        }
+
+        const price = currencyCode === "usd" ? product.priceUS : product.priceIL;
+        if (!Number.isFinite(price) || price < 0) {
+          throw new Error(`${product.itemName} has no valid price`);
+        }
+
+        const flavors = item.product_data?.metadata?.flavors || "";
+        const productName = flavors
+          ? `${product.itemName} (${flavors})`
+          : product.itemName;
+
+        return {
+          price_data: {
+            currency: currencyCode,
+            product_data: {
+              name: productName,
+              metadata: {
+                logoUrl: item.product_data?.metadata?.logoUrl || null,
+                flavors,
+              },
+            },
+            unit_amount: Math.round(price * 100),
+          },
+          quantity,
+        };
+      });
+
+      // Calculate subtotal for items only, excluding delivery charge.
+      const subtotal = catalogLineItems.reduce((total, item) => {
         return total + item.price_data.unit_amount * item.quantity;
       }, 0);
 
@@ -46,7 +116,7 @@ module.exports = async (req, res) => {
       const discountAmount = Math.round(subtotal * discountRate);
 
       // Apply the discount manually to each item price proportionally
-      const adjustedItems = items.map((item) => {
+      const adjustedItems = catalogLineItems.map((item) => {
         // Calculate discount for each item proportionally
         const itemDiscount = Math.round(
           item.price_data.unit_amount * discountRate
