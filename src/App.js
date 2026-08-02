@@ -98,8 +98,8 @@ function App() {
   };
 
   return (
-    <CurrencyProvider>
-      <ShopProvider>
+    <ShopProvider>
+      <CurrencyProvider>
         <ExchangeRateProvider>
           <Router>
             <ScrollToTop />
@@ -203,8 +203,8 @@ function App() {
             </div>
           </Router>
         </ExchangeRateProvider>
-      </ShopProvider>
-    </CurrencyProvider>
+      </CurrencyProvider>
+    </ShopProvider>
   );
 }
 

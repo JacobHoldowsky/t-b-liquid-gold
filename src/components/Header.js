@@ -1,15 +1,10 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import { CurrencyContext } from "../context/CurrencyContext";
 import { useShopContext } from "../context/ShopContext";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faDollarSign,
-  faShekelSign,
-  faShoppingCart,
-} from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../components/Modal";
 
 function Header({ cart, cartItemCount, clearCart }) {
@@ -18,7 +13,6 @@ function Header({ cart, cartItemCount, clearCart }) {
   const [showWarning, setShowWarning] = useState(false);
   const [showRedirectModal, setShowRedirectModal] = useState(false);
   const [cartIndicatorAnimated, setCartIndicatorAnimated] = useState(false);
-  const { currency, toggleCurrency } = useContext(CurrencyContext);
   const { shopRegion, toggleShopRegion } = useShopContext();
   const headerRef = useRef(null);
   const navigate = useNavigate();
@@ -35,10 +29,6 @@ function Header({ cart, cartItemCount, clearCart }) {
   const closeMenu = () => {
     setIsOpen(false);
     setActiveDropdown(null);
-  };
-
-  const handleCurrencyToggle = () => {
-    toggleCurrency(currency === "Dollar" ? "Shekel" : "Dollar");
   };
 
   const handleShopRegionSelect = (region) => {
@@ -190,21 +180,12 @@ function Header({ cart, cartItemCount, clearCart }) {
   return (
     <>
       <header className="header" ref={headerRef}>
-        <div className="logo-currency-wrapper">
+        <div className="logo-region-wrapper">
           <div className="logo">
             <Link to="/" onClick={closeMenu}>
               <img src="/tnbLiquidGoldLogo-min.png" alt="TnB Liquid Gold" />
             </Link>
           </div>
-          <div className="currency-toggle" onClick={handleCurrencyToggle}>
-            <FontAwesomeIcon
-              icon={currency === "Dollar" ? faDollarSign : faShekelSign}
-            />
-          </div>
-          {/* Enhanced Toggle Slider for Shop Region */}
-
-          {/* comment back in to get toggle bar */}
-
           <div className="shop-toggle-slider" ref={sliderRef}>
             <span
               className="slider-label"
