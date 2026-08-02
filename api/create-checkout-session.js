@@ -37,9 +37,10 @@ module.exports = async (req, res) => {
         discountRate = 0.05; // 5% discount
       }
 
-      if (promoCode === "9173") {
-        discountRate = 0.998; // 5% discount
-      }
+      // Disabled: this code applied an unintended 99.8% discount.
+      // if (promoCode === "9173") {
+      //   discountRate = 0.998;
+      // }
 
       // Calculate the total discount amount
       const discountAmount = Math.round(subtotal * discountRate);
