@@ -7,6 +7,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import Modal from "../components/Modal";
 
+// Legacy currency-switcher imports intentionally disabled.
+// import React, { useContext } from "react";
+// import { CurrencyContext } from "../context/CurrencyContext";
+// import {
+//   faDollarSign,
+//   faShekelSign,
+// } from "@fortawesome/free-solid-svg-icons";
+
 function Header({ cart, cartItemCount, clearCart }) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -14,6 +22,7 @@ function Header({ cart, cartItemCount, clearCart }) {
   const [showRedirectModal, setShowRedirectModal] = useState(false);
   const [cartIndicatorAnimated, setCartIndicatorAnimated] = useState(false);
   const { shopRegion, toggleShopRegion } = useShopContext();
+  // const { currency, toggleCurrency } = useContext(CurrencyContext);
   const headerRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,6 +39,11 @@ function Header({ cart, cartItemCount, clearCart }) {
     setIsOpen(false);
     setActiveDropdown(null);
   };
+
+  // Manual currency switching is disabled; currency follows shopRegion.
+  // const handleCurrencyToggle = () => {
+  //   toggleCurrency(currency === "Dollar" ? "Shekel" : "Dollar");
+  // };
 
   const handleShopRegionSelect = (region) => {
     if (cartItemCount > 0) {
@@ -186,6 +200,13 @@ function Header({ cart, cartItemCount, clearCart }) {
               <img src="/tnbLiquidGoldLogo-min.png" alt="TnB Liquid Gold" />
             </Link>
           </div>
+          {/* Legacy manual currency switcher intentionally disabled.
+          <div className="currency-toggle" onClick={handleCurrencyToggle}>
+            <FontAwesomeIcon
+              icon={currency === "Dollar" ? faDollarSign : faShekelSign}
+            />
+          </div>
+          */}
           <div className="shop-toggle-slider" ref={sliderRef}>
             <span
               className="slider-label"

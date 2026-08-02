@@ -18,6 +18,15 @@
   gap: 20px;
 }
 
+/* Legacy manual currency switcher styles intentionally disabled.
+.currency-toggle {
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: #333;
+  transition: color 0.3s ease;
+}
+*/
+
 .logo {
   display: flex;
   align-items: center;
@@ -49,6 +58,20 @@
   justify-content: center;
   text-align: center;
 }
+
+/* Legacy combined selector intentionally disabled.
+.header nav ul li a,
+.currency-toggle {
+  color: #333;
+  text-decoration: none;
+  padding: 5px 10px;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+  display: inline-block;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+*/
 
 .header nav ul li.cart-link {
   position: relative;
@@ -208,6 +231,9 @@ input:checked + .slider:before {
 
 /* Hover effects for larger screens only */
 @media (min-width: 769px) {
+  /* Legacy manual currency hover selector intentionally disabled.
+  .currency-toggle:hover,
+  */
   .header nav ul li a:hover,
   .header nav ul li .dropdown-menu .dropdown-menu-item:hover, .slider-label:hover {
     color: #7c2234;
@@ -286,6 +312,7 @@ input:checked + .slider:before {
   }
 
   /* Remove hover effects */
+  /* .currency-toggle:hover, */
   .header nav ul li a:hover,
   .shop-toggle:hover,
   .header nav ul li .dropdown-menu .dropdown-menu-item:hover,
@@ -367,6 +394,7 @@ input:checked + .slider:before {
   }
 
   /* Remove hover effects */
+  /* .currency-toggle:hover, */
   .header nav ul li a:hover,
   .shop-toggle:hover,
   .header nav ul li .dropdown-menu .dropdown-menu-item:hover,
