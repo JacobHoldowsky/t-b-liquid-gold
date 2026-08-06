@@ -10,7 +10,7 @@ export default async function handler(req, res) {
       await resend.emails.send({
         from: 'contact@uxilitypro.com', // Update this with your verified domain
         to: process.env.PERSONAL_EMAIL,
-        subject: "New Contact Form Submission 1",
+        subject: "New Contact Form Submission",
         html: `
           <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
             <h2 style="color: #7c2234; border-bottom: 2px solid #ddd; padding-bottom: 10px;">New Contact Form Submission</h2>
@@ -29,7 +29,7 @@ export default async function handler(req, res) {
       await resend.emails.send({
         from: 'contact@uxilitypro.com', // Update this with your verified domain
         to: email,
-        subject: "Thank you for contacting us 1",
+        subject: "Thank you for contacting us",
         html: `
           <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
             <h2 style="color: #7c2234; border-bottom: 2px solid #ddd; padding-bottom: 10px;">Thank You for Reaching Out</h2>
