@@ -2,7 +2,14 @@ import { Resend } from 'resend';
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { name, email, number, message } = req.body;
+    const { name, email, number, message, website } = req.body || {};
+
+    // Honeypot: real users never see or fill this field. Silently accept the
+    // request so bots do not learn that they were detected, but send no email.
+    if (typeof website === "string" && website.trim() !== "") {
+      return res.status(200).json({ success: true, message: "Email sent successfully" });
+    }
+
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     try {

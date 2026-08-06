@@ -10,6 +10,7 @@ function Contact() {
     email: "",
     number: "",
     message: "",
+    website: "",
   });
   const [isLoading, setIsLoading] = useState(false); // Loading state
 
@@ -51,6 +52,7 @@ function Contact() {
           email: "",
           number: "",
           message: "",
+          website: "",
         });
       } else {
         toast.error("Failed to send message. Please try again."); // Error notification
@@ -87,6 +89,23 @@ function Contact() {
 
         <form className="contact-form" onSubmit={handleSubmit}>
           <h3>Send Us a Message</h3>
+          <input
+            type="text"
+            name="website"
+            value={formData.website}
+            onChange={handleChange}
+            autoComplete="off"
+            tabIndex="-1"
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              left: "-10000px",
+              top: "auto",
+              width: "1px",
+              height: "1px",
+              overflow: "hidden",
+            }}
+          />
           <input
             type="text"
             name="name"
