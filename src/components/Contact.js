@@ -21,6 +21,9 @@ function Contact() {
       ? "https://wa.me/message/AUHFRK2KKV27O1"
       : "https://wa.me/+972534309254";
 
+  const phoneNumber = shopRegion === "US" ? "845-269-8649" : "053-430-9254";
+  const phoneUrl = `tel:${phoneNumber.replace(/-/g, "")}`;
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -42,7 +45,7 @@ function Contact() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, shopRegion }),
       });
 
       if (response.ok) {
@@ -82,7 +85,7 @@ function Contact() {
             .
           </p>
           <p>
-            Call us directly at: <a href="tel:0534309254">0534309254</a>
+            Call us directly at: <a href={phoneUrl}>{phoneNumber}</a>
           </p>
           <p>We look forward to connecting with you.</p>
         </div>

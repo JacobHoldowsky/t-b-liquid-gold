@@ -2,7 +2,7 @@ import { Resend } from 'resend';
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { name, email, number, message, website } = req.body || {};
+    const { name, email, number, message, website, shopRegion } = req.body || {};
 
     // Honeypot: real users never see or fill this field. Silently accept the
     // request so bots do not learn that they were detected, but send no email.
@@ -11,12 +11,16 @@ export default async function handler(req, res) {
     }
 
     const resend = new Resend(process.env.RESEND_API_KEY);
+    const recipientEmail =
+      shopRegion === "US"
+        ? process.env.US_PERSONAL_EMAIL
+        : process.env.PERSONAL_EMAIL;
 
     try {
       // Send email to admin
       await resend.emails.send({
         from: 'contact@uxilitypro.com', // Update this with your verified domain
-        to: process.env.PERSONAL_EMAIL,
+        to: recipientEmail,
         subject: "New Contact Form Submission",
         html: `
           <div style="font-family: Arial, sans-serif; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
