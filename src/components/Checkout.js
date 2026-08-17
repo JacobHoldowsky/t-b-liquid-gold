@@ -785,26 +785,6 @@ function Checkout({ cart, setCart, removeFromCart }) {
           </h3>
         </div>
         {aggregatedCart.aggregatedCart.length ? (
-          <div className="promo-code">
-            <label htmlFor="promoCode">Promo Code:</label>
-            <input
-              type="text"
-              id="promoCode"
-              value={promoCode}
-              onChange={handlePromoCodeChange}
-              placeholder="Enter promo code"
-            />
-            <button onClick={applyPromoCode} className="apply-promo-btn">
-              Apply
-            </button>
-            {promoMessage.message && (
-              <div className={`promo-message ${promoMessage.type}`}>
-                {promoMessage.message}
-              </div>
-            )}
-          </div>
-        ) : null}
-        {aggregatedCart.aggregatedCart.length ? (
           <>
             {/* Only show gift note box if cart has non-soldier family items */}
             {!aggregatedCart.aggregatedCart.every(
@@ -1166,8 +1146,8 @@ function Checkout({ cart, setCart, removeFromCart }) {
           </p>
         )} */}
         <p className="availability-note">
-          Invoices are not available but email confirmations are sent of your
-          order.
+          Invoices/tax receipts are not available. An email confirmation will be
+          sent with your order details.
         </p>
         <p className="availability-note">
           If recipient is not home, the package will be left by the door.

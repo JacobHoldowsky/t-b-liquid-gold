@@ -21,7 +21,7 @@ function About() {
         </p>
 
         <p>
-          We have 7 rich flavors of creamed honeys all handracfted in Israel.
+          We have 9 rich flavors of creamed honeys all handracfted in Israel.
         </p>
         <p>Every jar is made with lots of love.</p>
         <p>We look forward to sharing the goodness with you.</p>
