@@ -271,6 +271,7 @@ module.exports = async (req, res) => {
           zipCode: shippingDetails.zipCode,
           specialDeliveryOnly: specialDeliveryOnly,
           contactNumber: shippingDetails.contactNumber,
+          region: shippingDetails.region,
           promoCode: activePromo?.code || "",
           discountInfo: activePromo
             ? `${discountPercent}% discount applied; delivery excluded`
