@@ -334,6 +334,14 @@
   position: relative;
 }
 
+.payment-disabled-message {
+  margin: 20px 0 0;
+  color: #7c2234;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
 .submit-order-btn-tooltip {
   visibility: hidden;
   background-color: #333;
